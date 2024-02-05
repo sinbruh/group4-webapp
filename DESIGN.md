@@ -18,7 +18,11 @@ document is not final, and is updated when the group needs to make formal design
 
 ### Typography
 
+A sans-serif font will be used in a bold style with rounded edges.
+
 ### Border rounding
+
+Rounded edges will generally be used.
 
 ### Shadows
 
