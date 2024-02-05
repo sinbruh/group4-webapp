@@ -1,16 +1,16 @@
-*DESIGN
+#DESIGN
 
-**Colors
+##Colors
 pink :)
 
-**Typography
+##Typography
 comic sans
 
-**Hierarchy and layout
+##Hierarchy and layout
 
-**Icons
+##Icons
 
-**Spacing
+##Spacing
 
-**Border rounding
+##Border rounding
 20px ?
