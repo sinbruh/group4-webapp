@@ -8,36 +8,77 @@ document is not final, and is updated when the group needs to make formal design
 
 ### Theme
 
+The group will aim for a playful design, meaning the design will not be too plain or bland, but
+have elements that make the overall experience of the website exciting.
+
 ### Color scheme
+
+The company does not have a color scheme, meaning the group is responsible of creating one.
+
+The colors suggested by the playful theme is up for interpretation, however the group finds green
+to be the most fitting color, as green us usually associated with nature, and the company wants the
+design to give a sense of adventure.
+
+Main color: Green\
+Accent color: Yellow-green
 
 ### Hierarchy and layout
 
+#### Landing page
+
+The most important message on this page is the search function.
+
+The order of importance will thus be (1) the search bar, (2) the search button and (3) the
+navigation bar.
+
+The sections on the page will be the hero section and the navigation bar.
+
+The layout the group will use is a page containing only a hero section with a navigation bar on top
+of it.
+
+#### Main page
+
+The most important message on this page are the cars displayed for rental.
+
+The order of importance will thus be (1) the cars for rental section, (2) the card in the cars for
+rental section, (3) the rental information section, (4) the rent button in the rental information
+section and (5) the navigation bar.
+
+The sections on the page will be the cars for rental section, the rental information section and
+the navigation bar.
+
+The layout the group will is a scrolling cars for rental section to the left and a rental
+information section to the right, with a navigation bar on top of them.
+
 ### Images
+
+There will be text aside appropriate images (e.g. images of cars but mot background images).
+
+The group will use clear images.
+
+There will not be blur for images.
 
 ### Icons
 
+The group will use icons for different purposes. These may be seaching, logging in, and seeing
+information about cars. E.g. a person symbol may be used to indicate how many seats are in a car.
+
+Both colored and black-and-white/greyscale icons will be used, depending on the purpose of the
+icon.
+
 ### Typography
 
-A sans-serif font will be used in a bold style with rounded edges.
+A sans-serif font will be used.
+
+Bold style will be used.
+
+Rounded edges will be used to accommodate for the playful theme.
 
 ### Border rounding
 
-Rounded edges will generally be used.
+The edges should be quite rounded according to the playful theme, meaning they should be rounded
+enough to have an impact on the overall design.
 
 ### Shadows
 
-
-## Colors
-pink :)
-
-## Typography
-comic sans
-
-## Hierarchy and layout
-
-## Icons
-
-## Spacing
-
-## Border rounding
-20px ?
+The group will in general use slight shadowing to accommodate for the playful theme.
