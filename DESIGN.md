@@ -28,10 +28,11 @@ Accent color: Yellow-green
 
 The most important message on this page is the search function.
 
-The order of importance will thus be
-1. the search bar 
-2. the search button
-3. the navigation bar
+The order of importance will thus be:
+
+1. The search bar 
+2. The search button
+3. The navigation bar
 
 The sections on the page will be the hero section and the navigation bar.
 
@@ -42,20 +43,19 @@ of it.
 
 The most important message on this page are the cars displayed for rental.
 
-The order of importance will thus be 
-1. The cars for rental section,
-2. The card in the cars for
-rental section, 
-3. The rental information section, 
-4. The rent button in the rental information
-section and 
-5. The navigation bar.
+The order of importance will thus be:
 
-The sections on the page will be the cars for rental section, the rental information section and
+1. The 'cars for rental' section
+2. The card in the 'cars for rental' section
+3. The 'rental information' section, 
+4. The rent button in the 'rental information' section
+5. The navigation bar
+
+The sections on the page will be the 'cars for rental' section, the 'rental information' section and
 the navigation bar.
 
-The layout the group will is a scrolling cars for rental section to the left and a rental
-information section to the right, with a navigation bar on top of them.
+The layout the group will use is a scrolling 'cars for rental' section to the left and a 'rental
+information' section to the right, with a navigation bar on top of them.
 
 ### Images
 
