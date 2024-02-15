@@ -9,13 +9,13 @@ document is not final, and is updated when the group needs to make formal design
 ### Theme
 
 The group will aim for a playful design, meaning the design will not be too plain or bland, but
-have elements that make the overall experience of the website exciting.
+have elements that make the overall experience of the website unique and exciting.
 
 ### Color scheme
 
 The company does not have a color scheme, meaning the group is responsible of creating one.
 
-The colors suggested by the playful theme is up for interpretation, however the group finds green
+The colors suggested by the playful theme is up for interpretation, however the group found green
 to be the most fitting color, as green us usually associated with nature, and the company wants the
 design to give a sense of adventure.
 
@@ -28,8 +28,10 @@ Accent color: Yellow-green
 
 The most important message on this page is the search function.
 
-The order of importance will thus be (1) the search bar, (2) the search button and (3) the
-navigation bar.
+The order of importance will thus be
+1. the search bar 
+2. the search button
+3. the navigation bar
 
 The sections on the page will be the hero section and the navigation bar.
 
@@ -40,9 +42,14 @@ of it.
 
 The most important message on this page are the cars displayed for rental.
 
-The order of importance will thus be (1) the cars for rental section, (2) the card in the cars for
-rental section, (3) the rental information section, (4) the rent button in the rental information
-section and (5) the navigation bar.
+The order of importance will thus be 
+1. The cars for rental section,
+2. The card in the cars for
+rental section, 
+3. The rental information section, 
+4. The rent button in the rental information
+section and 
+5. The navigation bar.
 
 The sections on the page will be the cars for rental section, the rental information section and
 the navigation bar.
@@ -56,11 +63,11 @@ There will be text aside appropriate images (e.g. images of cars but mot backgro
 
 The group will use clear images.
 
-There will not be blur for images.
+Use of blurred images will be avoided.
 
 ### Icons
 
-The group will use icons for different purposes. These may be seaching, logging in, and seeing
+The group will use icons for different purposes. These may be searching, logging in, and viewing
 information about cars. E.g. a person symbol may be used to indicate how many seats are in a car.
 
 Both colored and black-and-white/greyscale icons will be used, depending on the purpose of the
@@ -68,7 +75,7 @@ icon.
 
 ### Typography
 
-A sans-serif font will be used.
+A sans-serif font will be used. 
 
 Bold style will be used.
 
