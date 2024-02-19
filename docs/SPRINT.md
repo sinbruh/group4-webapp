@@ -27,4 +27,43 @@ goals of this sprint.
 
 ### Accomplishments
 
+All the goals set by the group for this sprint was accomplished, the conceputal phase in the design
+guideline was filled in, the first version of the wireframes was made, as well as the document for
+sprint reports. Even though the conceptual phase of the design guideline was filled in, the group
+expects to update it later on in the project.
+
+The group thinks the only point of improvement for the next sprint is to work more consistently.
+
+## Week 7
+
+This sprint starts in week 7 and ends in week 8.
+
+Deadline: 20.02.2024
+
+### Goals
+
+The goals of this sprint is to (1) create the use-case diagram, (2) create the database schema, (3)
+continue working on the wireframes and (4) create the HTML skeleton for the project.
+
+Issues related to the goals:
+
+1. Create use-case diagram
+2. Create database schema
+3. Continue working on wireframes
+4. Create HTML skeleton
+
+### Work distribution
+
+The work is slightly distributed for this sprint, meaning certain group members is responsible to
+reach certain goals of this sprint:
+
+1. Sindre is responsible for the use-case diagram and the HTML skeleton for the project
+2. Mathias and Mats are responsible for continuing the work on the wireframes
+3. Leander is responsible for the database schema
+
+Even though group members have different responsibilites, all members should contribute to reaching
+the goals of this sprint.
+
+### Accomplishments
+
 TBD
