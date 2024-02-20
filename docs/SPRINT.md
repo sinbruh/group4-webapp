@@ -27,7 +27,7 @@ goals of this sprint.
 
 ### Accomplishments
 
-All the goals set by the group for this sprint was accomplished, the conceputal phase in the design
+All the goals set by the group for this sprint was accomplished; the conceputal phase in the design
 guideline was filled in, the first version of the wireframes was made, as well as the document for
 sprint reports. Even though the conceptual phase of the design guideline was filled in, the group
 expects to update it later on in the project.
@@ -62,8 +62,12 @@ reach certain goals of this sprint:
 3. Leander is responsible for the database schema
 
 Even though group members have different responsibilites, all members should contribute to reaching
-the goals of this sprint.
+the goals of the sprint.
 
 ### Accomplishments
 
-TBD
+All the goals set by the group for this sprint was accomplished; the use-case diagram and database
+schema was created, the work on the wireframes was continued, and the HTML skeleton for the project
+was created. None of the things worked on in the sprint is considered done, meaning the group
+expects to work more on these things throughout the project. E.g. even though the use-case diagram
+and database schema was created in the sprint, these expected to be worked more on in the project.
