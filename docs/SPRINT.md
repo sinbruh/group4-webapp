@@ -71,3 +71,7 @@ schema was created, the work on the wireframes was continued, and the HTML skele
 was created. None of the things worked on in the sprint is considered done, meaning the group
 expects to work more on these things throughout the project. E.g. even though the use-case diagram
 and database schema was created in the sprint, these expected to be worked more on in the project.
+
+The gorup thinks the point of improvement for the next sprint is to work more dynamically, meaning
+that even though group members might have different responsibilities in the sprint, each member
+should actively contribute to each responsibility.
