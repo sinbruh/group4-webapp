@@ -10,9 +10,18 @@ body {
   border-bottom: 1px solid;
 }
 
-#nav-container, #nav-container header {
+#nav-container, #nav-container header, #nav-container nav {
   display: flex;
   align-items: center;
+}
+
+#nav-container a {
+  text-decoration: none;
+  color: #000000;
+}
+
+#nav-container a:hover {
+  color: #808080;
 }
 
 #nav-container img, #nav-container a {
@@ -21,4 +30,8 @@ body {
 
 #nav-container svg {
   margin: 5px;
+}
+
+#nav-container svg:hover {
+  stroke: #808080;
 }
