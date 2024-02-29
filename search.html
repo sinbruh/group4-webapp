@@ -4,6 +4,7 @@
       <meta charset="UTF-8"/>
       <title>Rental Roulette</title>
       <link rel="stylesheet" href="css/base-style.css"/>
+      <link rel="stylesheet" href="css/search-style.css"/>
   </head>
   <body>
     <div id="nav-container">
@@ -21,10 +22,24 @@
         <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
       </svg> 
     </div>
-    <div>
-      <h2>hero section</h2>
-      <p><a href="search.html">search bar</a></p>
-    </div>
+    <section id="breadcrumb">
+      <p><a href="index.html">Home</a> > <a href="search.html">Search</a></p>
+    </section>
+    <section id="filter">
+      <label>Location:</label>
+      <input type="text" name="location" list="locations"/>
+      <datalist id="locations">
+        <option>Ålesund</option>
+      </datalist>
+      <label>From:</label>
+      <input type="date" name="fromDate"/>
+      <label>To:</label>
+      <input type="date" name="toDate"/>
+      <label>Price:</label>
+      <input type="range" name="fromPrice" value="0" min="0" max="1000"/>
+      <input type="range" name="toPrice" value="1000" min="0" max="1000"/>
+      <p><b>NOK/day</b></p>
+    </section>
     <footer>
       <hr/>
       <p>
