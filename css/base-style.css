@@ -1,0 +1,24 @@
+body {
+  margin: 0;
+
+  font-family: sans-serif;
+}
+
+#nav-container {
+  justify-content: space-between;
+
+  border-bottom: 1px solid;
+}
+
+#nav-container, #nav-container header {
+  display: flex;
+  align-items: center;
+}
+
+#nav-container img, #nav-container a {
+  margin: 10px;
+}
+
+#nav-container svg {
+  margin: 5px;
+}
