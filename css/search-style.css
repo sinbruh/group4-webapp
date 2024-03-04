@@ -5,12 +5,19 @@ body {
 
 .card {
     display: flex;
-    max-width: 50%;
     margin: 10px;
     padding: 10px;
     border: 1px solid;
     border-radius: 1rem;
     background-color: #ffffff;
+}
+
+#cards {
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+    max-height: 80vh;
+    max-width: 50%;
 }
 
 .card:hover {
