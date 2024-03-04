@@ -2,28 +2,35 @@ body {
   background-image: url("../img/temp-background-image.jpg");
   background-size: 100%;
 }
+
 #breadcrumb p {
   margin: 1px;
 }
+
 #breadcrumb a {
   text-decoration: none;
   color: #000000;
 }
+
 #breadcrumb a:hover {
   text-decoration: underline;
 }
+
 #filter {
   display: flex;
   align-items: center;
 }
+
 #filter label {
   font-weight: bold;
 }
+
 #filter input {
   width: 150px;
   margin: 5px 15px 5px 5px;
 
   font-size: 1rem;
 
-  border: 1px solid;
+  border: none;
+  border-radius: 1rem;
 }
