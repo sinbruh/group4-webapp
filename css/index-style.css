@@ -1,0 +1,51 @@
+body {
+  display: flex;
+  flex-direction: column;
+
+  background-image: url("../img/temp-background-image.jpg");
+  background-size: 100%;
+}
+
+section {
+  flex-grow: 1;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+input {
+  margin: 2px;
+
+  font-size: 2.5rem;
+
+  border: none;
+  border-radius: 0.5rem;
+}
+
+#main-container {
+  display: flex;
+  flex-direction: column;
+
+  height: 100vh;
+}
+
+#side-container {
+  flex: 1 0 100%;
+
+  margin: 0;
+  background-color: #FFFFFF;
+}
+
+#icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  margin: 2px;
+  width: 50px;
+  height: 50px;
+  background-image: linear-gradient(to right, #45B649, #DCE35B);
+
+  border-radius: 0.5rem;
+}

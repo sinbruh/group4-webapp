@@ -2,16 +2,6 @@ body {
   background-color: #808080;
 }
 
-/* nav {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #2b2c36;
-    margin: -0.5rem;
-    padding: 0rem 0.5rem;
-} */
-
 ul {
     list-style-type: none;
     display: flex;
