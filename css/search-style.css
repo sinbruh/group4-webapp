@@ -1,29 +1,50 @@
 body {
-  background-image: url("../img/temp-background-image.jpg");
-  background-size: 100%;
+    background-image: url("../img/temp-background-image.jpg");
+    background-size: 100%;
 }
+
+.card {
+    display: flex;
+    max-width: 50%;
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid;
+    border-radius: 1rem;
+    background-color: #ffffff;
+}
+
+.card:hover {
+    box-shadow: 2px 2px 2px #000000;
+    cursor: grab;
+}
+
 #breadcrumb p {
-  margin: 1px;
+    margin: 1px;
 }
+
 #breadcrumb a {
-  text-decoration: none;
-  color: #000000;
+    text-decoration: none;
+    color: #000000;
 }
+
 #breadcrumb a:hover {
-  text-decoration: underline;
+    text-decoration: underline;
 }
+
 #filter {
-  display: flex;
-  align-items: center;
+    display: flex;
+    align-items: center;
 }
+
 #filter label {
-  font-weight: bold;
+    font-weight: bold;
 }
+
 #filter input {
-  width: 150px;
-  margin: 5px 15px 5px 5px;
+    width: 150px;
+    margin: 5px 15px 5px 5px;
 
-  font-size: 1rem;
+    font-size: 1rem;
 
-  border: 1px solid;
+    border: 1px solid;
 }
