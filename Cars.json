@@ -1,0 +1,214 @@
+{
+    "cars": [
+        {
+            "carMaker": "Volkswagen",
+            "carModel": "Golf",
+            "year": 2007,
+            "fuelType": "Diesel",
+            "transmissionType": "Manual",
+            "numberOfSeats": 5,
+            "extraFeatures": [
+                "Bluetooth",
+                "DAB radio",
+                "warming in the chairs"
+            ],
+            "price": {
+                "Miller Bil": 600,
+                "Biller Bil": 550
+            },
+            "img": "img/cars/VW-Golf.jpg"
+        },
+        {
+            "carMaker": "Tesla",
+            "carModel": "Model 3",
+            "year": 2019,
+            "fuelType": "Electric",
+            "transmissionType": "Automatic",
+            "numberOfSeats": 5,
+            "extraFeatures": [
+                "autonomous driving",
+                "long range",
+                "warming in the seats"
+            ],
+            "price": {
+                "Biggernes Tesla": 700,
+                "Tesla Tom (private)": 500
+            },
+            "img": "img/cars/Tesla-Model-3.jpg"
+        },
+        {
+            "carMaker": "Tesla",
+            "carModel": "Model Y",
+            "year": 2022,
+            "fuelType": "Electric",
+            "transmissionType": "Automatic",
+            "numberOfSeats": 5,
+            "extraFeatures": [
+                "Four wheel drive",
+                "glass roof",
+                "autonomous driving"
+            ],
+            "price": {
+                "Biggernes Tesla": 900,
+                "Tesla Tom (private)": 700
+            },
+            "img": "img/cars/Tesla-Model-Y.jpg"
+        },
+        {
+            "carMaker": "Nissan",
+            "carModel": "Leaf",
+            "year": 2016,
+            "fuelType": "Electric",
+            "transmissionType": "Automatic",
+            "numberOfSeats": 5,
+            "extraFeatures": [
+                "None"
+            ],
+            "price": {
+                "Auto 9-9": 500,
+                "Auto 10-10": 500
+            },
+            "img": "img/cars/Nissan-Leaf.jpg"
+        },
+        {
+            "carMaker": "Mazda",
+            "carModel": "2",
+            "year": 2017,
+            "fuelType": "Petrol (Bensin)",
+            "transmissionType": "Automatic",
+            "numberOfSeats": 5,
+            "extraFeatures": [
+                "DAB radio"
+            ],
+            "price": {
+                "Bilikist": 400
+            },
+            "img": "img/cars/Mazda-2.png"
+        },
+        {
+            "carMaker": "Volkswagen",
+            "carModel": "Transporter",
+            "year": 1978,
+            "fuelType": "Petrol (Bensin)",
+            "transmissionType": "Manual",
+            "numberOfSeats": 8,
+            "extraFeatures": [
+                "Yellow",
+                "retro"
+            ],
+            "price": {
+                "Ørsta kommune": 200,
+                "Sirkelsliper": 70,
+                "Peace Per": 180
+            },
+            "img": "img/cars/VW_Transporter.png"
+        },
+        {
+            "carMaker": "BMW",
+            "carModel": "M3 Evo",
+            "year": 1988,
+            "fuelType": "Petrol (Bensin)",
+            "transmissionType": "Manual",
+            "numberOfSeats": 4,
+            "extraFeatures": [
+                "Three stripes",
+                "original tire discs"
+            ],
+            "price": {
+                "Bilverksted": 400,
+                "Grabes": 450,
+                "Djarney": 449
+            },
+            "img": "img/cars/BMW_M3.jpg"
+        },
+        {
+            "carMaker": "Skoda",
+            "carModel": "Fabia",
+            "year": 2011,
+            "fuelType": "Diesel",
+            "transmissionType": "Automatic",
+            "numberOfSeats": 5,
+            "extraFeatures": [
+                "Tow hook"
+            ],
+            "price": {
+                "Sprekksaver": 300,
+                "Smidig bilforhandler": 299,
+                "Fossefall bilforhandler": 700
+            },
+            "img": "img/cars/Skoda_Fabia.ppg"
+        },
+        {
+            "carMaker": "Peugeot",
+            "carModel": "307 SW",
+            "year": 2008,
+            "fuelType": "Diesel",
+            "transmissionType": "Manual",
+            "numberOfSeats": 7,
+            "extraFeatures": [
+                "travel box on the roof"
+            ],
+            "price": {
+                "Betrel Ostein": 600,
+                "Auto 10-10": 550
+            },
+            "img": "img/cars/Peugeot-307-SW.jpg"
+        },
+        {
+            "carMaker": "Peugeot",
+            "carModel": "207",
+            "year": 2007,
+            "fuelType": "Diesel",
+            "transmissionType": "Manual",
+            "numberOfSeats": 5,
+            "extraFeatures": [
+                "glass window",
+                "warming in the seats",
+                "warming in the steering wheel",
+                "warming in the mirrors",
+                "warming in the tires",
+                "warming 360"
+            ],
+            "price": {
+                "Betrel Ostein": 500,
+                "Auto 10-10": 550
+            },
+            "img": "img/cars/Peugeot-207.jpg"
+        },
+        {
+            "carMaker": "Peugeot",
+            "carModel": "3008",
+            "year": 2010,
+            "fuelType": "Diesel",
+            "transmissionType": "Manual",
+            "numberOfSeats": 5,
+            "extraFeatures": [
+                "FM radio",
+                "CD player",
+                "Metallic paint"
+            ],
+            "price": {
+                "Betrel Ostein": 600,
+                "Auto 10-10": 600
+            },
+            "img": "img/cars/Peugeot-3008.jpg"
+        },
+        {
+            "carMaker": "Peugeot",
+            "carModel": "iOn",
+            "year": 2015,
+            "fuelType": "Electric",
+            "transmissionType": "Automatic",
+            "numberOfSeats": 4,
+            "extraFeatures": [
+                "five doors",
+                "very economic"
+            ],
+            "price": {
+                "Betrel Ostein": 200,
+                "Auto 10-10": 201
+            },
+            "img": "img/cars/Peugeot-iOn.jpg"
+        }
+    ]
+}
