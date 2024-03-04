@@ -44,6 +44,10 @@ body {
     cursor: pointer;
 }
 
+#breadcrumb {
+    padding: 0px 10px;
+}
+
 #breadcrumb p {
     margin: 1px;
 }
@@ -60,6 +64,10 @@ body {
 #filter {
     display: flex;
     align-items: center;
+    background-color: #ffffff;
+    border-radius: 1rem;
+    margin: 10px;
+    padding: 0 10px;
 }
 
 #filter label {
