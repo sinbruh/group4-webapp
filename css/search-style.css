@@ -5,7 +5,6 @@ body {
 
 .card {
     display: flex;
-    max-width: 50%;
     margin: 10px;
     padding: 10px;
     border: 1px solid;
@@ -13,9 +12,17 @@ body {
     background-color: #ffffff;
 }
 
+#cards {
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+    max-height: 80vh;
+    max-width: 50%;
+}
+
 .card:hover {
     box-shadow: 2px 2px 2px #000000;
-    cursor: grab;
+    cursor: pointer;
 }
 
 #breadcrumb p {
