@@ -1,13 +1,14 @@
 body {
-  margin: 0;
-
   font-family: sans-serif;
 }
 
 #nav-container {
+  background-color: #FFFFFF;
+
   justify-content: space-between;
 
-  border-bottom: 1px solid;
+  /* border-bottom: 1px solid; */
+  border-radius: 1rem;
 }
 
 #nav-container, #nav-container header, #nav-container nav {
