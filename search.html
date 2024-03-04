@@ -49,6 +49,7 @@
         <input type="range" name="toPrice" value="1000" min="0" max="1000" />
         <p><b>NOK/day</b></p>
     </section>
+    <section id="hero">
     <section id="cards">
         <div class="card" id="mercedez">
             <img src="img/car.png" alt="car img" width="300" height="200" />
@@ -83,12 +84,27 @@
             </div>
         </div>
 
+
         <script>
             document.getElementById('mercedez').addEventListener('click', function () {
                 console.log('Mercedez clicked');
             });
         </script>
 
+    </section>
+    <div class="expandedCard" id="mercedez">
+        <img src="img/car.png" alt="car img" width="300" height="200" />
+        <div class="card-info">
+            <h2>mercedez</h2>
+            <p>Price: 500 NOK/day</p>
+            <p>Location: Ålesund</p>
+            <p>Owner: John Doe</p>
+            <p>Phone: 12345678</p>
+            <p>Email: matsern@email.com</p>
+
+            <button>Book</button>
+        </div>
+    </div>
     </section>
     <footer>
         <hr />
