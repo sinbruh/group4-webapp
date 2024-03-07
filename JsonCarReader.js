@@ -1,8 +1,12 @@
-fetch('Cars.json')
+fetch('cars.json')
     .then(response => response.json())
     .then(data => {
+        //removes prior cards and expanded cards
         const cardsContainer = document.getElementById('cards');
         cardsContainer.innerHTML = '';
+        const expandedCard = document.getElementById('expandedCard');
+        expandedCard.innerHTML = '';
+        //creates a card for each car with the createCard method
         data.cars.forEach(car => createCard(car));
     });
 
@@ -21,8 +25,20 @@ function createCard(car) {
     const cardInfo = createCardInfoElement(car);
     card.appendChild(cardInfo);
 
+
+    //method for expanded card
     card.addEventListener('click', function() {
-        document.getElementById('expandedCard').innerHTML = card.innerHTML;
+        const expandedCard = document.getElementById('expandedCard');
+        expandedCard.innerHTML = card.innerHTML;
+
+        //obtains info from original card, and adds more info from Json
+        const additionalInfo = document.createElement('div');
+        additionalInfo.innerHTML = `<p>Year: ${car.year}</p>
+                        <p>Fuel Type: ${car.fuelType}</p>
+                        <p>Transmission Type: ${car.transmissionType}</p>
+                        <p>Number of Seats: ${car.numberOfSeats}</p>
+                        <p>Extra Features: ${car.extraFeatures.join(', ')}</p>`;
+        expandedCard.appendChild(additionalInfo);
     });
 
     document.getElementById('cards').appendChild(card);
