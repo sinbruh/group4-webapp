@@ -37,4 +37,6 @@ body {
 
 #nav-container svg:hover {
   stroke: #808080;
+
+  cursor: pointer;
 }
