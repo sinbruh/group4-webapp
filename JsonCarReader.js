@@ -21,6 +21,10 @@ function createCard(car) {
     const cardInfo = createCardInfoElement(car);
     card.appendChild(cardInfo);
 
+    card.addEventListener('click', function() {
+        document.getElementById('expandedCard').innerHTML = card.innerHTML;
+    });
+
     document.getElementById('cards').appendChild(card);
 }
 
