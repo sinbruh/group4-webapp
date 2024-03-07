@@ -14,11 +14,7 @@ section {
   align-items: center;
 }
 
-h2 {
-  font-size: 2rem;
-}
-
-input {
+section input {
   height: 50px;
   margin: 2px;
 
@@ -27,6 +23,10 @@ input {
 
   border: none;
   border-radius: 0.5rem;
+}
+
+h2 {
+  font-size: 2rem;
 }
 
 .dateField {

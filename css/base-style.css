@@ -40,3 +40,70 @@ body {
 
   cursor: pointer;
 }
+
+#nav-container #login-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  display: none;
+  flex-direction: column;
+  align-items: center;
+
+  padding: 50px;
+  background-color: #FFFFFF;
+
+  border-radius: 1rem;
+}
+
+#nav-container #login-container > * {
+  margin: 10px;
+}
+
+#nav-container #login-container input {
+  width: 20rem;
+  height: 50px;
+
+  font-size: 1rem;
+  font-family: 'Montserrat', sans-serif;
+
+  border: 1px solid;
+  border-radius: 1rem;
+}
+
+#nav-container #login-container div {
+  width: 20rem;
+
+  text-align: center;
+  font-weight: bold;
+
+  border-radius: 1rem;
+
+  cursor: pointer;
+}
+
+#nav-container #login-container #login {
+  background-image: linear-gradient(to right, #45B649, #DCE35B);
+
+  color: #FFFFFF;
+}
+
+#nav-container #login-container #register {
+  /* Code gathered from
+     https://stackoverflow.com/questions/5706963/possible-to-use-border-radius-together-with-a-border-image-which-has-a-gradient
+     at 2024.03.07 */
+  border: 3px solid transparent;
+  background-image: linear-gradient(#FFFFFF, #FFFFFF), linear-gradient(to right, #45B649, #DCE35B);
+  background-origin: border-box;
+  background-clip: content-box, border-box;
+}
+
+#nav-container #login-container #register p {
+  /* Code gathered from
+     https://www.geeksforgeeks.org/how-to-create-linear-gradient-text-using-html-and-css/ at
+     2024.03.07 */
+  background: linear-gradient(to right, #45B649, #DCE35B);
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+}

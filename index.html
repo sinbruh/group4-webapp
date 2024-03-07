@@ -26,9 +26,20 @@
           <p><b><a href="contact.html">Contact</a></b></p>
         </nav>
         <!-- User icon -->
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#000000" class="w-6 h-6" width="60" height="60">
+        <svg id="user-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#000000" class="w-6 h-6" width="60" height="60">
           <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
         </svg> 
+        <div id="login-container">
+          <input type="email" placeholder="Email"/>
+          <input type="password" placeholder="Password"/>
+          <div id="login">
+            <p>Login</p>
+          </div>
+          <p>or</p>
+          <div id="register">
+            <p>Register</p>
+          </div>
+        </div>
       </div>
       <section>
         <input id="textField" type="text" placeholder="Location" list="locations"/>
@@ -83,6 +94,13 @@
         </p>
     </footer>
     </div>
-</body>
+    <script type="application/javascript">
+      let userIcon = document.getElementById("user-icon");
+      let loginContainer = document.getElementById("login-container");
 
+      userIcon.addEventListener("click", function() {
+        loginContainer.style.display = "flex";
+      })
+    </script>
+</body>
 </html>
