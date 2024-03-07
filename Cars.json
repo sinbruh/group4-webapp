@@ -101,7 +101,7 @@
                 "Sirkelsliper": 70,
                 "Peace Per": 180
             },
-            "img": "img/cars/VW_Transporter.png"
+            "img": "img/cars/VW-Transporter.png"
         },
         {
             "carMaker": "BMW",
@@ -119,7 +119,7 @@
                 "Grabes": 450,
                 "Djarney": 449
             },
-            "img": "img/cars/BMW_M3.jpg"
+            "img": "img/cars/BMW-M3.jpg"
         },
         {
             "carMaker": "Skoda",
@@ -136,7 +136,7 @@
                 "Smidig bilforhandler": 299,
                 "Fossefall bilforhandler": 700
             },
-            "img": "img/cars/Skoda_Fabia.ppg"
+            "img": "img/cars/Skoda-Fabia.png"
         },
         {
             "carMaker": "Peugeot",
