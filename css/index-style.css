@@ -19,12 +19,18 @@ h2 {
 }
 
 input {
+  height: 50px;
   margin: 2px;
 
-  font-size: 2.5rem;
+  font-size: 1.5rem;
+  font-family: 'Montserrat', sans-serif;
 
   border: none;
   border-radius: 0.5rem;
+}
+
+.dateField {
+  width: 15%;
 }
 
 #main-container {
@@ -32,6 +38,10 @@ input {
   flex-direction: column;
 
   height: 100vh;
+}
+
+#textField {
+  width: 35%;
 }
 
 #side-container {
@@ -50,9 +60,9 @@ input {
   justify-content: center;
   align-items: center;
 
-  margin: 2px;
   width: 50px;
   height: 50px;
+  margin: 2px;
   background-image: linear-gradient(to right, #45B649, #DCE35B);
 
   border-radius: 0.5rem;
