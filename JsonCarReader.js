@@ -1,3 +1,5 @@
+// interval to update cars cards every 500 ms   !! not good or recommended
+setInterval(() => {
 fetch('cars.json')
     .then(response => response.json())
     .then(data => {
@@ -7,9 +9,19 @@ fetch('cars.json')
         const expandedCard = document.getElementById('expandedCard');
         expandedCard.innerHTML = '';
         //creates a card for each car with the createCard method
-        data.cars.forEach(car => createCard(car));
+        data.cars.forEach(car => {
+            //gets lowest price for a car
+            const lowestPrice = Math.min(...Object.values(car.price));
+            //gets low and max price filters
+            const fromPrice = parseInt(document.getElementById('fromPrice').value);
+            const toPrice = parseInt(document.getElementById('toPrice').value);
+            //filters cars based on price range
+            if (lowestPrice >= fromPrice && lowestPrice <= toPrice) {
+                createCard(car);
+            }
+        });
     });
-
+}, 500);  
 
     // main method
 function createCard(car) {

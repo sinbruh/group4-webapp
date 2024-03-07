@@ -45,9 +45,30 @@
         <label>To:</label>
         <input type="date" name="toDate" />
         <label>Price:</label>
-        <input type="range" name="fromPrice" value="0" min="0" max="1000" />
-        <input type="range" name="toPrice" value="1000" min="0" max="1000" />
+        <input type="range" id="fromPrice" name="fromPrice" value="0" min="0" max="1000" oninput="updateValue('fromPrice', 'fromPriceValue')" />
+        <span id="fromPriceValue">0</span>
+        <input type="range" id="toPrice" name="toPrice" value="1000" min="0" max="1000" oninput="updateValue('toPrice', 'toPriceValue')" />
+        <span id="toPriceValue">1000</span>
         <p><b>NOK/day</b></p>
+
+<script>
+function updateValue(sliderID, outputID) {
+    var fromPrice = document.getElementById('fromPrice');
+    var toPrice = document.getElementById('toPrice');
+    var fromPriceValue = document.getElementById('fromPriceValue');
+    var toPriceValue = document.getElementById('toPriceValue');
+
+    if (sliderID === 'fromPrice' && parseInt(fromPrice.value) > parseInt(toPrice.value)) {
+        toPrice.value = fromPrice.value;
+    } else if (sliderID === 'toPrice' && parseInt(toPrice.value) < parseInt(fromPrice.value)) {
+        fromPrice.value = toPrice.value;
+    }
+
+    fromPriceValue.innerText = fromPrice.value;
+    toPriceValue.innerText = toPrice.value;
+}
+
+</script>
     </section>
     <section id="hero">
     <section id="cards">
