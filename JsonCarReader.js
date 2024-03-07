@@ -1,8 +1,12 @@
 fetch('cars.json')
     .then(response => response.json())
     .then(data => {
+        //removes prior cards and expanded cards
         const cardsContainer = document.getElementById('cards');
         cardsContainer.innerHTML = '';
+        const expandedCard = document.getElementById('expandedCard');
+        expandedCard.innerHTML = '';
+        //creates a card for each car with the createCard method
         data.cars.forEach(car => createCard(car));
     });
 
