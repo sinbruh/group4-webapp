@@ -67,3 +67,7 @@ h2 {
 
   border-radius: 0.5rem;
 }
+
+#icon:hover {
+  background-image: linear-gradient(to right, #3EA442, #C6CC52);
+}
