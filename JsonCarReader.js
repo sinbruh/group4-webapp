@@ -1,5 +1,5 @@
-// interval to update cars cards every 500 ms   !! not good or recommended
-setInterval(() => {
+
+function fetchAndCreateCards() {
 fetch('cars.json')
     .then(response => response.json())
     .then(data => {
@@ -21,7 +21,14 @@ fetch('cars.json')
             }
         });
     });
-}, 500);  
+}
+
+    // refreshes the cards when the page is loaded
+fetchAndCreateCards();
+
+   // refreshes cards when price range is changed
+document.getElementById('fromPrice').addEventListener('change', fetchAndCreateCards);
+document.getElementById('toPrice').addEventListener('change', fetchAndCreateCards);
 
     // main method
 function createCard(car) {
@@ -89,3 +96,6 @@ function createCardInfoElement(car) {
 
     return cardInfo;
 }
+
+ 
+

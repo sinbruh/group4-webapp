@@ -1,0 +1,71 @@
+Enum location {
+  "Ålesund"
+}
+
+Enum car_make {
+  BMW
+  Volkswagen
+  Tesla
+  Nissan
+  Mazda
+  Skoda
+  Peugeot
+}
+
+
+
+Enum fuel_type { 
+  Petrol
+  Diesel
+  Hybrid
+  Electric
+}
+
+Enum transmission {
+  Manual
+  Automatic
+}
+
+Table users {
+  user_id int [pk, increment]
+  first_name varchar [not null]
+  last_name varchar [not null]
+  email varchar [not null, unique]
+  phone_number varchar [not null]
+  password varchar [not null]
+  date_of_birth Date [not null]
+  dev_access boolean [default: false]
+}
+
+Table cars {
+  car_id int [pk, increment]
+  model_id int [ref: > car_model.model_id, not null]
+  location location [not null]
+  available boolean [default: true]
+  year int [not null]
+  fuel_type fuel_type [not null]
+  transmissionType transmission [not null]
+  numberOfSeats int [not null]
+  exstraFeatures "varchar(255)[]"
+  vendorList "varchar(255)[]"
+  img_source varchar
+}
+
+Table car_model {
+  model_id int [pk, increment]
+  carMaker car_make [not null]
+  carModel varchar [not null]
+}
+
+Table rentals {
+  rent_id int [pk, increment, not null]
+  user_id int [ref: > users.user_id, not null]
+  car_id int [ref: > cars.car_id, not null]
+  start_date Date [not null]
+  end_date Date [not null]
+  total_price int [not null]
+}
+
+
+
+
