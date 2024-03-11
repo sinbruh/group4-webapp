@@ -75,3 +75,46 @@ and database schema was created in the sprint, these expected to be worked more 
 The group thinks the point of improvement for the next sprint is to work more dynamically, meaning
 that even though group members might have different responsibilities in the sprint, each member
 should actively contribute to each responsibility.
+
+## Week 11
+
+This sprint starts in week 11 and ends in week 12.
+
+Deadline: 21.03.2024
+
+### Goals
+
+The goals of this sprint is to (1) complete the static pages of the website, (2) make wireframes
+for responsive versions of the website, (3) create entity classes for the website and (4) create an
+SQL database according to the entity classes.
+
+Issues related to the goals:
+
+1. Complete static pages
+    1. Add login pop-up for all pages
+    2. Add register pop-up for all pages
+2. Create wireframes for responsive versions of website
+    1. Create mobile wireframes
+    2. Create tablet wireframes
+3. Add entity classes
+    1. Add User entity class
+    2. Add Rental entity class
+    3. Add Car entity class
+4. Create SQL database
+
+### Work distribution
+
+The work is slightly distributed for this sprint, meaning certain group members is responsible to
+reach certain goals of this sprint:
+
+1. Mats is responsible for completing the static pages of the website
+2. Mathias is responsible for making wireframes for responsive versions of the website
+3. Mathias and Sindre are responsible for making entity classes for the website
+4. Leander is responsible for creating an SQL database according to the entity classes
+
+Even though group members have different responsibilites, all members should contribute to reaching
+the goals of the sprint.
+
+### Accomplishments
+
+TBD
