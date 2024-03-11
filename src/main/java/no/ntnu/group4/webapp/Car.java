@@ -69,4 +69,8 @@ public class Car {
   public void setPrice(int price) {
     this.price = price;
   }
+
+  public boolean isValid() {
+    return make != null && model != null && year > 0 && price > 0;
+  }
 }
