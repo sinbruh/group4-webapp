@@ -3,6 +3,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import java.util.Set;
 
 @Entity
 public class User {
@@ -12,6 +14,8 @@ public class User {
     private String username;
     private String password;
     private String email;
+    @OneToMany(mappedBy = "user")
+    private Set<Rental> rentals;
 
     public User() {
     }
