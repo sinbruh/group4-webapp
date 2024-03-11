@@ -15,15 +15,15 @@ Enum car_make {
 
 
 Enum fuel_type { 
-  bensin
-  diesel
-  hybrid
-  eletrisk
+  Petrol
+  Diesel
+  Hybrid
+  Electric
 }
 
 Enum transmission {
-  manuel
-  automatisk
+  Manual
+  Automatic
 }
 
 Table users {
@@ -47,10 +47,7 @@ Table cars {
   transmissionType transmission [not null]
   numberOfSeats int [not null]
   exstraFeatures varchar
-  vendor1 varchar
-  vendor1_price int
-  vendor2 varchar
-  vendor2_price int
+  vendorList varchar
   img_source varchar
 }
 
@@ -58,8 +55,6 @@ Table car_model {
   model_id int [pk, increment]
   carMaker car_make [not null]
   carModel varchar [not null]
- 
-  
 }
 
 Table rentals {
