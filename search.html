@@ -44,12 +44,14 @@
         <input type="date" name="fromDate" />
         <label>To:</label>
         <input type="date" name="toDate" />
-        <label>Price:</label>
+        <label>Min Price:</label>
         <input type="range" id="fromPrice" name="fromPrice" value="0" min="0" max="1000" oninput="updateValue('fromPrice', 'fromPriceValue')" />
         <span id="fromPriceValue">0</span>
+        <p class="nokPerDay"><b>NOK/day </b></p>
+        <label>Max Price:</label>
         <input type="range" id="toPrice" name="toPrice" value="1000" min="0" max="1000" oninput="updateValue('toPrice', 'toPriceValue')" />
         <span id="toPriceValue">1000</span>
-        <p><b>NOK/day</b></p>
+        <p class="nokPerDay"><b>NOK/day</b></p>
 
 <script>
 function updateValue(sliderID, outputID) {
