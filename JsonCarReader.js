@@ -16,7 +16,7 @@ fetch('cars.json')
             const fromPrice = parseInt(document.getElementById('fromPrice').value);
             const toPrice = parseInt(document.getElementById('toPrice').value);
             //filters cars based on price range
-            if (lowestPrice >= fromPrice && lowestPrice >= toPrice) {
+            if (lowestPrice >= fromPrice && lowestPrice <= toPrice) {
                 createCard(car);
             }
         });
