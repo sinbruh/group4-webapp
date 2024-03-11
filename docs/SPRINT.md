@@ -27,12 +27,12 @@ goals of this sprint.
 
 ### Accomplishments
 
-All the goals set by the group for this sprint was accomplished; the conceputal phase in the design
+All the goals set by the group for this sprint was accomplished; the conceptual phase in the design
 guideline was filled in, the first version of the wireframes was made, as well as the document for
 sprint reports. Even though the conceptual phase of the design guideline was filled in, the group
 expects to update it later on in the project.
 
-The group thinks the only point of improvement for the next sprint is to work more consistently.
+The group decided the only point of improvement for the next sprint is to work more consistently.
 
 ## Week 7
 
@@ -61,7 +61,7 @@ reach certain goals of this sprint:
 2. Mathias and Mats are responsible for continuing the work on the wireframes
 3. Leander is responsible for the database schema
 
-Even though group members have different responsibilites, all members should contribute to reaching
+Even though group members have different responsibilities, all members should contribute to reaching
 the goals of the sprint.
 
 ### Accomplishments
@@ -112,7 +112,7 @@ reach certain goals of this sprint:
 3. Mathias and Sindre are responsible for making entity classes for the website
 4. Leander is responsible for creating an SQL database according to the entity classes
 
-Even though group members have different responsibilites, all members should contribute to reaching
+Even though group members have different responsibilities, all members should contribute to reaching
 the goals of the sprint.
 
 ### Accomplishments

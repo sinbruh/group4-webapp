@@ -34,7 +34,7 @@ Table users {
   phone_number varchar [not null]
   password varchar [not null]
   date_of_birth Date [not null]
-  dev_access boolean [default: false]
+  admin boolean [default: false]
 }
 
 Table cars {
