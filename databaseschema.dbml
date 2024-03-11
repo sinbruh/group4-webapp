@@ -46,8 +46,8 @@ Table cars {
   fuel_type fuel_type [not null]
   transmissionType transmission [not null]
   numberOfSeats int [not null]
-  exstraFeatures varchar
-  vendorList varchar
+  exstraFeatures "varchar(255)[]"
+  vendorList "varchar(255)[]"
   img_source varchar
 }
 
