@@ -14,7 +14,7 @@
 </head>
 
 <body>
-  <div id="window"></div>
+  <div id="shade-container"></div>
   <div id="main-container">
     <div id="nav-container">
       <header>
@@ -103,20 +103,20 @@
     let userIcon = document.getElementById("user-icon");
     let exitIcon = document.getElementById("exit-icon");
     let loginContainer = document.getElementById("login-container");
-    let window = document.getElementById("window");
+    let shadeContainer = document.getElementById("shade-container");
 
     userIcon.addEventListener("click", enter);
     exitIcon.addEventListener("click", exit);
-    window.addEventListener("click", exit);
+    shadeContainer.addEventListener("click", exit);
 
     function enter() {
-      window.style.display = "block";
       loginContainer.style.display = "flex";
+      shadeContainer.style.display = "block";
     }
 
     function exit() {
-      window.style.display = "none";
       loginContainer.style.display = "none";
+      shadeContainer.style.display = "none";
     }
   </script>
 </body>

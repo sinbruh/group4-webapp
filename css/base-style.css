@@ -4,7 +4,7 @@ body {
   font-family: "Montserrat", sans-serif;
 }
 
-#window {
+#shade-container {
   position: fixed;
 
   display: none;
@@ -55,7 +55,7 @@ body {
 }
 
 #nav-container #login-container {
-  position: absolute;
+  position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -82,6 +82,7 @@ body {
 #nav-container #login-container input {
   width: 20rem;
   height: 50px;
+  padding-left: 15px;
 
   font-size: 1rem;
   font-family: 'Montserrat', sans-serif;
@@ -107,6 +108,10 @@ body {
   color: #FFFFFF;
 }
 
+#nav-container #login-container #login:hover {
+  background-image: linear-gradient(to right, #3EA442, #C6CC52);
+}
+
 #nav-container #login-container #register {
   /* Code gathered from
      https://stackoverflow.com/questions/5706963/possible-to-use-border-radius-together-with-a-border-image-which-has-a-gradient
@@ -115,6 +120,16 @@ body {
   background-image: linear-gradient(#FFFFFF, #FFFFFF), linear-gradient(to right, #45B649, #DCE35B);
   background-origin: border-box;
   background-clip: content-box, border-box;
+}
+
+#nav-container #login-container #register:hover {
+  background-image: linear-gradient(#FFFFFF, #FFFFFF), linear-gradient(to right, #3EA442, #C6CC52);
+}
+
+#nav-container #login-container #register:hover p {
+  background: linear-gradient(to right, #3EA442, #C6CC52);
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
 }
 
 #nav-container #login-container #register p {
