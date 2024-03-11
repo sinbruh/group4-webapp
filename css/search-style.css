@@ -15,13 +15,21 @@ body {
 .expandedCard {
     display: flex;
     flex-direction: column;
-    margin: 10px;
+    margin-right: auto;
+    margin-left: 1%;
+    margin-top: 0.5%;
     padding: 20px;
     border: 1px solid;
     border-radius: 1rem;
     background-color: #ffffff;
-    max-width: 50%;
-    min-width: 50%;
+    max-width: 400px;
+    min-width: 400px;
+    max-height: 650px;
+    min-height: 600px;
+}
+
+.expandedCard:empty {
+    display: none;
 }
 
 #hero {
@@ -82,4 +90,11 @@ body {
 
   border: none;
   border-radius: 1rem;
+}
+
+
+
+.nokPerDay {
+    margin-right: 20px;
+    margin-left: 4px;
 }
