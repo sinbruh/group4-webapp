@@ -2,7 +2,7 @@ body {
   display: flex;
   flex-direction: column;
 
-  background-image: url("../img/temp-background-image.jpg");
+  background-image: url("../../../../img/temp-background-image.jpg");
   background-size: 100%;
 }
 
