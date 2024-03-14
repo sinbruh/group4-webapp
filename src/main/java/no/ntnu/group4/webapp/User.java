@@ -58,4 +58,8 @@ public class User {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    public boolean isValid() {
+        return username != null && !username.isEmpty() && password != null && !password.isEmpty() && email != null && !email.isEmpty();
+    }
 }
