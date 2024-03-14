@@ -93,6 +93,8 @@ Issues related to the goals:
 1. Complete static pages
     1. Add login pop-up for all pages
     2. Add register pop-up for all pages
+    3. Add hover colors and gradients
+    4. Add container for all login operations for all pages
 2. Create wireframes for responsive versions of website
     1. Create mobile wireframes
     2. Create tablet wireframes
