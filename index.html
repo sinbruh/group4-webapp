@@ -29,21 +29,32 @@
       <!-- User icon -->
       <svg id="user-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#000000" class="w-6 h-6" width="60" height="60">
         <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
-      </svg> 
+      </svg>
       <div id="login-container">
         <!-- Exit icon -->
-        <svg id="exit-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6" width="38" height="38">
+        <svg class="exit-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6" width="38" height="38">
           <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12"/>
         </svg>
         <input type="email" placeholder="Email"/>
         <input type="password" placeholder="Password"/>
-        <div id="login">
+        <div class="primary-button">
           <p>Login</p>
         </div>
         <p>or</p>
-        <div id="register">
+        <div id="secondary-button">
           <p>Register</p>
         </div>
+      </div>
+      <div id="register-container">
+        <!-- Exit icon -->
+        <svg class="exit-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6" width="38" height="38">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12"/>
+        </svg>
+        <div id="name">
+          <input type="text" placeholder="First name"/>
+          <input type="text" placeholder="Last name"/>
+        </div>
+        <input type="email" placeholder="Email"/>
       </div>
     </div>
     <section>
@@ -100,23 +111,45 @@
     </footer>
     </div>
   <script type="application/javascript">
-    let userIcon = document.getElementById("user-icon");
-    let exitIcon = document.getElementById("exit-icon");
-    let loginContainer = document.getElementById("login-container");
+    // Get necessary elements from DOM by id
     let shadeContainer = document.getElementById("shade-container");
+    let loginContainer = document.getElementById("login-container");
+    let registerContainer = document.getElementById("register-container");
 
-    userIcon.addEventListener("click", enter);
-    exitIcon.addEventListener("click", exit);
+    let secondaryButton = document.getElementById("secondary-button");
+
+    let userIcon = document.getElementById("user-icon");
+
+    // Get necessary elements from DOM by class
+    let exitIcons = document.getElementsByClassName("exit-icon");
+
+    // Add event listeners to elements gathered from DOM by id
     shadeContainer.addEventListener("click", exit);
 
-    function enter() {
-      loginContainer.style.display = "flex";
+    secondaryButton.addEventListener("click", enterRegister);
+
+    userIcon.addEventListener("click", enterLogin);
+
+    // Add event listeners to elements gathered from DOM by class
+    for (let i = 0; i < exitIcons.length; i++) {
+      exitIcons[i].addEventListener("click", exit);
+    }
+
+    // Define functions
+    function enterLogin() {
       shadeContainer.style.display = "block";
+      loginContainer.style.display = "flex";
+    }
+
+    function enterRegister() {
+      loginContainer.style.display = "none";
+      registerContainer.style.display = "flex";
     }
 
     function exit() {
-      loginContainer.style.display = "none";
       shadeContainer.style.display = "none";
+      loginContainer.style.display = "none";
+      registerContainer.style.display = "none";
     }
   </script>
 </body>

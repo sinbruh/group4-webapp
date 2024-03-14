@@ -54,7 +54,76 @@ body {
   cursor: pointer;
 }
 
+#nav-container .primary-button {
+  width: 336px;
+  background-image: linear-gradient(to right, #45B649, #DCE35B);
+
+  color: #FFFFFF;
+}
+
+#nav-container .primary-button:hover {
+  background-image: linear-gradient(to right, #3EA442, #C6CC52);
+}
+
+#nav-container #secondary-button {
+  width: 333px;
+
+  /* Code gathered from
+     https://stackoverflow.com/questions/5706963/possible-to-use-border-radius-together-with-a-border-image-which-has-a-gradient
+     at 2024.03.07 */
+  border: 3px solid transparent;
+  background-image: linear-gradient(#FFFFFF, #FFFFFF), linear-gradient(to right, #45B649, #DCE35B);
+  background-origin: border-box;
+  background-clip: content-box, border-box;
+}
+
+#nav-container #secondary-button:hover {
+  background-image: linear-gradient(#FFFFFF, #FFFFFF), linear-gradient(to right, #3EA442, #C6CC52);
+}
+
+#nav-container #secondary-button:hover p {
+  background: linear-gradient(to right, #3EA442, #C6CC52);
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+}
+
+#nav-container #secondary-button p {
+  /* Code gathered from
+     https://www.geeksforgeeks.org/how-to-create-linear-gradient-text-using-html-and-css/ at
+     2024.03.07 */
+  background: linear-gradient(to right, #45B649, #DCE35B);
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+}
+
 #nav-container #login-container {
+  width: 440px;
+}
+
+#nav-container #login-container input {
+  width: 320px;
+}
+
+#nav-container #register-container {
+  width: 740px;
+}
+
+#nav-container #register-container input {
+  width: 620px;
+}
+
+#nav-container #register-container #name {
+  display: flex;
+  justify-content: space-between;
+
+  width: 640px;
+}
+
+#nav-container #register-container #name > * {
+  width: 294px;
+}
+
+#nav-container #login-container, #nav-container #register-container {
   position: fixed;
   top: 50%;
   left: 50%;
@@ -64,23 +133,21 @@ body {
   flex-direction: column;
   align-items: center;
 
-  width: 26rem;
   padding-bottom: 45px;
   background-color: #FFFFFF;
 
   border-radius: 1rem;
 }
 
-#nav-container #login-container > * {
+#nav-container #login-container > *, #nav-container #register-container > * {
   margin: 10px;
 }
 
-#nav-container #login-container svg {
+#nav-container #login-container svg, #nav-container #register-container svg {
   align-self: flex-start;
 }
 
-#nav-container #login-container input {
-  width: 20rem;
+#nav-container #login-container input, #nav-container #register-container input {
   height: 50px;
   padding-left: 15px;
 
@@ -92,51 +159,12 @@ body {
 }
 
 #nav-container #login-container div {
-  width: 20rem;
+  cursor: pointer;
+}
 
+#nav-container #login-container div, #nav-container #register-container div {
   text-align: center;
   font-weight: bold;
 
   border-radius: 1rem;
-
-  cursor: pointer;
-}
-
-#nav-container #login-container #login {
-  background-image: linear-gradient(to right, #45B649, #DCE35B);
-
-  color: #FFFFFF;
-}
-
-#nav-container #login-container #login:hover {
-  background-image: linear-gradient(to right, #3EA442, #C6CC52);
-}
-
-#nav-container #login-container #register {
-  /* Code gathered from
-     https://stackoverflow.com/questions/5706963/possible-to-use-border-radius-together-with-a-border-image-which-has-a-gradient
-     at 2024.03.07 */
-  border: 3px solid transparent;
-  background-image: linear-gradient(#FFFFFF, #FFFFFF), linear-gradient(to right, #45B649, #DCE35B);
-  background-origin: border-box;
-  background-clip: content-box, border-box;
-}
-
-#nav-container #login-container #register:hover {
-  background-image: linear-gradient(#FFFFFF, #FFFFFF), linear-gradient(to right, #3EA442, #C6CC52);
-}
-
-#nav-container #login-container #register:hover p {
-  background: linear-gradient(to right, #3EA442, #C6CC52);
-  -webkit-text-fill-color: transparent;
-  -webkit-background-clip: text;
-}
-
-#nav-container #login-container #register p {
-  /* Code gathered from
-     https://www.geeksforgeeks.org/how-to-create-linear-gradient-text-using-html-and-css/ at
-     2024.03.07 */
-  background: linear-gradient(to right, #45B649, #DCE35B);
-  -webkit-text-fill-color: transparent;
-  -webkit-background-clip: text;
 }
