@@ -91,4 +91,11 @@ public class User {
   public void setDateOfBirth(Date dateOfBirth) {
     this.dateOfBirth = dateOfBirth;
   }
+
+  public boolean isValid() {
+    return this.firstName != null && !this.firstName.isBlank() && this.lastName != null &&
+           !this.lastName.isBlank() && this.email != null && !this.email.isBlank() &&
+           this.phoneNumber > 0 && this.password != null && !this.password.isBlank() &&
+           this.dateOfBirth != null;
+  }
 }
