@@ -32,7 +32,7 @@ public class UserService {
   /**
    * Add the given user to the database.
    * 
-   * @param rental The given user
+   * @param user The given user
    * @return The ID of the given user
    * @throws IllegalArgumentException If the given user is invalid
    */
@@ -62,7 +62,7 @@ public class UserService {
    * Try to update a user with the given ID.
    * 
    * @param id The given ID
-   * @param rental The updated user metadata
+   * @param user The updated user metadata
    * @throws IllegalArgumentException If the current user is not found or the updated user metadata
    *                                  has an ID mismatch or is invalid
    */

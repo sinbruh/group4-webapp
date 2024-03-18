@@ -16,21 +16,21 @@ public class RentalService {
    * @return All rentals in the database
    */
   public Iterable<Rental> getAll() {
-    return rentalRepository.findAll();
+    return this.rentalRepository.findAll();
   }
 
   /**
-   * Try to find a rental with the given ID regardless of if it exits or not
+   * Try to find a rental with the given ID regardless of if it exists or not
    * 
    * @param id The given ID
    * @return A rental with the given ID regardless of if it exists or not
    */
   public Optional<Rental> getOne(int id) {
-    return rentalRepository.findById(id);
+    return this.rentalRepository.findById(id);
   }
 
   /**
-   * Add the given rental in the database.
+   * Add the given rental to the database.
    * 
    * @param rental The given rental
    * @return The ID of the given rental
@@ -40,7 +40,7 @@ public class RentalService {
     if (!rental.isValid()) {
       throw new IllegalArgumentException("Rental is invalid");
     }
-    rentalRepository.save(rental);
+    this.rentalRepository.save(rental);
     return rental.getId();
   }
 
@@ -48,12 +48,12 @@ public class RentalService {
    * Try to delete a rental with the given ID.
    * 
    * @param id The given ID
-   * @return True if the car was found and thus deleted or false otherwise
+   * @return True if the rental was found and thus deleted or false otherwise
    */
   public boolean delete(int id) {
-    Optional<Rental> rental = rentalRepository.findById(id);
+    Optional<Rental> rental = this.rentalRepository.findById(id);
     if (rental.isPresent()) {
-      rentalRepository.deleteById(id);
+      this.rentalRepository.deleteById(id);
     }
     return rental.isPresent();
   }
@@ -67,7 +67,7 @@ public class RentalService {
    *                                  metadata has an ID mismatch or is invalid
    */
   public void update(int id, Rental rental) {
-    Optional<Rental> currentRental = rentalRepository.findById(id);
+    Optional<Rental> currentRental = this.rentalRepository.findById(id);
     if (!currentRental.isPresent()) {
       throw new IllegalArgumentException("Rental not found");
     }
@@ -77,6 +77,6 @@ public class RentalService {
     if (!rental.isValid()) {
       throw new IllegalArgumentException("Rental is invalid");
     }
-    rentalRepository.save(rental);
+    this.rentalRepository.save(rental);
   }
 }
