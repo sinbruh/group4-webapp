@@ -70,4 +70,8 @@ public class Rental {
   public void setEndDate(Date endDate) {
     this.endDate = endDate;
   }
+
+  public boolean isValid() {
+    return this.car != null && this.user != null && this.startDate != null && this.endDate != null;
+  }
 }
