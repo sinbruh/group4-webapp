@@ -219,6 +219,10 @@ body {
 
 /* Cursor display */
 
+.primary-button {
+  cursor: pointer;
+}
+
 #shade-container {
   cursor: pointer;
 }
@@ -227,6 +231,6 @@ body {
   cursor: pointer;
 }
 
-#login-container div, #register-container div {
+#secondary-button {
   cursor: pointer;
 }
