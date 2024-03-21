@@ -1,20 +1,44 @@
+/* Element formatting */
+
 body {
-  background-color: #808080;
+  background-image: url("../img/temp-background-image.jpg");
+  background-size: 100%;
 }
 
-ul {
-    list-style-type: none;
-    display: flex;
-    flex-direction: row;
-    justify-content: end;
-    padding: 0;
-    margin: 0;
+article {
+  margin: 0 10px 10px 10px;
+  padding: 0 18px;
+  background-color: #FFFFFF;
 }
 
-li {
-    padding: 0.5rem;
-    margin: 0;
-    border: none;
-    color: white;
-    font-size: 1.5rem;
+#main-container {
+  height: 100vh;
+}
+
+/* Font formatting */
+
+article {
+  font-size: 20px;
+}
+
+/* Border formatting */
+
+article {
+  border-radius: 1rem;
+}
+
+/* Display */
+
+#main-container {
+  display: flex;
+}
+
+/* Flexbox formatting */
+
+article {
+  flex-grow: 1;
+}
+
+#main-container {
+  flex-direction: column;
 }
