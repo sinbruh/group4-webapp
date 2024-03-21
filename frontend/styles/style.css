@@ -1,4 +1,4 @@
-/* Element formatting */
+/* Element styling */
 
 body {
   background-image: url("../img/temp-background-image.jpg");
@@ -15,13 +15,13 @@ article {
   height: 100vh;
 }
 
-/* Font formatting */
+/* Font styling */
 
 article {
   font-size: 20px;
 }
 
-/* Border formatting */
+/* Border styling */
 
 article {
   border-radius: 1rem;
@@ -33,7 +33,7 @@ article {
   display: flex;
 }
 
-/* Flexbox formatting */
+/* Flexbox styling */
 
 article {
   flex-grow: 1;

@@ -1,4 +1,4 @@
-/* Element formatting */
+/* Element styling */
 
 body {
   margin: 0;
@@ -116,7 +116,7 @@ footer p {
   width: 291px;
 }
 
-/* Font formatting */
+/* Font styling */
 
 body {
   font-family: "Montserrat", sans-serif;
@@ -150,7 +150,7 @@ footer {
   font-family: 'Montserrat', sans-serif;
 }
 
-/* Border formatting */
+/* Border styling */
 
 #nav-container {
   border-radius: 1rem;
@@ -214,7 +214,7 @@ header, nav, #nav-container {
   display: flex;
 }
 
-/* Flexbox formatting */
+/* Flexbox styling */
 
 footer {
   flex-direction: column;
@@ -242,7 +242,7 @@ header, nav, #nav-container {
   justify-content: space-between;
 }
 
-/* Canvas formatting */
+/* Canvas styling */
 
 #nav-container svg:hover {
   stroke: #808080;
