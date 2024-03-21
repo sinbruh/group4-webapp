@@ -32,7 +32,7 @@ public class RentalController {
     public ResponseEntity<Rental> addRental(@RequestBody Rental rental) {
         ResponseEntity<Rental> response;
         try {
-            int rentalId = rentalService.add(rental);
+            rentalService.add(rental);
             response = ResponseEntity.ok().build();
         } catch (IllegalArgumentException e) {
             response = ResponseEntity.badRequest().build();
