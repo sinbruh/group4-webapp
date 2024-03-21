@@ -1,9 +1,9 @@
-package src.main.java.no.ntnu.group4.webapp.service;
+package no.ntnu.group4.webapp.service;
 
 import java.util.Optional;
 
-import src.main.java.no.ntnu.group4.webapp.model.Car;
-import src.main.java.no.ntnu.group4.webapp.repositories.CarRepository;
+import no.ntnu.group4.webapp.model.Car;
+import no.ntnu.group4.webapp.repositories.CarRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

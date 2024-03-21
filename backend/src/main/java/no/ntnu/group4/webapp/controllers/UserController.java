@@ -1,7 +1,7 @@
-package src.main.java.no.ntnu.group4.webapp.controllers;
+package no.ntnu.group4.webapp.controllers;
 
-import src.main.java.no.ntnu.group4.webapp.model.User;
-import src.main.java.no.ntnu.group4.webapp.service.UserService;
+import no.ntnu.group4.webapp.model.User;
+import no.ntnu.group4.webapp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
