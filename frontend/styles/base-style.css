@@ -4,6 +4,10 @@ body {
   margin: 0;
 }
 
+nav a {
+  margin: 10px;
+}
+
 footer {
   padding: 20px;
   background-color: #00509E;
@@ -26,8 +30,8 @@ footer p {
   background-color: #FFFFFF;
 }
 
-#nav-container a, #nav-container img {
-  margin: 10px;
+#nav-container img {
+  margin: 10px 10px 6px 10px;
 }
 
 #nav-container svg {
@@ -118,6 +122,15 @@ body {
   font-family: "Montserrat", sans-serif;
 }
 
+header a, nav a {
+  text-decoration: none;
+  color: #000000;
+}
+
+nav a:hover {
+  color: #808080;
+}
+
 footer {
   text-align: center;
   color: #FFFFFF;
@@ -125,15 +138,6 @@ footer {
 
 .primary-button {
   color: #FFFFFF;
-}
-
-#nav-container a {
-  text-decoration: none;
-  color: #000000;
-}
-
-#nav-container a:hover {
-  color: #808080;
 }
 
 #user-operations > * div {
@@ -194,7 +198,7 @@ footer {
   display: flex;
 }
 
-#nav-container, header, nav {
+header, nav, #nav-container {
   display: flex;
 }
 
@@ -221,7 +225,7 @@ footer {
   justify-content: space-between;
 }
 
-#nav-container, header, nav {
+header, nav, #nav-container {
   align-items: center;
 }
 
