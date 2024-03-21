@@ -36,6 +36,20 @@ body {
   opacity: 0.8;
 }
 
+#user-operations > * {
+  padding-bottom: 44px;
+  background-color: #FFFFFF;
+}
+
+#user-operations > * > * {
+  margin: 10px;
+}
+
+#user-operations input {
+  height: 50px;
+  padding-left: 15px;
+}
+
 #login-container {
   width: 440px;
 }
@@ -89,20 +103,6 @@ body {
   width: 291px;
 }
 
-#login-container, #register-container {
-  padding-bottom: 44px;
-  background-color: #FFFFFF;
-}
-
-#login-container > *, #register-container > * {
-  margin: 10px;
-}
-
-#login-container input, #register-container input {
-  height: 50px;
-  padding-left: 15px;
-}
-
 /* Font formatting */
 
 body {
@@ -122,14 +122,14 @@ body {
   color: #808080;
 }
 
-#login-container input, #register-container input {
-  font-size: 1rem;
-  font-family: 'Montserrat', sans-serif;
-}
-
-#login-container div, #register-container div {
+#user-operations > * div {
   text-align: center;
   font-weight: bold;
+}
+
+#user-operations input {
+  font-size: 1rem;
+  font-family: 'Montserrat', sans-serif;
 }
 
 /* Border formatting */
@@ -138,21 +138,21 @@ body {
   border-radius: 1rem;
 }
 
-#secondary-button {
-  border: 3px solid transparent;
-}
-
-#login-container, #register-container {
+#user-operations > * {
   border-radius: 1rem;
 }
 
-#login-container input, #register-container input {
+#user-operations > * div {
+  border-radius: 1rem;
+}
+
+#user-operations input {
   border: 1px solid;
   border-radius: 1rem;
 }
 
-#login-container div, #register-container div {
-  border-radius: 1rem;
+#secondary-button {
+  border: 3px solid transparent;
 }
 
 /* Positioning */
@@ -163,7 +163,11 @@ body {
   left: 0;
 }
 
-#login-container, #register-container {
+#user-operations {
+  position: fixed;
+}
+
+#user-operations > * {
   position: fixed;
   top: 50%;
   left: 50%;
@@ -172,20 +176,20 @@ body {
 
 /* Display */
 
-#shade-container {
-  display: none;
-}
-
 #nav-container, header, nav {
   display: flex;
 }
 
-#name {
-  display: flex;
+#shade-container {
+  display: none;
 }
 
-#login-container, #register-container {
+#user-operations > * {
   display: none;
+}
+
+#name {
+  display: flex;
 }
 
 /* Flexbox formatting */
@@ -198,17 +202,17 @@ body {
   align-items: center;
 }
 
-#name {
-  justify-content: space-between;
-}
-
-#login-container, #register-container {
+#user-operations > * {
   flex-direction: column;
   align-items: center;
 }
 
-#login-container svg, #register-container svg {
+#user-operations svg {
   align-self: flex-start;
+}
+
+#name {
+  justify-content: space-between;
 }
 
 /* Canvas formatting */
