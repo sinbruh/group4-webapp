@@ -9,20 +9,20 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="../static/base-style.css"/>
-    <link rel="stylesheet" href="../static/style.css"/>
+    <link rel="stylesheet" th:href="@{/css/base-style.css}"/>
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
 </head>
 
 <body>
     <div id="nav-container">
       <header>
-        <img src="../../../../img/temp-logo.png" alt="Temporary logo" width="78" height="88"/>
+        <img th:src="@{/img/temp-logo.png}" alt="Temporary logo" width="78" height="88"/>
         <h1>Rental Roulette</h1>
       </header>
       <nav>
-        <p><b><a href="index.html">Home</a></b></p>
-        <p><b><a href="about.html">About</a></b></p>
-        <p><b><a href="contact.html">Contact</a></b></p>
+        <p><b><a href="/">Home</a></b></p>
+        <p><b><a href="/about">About</a></b></p>
+        <p><b><a href="/contact">Contact</a></b></p>
       </nav>
       <!-- User icon -->
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#000000" class="w-6 h-6" width="60" height="60">

@@ -2,80 +2,83 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
+    <meta charset="UTF-8"/>
     <title>Rental Roulette</title>
-    
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+          rel="stylesheet">
 
-    <link rel="stylesheet" href="../static/base-style.css" />
-    <link rel="stylesheet" href="../static/search-style.css" />
+    <link rel="stylesheet" th:href="@{/css/base-style.css}"/>
+    <link rel="stylesheet" th:href="@{/css/search-style.css}"/>
 </head>
 
 <body>
-    <div id="nav-container">
-        <header>
-            <img src="../../../../img/temp-logo.png" alt="Temporary logo" width="78" height="88" />
-            <h1>Rental Roulette</h1>
-        </header>
-        <nav>
-            <p><b><a href="index.html">Home</a></b></p>
-            <p><b><a href="about.html">About</a></b></p>
-            <p><b><a href="contact.html">Contact</a></b></p>
-        </nav>
-        <!-- User icon -->
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#000000"
-            class="w-6 h-6" width="60" height="60">
-            <path stroke-linecap="round" stroke-linejoin="round"
-                d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-        </svg>
-    </div>
-    <section id="breadcrumb">
-        <p><a href="index.html">Home</a> > <a href="search.html">Search</a></p>
-    </section>
-    <section id="filter">
-        <label>Location:</label>
-        <input type="text" name="location" list="locations" />
-        <datalist id="locations">
-            <option>Ålesund</option>
-        </datalist>
-        <label>From:</label>
-        <input type="date" name="fromDate" />
-        <label>To:</label>
-        <input type="date" name="toDate" />
-        <label>Min Price:</label>
-        <input type="range" id="fromPrice" name="fromPrice" value="0" min="0" max="1000" oninput="updateValue('fromPrice', 'fromPriceValue')" />
-        <span id="fromPriceValue">0</span>
-        <p class="nokPerDay"><b>NOK/day </b></p>
-        <label>Max Price:</label>
-        <input type="range" id="toPrice" name="toPrice" value="1000" min="0" max="1000" oninput="updateValue('toPrice', 'toPriceValue')" />
-        <span id="toPriceValue">1000</span>
-        <p class="nokPerDay"><b>NOK/day</b></p>
+<div id="nav-container">
+    <header>
+        <img th:src="@{/img/temp-logo.png}" alt="Temporary logo" width="78" height="88"/>
+        <h1>Rental Roulette</h1>
+    </header>
+    <nav>
+        <p><b><a href="/">Home</a></b></p>
+        <p><b><a href="/about">About</a></b></p>
+        <p><b><a href="/contact">Contact</a></b></p>
+    </nav>
+    <!-- User icon -->
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#000000"
+         class="w-6 h-6" width="60" height="60">
+        <path stroke-linecap="round" stroke-linejoin="round"
+              d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
+    </svg>
+</div>
+<section id="breadcrumb">
+    <p><a href="index.html">Home</a> > <a href="search.html">Search</a></p>
+</section>
+<section id="filter">
+    <label>Location:</label>
+    <input type="text" name="location" list="locations"/>
+    <datalist id="locations">
+        <option>Ålesund</option>
+    </datalist>
+    <label>From:</label>
+    <input type="date" name="fromDate"/>
+    <label>To:</label>
+    <input type="date" name="toDate"/>
+    <label>Min Price:</label>
+    <input type="range" id="fromPrice" name="fromPrice" value="0" min="0" max="1000"
+           oninput="updateValue('fromPrice', 'fromPriceValue')"/>
+    <span id="fromPriceValue">0</span>
+    <p class="nokPerDay"><b>NOK/day </b></p>
+    <label>Max Price:</label>
+    <input type="range" id="toPrice" name="toPrice" value="1000" min="0" max="1000"
+           oninput="updateValue('toPrice', 'toPriceValue')"/>
+    <span id="toPriceValue">1000</span>
+    <p class="nokPerDay"><b>NOK/day</b></p>
 
-<script>
-function updateValue(sliderID, outputID) {
-    var fromPrice = document.getElementById('fromPrice');
-    var toPrice = document.getElementById('toPrice');
-    var fromPriceValue = document.getElementById('fromPriceValue');
-    var toPriceValue = document.getElementById('toPriceValue');
+    <script>
+        function updateValue(sliderID, outputID) {
+            var fromPrice = document.getElementById('fromPrice');
+            var toPrice = document.getElementById('toPrice');
+            var fromPriceValue = document.getElementById('fromPriceValue');
+            var toPriceValue = document.getElementById('toPriceValue');
 
-    if (sliderID === 'fromPrice' && parseInt(fromPrice.value) > parseInt(toPrice.value)) {
-        toPrice.value = fromPrice.value;
-    } else if (sliderID === 'toPrice' && parseInt(toPrice.value) < parseInt(fromPrice.value)) {
-        fromPrice.value = toPrice.value;
-    }
+            if (sliderID === 'fromPrice' && parseInt(fromPrice.value) > parseInt(toPrice.value)) {
+                toPrice.value = fromPrice.value;
+            } else if (sliderID === 'toPrice' && parseInt(toPrice.value) < parseInt(fromPrice.value)) {
+                fromPrice.value = toPrice.value;
+            }
 
-    fromPriceValue.innerText = fromPrice.value;
-    toPriceValue.innerText = toPrice.value;
-}
+            fromPriceValue.innerText = fromPrice.value;
+            toPriceValue.innerText = toPrice.value;
+        }
 
-</script>
-    </section>
-    <section id="hero">
+    </script>
+</section>
+<section id="hero">
     <section id="cards">
         <div class="card" id="mercedez">
-            <img src="../../../../img/car.png" alt="car img" width="300" height="200" />
+            <img src="../static/img/car.png" alt="car img" width="300" height="200"/>
             <div class="card-info">
                 <h2>mercedez</h2>
                 <p>Price: 500 NOK/day</p>
@@ -83,7 +86,7 @@ function updateValue(sliderID, outputID) {
             </div>
         </div>
         <div class="card" id="bmw">
-            <img src="../../../../img/car.png" alt="car img" width="300" height="200" />
+            <img src="../static/img/car.png" alt="car img" width="300" height="200"/>
             <div class="card-info">
                 <h2>bmw</h2>
                 <p>Price: 500 NOK/day</p>
@@ -91,7 +94,7 @@ function updateValue(sliderID, outputID) {
             </div>
         </div>
         <div class="card" id="audi">
-            <img src="../../../../img/car.png" alt="car img" width="300" height="200" />
+            <img src="../static/img/car.png" alt="car img" width="300" height="200"/>
             <div class="card-info">
                 <h2>audi</h2>
                 <p>Price: 500 NOK/day</p>
@@ -99,7 +102,7 @@ function updateValue(sliderID, outputID) {
             </div>
         </div>
         <div class="card" id="audi">
-            <img src="../../../../img/car.png" alt="car img" width="300" height="200" />
+            <img src="../static/img/car.png" alt="car img" width="300" height="200"/>
             <div class="card-info">
                 <h2>audi</h2>
                 <p>Price: 500 NOK/day</p>
@@ -107,16 +110,14 @@ function updateValue(sliderID, outputID) {
             </div>
         </div>
 
-       
 
-        
-        //              !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!    
+        // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         //script removes the cards and adds the card from Cars.json instead
-        <script src="jsonCarReader.js"></script>
+        <script th:src="@{/js/jsonCarReader.js}"></script>
 
     </section>
     <div class="expandedCard" id="expandedCard">
-        <img src="../../../../img/car.png" alt="car img" width="300" height="200" />
+        <img src="../static/img/car.png" alt="car img" width="300" height="200"/>
         <div class="card-info">
             <h2>mercedez</h2>
             <p>Price: 500 NOK/day</p>
@@ -128,19 +129,19 @@ function updateValue(sliderID, outputID) {
             <button>Book</button>
         </div>
     </div>
-    </section>
-    <footer>
-        <hr />
-        <p>
-            <em>
-                This website is a result of a university group project, performed in the course
-                <a href="https://www.ntnu.edu/studies/courses/IDATA2301#tab=omEmnet">IDATA2301 Web<br />
-                    Technologies</a>, at <a href="https://www.ntnu.edu/">NTNU</a>. All the information
-                provided here is a result of imagination. Any<br />resemblance with real companies or
-                products is a coincidence.
-            </em>
-        </p>
-    </footer>
+</section>
+<footer>
+    <hr/>
+    <p>
+        <em>
+            This website is a result of a university group project, performed in the course
+            <a href="https://www.ntnu.edu/studies/courses/IDATA2301#tab=omEmnet">IDATA2301 Web<br/>
+                Technologies</a>, at <a href="https://www.ntnu.edu/">NTNU</a>. All the information
+            provided here is a result of imagination. Any<br/>resemblance with real companies or
+            products is a coincidence.
+        </em>
+    </p>
+</footer>
 </body>
 
 </html>
