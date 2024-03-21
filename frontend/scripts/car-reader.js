@@ -1,4 +1,3 @@
-
 function fetchAndCreateCards() {
 fetch('cars.json')
     .then(response => response.json())
@@ -96,6 +95,3 @@ function createCardInfoElement(car) {
 
     return cardInfo;
 }
-
- 
-
