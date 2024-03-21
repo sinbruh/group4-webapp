@@ -1,8 +1,9 @@
-package no.ntnu.group4.webapp.repositories;
+package no.ntnu.project.group4.webapp.repositories;
 
-import no.ntnu.group4.webapp.model.Rental;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
+
+import no.ntnu.project.group4.webapp.model.Rental;
 
 @Repository
 public interface RentalRepository extends CrudRepository<Rental, Integer> {

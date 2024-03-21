@@ -1,8 +1,9 @@
-package no.ntnu.group4.webapp.repositories;
+package no.ntnu.project.group4.webapp.repositories;
 
-import no.ntnu.group4.webapp.model.Car;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
+
+import no.ntnu.project.group4.webapp.model.Car;
 
 /**
  * Repository interface for SQL access to our database table.

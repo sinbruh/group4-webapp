@@ -1,11 +1,12 @@
-package no.ntnu.group4.webapp.service;
+package no.ntnu.project.group4.webapp.service;
 
 import java.util.Optional;
 
-import no.ntnu.group4.webapp.model.Rental;
-import no.ntnu.group4.webapp.repositories.RentalRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import no.ntnu.project.group4.webapp.model.Rental;
+import no.ntnu.project.group4.webapp.repositories.RentalRepository;
 
 @Service
 public class RentalService {
