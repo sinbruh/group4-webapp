@@ -1,5 +1,5 @@
 function fetchAndCreateCards() {
-fetch('cars.json')
+fetch('../backend/cars.json')
     .then(response => response.json())
     .then(data => {
         //removes prior cards and expanded cards
