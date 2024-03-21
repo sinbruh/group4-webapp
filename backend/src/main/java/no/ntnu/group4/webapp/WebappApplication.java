@@ -1,4 +1,4 @@
-package no.ntnu.group4.webapp;
+package src.main.java.no.ntnu.group4.webapp;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

@@ -1,7 +1,7 @@
-package no.ntnu.group4.webapp.controllers;
+package src.main.java.no.ntnu.group4.webapp.controllers;
 
-import no.ntnu.group4.webapp.model.Rental;
-import no.ntnu.group4.webapp.service.RentalService;
+import src.main.java.no.ntnu.group4.webapp.model.Rental;
+import src.main.java.no.ntnu.group4.webapp.service.RentalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
