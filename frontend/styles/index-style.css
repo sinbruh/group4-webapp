@@ -1,32 +1,13 @@
-body {
-  display: flex;
-  flex-direction: column;
+/* Element styling */
 
+body {
   background-image: url("../img/temp-background-image.jpg");
   background-size: 100%;
-}
-
-section {
-  flex-grow: 1;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 section input {
   height: 50px;
   margin: 2px;
-
-  font-size: 1.5rem;
-  font-family: 'Montserrat', sans-serif;
-
-  border: none;
-  border-radius: 0.5rem;
-}
-
-h2 {
-  font-size: 2rem;
 }
 
 .dateField {
@@ -34,9 +15,6 @@ h2 {
 }
 
 #main-container {
-  display: flex;
-  flex-direction: column;
-
   height: 100vh;
 }
 
@@ -45,29 +23,86 @@ h2 {
 }
 
 #side-container {
-  flex: 1 0 100%;
-
   margin: 0;
   background-color: #FFFFFF;
+}
+
+#icon {
+  width: 50px;
+  height: 50px;
+  margin: 2px;
+  background-image: linear-gradient(to right, #45B649, #DCE35B);
+}
+
+#icon:hover {
+  background-image: linear-gradient(to right, #3EA442, #C6CC52);
+}
+
+/* Font styling */
+
+section input {
+  font-size: 1.5rem;
+  font-family: 'Montserrat', sans-serif;
+}
+
+h2 {
+  font-size: 2rem;
 }
 
 #side-container div {
   text-align: center;
 }
 
-#icon {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+/* Border styling */
 
-  width: 50px;
-  height: 50px;
-  margin: 2px;
-  background-image: linear-gradient(to right, #45B649, #DCE35B);
-
+section input {
+  border: none;
   border-radius: 0.5rem;
 }
 
-#icon:hover {
-  background-image: linear-gradient(to right, #3EA442, #C6CC52);
+#icon {
+  border-radius: 0.5rem;
+}
+
+/* Display */
+
+body {
+  display: flex;
+}
+
+section {
+  display: flex;
+}
+
+#main-container {
+  display: flex;
+}
+
+#icon {
+  display: flex;
+}
+
+/* Flexbox styling */
+
+body {
+  flex-direction: column;
+}
+
+section {
+  flex-grow: 1;
+  justify-content: center;
+  align-items: center;
+}
+
+#main-container {
+  flex-direction: column;
+}
+
+#side-container {
+  flex: 1 0 100%;
+}
+
+#icon {
+  justify-content: center;
+  align-items: center;
 }
