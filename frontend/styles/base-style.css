@@ -4,6 +4,15 @@ body {
   margin: 0;
 }
 
+footer {
+  padding: 20px;
+  background-color: #00509E;
+}
+
+footer p {
+  margin-bottom: 0;
+}
+
 .primary-button {
   background-image: linear-gradient(to right, #45B649, #DCE35B);
 }
@@ -109,6 +118,11 @@ body {
   font-family: "Montserrat", sans-serif;
 }
 
+footer {
+  text-align: center;
+  color: #FFFFFF;
+}
+
 .primary-button {
   color: #FFFFFF;
 }
@@ -176,6 +190,10 @@ body {
 
 /* Display */
 
+footer {
+  display: flex;
+}
+
 #nav-container, header, nav {
   display: flex;
 }
@@ -193,6 +211,11 @@ body {
 }
 
 /* Flexbox formatting */
+
+footer {
+  flex-direction: column;
+  align-items: center;
+}
 
 #nav-container {
   justify-content: space-between;
