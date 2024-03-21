@@ -1,9 +1,10 @@
-package no.ntnu.group4.webapp;
+package no.ntnu.group4.webapp.model;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import no.ntnu.group4.webapp.model.Rental;
 
 import java.sql.Date;
 import java.util.Set;

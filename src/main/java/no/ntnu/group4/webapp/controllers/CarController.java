@@ -1,6 +1,9 @@
-package no.ntnu.group4.webapp;
+package no.ntnu.group4.webapp.controllers;
 
 import java.util.Optional;
+
+import no.ntnu.group4.webapp.model.Car;
+import no.ntnu.group4.webapp.service.CarService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

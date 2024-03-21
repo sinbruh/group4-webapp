@@ -1,4 +1,4 @@
-package no.ntnu.group4.webapp;
+package no.ntnu.group4.webapp.model;
 
 import java.sql.Date;
 
