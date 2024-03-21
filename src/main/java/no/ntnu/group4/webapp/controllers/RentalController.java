@@ -27,4 +27,26 @@ public class RentalController {
         response = rental.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
         return response;
     }
+
+    @PostMapping()
+    public ResponseEntity<Rental> addRental(@RequestBody Rental rental) {
+        ResponseEntity<Rental> response;
+        try {
+            int rentalId = rentalService.add(rental);
+            response = ResponseEntity.ok().build();
+        } catch (IllegalArgumentException e) {
+            response = ResponseEntity.badRequest().build();
+        }
+        return response;
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteRental(@PathVariable int id) {
+        boolean wasDeleted = rentalService.delete(id);
+        if (wasDeleted) {
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 }
