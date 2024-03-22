@@ -8,6 +8,8 @@ let secondaryButton = document.getElementById("secondary-button");
 let userIcon = document.getElementById("user-icon");
 
 // Get necessary elements from DOM by class
+let fields = document.getElementsByClassName("field");
+
 let exitIcons = document.getElementsByClassName("exit-icon");
 
 // Add event listeners to elements gathered from DOM by id
@@ -24,6 +26,10 @@ for (let i = 0; i < exitIcons.length; i++) {
 
 // Define functions
 function enterLogin() {
+  for (let i = 0; i < fields.length; i++) {
+    fields[i].style.position = "static";
+  }
+
   shadeContainer.style.display = "block";
   loginContainer.style.display = "flex";
 }
@@ -34,6 +40,10 @@ function enterRegister() {
 }
 
 function exit() {
+  for (let i = 0; i < fields.length; i++) {
+    fields[i].style.position = "relative";
+  }
+
   shadeContainer.style.display = "none";
   loginContainer.style.display = "none";
   registerContainer.style.display = "none";
