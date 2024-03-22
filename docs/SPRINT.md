@@ -11,14 +11,8 @@ Deadline: 15.02.2024
 
 ### Goals
 
-The goals of this sprint is to (1) fill in the conceptual phase of the design guideline, (2) make
-the first version of the wireframes and (3) make a document for sprint reports.
-
-Issues related to the goals:
-
-1. Fill in conceptual phase in design guideline
-2. Create first version of wireframes
-3. Create document for sprint reports
+The goals of this sprint is to fill in the conceptual phase of the design guideline, make the first
+version of the wireframes and make a document for sprint reports.
 
 ### Work distribution
 
@@ -42,15 +36,8 @@ Deadline: 20.02.2024
 
 ### Goals
 
-The goals of this sprint is to (1) create the use-case diagram, (2) create the database schema, (3)
-continue working on the wireframes and (4) create the HTML skeleton for the project.
-
-Issues related to the goals:
-
-1. Create use-case diagram
-2. Create database schema
-3. Continue working on wireframes
-4. Create HTML skeleton
+The goals of this sprint is to create the use-case diagram, create the database schema, continue
+working on the wireframes and (4) create the HTML skeleton for the project.
 
 ### Work distribution
 
@@ -84,25 +71,9 @@ Deadline: 21.03.2024
 
 ### Goals
 
-The goals of this sprint is to (1) complete the static pages of the website, (2) make wireframes
-for responsive versions of the website, (3) create entity classes for the website and (4) create an
-SQL database according to the entity classes.
-
-Issues related to the goals:
-
-1. Complete static pages
-    1. Add login pop-up for all pages
-    2. Add register pop-up for all pages
-    3. Add hover colors and gradients
-    4. Add container for all login operations for all pages
-2. Create wireframes for responsive versions of website
-    1. Create mobile wireframes
-    2. Create tablet wireframes
-3. Add entity classes
-    1. Add User entity class
-    2. Add Rental entity class
-    3. Add Car entity class
-4. Create SQL database
+The goals of this sprint is to complete the static pages of the website, make wireframes for
+responsive versions of the website, create entity classes for the website and create an SQL
+database according to the entity classes.
 
 ### Work distribution
 
