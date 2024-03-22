@@ -1,4 +1,4 @@
-CREATE TABLE `users` (
+CREATE TABLE `user` (
   `user_id` int PRIMARY KEY AUTO_INCREMENT,
   `first_name` varchar(255) NOT NULL,
   `last_name` varchar(255) NOT NULL,
@@ -9,7 +9,7 @@ CREATE TABLE `users` (
   `admin` boolean DEFAULT false
 );
 
-CREATE TABLE `cars` (
+CREATE TABLE `car` (
   `car_id` int PRIMARY KEY AUTO_INCREMENT,
   `model_id` int NOT NULL,
   `location` ENUM ('Ålesund') NOT NULL,
@@ -29,7 +29,7 @@ CREATE TABLE `car_model` (
   `carModel` varchar(255) NOT NULL
 );
 
-CREATE TABLE `rentals` (
+CREATE TABLE `rental` (
   `rent_id` int PRIMARY KEY NOT NULL AUTO_INCREMENT,
   `user_id` int NOT NULL,
   `car_id` int NOT NULL,
@@ -38,8 +38,8 @@ CREATE TABLE `rentals` (
   `total_price` int NOT NULL
 );
 
-ALTER TABLE `cars` ADD FOREIGN KEY (`model_id`) REFERENCES `car_model` (`model_id`);
+ALTER TABLE `car` ADD FOREIGN KEY (`model_id`) REFERENCES `car_model` (`model_id`);
 
-ALTER TABLE `rentals` ADD FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`);
+ALTER TABLE `rental` ADD FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`);
 
-ALTER TABLE `rentals` ADD FOREIGN KEY (`car_id`) REFERENCES `cars` (`car_id`);
+ALTER TABLE `rental` ADD FOREIGN KEY (`car_id`) REFERENCES `car` (`car_id`);

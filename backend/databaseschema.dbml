@@ -26,7 +26,7 @@ Enum transmission {
   Automatic
 }
 
-Table users {
+Table user {
   user_id int [pk, increment]
   first_name varchar [not null]
   last_name varchar [not null]
@@ -37,7 +37,7 @@ Table users {
   admin boolean [default: false]
 }
 
-Table cars {
+Table car {
   car_id int [pk, increment]
   model_id int [ref: > car_model.model_id, not null]
   location location [not null]
@@ -57,10 +57,10 @@ Table car_model {
   carModel varchar [not null]
 }
 
-Table rentals {
+Table rental {
   rent_id int [pk, increment, not null]
-  user_id int [ref: > users.user_id, not null]
-  car_id int [ref: > cars.car_id, not null]
+  user_id int [ref: > user.user_id, not null]
+  car_id int [ref: > car.car_id, not null]
   start_date Date [not null]
   end_date Date [not null]
   total_price int [not null]
