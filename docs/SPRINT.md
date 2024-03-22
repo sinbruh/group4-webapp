@@ -26,6 +26,8 @@ guideline was filled in, the first version of the wireframes was made, as well a
 sprint reports. Even though the conceptual phase of the design guideline was filled in, the group
 expects to update it later on in the project.
 
+### Retrospective
+
 The group decided the only point of improvement for the next sprint is to work more consistently.
 
 ## Week 7
@@ -37,7 +39,7 @@ Deadline: 20.02.2024
 ### Goals
 
 The goals of this sprint is to create the use-case diagram, create the database schema, continue
-working on the wireframes and (4) create the HTML skeleton for the project.
+working on the wireframes and create the HTML skeleton for the project.
 
 ### Work distribution
 
@@ -58,6 +60,8 @@ schema was created, the work on the wireframes was continued, and the HTML skele
 was created. None of the things worked on in the sprint is considered done, meaning the group
 expects to work more on these things throughout the project. E.g. even though the use-case diagram
 and database schema was created in the sprint, these expected to be worked more on in the project.
+
+### Retrospective
 
 The group thinks the point of improvement for the next sprint is to work more dynamically, meaning
 that even though group members might have different responsibilities in the sprint, each member
@@ -90,4 +94,19 @@ the goals of the sprint.
 
 ### Accomplishments
 
-TBD
+All the goals set by the group for this sprint was accomplished to some degree; the static pages of
+the website were completed except for the search page, wireframes for responsive versions of the
+website were made for mobile versions, entity classes for the website were created, and an SQL
+database was created according to the entity classes. The static pages of the website and the
+wireframes for responsive versions are not considered done, meaning the group expects to work more
+on these things throughout the project.
+
+### Retrospective
+
+The group has gotten better at working more dynamically since the last sprint, but still feels like
+this is a point of improvement for the next sprint. Even though group members might have different
+responsibilities in the sprint, each member should actively contribute to each responsibility.
+
+The group had a checkpoint meeting at the end of this sprint. The feedback the group got from the
+lecturers was that the database should not contain array values. Instead, separate tables should be
+made to set the relation between many values.
