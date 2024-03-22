@@ -14,6 +14,10 @@ section input {
   width: 15%;
 }
 
+.timeField {
+  width: 5%;
+}
+
 #main-container {
   height: 100vh;
 }
