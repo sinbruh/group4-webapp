@@ -15,7 +15,7 @@ import no.ntnu.project.group4.webapp.models.Car;
 import no.ntnu.project.group4.webapp.services.CarService;
 
 @RestController
-@RequestMapping("/cars")
+@RequestMapping("/api/cars")
 public class CarController {
   @Autowired
   private CarService carService;
@@ -25,7 +25,7 @@ public class CarController {
     return carService.getAll();
   }
 
-  @GetMapping("/{id}")
+  @GetMapping("/api/cars/{id}")
   public ResponseEntity<Car> getOne(@PathVariable int id) {
     ResponseEntity<Car> response;
     Optional<Car> car = carService.findById(id);
@@ -37,7 +37,7 @@ public class CarController {
     return response;
   }
 
-  @DeleteMapping("/{id}")
+  @DeleteMapping("/api/cars/{id}")
   public HttpStatus deleteOne(@PathVariable int id) {
     HttpStatus response;
     Optional<Car> car = carService.findById(id);
