@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @CrossOrigin
 @RestController
+@RequestMapping("/api")
 public class AuthenticationController {
   @Autowired
   private AuthenticationManager authenticationManager;
@@ -32,7 +34,7 @@ public class AuthenticationController {
    * @param authenticationRequest The request JSON object containing username and password
    * @return OK + JWT token; Or UNAUTHORIZED
    */
-  @PostMapping("/api/authenticate")
+  @PostMapping("/authenticate")
   public ResponseEntity<?> authenticate(@RequestBody AuthenticationRequest authenticationRequest) {
     try {
       authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
@@ -54,7 +56,7 @@ public class AuthenticationController {
    *
    * @return Name of the template for the result page
    */
-  @PostMapping("/api/signup")
+  @PostMapping("/register")
   public ResponseEntity<String> signupProcess(@RequestBody SignupDto signupData) {
     ResponseEntity<String> response;
     try {

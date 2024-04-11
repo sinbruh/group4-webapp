@@ -18,7 +18,7 @@ import java.util.Optional;
 
 @CrossOrigin
 @RestController
-@RequestMapping ("/api/rentals")
+@RequestMapping("/api/rentals")
 public class RentalController {
     @Autowired
     private RentalService rentalService;
