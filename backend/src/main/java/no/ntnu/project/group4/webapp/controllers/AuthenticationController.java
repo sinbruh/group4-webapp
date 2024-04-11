@@ -18,6 +18,7 @@ import no.ntnu.project.group4.webapp.dto.AuthenticationRequest;
 import no.ntnu.project.group4.webapp.dto.AuthenticationResponse;
 import no.ntnu.project.group4.webapp.dto.RegisterDto;
 import no.ntnu.project.group4.webapp.security.JwtUtil;
+import no.ntnu.project.group4.webapp.services.AccessUserService;
 
 /**
  * Controller responsible for authentication.
@@ -49,7 +50,7 @@ public class AuthenticationController {
     } catch (BadCredentialsException e) {
       return new ResponseEntity<>("Invalid email or password", HttpStatus.UNAUTHORIZED);
     }
-    final UserDetails userDetails = userService.loadUserByEmail(
+    final UserDetails userDetails = userService.loadUserByUsername(
       authenticationRequest.getEmail()
     );
     final String jwt = jwtUtil.generateToken(userDetails);
@@ -65,8 +66,9 @@ public class AuthenticationController {
   public ResponseEntity<String> registerProcess(@RequestBody RegisterDto registerData) {
     ResponseEntity<String> response;
     try {
-      // TODO Change parameters in method call
-      userService.tryCreateNewUser(registerData.getEmail(), registerData.getPassword());
+      userService.tryCreateNewUser(registerData.getFirstName(), registerData.getLastName(),
+                                   registerData.getEmail(), registerData.getPhoneNumber(),
+                                   registerData.getPassword(), registerData.getDateOfBirth());
       response = new ResponseEntity<>(HttpStatus.OK);
     } catch (IOException e) {
       response = new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);

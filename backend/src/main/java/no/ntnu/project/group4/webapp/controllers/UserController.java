@@ -13,16 +13,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import no.ntnu.project.group4.webapp.dto.UserDto;
 import no.ntnu.project.group4.webapp.models.User;
-import no.ntnu.project.group4.webapp.services.UserService;
-
-import java.util.Optional;
+import no.ntnu.project.group4.webapp.services.AccessUserService;
 
 @CrossOrigin
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
   @Autowired
-  private AcessUserService userService;
+  private AccessUserService userService;
 
   /**
    * Returns user information.

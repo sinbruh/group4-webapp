@@ -143,13 +143,13 @@ public class AccessUserService implements UserDetailsService {
   }
 
   /**
-   * Updates profile information for a user.
+   * Updates user information.
    *
    * @param user User to update
    * @param profileData Profile data to set for the user
    * @return True on success or false otherwise
    */
-  public boolean updateProfile(User user, UserDto userData) {
+  public boolean updateUser(User user, UserDto userData) {
     user.setFirstName(userData.getFirstName());
     user.setLastName(userData.getLastName());
     user.setEmail(userData.getEmail());
