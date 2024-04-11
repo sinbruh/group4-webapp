@@ -28,7 +28,7 @@ public class UserService {
    * @param id The given ID
    * @return A user with the given ID regardless of if it exists or not
    */
-  public Optional<User> getOne(int id) {
+  public Optional<User> getOne(Long id) {
     return this.userRepository.findById(id);
   }
 
@@ -39,7 +39,7 @@ public class UserService {
    * @return The ID of the given user
    * @throws IllegalArgumentException If the given user is invalid
    */
-  public int add(User user) {
+  public Long add(User user) {
     if (!user.isValid()) {
       throw new IllegalArgumentException("User is invalid");
     }
@@ -53,7 +53,7 @@ public class UserService {
    * @param id The given ID
    * @return True if the user was found and thus deleted or false otherwise
    */
-  public boolean delete(int id) {
+  public boolean delete(Long id) {
     Optional<User> user = this.userRepository.findById(id);
     if (user.isPresent()) {
       this.userRepository.deleteById(id);
@@ -69,7 +69,7 @@ public class UserService {
    * @throws IllegalArgumentException If the current user is not found or the updated user metadata
    *                                  has an ID mismatch or is invalid
    */
-  public void update(int id, User user) {
+  public void update(Long id, User user) {
     Optional<User> currentUser = this.userRepository.findById(id);
     if (!currentUser.isPresent()) {
       throw new IllegalArgumentException("User not found");

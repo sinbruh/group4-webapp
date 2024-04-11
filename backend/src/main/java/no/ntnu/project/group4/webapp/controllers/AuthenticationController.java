@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import no.ntnu.project.group4.webapp.dto.AuthenticationRequest;
 import no.ntnu.project.group4.webapp.dto.AuthenticationResponse;
 import no.ntnu.project.group4.webapp.dto.RegisterDto;
+import no.ntnu.project.group4.webapp.security.JwtUtil;
 
 /**
  * Controller responsible for authentication.

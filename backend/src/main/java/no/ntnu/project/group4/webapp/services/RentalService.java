@@ -28,7 +28,7 @@ public class RentalService {
    * @param id The given ID
    * @return A rental with the given ID regardless of if it exists or not
    */
-  public Optional<Rental> getOne(int id) {
+  public Optional<Rental> getOne(Long id) {
     return this.rentalRepository.findById(id);
   }
 
@@ -39,7 +39,7 @@ public class RentalService {
    * @return The ID of the given rental
    * @throws IllegalArgumentException If the given rental is invalid
    */
-  public int add(Rental rental) {
+  public Long add(Rental rental) {
     if (!rental.isValid()) {
       throw new IllegalArgumentException("Rental is invalid");
     }
@@ -53,7 +53,7 @@ public class RentalService {
    * @param id The given ID
    * @return True if the rental was found and thus deleted or false otherwise
    */
-  public boolean delete(int id) {
+  public boolean delete(Long id) {
     Optional<Rental> rental = this.rentalRepository.findById(id);
     if (rental.isPresent()) {
       this.rentalRepository.deleteById(id);
@@ -69,7 +69,7 @@ public class RentalService {
    * @throws IllegalArgumentException If the current rental is not found or the updated rental
    *                                  metadata has an ID mismatch or is invalid
    */
-  public void update(int id, Rental rental) {
+  public void update(Long id, Rental rental) {
     Optional<Rental> currentRental = this.rentalRepository.findById(id);
     if (!currentRental.isPresent()) {
       throw new IllegalArgumentException("Rental not found");

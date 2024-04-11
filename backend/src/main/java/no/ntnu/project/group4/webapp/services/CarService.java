@@ -13,7 +13,7 @@ public class CarService {
   @Autowired
   private CarRepository carRepository;
 
-  public int addCar(Car car) {
+  public Long addCar(Car car) {
     if (!car.isValid()) {
       throw new IllegalArgumentException("Car is invalid");
     }
@@ -33,7 +33,7 @@ public class CarService {
    * @param id ID of the car to find
    * @return True if the car was found and False otherwise.
    */
-  public Optional<Car> findById(int id) {
+  public Optional<Car> findById(Long id) {
     return carRepository.findById(id);
   }
 
@@ -42,7 +42,7 @@ public class CarService {
    * @param id ID of the car
    * @return True if the car was found and got deleted. False otherwise.
    */
-  public boolean delete(int id) {
+  public boolean delete(Long id) {
     Optional<Car> car = carRepository.findById(id);
     if (car.isPresent()) {
       carRepository.deleteById(id);
@@ -57,7 +57,7 @@ public class CarService {
    * @throws IllegalArgumentException If something goes wrong.
    *                                  Error message can be used in HTTP response.
    */
-  public void update(int id, Car car) throws IllegalArgumentException {
+  public void update(Long id, Car car) throws IllegalArgumentException {
     Optional<Car> existingCar = carRepository.findById(id);
     if (existingCar.isEmpty()) {
       throw new IllegalArgumentException("Car not found");
