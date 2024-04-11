@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 import no.ntnu.project.group4.webapp.models.Rental;
 
 @Repository
-public interface RentalRepository extends CrudRepository<Rental, Integer> {
+public interface RentalRepository extends CrudRepository<Rental, Long> {
 }
