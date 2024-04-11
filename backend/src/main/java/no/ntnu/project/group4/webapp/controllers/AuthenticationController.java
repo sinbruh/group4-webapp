@@ -31,36 +31,37 @@ public class AuthenticationController {
   /**
    * HTTP POST request to /authenticate.
    *
-   * @param authenticationRequest The request JSON object containing username and password
-   * @return OK + JWT token; Or UNAUTHORIZED
+   * @param authenticationRequest The request JSON object containing email and password
+   * @return OK + JWT token or UNAUTHORIZED
    */
   @PostMapping("/authenticate")
   public ResponseEntity<?> authenticate(@RequestBody AuthenticationRequest authenticationRequest) {
     try {
       authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
-        authenticationRequest.getUsername(),
+        authenticationRequest.getEmail(),
         authenticationRequest.getPassword())
       );
     } catch (BadCredentialsException e) {
-      return new ResponseEntity<>("Invalid username or password", HttpStatus.UNAUTHORIZED);
+      return new ResponseEntity<>("Invalid email or password", HttpStatus.UNAUTHORIZED);
     }
-    final UserDetails userDetails = userService.loadUserByUsername(
-      authenticationRequest.getUsername()
+    final UserDetails userDetails = userService.loadUserByEmail(
+      authenticationRequest.getEmail()
     );
     final String jwt = jwtUtil.generateToken(userDetails);
     return ResponseEntity.ok(new AuthenticationResponse(jwt));
   }
 
   /**
-   * This method processes data received from the sign-up form (HTTP POST).
+   * This method processes data received from the register form (HTTP POST).
    *
-   * @return Name of the template for the result page
+   * @return OK or BAD REQUEST
    */
   @PostMapping("/register")
-  public ResponseEntity<String> signupProcess(@RequestBody SignupDto signupData) {
+  public ResponseEntity<String> registerProcess(@RequestBody RegisterDto registerData) {
     ResponseEntity<String> response;
     try {
-      userService.tryCreateNewUser(signupData.getUsername(), signupData.getPassword());
+      // TODO Change parameters in method call
+      userService.tryCreateNewUser(registerData.getEmail(), registerData.getPassword());
       response = new ResponseEntity<>(HttpStatus.OK);
     } catch (IOException e) {
       response = new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
