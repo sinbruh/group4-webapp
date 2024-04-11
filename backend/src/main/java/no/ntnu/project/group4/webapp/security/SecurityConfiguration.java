@@ -62,7 +62,7 @@ public class SecurityConfiguration {
         .authorizeHttpRequests((auth) -> auth.requestMatchers("/api/authenticate").permitAll())
         .authorizeHttpRequests((auth) -> auth.requestMatchers("/api/register").permitAll())
         // The following are also available to everyone
-        .authorizeHttpRequests((auth) -> auth.requestMatchers("/api/products").permitAll())
+        .authorizeHttpRequests((auth) -> auth.requestMatchers("/api/cars").permitAll())
         // Allow HTTP OPTIONS requests - CORS pre-flight requests
         .authorizeHttpRequests((auth) -> auth.requestMatchers(HttpMethod.OPTIONS).permitAll())
         // Any other request will be authenticated with a stateless policy
