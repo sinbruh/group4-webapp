@@ -1,11 +1,11 @@
-package no.ntnu.project.group4.webapp.service;
+package no.ntnu.project.group4.webapp.services;
 
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import no.ntnu.project.group4.webapp.model.User;
+import no.ntnu.project.group4.webapp.models.User;
 import no.ntnu.project.group4.webapp.repositories.UserRepository;
 
 @Service

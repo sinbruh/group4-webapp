@@ -1,4 +1,4 @@
-package no.ntnu.project.group4.webapp.model;
+package no.ntnu.project.group4.webapp.models;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

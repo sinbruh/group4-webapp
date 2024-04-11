@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import no.ntnu.project.group4.webapp.model.Car;
-import no.ntnu.project.group4.webapp.service.CarService;
+import no.ntnu.project.group4.webapp.models.Car;
+import no.ntnu.project.group4.webapp.services.CarService;
 
 @RestController
 @RequestMapping("/cars")

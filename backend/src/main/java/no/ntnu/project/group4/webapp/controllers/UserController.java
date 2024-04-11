@@ -4,8 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import no.ntnu.project.group4.webapp.model.User;
-import no.ntnu.project.group4.webapp.service.UserService;
+import no.ntnu.project.group4.webapp.models.User;
+import no.ntnu.project.group4.webapp.services.UserService;
 
 import java.util.Optional;
 
