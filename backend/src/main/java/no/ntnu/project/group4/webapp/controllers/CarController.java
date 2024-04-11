@@ -28,7 +28,7 @@ public class CarController {
   }
 
   @GetMapping("/{id}")
-  public ResponseEntity<Car> getOne(@PathVariable int id) {
+  public ResponseEntity<Car> getOne(@PathVariable Long id) {
     ResponseEntity<Car> response;
     Optional<Car> car = carService.findById(id);
     if (car.isPresent()) {
@@ -40,7 +40,7 @@ public class CarController {
   }
 
   @DeleteMapping("/{id}")
-  public HttpStatus deleteOne(@PathVariable int id) {
+  public HttpStatus deleteOne(@PathVariable Long id) {
     HttpStatus response;
     Optional<Car> car = carService.findById(id);
     if (car.isPresent()) {
