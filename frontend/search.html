@@ -179,6 +179,26 @@ function updateValue(sliderID, outputID) {
       </p>
     </footer>
     <script src="scripts/base-script.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', (event) => {
+        
+        var params = new URLSearchParams(window.location.search);
+    
+       
+        var location = params.get('location');
+        var fromDate = params.get('fromDate');
+        //var fromTime = params.get('fromTime');
+        var toDate = params.get('toDate');
+        //var toTime = params.get('toTime');
+    
+        
+        document.getElementsByName('location')[0].value = location;
+        document.getElementsByName('fromDate')[0].value = fromDate;
+        //document.getElementsByName('fromTime')[0].value = fromTime;
+        document.getElementsByName('toDate')[0].value = toDate;
+        //document.getElementsByName('toTime')[0].value = toTime;
+      });
+    </script>
 </body>
 
 </html>
