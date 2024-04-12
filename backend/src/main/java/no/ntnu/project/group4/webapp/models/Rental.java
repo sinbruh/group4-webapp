@@ -1,4 +1,4 @@
-package no.ntnu.project.group4.webapp.model;
+package no.ntnu.project.group4.webapp.models;
 
 import java.sql.Date;
 
@@ -12,7 +12,7 @@ import jakarta.persistence.ManyToOne;
 public class Rental {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private int id;
+  private Long id;
   @ManyToOne()
   private Car car;
   @ManyToOne()
@@ -23,24 +23,23 @@ public class Rental {
   public Rental() {
   }
 
-  public Rental(int id, Car car, User user, Date startDate, Date endDate) {
-    this.id = id;
+  public Rental(Car car, User user, Date startDate, Date endDate) {
     this.car = car;
     this.user = user;
     this.startDate = startDate;
     this.endDate = endDate;
   }
 
-  public int getId() {
-    return id;
+  public Long getId() {
+    return this.id;
   }
 
-  public void setId(int rental_id) {
-    this.id = rental_id;
+  public void setId(Long id) {
+    this.id = id;
   }
 
   public Car getCar() {
-    return car;
+    return this.car;
   }
 
   public void setCar(Car car) {
@@ -48,7 +47,7 @@ public class Rental {
   }
 
   public User getUser() {
-    return user;
+    return this.user;
   }
 
   public void setUser(User user) {

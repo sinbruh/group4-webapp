@@ -1,4 +1,4 @@
-package no.ntnu.project.group4.webapp.model;
+package no.ntnu.project.group4.webapp.models;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -12,7 +12,7 @@ import java.util.Set;
 public class Car {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private int id;
+  private Long id;
   private String make;
   private String model;
   private int year;
@@ -23,24 +23,23 @@ public class Car {
   public Car() {
   }
 
-  public Car(int id, String make, String model, int year, int price) {
-    this.id = id;
+  public Car(String make, String model, int year, int price) {
     this.make = make;
     this.model = model;
     this.year = year;
     this.price = price;
   }
 
-  public int getId() {
-    return id;
+  public Long getId() {
+    return this.id;
   }
 
-  public void setId(int id) {
+  public void setId(Long id) {
     this.id = id;
   }
 
   public String getMake() {
-    return make;
+    return this.make;
   }
 
   public void setMake(String make) {
@@ -48,7 +47,7 @@ public class Car {
   }
 
   public String getModel() {
-    return model;
+    return this.model;
   }
 
   public void setModel(String model) {
@@ -56,7 +55,7 @@ public class Car {
   }
 
   public int getYear() {
-    return year;
+    return this.year;
   }
 
   public void setYear(int year) {
@@ -64,7 +63,7 @@ public class Car {
   }
 
   public int getPrice() {
-    return price;
+    return this.price;
   }
 
   public void setPrice(int price) {
@@ -72,6 +71,6 @@ public class Car {
   }
 
   public boolean isValid() {
-    return make != null && model != null && year > 0 && price > 0;
+    return this.make != null && this.model != null && this.year > 0 && this.price > 0;
   }
 }

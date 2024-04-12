@@ -110,3 +110,35 @@ responsibilities in the sprint, each member should actively contribute to each r
 The group had a checkpoint meeting at the end of this sprint. The feedback the group got from the
 lecturers was that the database should not contain array values. Instead, separate tables should be
 made to set the relation between many values.
+
+## Week 15
+
+This sprint starts in week 15 and ends in week 16.
+
+Deadline: 19.04.2024
+
+### Goals
+
+The goals of this sprint is to add security to the website, fetch car information from the backend
+and display it on the website and begin implementing React to the project.
+
+### Work distribution
+
+The work is slightly distributed for this sprint, meaning certain group members is responsible to
+reach certain goals of this sprint:
+
+1. Mats is responsible for adding security to the website
+2. Leander is responsible for fetching car information from the backend and displaying it on the
+   website
+3. Mathias and Sindre are responsible for beginning implementing React to the project
+
+Even though group members have different responsibilities, all members should contribute to reaching
+the goals of the sprint.
+
+### Accomplishments
+
+TBD
+
+### Retrospective
+
+TBD
