@@ -52,17 +52,27 @@ public class SecurityConfiguration {
    */
   @Bean
   public SecurityFilterChain configureAuthorizationFilterChain(HttpSecurity http) throws Exception {
-    // TODO Set up the authorization requests
-    // Starting from most restrictive at the top, to least restrictive on the bottom
     http
         // Disable CSRF and CORS checks. Without this it will be hard to make automated tests
         .csrf(AbstractHttpConfigurer::disable)
         .cors(AbstractHttpConfigurer::disable)
+        // The following is accessible only for admin users
+        .authorizeHttpRequests(
+          (auth) -> auth.requestMatchers("/api/cars/delete/{id}").hasAuthority("ROLE_ADMIN")
+        )
+        .authorizeHttpRequests(
+          (auth) -> auth.requestMatchers("/api/rentals").hasAuthority("ROLE_ADMIN")
+        )
+        // The following is accessible for users
+        .authorizeHttpRequests(
+          (auth) -> auth.requestMatchers("/api/users").hasAuthority("ROLE_USER")
+        )
+        // The following is accessible for everyone
+        .authorizeHttpRequests((auth) -> auth.requestMatchers("/api/cars/get").permitAll())
+        .authorizeHttpRequests((auth) -> auth.requestMatchers("/api/cars/get/{id}").permitAll())
         // Authentication and registering is accessible for everyone
         .authorizeHttpRequests((auth) -> auth.requestMatchers("/api/authenticate").permitAll())
         .authorizeHttpRequests((auth) -> auth.requestMatchers("/api/register").permitAll())
-        // The following are also available to everyone
-        .authorizeHttpRequests((auth) -> auth.requestMatchers("/api/cars").permitAll())
         // Allow HTTP OPTIONS requests - CORS pre-flight requests
         .authorizeHttpRequests((auth) -> auth.requestMatchers(HttpMethod.OPTIONS).permitAll())
         // Any other request will be authenticated with a stateless policy

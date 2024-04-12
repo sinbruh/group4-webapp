@@ -23,12 +23,12 @@ public class RentalController {
   @Autowired
   private RentalService rentalService;
 
-  @GetMapping()
+  @GetMapping("/get")
   public Iterable<Rental> getAll() {
     return rentalService.getAll();
   }
 
-  @GetMapping("/{id}")
+  @GetMapping("/get/{id}")
   public ResponseEntity<Rental> getOne(@PathVariable Long id) {
     ResponseEntity<Rental> response;
     Optional<Rental> rental = rentalService.getOne(id);
@@ -36,7 +36,7 @@ public class RentalController {
     return response;
   }
 
-  @PostMapping()
+  @PostMapping("/add")
   public ResponseEntity<Rental> addRental(@RequestBody Rental rental) {
     ResponseEntity<Rental> response;
     try {
@@ -48,7 +48,7 @@ public class RentalController {
     return response;
   }
 
-  @DeleteMapping("/{id}")
+  @DeleteMapping("/delete/{id}")
   public ResponseEntity<Void> deleteRental(@PathVariable Long id) {
     boolean wasDeleted = rentalService.delete(id);
     if (wasDeleted) {

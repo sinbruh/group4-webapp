@@ -22,12 +22,12 @@ public class CarController {
   @Autowired
   private CarService carService;
 
-  @GetMapping()
+  @GetMapping("/get")
   public Iterable<Car> getAll() {
     return carService.getAll();
   }
 
-  @GetMapping("/{id}")
+  @GetMapping("/get/{id}")
   public ResponseEntity<Car> getOne(@PathVariable Long id) {
     ResponseEntity<Car> response;
     Optional<Car> car = carService.findById(id);
@@ -39,7 +39,7 @@ public class CarController {
     return response;
   }
 
-  @DeleteMapping("/{id}")
+  @DeleteMapping("/delete/{id}")
   public HttpStatus deleteOne(@PathVariable Long id) {
     HttpStatus response;
     Optional<Car> car = carService.findById(id);
