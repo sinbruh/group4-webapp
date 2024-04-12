@@ -14,12 +14,13 @@ public class RegisterDto {
   private final Date dateOfBirth;
 
   public RegisterDto(String firstName, String lastName, String email, int phoneNumber,
-                     String password, Date dateOfBirth) {
+                     String password, long unixDateOfBirth) {
     this.firstName = firstName;
     this.lastName = lastName;
     this.email = email;
     this.phoneNumber = phoneNumber;
     this.password = password;
+    Date dateOfBirth = new Date(unixDateOfBirth * 1000);
     this.dateOfBirth = dateOfBirth;
   }
 
