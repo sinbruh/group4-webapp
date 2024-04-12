@@ -16,7 +16,7 @@
                 "Miller Bil": 600,
                 "Biller Bil": 550
             },
-            "img": "img/cars/VW-Golf.jpg"
+            "img": "img/cars/carsLowRes/VW-Golf.jpg"
         },
         {
             "carMaker": "Tesla",
@@ -34,7 +34,7 @@
                 "Biggernes Tesla": 700,
                 "Tesla Tom (private)": 500
             },
-            "img": "img/cars/Tesla-Model-3.jpg"
+            "img": "img/cars/carsLowRes/Tesla-Model-3.jpg"
         },
         {
             "carMaker": "Tesla",
@@ -52,7 +52,7 @@
                 "Biggernes Tesla": 900,
                 "Tesla Tom (private)": 700
             },
-            "img": "img/cars/Tesla-Model-Y.jpg"
+            "img": "img/cars/carsLowRes/Tesla-Model-Y.jpg"
         },
         {
             "carMaker": "Nissan",
@@ -68,7 +68,7 @@
                 "Auto 9-9": 500,
                 "Auto 10-10": 500
             },
-            "img": "img/cars/Nissan-Leaf.jpg"
+            "img": "img/cars/carsLowRes/Nissan-Leaf.jpg"
         },
         {
             "carMaker": "Mazda",
@@ -83,7 +83,7 @@
             "price": {
                 "Bilikist": 400
             },
-            "img": "img/cars/Mazda-2.png"
+            "img": "img/cars/carsLowRes/Mazda-2.jpg"
         },
         {
             "carMaker": "Volkswagen",
@@ -101,7 +101,7 @@
                 "Sirkelsliper": 70,
                 "Peace Per": 180
             },
-            "img": "img/cars/VW-Transporter.png"
+            "img": "img/cars/carsLowRes/VW-Transporter.jpg"
         },
         {
             "carMaker": "BMW",
@@ -119,7 +119,7 @@
                 "Grabes": 450,
                 "Djarney": 449
             },
-            "img": "img/cars/BMW-M3.jpg"
+            "img": "img/cars/carsLowRes/BMW-M3.jpg"
         },
         {
             "carMaker": "Skoda",
@@ -136,7 +136,7 @@
                 "Smidig bilforhandler": 299,
                 "Fossefall bilforhandler": 700
             },
-            "img": "img/cars/Skoda-Fabia.png"
+            "img": "img/cars/carsLowRes/Skoda-Fabia.jpg"
         },
         {
             "carMaker": "Peugeot",
@@ -152,7 +152,7 @@
                 "Betrel Ostein": 600,
                 "Auto 10-10": 550
             },
-            "img": "img/cars/Peugeot-307-SW.jpg"
+            "img": "img/cars/carsLowRes/Peugeot-307-SW.jpg"
         },
         {
             "carMaker": "Peugeot",
@@ -173,7 +173,7 @@
                 "Betrel Ostein": 500,
                 "Auto 10-10": 550
             },
-            "img": "img/cars/Peugeot-207.jpg"
+            "img": "img/cars/carsLowRes/Peugeot-207.jpg"
         },
         {
             "carMaker": "Peugeot",
@@ -191,7 +191,7 @@
                 "Betrel Ostein": 600,
                 "Auto 10-10": 600
             },
-            "img": "img/cars/Peugeot-3008.jpg"
+            "img": "img/cars/carsLowRes/Peugeot-3008.jpg"
         },
         {
             "carMaker": "Peugeot",
@@ -208,7 +208,7 @@
                 "Betrel Ostein": 200,
                 "Auto 10-10": 201
             },
-            "img": "img/cars/Peugeot-iOn.jpg"
+            "img": "img/cars/carsLowRes/Peugeot-iOn.jpg"
         }
     ]
 }
