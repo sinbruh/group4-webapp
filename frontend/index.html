@@ -5,7 +5,7 @@
     <title>Rental Roulette</title>
     <link rel="preconnect" href="https://fonts.googleapis.com"/>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-    <link rel="icon" type="image/x-icon" href="img/temp-logo.png"/>
+    <link rel="icon" type="image/x-icon" href="img/temp-logo-low.png"/>
     <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet"/>
     <link rel="stylesheet" href="styles/base-style.css"/>
     <link rel="stylesheet" href="styles/index-style.css"/>
@@ -15,7 +15,7 @@
       <div id="nav-container">
         <header>
           <a href="index.html">
-            <img src="img/temp-logo.png" alt="Temporary logo" width="78" height="88"/>
+            <img src="img/temp-logo-low.png" alt="Temporary logo" width="78" height="88"/>
           </a>
           <a href="index.html">
             <h1>Rental Roulette</h1>
@@ -68,34 +68,33 @@
         </div>
       </div>
       <section>
-        <input id="textField" type="text" placeholder="Location" list="locations"/>
-        <datalist id="locations">
-          <option>Ålesund</option>
-        </datalist>
-        <div class="field">
-          <label>From</label>
-          <input type="date"/>
-        </div>
-        <div class="field">
-          <label>From</label>
-          <input type="time"/>
-        </div>
-        <div class="field">
-          <label>To</label>
-          <input type="date"/>
-        </div>
-        <div class="field">
-          <label>To</label>
-          <input type="time"/>
-        </div>
-        <a href="search.html">
-          <div id="icon">
-            <!-- Search icon -->
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#FFFFFF" class="w-6 h-6" width="38" height="38">
-              <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"/>
-            </svg>
+        <form action="search.html" method="get">
+          <input id="textField" type="text" placeholder="Location" list="locations" name="location"/>
+          <div class="field">
+              <label>From</label>
+              <input type="date" name="fromDate"/>
           </div>
-        </a>
+          <!--<div class="field">
+              <label>From</label>
+              <input type="time" name="fromTime"/>
+          </div> -->
+          <div class="field">
+              <label>To</label>
+              <input type="date" name="toDate"/>
+          </div>
+          <!--<div class="field">
+              <label>To</label>
+              <input type="time" name="toTime"/> 
+          </div> -->
+          <button type="submit">
+              <div id="icon">
+                  <!-- Search icon -->
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#FFFFFF" class="w-6 h-6" width="38" height="38">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"/>
+                  </svg>
+              </div>
+          </button>
+      </form>
       </section>
     </div>
     <div id="side-container">

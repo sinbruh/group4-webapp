@@ -1,7 +1,7 @@
 /* Element styling */
 
 body {
-  background-image: url("../img/temp-background-image.jpg");
+  background-image: url("../img/temp-background-image-low.webp");
   background-size: 100%;
 }
 
@@ -152,4 +152,51 @@ section {
 #icon {
   justify-content: center;
   align-items: center;
+}
+
+form {
+  display: flex;
+  flex-grow: 1;
+  justify-content: center;
+  align-items: center;
+}
+
+form div {
+  height: 50px;
+  margin: 2px;
+}
+
+form input {
+  height: 50px;
+}
+
+form > input {
+  margin: 2px;
+}
+
+form div:nth-of-type(1) label {
+  left: 75px;
+}
+
+form div:nth-of-type(2) label {
+  left: 21px;
+}
+
+form div:nth-of-type(3) label {
+  left: 90px;
+}
+
+form div:nth-of-type(4) label {
+  left: 38px;
+}
+
+form > div {
+  position: relative;
+}
+
+button[type="submit"] {
+  background: none !important;
+  border: none !important;
+  padding: 0 !important;
+  cursor: pointer;
 }
