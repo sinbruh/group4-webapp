@@ -11,7 +11,7 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
 
 /**
- * A class which inserts some dummy data into the database, when Spring Boot app has started.
+ * A class which inserts necessary data into the database, when Spring Boot app has started.
  */
 @Component
 public class DataInitializer implements ApplicationListener<ApplicationReadyEvent> {
