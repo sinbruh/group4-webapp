@@ -1,0 +1,98 @@
+/*!****************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[13].oneOf[7].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[13].oneOf[7].use[3]!./src/app/search/search.module.css ***!
+  \****************************************************************************************************************************************************************************************************************************************************************************/
+.search_card__HrGjR {
+    display: flex;
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid;
+    border-radius: 1rem;
+    background-color: #ffffff;
+}
+
+.search_expandedCard__OOBu4 {
+    display: flex;
+    flex-direction: column;
+    margin-right: auto;
+    margin-left: 1%;
+    margin-top: 0.5%;
+    padding: 20px;
+    border: 1px solid;
+    border-radius: 1rem;
+    background-color: #ffffff;
+    max-width: 400px;
+    min-width: 400px;
+    max-height: 650px;
+    min-height: 600px;
+}
+
+.search_expandedCard__OOBu4:empty {
+    display: none;
+}
+
+.search_hero__M66rm {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.search_cards__WUunN {
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+    max-height: 80vh;
+    max-width: 50%;
+    min-width: 45%;
+}
+
+.search_card__HrGjR:hover {
+    box-shadow: 2px 2px 2px #000000;
+    cursor: pointer;
+}
+
+.search_breadcrumb__PceWB {
+    padding: 0px 10px;
+}
+
+.search_breadcrumb__PceWB p {
+    margin: 1px;
+}
+
+.search_breadcrumb__PceWB a {
+    text-decoration: none;
+    color: #000000;
+}
+
+.search_breadcrumb__PceWB a:hover {
+    text-decoration: underline;
+}
+
+.search_filter__3zj_b {
+    display: flex;
+    align-items: center;
+    background-color: #ffffff;
+    border-radius: 1rem;
+    margin: 10px;
+    padding: 0 10px;
+}
+
+.search_filter__3zj_b label {
+    font-weight: bold;
+}
+
+.search_filter__3zj_b input {
+    width: 150px;
+    margin: 5px 15px 5px 5px;
+
+    font-size: 1rem;
+
+  border: none;
+  border-radius: 1rem;
+}
+
+
+
+.search_nokPerDay__vu1_Y {
+    margin-right: 20px;
+    margin-left: 4px;
+}

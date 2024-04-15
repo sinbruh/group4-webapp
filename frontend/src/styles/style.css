@@ -1,0 +1,44 @@
+/* Element styling */
+
+body {
+  background-image: url("../img/temp-background-image.jpg");
+  background-size: 100%;
+}
+
+article {
+  margin: 0 10px 10px 10px;
+  padding: 0 18px;
+  background-color: #FFFFFF;
+}
+
+#main-container {
+  height: 100vh;
+}
+
+/* Font styling */
+
+article {
+  font-size: 20px;
+}
+
+/* Border styling */
+
+article {
+  border-radius: 1rem;
+}
+
+/* Display */
+
+#main-container {
+  display: flex;
+}
+
+/* Flexbox styling */
+
+article {
+  flex-grow: 1;
+}
+
+#main-container {
+  flex-direction: column;
+}
