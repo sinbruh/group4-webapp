@@ -11,6 +11,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 
 @Entity(name = "models")
 public class Model {
@@ -23,6 +24,8 @@ public class Model {
   private String fuel;
   private String transmission;
   private int numberOfSeats;
+  @OneToOne(mappedBy = "model")
+  private Car car;
   @OneToMany(mappedBy = "model")
   private Set<Configuration> configurations;
   @ManyToMany
@@ -99,6 +102,14 @@ public class Model {
 
   public void setNumberOfSeats(int numberOfSeats) {
     this.numberOfSeats = numberOfSeats;
+  }
+
+  public Car getCar() {
+    return this.car;
+  }
+
+  public void setCar(Car car) {
+    this.car = car;
   }
 
   public Set<Configuration> getConfigurations() {
