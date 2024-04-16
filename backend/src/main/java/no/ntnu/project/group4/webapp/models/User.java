@@ -15,6 +15,7 @@ import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+// TODO Add methods for rentals field
 @Entity(name = "users")
 public class User {
   @Id
