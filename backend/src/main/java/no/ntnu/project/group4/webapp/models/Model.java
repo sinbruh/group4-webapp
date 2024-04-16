@@ -4,7 +4,6 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -26,10 +25,11 @@ public class Model {
   private int numberOfSeats;
   @OneToMany(mappedBy = "model")
   private Set<Configuration> configurations;
-  @ManyToMany(fetch = FetchType.EAGER)
-  @JoinTable(name = "model_feature",
+  @ManyToMany
+  @JoinTable(
+    name = "model_extrafeature",
     joinColumns = @JoinColumn(name = "model_id"),
-    inverseJoinColumns = @JoinColumn(name = "feature_id")
+    inverseJoinColumns = @JoinColumn(name = "extrafeature_id")
   )
   private Set<ExtraFeature> extraFeatures = new LinkedHashSet<>();
 
@@ -115,23 +115,5 @@ public class Model {
 
   public void setExtraFeatures(Set<ExtraFeature> extraFeatures) {
     this.extraFeatures = extraFeatures;
-  }
-
-  /**
-   * Adds the specified configuration to the model.
-   * 
-   * @param configuration The specified configuration
-   */
-  public void addConfiguration(Configuration configuration) {
-    this.configurations.add(configuration);
-  }
-
-  /**
-   * Adds the specified extra feature to the model.
-   * 
-   * @param extraFeature The specified extra feature
-   */
-  public void addExtraFeature(ExtraFeature extraFeature) {
-    this.extraFeatures.add(extraFeature);
   }
 }
