@@ -15,7 +15,7 @@ public class ExtraFeature {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
   private String name;
-  @ManyToMany(mappedBy = "extra_features")
+  @ManyToMany(mappedBy = "extraFeatures")
   private Set<Model> models = new LinkedHashSet<>();
 
   public ExtraFeature() {
