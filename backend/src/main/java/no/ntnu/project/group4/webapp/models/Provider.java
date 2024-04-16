@@ -1,9 +1,20 @@
 package no.ntnu.project.group4.webapp.models;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+
+@Entity(name = "providers")
 public class Provider {
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
   private String name;
   private int price;
+  @ManyToOne
+  private Configuration configuration;
 
   public Provider() {
   }
@@ -35,5 +46,13 @@ public class Provider {
 
   public void setPrice(int price) {
     this.price = price;
+  }
+
+  public Configuration geConfiguration() {
+    return this.configuration;
+  }
+
+  public void setConfiguration(Configuration configuration) {
+    this.configuration = configuration;
   }
 }
