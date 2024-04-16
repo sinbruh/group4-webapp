@@ -27,9 +27,9 @@ public class Model {
   private Set<Configuration> configurations;
   @ManyToMany
   @JoinTable(
-    name = "model_extrafeature",
+    name = "model_extra_feature",
     joinColumns = @JoinColumn(name = "model_id"),
-    inverseJoinColumns = @JoinColumn(name = "extrafeature_id")
+    inverseJoinColumns = @JoinColumn(name = "extra_feature_id")
   )
   private Set<ExtraFeature> extraFeatures = new LinkedHashSet<>();
 

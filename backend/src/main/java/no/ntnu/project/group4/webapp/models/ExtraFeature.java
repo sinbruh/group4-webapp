@@ -9,13 +9,13 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 
-@Entity(name = "extrafeatures")
+@Entity(name = "extra_features")
 public class ExtraFeature {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
   private String name;
-  @ManyToMany(mappedBy = "extrafeatures")
+  @ManyToMany(mappedBy = "extra_features")
   private Set<Model> models = new LinkedHashSet<>();
 
   public ExtraFeature() {
