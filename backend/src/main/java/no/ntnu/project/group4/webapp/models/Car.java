@@ -6,7 +6,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToOne;
 
-@Entity
+@Entity(name = "cars")
 public class Car {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
