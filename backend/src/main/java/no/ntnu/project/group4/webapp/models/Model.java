@@ -1,6 +1,22 @@
 package no.ntnu.project.group4.webapp.models;
 
+import java.util.LinkedHashSet;
+import java.util.Set;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
+
+@Entity(name = "models")
 public class Model {
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
   private String make;
   private String name;
@@ -8,6 +24,14 @@ public class Model {
   private String fuel;
   private String transmission;
   private int numberOfSeats;
+  @OneToMany(mappedBy = "model")
+  private Set<Configuration> configurations;
+  @ManyToMany(fetch = FetchType.EAGER)
+  @JoinTable(name = "model_feature",
+    joinColumns = @JoinColumn(name = "model_id"),
+    inverseJoinColumns = @JoinColumn(name = "feature_id")
+  )
+  private Set<ExtraFeature> extraFeatures = new LinkedHashSet<>();
 
   public Model() {
   }
@@ -75,5 +99,39 @@ public class Model {
 
   public void setNumberOfSeats(int numberOfSeats) {
     this.numberOfSeats = numberOfSeats;
+  }
+
+  public Set<Configuration> getConfigurations() {
+    return this.configurations;
+  }
+
+  public void setConfigurations(Set<Configuration> configurations) {
+    this.configurations = configurations;
+  }
+
+  public Set<ExtraFeature> getExtraFeatures() {
+    return this.extraFeatures;
+  }
+
+  public void setExtraFeatures(Set<ExtraFeature> extraFeatures) {
+    this.extraFeatures = extraFeatures;
+  }
+
+  /**
+   * Adds the specified configuration to the model.
+   * 
+   * @param configuration The specified configuration
+   */
+  public void addConfiguration(Configuration configuration) {
+    this.configurations.add(configuration);
+  }
+
+  /**
+   * Adds the specified extra feature to the model.
+   * 
+   * @param extraFeature The specified extra feature
+   */
+  public void addExtraFeature(ExtraFeature extraFeature) {
+    this.extraFeatures.add(extraFeature);
   }
 }
