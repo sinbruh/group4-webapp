@@ -132,6 +132,24 @@ public class Configuration {
     this.providers = providers;
   }
 
+  /**
+   * Adds the specified extra feature to the configuration.
+   * 
+   * @param extraFeature The specified extra feature
+   */
+  public void addExtraFeature(ExtraFeature extraFeature) {
+    this.extraFeatures.add(extraFeature);
+  }
+
+  /**
+   * Adds the specified provider to the configuration.
+   * 
+   * @param provider The specified provider
+   */
+  public void addProvider(Provider provider) {
+    this.providers.add(provider);
+  }
+
   public boolean isValid() {
     return !this.name.isBlank() && !this.fuelType.isBlank() && !this.transmissionType.isBlank() &&
            this.numberOfSeats > 0 && !this.location.isBlank();
