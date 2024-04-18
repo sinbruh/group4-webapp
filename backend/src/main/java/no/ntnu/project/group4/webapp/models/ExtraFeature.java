@@ -3,6 +3,8 @@ package no.ntnu.project.group4.webapp.models;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -11,10 +13,12 @@ import jakarta.persistence.ManyToMany;
 
 @Entity(name = "extra_feature")
 public class ExtraFeature {
+  @JsonIgnore
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
   private String name;
+  @JsonIgnore
   @ManyToMany(mappedBy = "extraFeatures")
   private Set<Configuration> configurations = new LinkedHashSet<>();
 
