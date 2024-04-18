@@ -48,4 +48,8 @@ public class ExtraFeature {
   public void setConfiguraitons(Set<Configuration> configurations) {
     this.configurations = configurations;
   }
+
+  public boolean isValid() {
+    return !this.name.isBlank();
+  }
 }

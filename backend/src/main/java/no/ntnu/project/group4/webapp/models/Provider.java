@@ -58,4 +58,8 @@ public class Provider {
   public void setConfigurations(Set<Configuration> configurations) {
     this.configurations = configurations;
   }
+
+  public boolean isValid() {
+    return !this.name.isBlank() && this.price > 0;
+  }
 }

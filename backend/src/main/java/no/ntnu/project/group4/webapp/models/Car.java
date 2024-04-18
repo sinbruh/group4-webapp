@@ -75,4 +75,8 @@ public class Car {
   public void setConfigurations(Set<Configuration> configurations) {
     this.configurations = configurations;
   }
+
+  public boolean isValid() {
+    return !this.make.isBlank() && !this.model.isBlank() && this.year >= 0;
+  }
 }

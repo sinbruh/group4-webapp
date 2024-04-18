@@ -131,4 +131,9 @@ public class Configuration {
   public void setProviders(Set<Provider> providers) {
     this.providers = providers;
   }
+
+  public boolean isValid() {
+    return !this.name.isBlank() && !this.fuelType.isBlank() && !this.transmissionType.isBlank() &&
+           this.numberOfSeats > 0 && !this.location.isBlank();
+  }
 }
