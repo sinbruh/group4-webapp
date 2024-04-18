@@ -12,27 +12,27 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import no.ntnu.project.group4.webapp.models.Car;
-import no.ntnu.project.group4.webapp.services.CarService;
+import no.ntnu.project.group4.webapp.models.Provider;
+import no.ntnu.project.group4.webapp.services.ProviderService;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/api/cars")
-public class CarController {
+@RequestMapping("/api/providers")
+public class ProviderController {
   @Autowired
-  private CarService carService;
+  private ProviderService providerService;
 
   @GetMapping("/get")
-  public Iterable<Car> getAll() {
-    return this.carService.getAll();
+  public Iterable<Provider> getAll() {
+    return this.providerService.getAll();
   }
 
   @GetMapping("/get/{id}")
-  public ResponseEntity<Car> getOne(@PathVariable Long id) {
-    ResponseEntity<Car> response;
-    Optional<Car> car = this.carService.getOne(id);
-    if (car.isPresent()) {
-      response = ResponseEntity.ok(car.get());
+  public ResponseEntity<Provider> getOne(@PathVariable Long id) {
+    ResponseEntity<Provider> response;
+    Optional<Provider> provider = this.providerService.getOne(id);
+    if (provider.isPresent()) {
+      response = ResponseEntity.ok(provider.get());
     } else {
       response = ResponseEntity.notFound().build();
     }
@@ -42,9 +42,9 @@ public class CarController {
   @DeleteMapping("/delete/{id}")
   public HttpStatus deleteOne(@PathVariable Long id) {
     HttpStatus response;
-    Optional<Car> car = this.carService.getOne(id);
-    if (car.isPresent()) {
-      this.carService.delete(id);
+    Optional<Provider> provider = this.providerService.getOne(id);
+    if (provider.isPresent()) {
+      this.providerService.delete(id);
       response = HttpStatus.ACCEPTED;
     } else {
       response = HttpStatus.NOT_FOUND;

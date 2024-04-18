@@ -12,27 +12,27 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import no.ntnu.project.group4.webapp.models.Car;
-import no.ntnu.project.group4.webapp.services.CarService;
+import no.ntnu.project.group4.webapp.models.ExtraFeature;
+import no.ntnu.project.group4.webapp.services.ExtraFeatureService;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/api/cars")
-public class CarController {
+@RequestMapping("/api/extrafeatures")
+public class ExtraFeatureController {
   @Autowired
-  private CarService carService;
+  private ExtraFeatureService extraFeatureService;
 
   @GetMapping("/get")
-  public Iterable<Car> getAll() {
-    return this.carService.getAll();
+  public Iterable<ExtraFeature> getAll() {
+    return this.extraFeatureService.getAll();
   }
 
   @GetMapping("/get/{id}")
-  public ResponseEntity<Car> getOne(@PathVariable Long id) {
-    ResponseEntity<Car> response;
-    Optional<Car> car = this.carService.getOne(id);
-    if (car.isPresent()) {
-      response = ResponseEntity.ok(car.get());
+  public ResponseEntity<ExtraFeature> getOne(@PathVariable Long id) {
+    ResponseEntity<ExtraFeature> response;
+    Optional<ExtraFeature> extraFeature = this.extraFeatureService.getOne(id);
+    if (extraFeature.isPresent()) {
+      response = ResponseEntity.ok(extraFeature.get());
     } else {
       response = ResponseEntity.notFound().build();
     }
@@ -42,9 +42,9 @@ public class CarController {
   @DeleteMapping("/delete/{id}")
   public HttpStatus deleteOne(@PathVariable Long id) {
     HttpStatus response;
-    Optional<Car> car = this.carService.getOne(id);
-    if (car.isPresent()) {
-      this.carService.delete(id);
+    Optional<ExtraFeature> extraFeature = this.extraFeatureService.getOne(id);
+    if (extraFeature.isPresent()) {
+      this.extraFeatureService.delete(id);
       response = HttpStatus.ACCEPTED;
     } else {
       response = HttpStatus.NOT_FOUND;
