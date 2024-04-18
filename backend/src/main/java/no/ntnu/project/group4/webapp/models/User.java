@@ -16,7 +16,7 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 // TODO Add methods for rentals field
-@Entity(name = "users")
+@Entity(name = "user")
 public class User {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
