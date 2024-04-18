@@ -30,7 +30,7 @@ public class CarController {
   @GetMapping("/get/{id}")
   public ResponseEntity<Car> getOne(@PathVariable Long id) {
     ResponseEntity<Car> response;
-    Optional<Car> car = carService.findById(id);
+    Optional<Car> car = carService.getOne(id);
     if (car.isPresent()) {
       response = ResponseEntity.ok(car.get());
     } else {
@@ -42,7 +42,7 @@ public class CarController {
   @DeleteMapping("/delete/{id}")
   public HttpStatus deleteOne(@PathVariable Long id) {
     HttpStatus response;
-    Optional<Car> car = carService.findById(id);
+    Optional<Car> car = carService.getOne(id);
     if (car.isPresent()) {
       carService.delete(id);
       response = HttpStatus.ACCEPTED;
