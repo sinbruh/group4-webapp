@@ -10,6 +10,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 
 @Entity(name = "configuration")
 public class Configuration {
@@ -22,8 +23,8 @@ public class Configuration {
   private int numberOfSeats;
   private String location;
   private boolean available;
-  @ManyToMany(mappedBy = "configurations")
-  private Set<Car> cars = new LinkedHashSet<>();
+  @ManyToOne
+  private Car car;
   @ManyToMany
   @JoinTable(
     name = "configuration_extra_feature",
@@ -108,12 +109,12 @@ public class Configuration {
     this.available = available;
   }
 
-  public Set<Car> getCars() {
-    return this.cars;
+  public Car getCar() {
+    return this.car;
   }
 
-  public void setCars(Set<Car> cars) {
-    this.cars = cars;
+  public void setCar(Car car) {
+    this.car = car;
   }
 
   public Set<ExtraFeature> getExtraFeatures() {
