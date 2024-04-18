@@ -67,4 +67,12 @@ public class Car {
   public void setYear(int year) {
     this.year = year;
   }
+
+  public Set<Configuration> getConfigurations() {
+    return this.configurations;
+  }
+
+  public void setConfigurations(Set<Configuration> configurations) {
+    this.configurations = configurations;
+  }
 }
