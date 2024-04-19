@@ -1,17 +1,17 @@
-import styles from "./index-style.css"
 import React from "react";
+import styles from "./index-style.module.css";
 import Link from "next/link";
 import Navigation from "@/components/Navigation";
 import {Footer} from "@/components/Footer";
 
 export default function Home() {
   return (
-    <div className={styles.container}>
+    <>
       <Navigation />
-      <div id="main-container">
+        <div className={styles.mainContainer}>
         <section>
           <input
-              id="textField"
+              className={styles.textField}
               type="text"
               placeholder="Location"
               list="locations"
@@ -35,8 +35,8 @@ export default function Home() {
             <label>To</label>
             <input type="time"/>
           </div>
-          <Link href="search">
-            <div id="icon">
+          <Link href="/search">
+            <div className={styles.icon}>
               {/* Search icon */}
               <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -58,8 +58,8 @@ export default function Home() {
           </Link>
         </section>
       </div>
-  <div id={"side-container"}>
-    <div id={"info"}>
+  <div className={styles.sideContainer}>
+    <div className={styles.info}>
     <div>
       <h2>How it works</h2>
       <p>
@@ -83,6 +83,6 @@ export default function Home() {
     </div>
     <Footer />
     </div>
-    </div>
+    </>
 );
 }
