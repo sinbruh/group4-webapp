@@ -137,6 +137,48 @@ the goals of the sprint.
 
 ### Accomplishments
 
+All the goals set by the group for this sprint was either accomplished or accomplished to some
+degree; the group began implementing React to the project, but was only able to begin adding
+security to the website and begin fetching car information from the backend and displaying it on
+the website. The reason for this was that the group had not completely designed the database
+according to the project theme description, so the group had to deal with this in order to load the
+necessary data to the database, which again was supposed to be fetched as car information.
+
+### Retrospective
+
+The group has gotten well at working more dynamically, and is satisfied with the workflow. The
+group even discussed how the work of each group member could help the other members. Some of the
+group members were unsatisfied with the amount of work that was put into the project over the
+sprint, while others felt like they worked a lot. Because of this, the only point of improvement
+for the next sprint is to distribute the workload better among the group members.
+
+## Week 16
+
+This sprint starts in week 16 and ends in week 17.
+
+Deadline: 26.04.2024
+
+### Goals
+
+The goals of this sprint is to finish adding security to the website, continue fetching car
+information from the backend and displaying it on the website and continue implementing React to
+the project.
+
+### Work distribution
+
+The work is slightly distributed for this sprint, meaning certain group members is responsible to
+reach certain goals of this sprint:
+
+1. Mats is responsible for finishing adding security to the website
+2. Leander is responsible for continuing fetching car information from the backend and displaying
+   it on the website
+3. Mathias and Sindre are responsible for continuing implementing React to the project
+
+Even though group members have different responsibilities, all members should contribute to reaching
+the goals of the sprint.
+
+### Accomplishments
+
 TBD
 
 ### Retrospective
