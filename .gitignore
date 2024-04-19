@@ -20,6 +20,8 @@ target/
 *.iml
 *.ipr
 .idea/*
+.idea/
+/backend/.idea/
 
 # Log file
 *.log
@@ -57,6 +59,7 @@ replay_pid*
 # next.js
 /.next/
 /out/
+.next/
 node_modules/
 
 # production
