@@ -98,7 +98,7 @@ public class DataInitializer implements ApplicationListener<ApplicationReadyEven
       Car car5 = new Car("Mazda", "2", 2017);
       Car car6 = new Car("Volkswagen", "Transporter", 1978);
       Car car7 = new Car("BMW", "M3 Evo", 1988);
-      Car car8 = new Car("Skodia", "Fabia", 2011);
+      Car car8 = new Car("Skoda", "Fabia", 2011);
       Car car9 = new Car("Peugeot", "307 SW", 2008);
       Car car10 = new Car("Peugeot", "207", 2007);
       Car car11 = new Car("Peugeot", "3008", 2010);

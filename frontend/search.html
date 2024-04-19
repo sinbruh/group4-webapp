@@ -89,6 +89,7 @@
         <input type="range" id="toPrice" name="toPrice" value="1000" min="0" max="1000" oninput="updateValue('toPrice', 'toPriceValue')" />
         <span id="toPriceValue">1000</span>
         <p class="nokPerDay"><b>NOK/day</b></p>
+        
 
 <script>
 function updateValue(sliderID, outputID) {
@@ -107,64 +108,16 @@ function updateValue(sliderID, outputID) {
     toPriceValue.innerText = toPrice.value;
 }
 
+
 </script>
     </section>
     <section id="hero">
     <section id="cards">
-        <!--<div class="card" id="mercedez">
-            <img src="img/car.png" alt="car img" width="300" height="200" />
-            <div class="card-info">
-                <h2>mercedez</h2>
-                <p>Price: 500 NOK/day</p>
-                <p>Location: Ålesund</p>
-            </div>
-        </div>
-        <div class="card" id="bmw">
-            <img src="img/car.png" alt="car img" width="300" height="200" />
-            <div class="card-info">
-                <h2>bmw</h2>
-                <p>Price: 500 NOK/day</p>
-                <p>Location: Ålesund</p>
-            </div>
-        </div>
-        <div class="card" id="audi">
-            <img src="img/car.png" alt="car img" width="300" height="200" />
-            <div class="card-info">
-                <h2>audi</h2>
-                <p>Price: 500 NOK/day</p>
-                <p>Location: Ålesund</p>
-            </div>
-        </div>
-        <div class="card" id="audi">
-            <img src="img/car.png" alt="car img" width="300" height="200" />
-            <div class="card-info">
-                <h2>audi</h2>
-                <p>Price: 500 NOK/day</p>
-                <p>Location: Ålesund</p>
-            </div>
-        </div> 
 
-       
-
-        
-        //              !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!    
-        //script removes the cards and adds the card from Cars.json instead -->
-        <script src="scripts/car-reader.js"></script>
+    
 
     </section>
-    <div class="expandedCard" id="expandedCard">
-        <!--<img src="img/car.png" alt="car img" width="300" height="200" />
-        <div class="card-info">
-            <h2>mercedez</h2>
-            <p>Price: 500 NOK/day</p>
-            <p>Location: Ålesund</p>
-            <p>Owner: John Doe</p>
-            <p>Phone: 12345678</p>
-            <p>Email: matsern@email.com</p>
-
-            <button>Book</button>
-        </div> -->
-    </div>
+    <div class="expandedCard" id="expandedCard"></div>
     </section>
     <footer>
       <img src="img/ntnu-logo.png" width="379" height="70"/>
@@ -184,21 +137,28 @@ function updateValue(sliderID, outputID) {
         
         var params = new URLSearchParams(window.location.search);
     
-       
         var location = params.get('location');
         var fromDate = params.get('fromDate');
         //var fromTime = params.get('fromTime');
         var toDate = params.get('toDate');
         //var toTime = params.get('toTime');
     
-        
         document.getElementsByName('location')[0].value = location;
         document.getElementsByName('fromDate')[0].value = fromDate;
         //document.getElementsByName('fromTime')[0].value = fromTime;
         document.getElementsByName('toDate')[0].value = toDate;
         //document.getElementsByName('toTime')[0].value = toTime;
       });
+
     </script>
+
+    <script src="scripts/parseSpringBootData.js"></script>
+    
+    <script src="scripts/car-reader-local-storage.js"></script>
+
+    
+  
+ 
 </body>
 
 </html>

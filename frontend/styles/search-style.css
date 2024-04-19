@@ -1,6 +1,7 @@
 body {
     background-image: url("../img/temp-background-image-low.webp");
-    background-size: 100%;
+    background-size: cover;
+    background-repeat: no-repeat;
 }
 
 .card {
@@ -30,6 +31,10 @@ body {
 
 .expandedCard:empty {
     display: none;
+    background-color: none;
+    border: none;
+    padding: 0;
+    margin: 0;
 }
 
 #hero {
@@ -43,6 +48,7 @@ body {
     flex-direction: column;
     overflow: auto;
     max-height: 80vh;
+    min-height: 80vh;
     max-width: 50%;
     min-width: 45%;
 }
@@ -92,9 +98,24 @@ body {
   border-radius: 1rem;
 }
 
-
-
 .nokPerDay {
     margin-right: 20px;
     margin-left: 4px;
 }
+
+#statusMessage:empty {
+    display: none;
+}
+
+#statusMessage {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    font-size: 2em;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 20px;
+    border-radius: 10px;
+    z-index: 1000;
+}
+

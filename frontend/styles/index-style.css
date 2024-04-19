@@ -2,8 +2,9 @@
 
 body {
   background-image: url("../img/temp-background-image-low.webp");
-  background-size: auto 100%;
+  background-size: cover;
   background-repeat: no-repeat;
+
 }
 
 section div {

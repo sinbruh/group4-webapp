@@ -16,7 +16,7 @@
                 "Miller Bil": 600,
                 "Biller Bil": 550
             },
-            "img": "img/cars/carsLowRes/VW-Golf.jpg"
+            "img": "img/cars/carsLowRes/Volkswagen-Golf.jpg"
         },
         {
             "carMaker": "Tesla",
@@ -101,7 +101,7 @@
                 "Sirkelsliper": 70,
                 "Peace Per": 180
             },
-            "img": "img/cars/carsLowRes/VW-Transporter.jpg"
+            "img": "img/cars/carsLowRes/Volkswagen-Transporter.jpg"
         },
         {
             "carMaker": "BMW",
@@ -119,7 +119,7 @@
                 "Grabes": 450,
                 "Djarney": 449
             },
-            "img": "img/cars/carsLowRes/BMW-M3.jpg"
+            "img": "img/cars/carsLowRes/BMW-M3-Evo.jpg"
         },
         {
             "carMaker": "Skoda",
