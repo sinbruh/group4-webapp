@@ -20,6 +20,17 @@ export default function Page() {
                     Feel free to reach out to us
                     using the contact information provided below, and we'll get back to you as soon as possible.
                 </p>
+                <h2>Technical Support</h2>
+                <p>
+                    Incase of any technical issues, please contact our support team at 999 99 999.
+                    Our team is available 24/7 to assist you with any troubleshooting or inquiries
+                    if you encounter any difficulties while using our platform.
+                </p>
+                <h3>Media Inqueries</h3>
+                <p>
+                    For media inquiries, please contact our press team at 999 99 999.
+                    Our team is available Monday through Friday, from 9:00 AM to 5:00 PM.
+                </p>
             </section>
             <Footer />
         </div>
