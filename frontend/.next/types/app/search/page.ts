@@ -1,4 +1,4 @@
-// File: C:\Users\sindr\Skule\4. Semester\Apputvikling_IDATA2306\group4-webapp\frontend\src\app\search\page.js
+// File: /home/sinbruh/skule/web/group4-webapp/frontend/src/app/search/page.js
 import * as entry from '../../../../src/app/search/page.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 

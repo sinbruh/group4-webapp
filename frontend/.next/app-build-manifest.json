@@ -3,7 +3,7 @@
     "/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/css/css-src_app_index-style_css.css",
+      "static/css/css-src_app_index-style_module_css.css",
       "static/chunks/app/page.js"
     ],
     "/layout": [
@@ -15,13 +15,8 @@
     "/search/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/css/css-src_app_search_search_module_css.css",
+      "static/css/css-src_app_search_search_module_css-src_styles_filter_module_css.css",
       "static/chunks/app/search/page.js"
-    ],
-    "/_not-found/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/_not-found/page.js"
     ]
   }
 }
