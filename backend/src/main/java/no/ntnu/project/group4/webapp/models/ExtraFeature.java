@@ -3,20 +3,24 @@ package no.ntnu.project.group4.webapp.models;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 
-@Entity(name = "extra_features")
+@Entity(name = "extra_feature")
 public class ExtraFeature {
+  @JsonIgnore
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
   private String name;
+  @JsonIgnore
   @ManyToMany(mappedBy = "extraFeatures")
-  private Set<Model> models = new LinkedHashSet<>();
+  private Set<Configuration> configurations = new LinkedHashSet<>();
 
   public ExtraFeature() {
   }
@@ -41,11 +45,15 @@ public class ExtraFeature {
     this.name = name;
   }
 
-  public Set<Model> getModels() {
-    return this.models;
+  public Set<Configuration> getConfigurations() {
+    return this.configurations;
   }
 
-  public void setModels(Set<Model> models) {
-    this.models = models;
+  public void setConfiguraitons(Set<Configuration> configurations) {
+    this.configurations = configurations;
+  }
+
+  public boolean isValid() {
+    return !this.name.isBlank();
   }
 }

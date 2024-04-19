@@ -7,7 +7,7 @@ import jakarta.persistence.ManyToMany;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-@Entity(name = "roles")
+@Entity(name = "role")
 public class Role {
   @Id
   @GeneratedValue

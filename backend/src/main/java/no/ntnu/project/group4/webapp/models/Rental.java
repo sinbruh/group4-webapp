@@ -8,14 +8,14 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 
-@Entity(name = "rentals")
+@Entity(name = "rental")
 public class Rental {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
-  @ManyToOne()
+  @ManyToOne
   private Car car;
-  @ManyToOne()
+  @ManyToOne
   private User user;
   private Date startDate;
   private Date endDate;

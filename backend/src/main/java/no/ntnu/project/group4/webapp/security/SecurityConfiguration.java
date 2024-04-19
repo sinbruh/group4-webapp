@@ -70,6 +70,12 @@ public class SecurityConfiguration {
         // The following is accessible for everyone
         .authorizeHttpRequests((auth) -> auth.requestMatchers("/api/cars/get").permitAll())
         .authorizeHttpRequests((auth) -> auth.requestMatchers("/api/cars/get/{id}").permitAll())
+        .authorizeHttpRequests((auth) -> auth.requestMatchers("/api/configurations/get").permitAll())
+        .authorizeHttpRequests((auth) -> auth.requestMatchers("/api/configurations/get/{id}").permitAll())
+        .authorizeHttpRequests((auth) -> auth.requestMatchers("/api/extrafeatures/get").permitAll())
+        .authorizeHttpRequests((auth) -> auth.requestMatchers("/api/extrafeatures/get/{id}").permitAll())
+        .authorizeHttpRequests((auth) -> auth.requestMatchers("/api/providers/get").permitAll())
+        .authorizeHttpRequests((auth) -> auth.requestMatchers("/api/providers/get/{id}").permitAll())
         // Authentication and registering is accessible for everyone
         .authorizeHttpRequests((auth) -> auth.requestMatchers("/api/authenticate").permitAll())
         .authorizeHttpRequests((auth) -> auth.requestMatchers("/api/register").permitAll())

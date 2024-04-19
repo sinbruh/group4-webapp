@@ -1,27 +1,28 @@
 package no.ntnu.project.group4.webapp.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
-
-@Entity(name = "cars")
+@Entity(name = "car")
 public class Car {
+  @JsonIgnore
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
-  private String location;
-  private boolean available;
-  @OneToOne
-  private Model model;
+  private String make;
+  private String model;
+  private int year;
 
   public Car() {
   }
 
-  public Car(String location) {
-    this.location = location;
-    this.available = true;
+  public Car(String make, String model, int year) {
+    this.make = make;
+    this.model = model;
+    this.year = year;
   }
 
   public Long getId() {
@@ -32,31 +33,31 @@ public class Car {
     this.id = id;
   }
 
-  public String getLocation() {
-    return this.location;
+  public String getMake() {
+    return this.make;
   }
 
-  public void setLocation(String location) {
-    this.location = location;
+  public void setMake(String make) {
+    this.make = make;
   }
 
-  public boolean isAvailable() {
-    return this.available;
-  }
-
-  public void setAvailable(boolean available) {
-    this.available = available;
-  }
-
-  public Model getModel() {
+  public String getModel() {
     return this.model;
   }
 
-  public void setModel(Model model) {
+  public void setModel(String model) {
     this.model = model;
   }
 
+  public int getYear() {
+    return this.year;
+  }
+
+  public void setYear(int year) {
+    this.year = year;
+  }
+
   public boolean isValid() {
-    return !this.location.isBlank();
+    return !this.make.isBlank() && !this.model.isBlank() && this.year >= 0;
   }
 }
