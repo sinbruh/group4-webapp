@@ -51,7 +51,7 @@ public class UserController {
    * @param email Email for which the user is updated
    * @return HTTP 200 OK or error code with error message
    */
-  @PutMapping("/update/{email}")
+  @PutMapping("/upd/{email}")
   public ResponseEntity<String> updateUser(@PathVariable String email,
                                            @RequestBody UserDto userData) {
     User sessionUser = userService.getSessionUser();

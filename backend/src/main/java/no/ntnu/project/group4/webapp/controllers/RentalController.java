@@ -48,7 +48,7 @@ public class RentalController {
     return response;
   }
 
-  @DeleteMapping("/delete/{id}")
+  @DeleteMapping("/del/{id}")
   public ResponseEntity<Void> deleteRental(@PathVariable Long id) {
     boolean wasDeleted = rentalService.delete(id);
     if (wasDeleted) {

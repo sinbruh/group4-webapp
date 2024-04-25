@@ -39,7 +39,7 @@ public class CarController {
     return response;
   }
 
-  @DeleteMapping("/delete/{id}")
+  @DeleteMapping("/del/{id}")
   public HttpStatus deleteOne(@PathVariable Long id) {
     HttpStatus response;
     Optional<Car> car = this.carService.getOne(id);

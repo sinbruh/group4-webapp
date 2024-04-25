@@ -39,7 +39,7 @@ public class ConfigurationController {
     return response;
   }
 
-  @DeleteMapping("/delete/{id}")
+  @DeleteMapping("/del/{id}")
   public HttpStatus deleteOne(@PathVariable Long id) {
     HttpStatus response;
     Optional<Configuration> configuration = this.configurationService.getOne(id);

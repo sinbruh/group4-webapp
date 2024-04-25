@@ -58,14 +58,23 @@ public class SecurityConfiguration {
         .cors(AbstractHttpConfigurer::disable)
         // The following is accessible only for admin users
         .authorizeHttpRequests(
-          (auth) -> auth.requestMatchers("/api/cars/delete/{id}").hasAuthority("ROLE_ADMIN")
+          (auth) -> auth.requestMatchers("/api/cars/del/{id}").hasRole("ROLE_ADMIN")
         )
         .authorizeHttpRequests(
-          (auth) -> auth.requestMatchers("/api/rentals").hasAuthority("ROLE_ADMIN")
+          (auth) -> auth.requestMatchers("/api/configurations/del/{id}").hasRole("ROLE_ADMIN")
+        )
+        .authorizeHttpRequests(
+          (auth) -> auth.requestMatchers("/api/extrafeatures/del/{id}").hasRole("ROLE_ADMIN")
+        )
+        .authorizeHttpRequests(
+          (auth) -> auth.requestMatchers("/api/providers/del/{id}").hasRole("ROLE_ADMIN")
         )
         // The following is accessible for users
         .authorizeHttpRequests(
-          (auth) -> auth.requestMatchers("/api/users").hasAuthority("ROLE_USER")
+          (auth) -> auth.requestMatchers("/api/rentals").hasRole("ROLE_USER")
+        )
+        .authorizeHttpRequests(
+          (auth) -> auth.requestMatchers("/api/users").hasRole("ROLE_USER")
         )
         // The following is accessible for everyone
         .authorizeHttpRequests((auth) -> auth.requestMatchers("/api/cars/get").permitAll())
