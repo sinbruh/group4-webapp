@@ -144,7 +144,7 @@ public class AccessUserService implements UserDetailsService {
 
   // TODO Fix return clause
   /**
-   * Updates user information.
+   * Updates user information except password.
    *
    * @param user User to update
    * @param profileData Profile data to set for the user

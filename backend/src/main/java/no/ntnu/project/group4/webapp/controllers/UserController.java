@@ -46,13 +46,13 @@ public class UserController {
   }
 
   /**
-   * Updates user information.
+   * Updates user information except password.
    *
    * @param email Email for which the user is updated
    * @param userData User data to update the user with
    * @return HTTP 200 OK or error code with error message
    */
-  @PutMapping("/upd/{email}")
+  @PutMapping("/upd/user/{email}")
   public ResponseEntity<String> updateUser(@PathVariable String email,
                                            @RequestBody UserDto userData) {
     ResponseEntity<String> response;
@@ -85,6 +85,7 @@ public class UserController {
    * @param password Password to update the user password with
    * @return HTTP 200 OK or error code with error message
    */
+  @PutMapping("/upd/password/{email}")
   public ResponseEntity<String> updateUserPassword(@PathVariable String email,
                                                    @RequestBody String password) {
     ResponseEntity<String> response;
