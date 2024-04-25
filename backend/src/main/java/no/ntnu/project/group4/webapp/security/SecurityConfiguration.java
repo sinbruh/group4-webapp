@@ -69,9 +69,18 @@ public class SecurityConfiguration {
         .authorizeHttpRequests(
           (auth) -> auth.requestMatchers("/api/providers/del/{id}").hasRole("ROLE_ADMIN")
         )
+        .authorizeHttpRequests(
+          (auth) -> auth.requestMatchers("/api/rentals/get").hasRole("ROLE_ADMIN")
+        )
         // The following is accessible for users
         .authorizeHttpRequests(
-          (auth) -> auth.requestMatchers("/api/rentals").hasRole("ROLE_USER")
+          (auth) -> auth.requestMatchers("/api/rentals/get/{id}").hasRole("ROLE_USER")
+        )
+        .authorizeHttpRequests(
+          (auth) -> auth.requestMatchers("/api/rentals/add").hasRole("ROLE_USER")
+        )
+        .authorizeHttpRequests(
+          (auth) -> auth.requestMatchers("/api/rentals/del/{id}").hasRole("ROLE_USER")
         )
         .authorizeHttpRequests(
           (auth) -> auth.requestMatchers("/api/users").hasRole("ROLE_USER")
