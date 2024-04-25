@@ -142,6 +142,7 @@ public class AccessUserService implements UserDetailsService {
     return BCrypt.hashpw(password, BCrypt.gensalt());
   }
 
+  // TODO Fix return clause
   /**
    * Updates user information.
    *
@@ -157,5 +158,21 @@ public class AccessUserService implements UserDetailsService {
     user.setDateOfBirth(userData.getDateOfBirth());
     userRepository.save(user);
     return true;
+  }
+
+  /**
+   * Updates user password.
+   * 
+   * @param user User to update
+   * @param password Password to set for the user
+   * @return A string containing an error message, null if no errors occured
+   */
+  public String updateUserPassword(User user, String password) {
+    String errorMessage = checkPasswordRequirements(password);
+    if (errorMessage == null) {
+      user.setPassword(createHash(password));
+      userRepository.save(user);
+    }
+    return errorMessage;
   }
 }

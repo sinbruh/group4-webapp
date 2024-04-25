@@ -49,13 +49,14 @@ public class UserController {
    * Updates user information.
    *
    * @param email Email for which the user is updated
+   * @param userData User data to update the user with
    * @return HTTP 200 OK or error code with error message
    */
   @PutMapping("/upd/{email}")
   public ResponseEntity<String> updateUser(@PathVariable String email,
                                            @RequestBody UserDto userData) {
-    User sessionUser = userService.getSessionUser();
     ResponseEntity<String> response;
+    User sessionUser = userService.getSessionUser();
     if (sessionUser != null && sessionUser.getEmail().equals(email)) {
       if (userData != null) {
         if (userService.updateUser(sessionUser, userData)) {
@@ -66,6 +67,38 @@ public class UserController {
         }
       } else {
         response = new ResponseEntity<>("User data not supplied", HttpStatus.BAD_REQUEST);
+      }
+    } else if (sessionUser == null) {
+      response = new ResponseEntity<>("User data accessible only to authenticated users",
+                                      HttpStatus.UNAUTHORIZED);
+    } else {
+      response = new ResponseEntity<>("User data for other users not accessible",
+                                      HttpStatus.FORBIDDEN);
+    }
+    return response;
+  }
+
+  /**
+   * Updates user password.
+   * 
+   * @param email Email for which the user is updated
+   * @param password Password to update the user password with
+   * @return HTTP 200 OK or error code with error message
+   */
+  public ResponseEntity<String> updateUserPassword(@PathVariable String email,
+                                                   @RequestBody String password) {
+    ResponseEntity<String> response;
+    User sessionUser = userService.getSessionUser();
+    if (sessionUser != null && sessionUser.getEmail().equals(email)) {
+      if (password != null) {
+        String errorMessage = userService.updateUserPassword(sessionUser, password);
+        if (errorMessage == null) {
+          response = new ResponseEntity<>("", HttpStatus.OK);
+        } else {
+          response = new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
+        }
+      } else {
+        response = new ResponseEntity<>("Password not supplied", HttpStatus.BAD_REQUEST);
       }
     } else if (sessionUser == null) {
       response = new ResponseEntity<>("User data accessible only to authenticated users",
