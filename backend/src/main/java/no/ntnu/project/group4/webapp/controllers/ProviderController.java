@@ -39,7 +39,7 @@ public class ProviderController {
     return response;
   }
 
-  @DeleteMapping("/delete/{id}")
+  @DeleteMapping("/del/{id}")
   public HttpStatus deleteOne(@PathVariable Long id) {
     HttpStatus response;
     Optional<Provider> provider = this.providerService.getOne(id);

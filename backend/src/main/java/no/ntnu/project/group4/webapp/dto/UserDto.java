@@ -6,7 +6,6 @@ import java.sql.Date;
  * Data transfer object (DTO) for submitting changes to user data.
  */
 public class UserDto {
-  // TODO Add functionality for changing password
   private String firstName;
   private String lastName;
   private String email;

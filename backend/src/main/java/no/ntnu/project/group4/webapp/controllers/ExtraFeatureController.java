@@ -39,7 +39,7 @@ public class ExtraFeatureController {
     return response;
   }
 
-  @DeleteMapping("/delete/{id}")
+  @DeleteMapping("/del/{id}")
   public HttpStatus deleteOne(@PathVariable Long id) {
     HttpStatus response;
     Optional<ExtraFeature> extraFeature = this.extraFeatureService.getOne(id);
