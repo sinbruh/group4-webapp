@@ -5,12 +5,16 @@ import no.ntnu.project.group4.webapp.models.Configuration;
 import no.ntnu.project.group4.webapp.models.ExtraFeature;
 import no.ntnu.project.group4.webapp.models.Provider;
 import no.ntnu.project.group4.webapp.models.Role;
+import no.ntnu.project.group4.webapp.models.User;
 import no.ntnu.project.group4.webapp.repositories.RoleRepository;
+import no.ntnu.project.group4.webapp.services.AccessUserService;
 import no.ntnu.project.group4.webapp.services.CarService;
 import no.ntnu.project.group4.webapp.services.ConfigurationService;
 import no.ntnu.project.group4.webapp.services.ExtraFeatureService;
 import no.ntnu.project.group4.webapp.services.ProviderService;
+import no.ntnu.project.group4.webapp.services.UserService;
 
+import java.sql.Date;
 import java.util.Iterator;
 
 import org.slf4j.Logger;
@@ -27,6 +31,10 @@ import org.springframework.stereotype.Component;
 public class DataInitializer implements ApplicationListener<ApplicationReadyEvent> {
   @Autowired
   private RoleRepository roleRepository;
+  @Autowired
+  private UserService userService;
+  @Autowired
+  private AccessUserService accessUserService;
   @Autowired
   private CarService carService;
   @Autowired
@@ -50,6 +58,7 @@ public class DataInitializer implements ApplicationListener<ApplicationReadyEven
   public void onApplicationEvent(ApplicationReadyEvent event) {
     this.logger.info("Importing data...");
     this.loadUserRoles();
+    this.loadUsers();
     this.loadCars();
     this.logger.info("Done importing data");
   }
@@ -75,6 +84,38 @@ public class DataInitializer implements ApplicationListener<ApplicationReadyEven
       this.logger.info("Done loading user role data");
     } else {
       this.logger.info("User roles already in the database, not loading data");
+    }
+  }
+
+  private void loadUsers() {
+    boolean isEmpty = true; // Guard condition
+    Iterable<User> existingUsers = this.userService.getAll();
+    Iterator<User> usersIt = existingUsers.iterator();
+    if (usersIt.hasNext()) {
+      isEmpty = false;
+    }
+    this.logger.info("Loading user data...");
+    if (isEmpty) {
+      // TODO Figure out how to use Date with unix timestamp
+      long unixTimestamp = Long.valueOf(946684800 * 1000);
+      Date dateOfBirth = new Date(unixTimestamp);
+      // Create admin user with temporary password
+      User admin = new User("Admin", "User", "admin@user.com", 12345678, "temp", dateOfBirth);
+
+      Role userRole = this.roleRepository.findOneByName("ROLE_USER");
+      Role adminRole = this.roleRepository.findOneByName("ROLE_ADMIN");
+
+      admin.addRole(userRole);
+      admin.addRole(adminRole);
+
+      this.userService.add(admin);
+
+      // Update admin user password to a proper password that uses BCrypt hashing
+      this.accessUserService.updateUserPassword(admin, "adminuser");
+
+      this.logger.info("Done loading user data");
+    } else {
+      this.logger.info("Users already in the database, not loading data");
     }
   }
 
