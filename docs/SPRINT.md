@@ -179,6 +179,50 @@ the goals of the sprint.
 
 ### Accomplishments
 
+All the goals set by the group for this sprint was accomplished; the group finished adding security
+to the website, made much progress in fetching car information from the backend, but still needs to
+display it on the website, and made progess in implementing React to the project. Even though the
+group finished adding security, they expect to change this throughout the rest of the project, as
+they are very likely to add or remove endpoints later.
+
+### Retrospective
+
+The group is still working weekly on the project and is satisfied with the workflow. The group
+still feel like the workload could be distributed better amoung the group members, and that the
+uneven workload could be caused by too vauge goals distributed among the members. If the goals were
+more precise and had clearer points of accomplishment, the group members would perhaps work more
+directed towards finishing the goals they were responsible of. Because of this, the point of
+improvement for the next sprint is to make more precise goals that have clear points of
+accomplishment.
+
+## Week 17
+
+This sprint starts in week 17 and ends in week 18.
+
+Deadline: 03.05.2024
+
+### Goals
+
+The goals of this sprint is to add a Postman test collection that covers most if not all security
+functionalities, to convert the pop-up for user operations to React and to convert the search bar
+in the landing page to React.
+
+### Work distribution
+
+The work is slightly distributed for this sprint, meaning certain group members is responsible to
+reach certain goals of this sprint:
+
+1. Mats is responsible for adding a Postman collection that covers most if not all security
+   functionalities
+2. Mathias is responsible for converting the pop-up for user operations to React
+3. Sindre is responsible for converting the search bar in the landing page to React
+4. TBD
+
+Even though group members have different responsibilities, all members should contribute to reaching
+the goals of the sprint.
+
+### Accomplishments
+
 TBD
 
 ### Retrospective
