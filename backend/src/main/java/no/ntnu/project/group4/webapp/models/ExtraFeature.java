@@ -15,6 +15,9 @@ public class ExtraFeature {
   @ManyToOne
   private Configuration configuration;
 
+  /**
+   * Empty constructor needed for JPA.
+   */
   public ExtraFeature() {
   }
 

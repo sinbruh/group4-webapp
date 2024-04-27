@@ -4,6 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+
 @Entity(name = "car")
 public class Car {
   @Id
@@ -13,6 +14,9 @@ public class Car {
   private String model;
   private int year;
 
+  /**
+   * Empty constructor needed for JPA.
+   */
   public Car() {
   }
 

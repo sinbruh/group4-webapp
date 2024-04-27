@@ -16,6 +16,9 @@ public class Provider {
   @ManyToOne
   private Configuration configuration;
 
+  /**
+   * Empty constructor needed for JPA.
+   */
   public Provider() {
   }
 

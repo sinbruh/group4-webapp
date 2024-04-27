@@ -20,6 +20,9 @@ public class Rental {
   @ManyToOne
   private User user;
 
+  /**
+   * Empty constructor needed for JPA.
+   */
   public Rental() {
   }
 

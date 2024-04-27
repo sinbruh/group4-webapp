@@ -20,6 +20,9 @@ public class Configuration {
   @ManyToOne
   private Car car;
 
+  /**
+   * Empty constructor needed for JPA.
+   */
   public Configuration() {
   }
 
