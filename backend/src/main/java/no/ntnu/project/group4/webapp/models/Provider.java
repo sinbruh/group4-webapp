@@ -1,27 +1,20 @@
 package no.ntnu.project.group4.webapp.models;
 
-import java.util.LinkedHashSet;
-import java.util.Set;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 
 @Entity(name = "provider")
 public class Provider {
-  @JsonIgnore
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
   private String name;
   private int price;
-  @JsonIgnore
-  @ManyToMany(mappedBy = "providers")
-  private Set<Configuration> configurations = new LinkedHashSet<>();
+  @ManyToOne
+  private Configuration configuration;
 
   public Provider() {
   }
@@ -55,12 +48,12 @@ public class Provider {
     this.price = price;
   }
 
-  public Set<Configuration> getConfigurations() {
-    return this.configurations;
+  public Configuration getConfiguration() {
+    return this.configuration;
   }
 
-  public void setConfigurations(Set<Configuration> configurations) {
-    this.configurations = configurations;
+  public void setConfiguration(Configuration configuration) {
+    this.configuration = configuration;
   }
 
   public boolean isValid() {
