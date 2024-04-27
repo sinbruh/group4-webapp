@@ -1,6 +1,6 @@
 package no.ntnu.project.group4.webapp.models;
 
-import java.sql.Date;
+import java.sql.Time;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -13,21 +13,19 @@ public class Rental {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
+  private Time startTime;
+  private Time endTime;
   @ManyToOne
-  private Car car;
+  private Configuration configuration;
   @ManyToOne
   private User user;
-  private Date startDate;
-  private Date endDate;
 
   public Rental() {
   }
 
-  public Rental(Car car, User user, Date startDate, Date endDate) {
-    this.car = car;
-    this.user = user;
-    this.startDate = startDate;
-    this.endDate = endDate;
+  public Rental(Time startTime, Time endTime) {
+    this.startTime = startTime;
+    this.endTime = endTime;
   }
 
   public Long getId() {
@@ -38,12 +36,28 @@ public class Rental {
     this.id = id;
   }
 
-  public Car getCar() {
-    return this.car;
+  public Time getStartTime() {
+    return this.startTime;
   }
 
-  public void setCar(Car car) {
-    this.car = car;
+  public void setStartTime(Time startTime) {
+    this.startTime = startTime;
+  }
+
+  public Time getEndTime() {
+    return this.endTime;
+  }
+
+  public void setEndTime(Time endTime) {
+    this.endTime = endTime;
+  }
+
+  public Configuration getConfiguration() {
+    return this.configuration;
+  }
+
+  public void setConfiguration(Configuration configuration) {
+    this.configuration = configuration;
   }
 
   public User getUser() {
@@ -54,23 +68,7 @@ public class Rental {
     this.user = user;
   }
 
-  public Date getStartDate() {
-    return this.startDate;
-  }
-
-  public void setStartDate(Date startDate) {
-    this.startDate = startDate;
-  }
-
-  public Date getEndDate() {
-    return this.endDate;
-  }
-
-  public void setEndDate(Date endDate) {
-    this.endDate = endDate;
-  }
-
   public boolean isValid() {
-    return this.car != null && this.user != null && this.startDate != null && this.endDate != null;
+    return this.startTime != null && this.endTime != null;
   }
 }
