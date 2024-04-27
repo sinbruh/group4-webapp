@@ -1,26 +1,19 @@
 package no.ntnu.project.group4.webapp.models;
 
-import java.util.LinkedHashSet;
-import java.util.Set;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 
 @Entity(name = "extra_feature")
 public class ExtraFeature {
-  @JsonIgnore
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
   private String name;
-  @JsonIgnore
-  @ManyToMany(mappedBy = "extraFeatures")
-  private Set<Configuration> configurations = new LinkedHashSet<>();
+  @ManyToOne
+  private Configuration configuration;
 
   public ExtraFeature() {
   }
@@ -45,12 +38,12 @@ public class ExtraFeature {
     this.name = name;
   }
 
-  public Set<Configuration> getConfigurations() {
-    return this.configurations;
+  public Configuration getConfiguration() {
+    return this.configuration;
   }
 
-  public void setConfiguraitons(Set<Configuration> configurations) {
-    this.configurations = configurations;
+  public void setConfiguration(Configuration configuration) {
+    this.configuration = configuration;
   }
 
   public boolean isValid() {
