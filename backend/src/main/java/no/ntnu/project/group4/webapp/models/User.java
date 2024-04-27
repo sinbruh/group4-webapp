@@ -8,14 +8,12 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToMany;
 
 import java.sql.Date;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-// TODO Add methods for rentals field
 @Entity(name = "user")
 public class User {
   @Id
@@ -27,8 +25,6 @@ public class User {
   private int phoneNumber;
   private String password;
   private Date dateOfBirth;
-  @OneToMany(mappedBy = "user")
-  private Set<Rental> rentals;
   private boolean active = true;
   @ManyToMany(fetch = FetchType.EAGER)
   @JoinTable(name = "user_role",
