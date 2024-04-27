@@ -1,22 +1,13 @@
 package no.ntnu.project.group4.webapp.models;
 
-import java.util.LinkedHashSet;
-import java.util.Set;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 
 @Entity(name = "configuration")
 public class Configuration {
-  @JsonIgnore
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
@@ -28,20 +19,6 @@ public class Configuration {
   private boolean available;
   @ManyToOne
   private Car car;
-  @ManyToMany
-  @JoinTable(
-    name = "configuration_extra_feature",
-    joinColumns = @JoinColumn(name = "configuration_id"),
-    inverseJoinColumns = @JoinColumn(name = "extra_feature_id")
-  )
-  private Set<ExtraFeature> extraFeatures = new LinkedHashSet<>();
-  @ManyToMany
-  @JoinTable(
-    name = "configuration_provider",
-    joinColumns = @JoinColumn(name = "configuration_id"),
-    inverseJoinColumns = @JoinColumn(name = "provider_id")
-  )
-  private Set<Provider> providers = new LinkedHashSet<>();
 
   public Configuration() {
   }
@@ -118,40 +95,6 @@ public class Configuration {
 
   public void setCar(Car car) {
     this.car = car;
-  }
-
-  public Set<ExtraFeature> getExtraFeatures() {
-    return this.extraFeatures;
-  }
-
-  public void setExtraFeatures(Set<ExtraFeature> extraFeatures) {
-    this.extraFeatures = extraFeatures;
-  }
-
-  public Set<Provider> getProviders() {
-    return this.providers;
-  }
-
-  public void setProviders(Set<Provider> providers) {
-    this.providers = providers;
-  }
-
-  /**
-   * Adds the specified extra feature to the configuration.
-   * 
-   * @param extraFeature The specified extra feature
-   */
-  public void addExtraFeature(ExtraFeature extraFeature) {
-    this.extraFeatures.add(extraFeature);
-  }
-
-  /**
-   * Adds the specified provider to the configuration.
-   * 
-   * @param provider The specified provider
-   */
-  public void addProvider(Provider provider) {
-    this.providers.add(provider);
   }
 
   public boolean isValid() {
