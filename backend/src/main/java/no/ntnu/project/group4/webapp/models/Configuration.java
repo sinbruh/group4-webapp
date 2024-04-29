@@ -16,7 +16,7 @@ public class Configuration {
   private String transmissionType;
   private int numberOfSeats;
   private String location;
-  private boolean available;
+  private boolean available = true;
   @ManyToOne
   private Car car;
 
@@ -33,7 +33,6 @@ public class Configuration {
     this.transmissionType = transmissionType;
     this.numberOfSeats = numberOfSeats;
     this.location = location;
-    this.available = true;
   }
 
   public Long getId() {
