@@ -119,7 +119,6 @@ public class DataInitializer implements ApplicationListener<ApplicationReadyEven
     }
   }
 
-  // TODO Refactor method
   /**
    * Loads the cars into the database if they are not already there.
    */
@@ -132,249 +131,323 @@ public class DataInitializer implements ApplicationListener<ApplicationReadyEven
     }
     this.logger.info("Loading car data...");
     if (isEmpty) {
+      // CAR 1
+
+      // Initialization
       Car car1 = new Car("Volkswagen", "Golf", 2007);
+      Configuration configuration1_1 = new Configuration("Diesel config", "Diesel", "Manual", 5,
+                                                      "Ålesund");
+      ExtraFeature extraFeature1_1_1 = new ExtraFeature("Bluetooth");
+      ExtraFeature extraFeature1_1_2 = new ExtraFeature("DAB radio");
+      ExtraFeature extraFeature1_1_3 = new ExtraFeature("Warming in the chairs");
+      Provider provider1_1_1 = new Provider("Miller Bil", 600);
+      Provider provider1_1_2 = new Provider("Biller Bil", 550);
+
+      configuration1_1.setCar(car1);
+      extraFeature1_1_1.setConfiguration(configuration1_1);
+      extraFeature1_1_2.setConfiguration(configuration1_1);
+      extraFeature1_1_3.setConfiguration(configuration1_1);
+      provider1_1_1.setConfiguration(configuration1_1);
+      provider1_1_2.setConfiguration(configuration1_1);
+
+      // Loading into database
+      carService.add(car1);
+      configurationService.add(configuration1_1);
+      extraFeatureService.add(extraFeature1_1_1);
+      extraFeatureService.add(extraFeature1_1_2);
+      extraFeatureService.add(extraFeature1_1_3);
+      providerService.add(provider1_1_1);
+      providerService.add(provider1_1_2);
+
+      // CAR 2
+
+      // Initialization
       Car car2 = new Car("Tesla", "Model 3", 2019);
+      Configuration configuration2_1 = new Configuration("Electric config", "Electric",
+                                                         "Automatic", 5, "Ålesund");
+      ExtraFeature extraFeature2_1_1 = new ExtraFeature("Autonomous driving");
+      ExtraFeature extraFeature2_1_2 = new ExtraFeature("Long range");
+      ExtraFeature extraFeature2_1_3 = new ExtraFeature("Warming in the seats");
+      Provider provider2_1_1 = new Provider("Biggernes Tesla", 700);
+      Provider provider2_1_2 = new Provider("Tesla Tom (private)", 500);
+
+      configuration2_1.setCar(car2);
+      extraFeature2_1_1.setConfiguration(configuration2_1);
+      extraFeature2_1_2.setConfiguration(configuration2_1);
+      extraFeature2_1_3.setConfiguration(configuration2_1);
+      provider2_1_1.setConfiguration(configuration2_1);
+      provider2_1_2.setConfiguration(configuration2_1);
+
+      // Loading into database
+      carService.add(car2);
+      configurationService.add(configuration2_1);
+      extraFeatureService.add(extraFeature2_1_1);
+      extraFeatureService.add(extraFeature2_1_2);
+      extraFeatureService.add(extraFeature2_1_3);
+      providerService.add(provider2_1_1);
+      providerService.add(provider2_1_2);
+
+      // CAR 3
+
+      // Initialization
       Car car3 = new Car("Tesla", "Model Y", 2022);
+      Configuration configuration3_1 = new Configuration("Electric config", "Electric",
+                                                         "Automatic", 5, "Ålesund");
+      ExtraFeature extraFeature3_1_1 = new ExtraFeature("Four wheel drive");
+      ExtraFeature extraFeature3_1_2 = new ExtraFeature("Glass roof");
+      ExtraFeature extraFeature3_1_3 = new ExtraFeature("Autonomous driving");
+      Provider provider3_1_1 = new Provider("Biggernes Tesla", 900);
+      Provider provider3_1_2 = new Provider("Tesla Tom (private)", 700);
+
+      configuration3_1.setCar(car3);
+      extraFeature3_1_1.setConfiguration(configuration3_1);
+      extraFeature3_1_2.setConfiguration(configuration3_1);
+      extraFeature3_1_3.setConfiguration(configuration3_1);
+      provider3_1_1.setConfiguration(configuration3_1);
+      provider3_1_2.setConfiguration(configuration3_1);
+
+      // Loading into database
+      carService.add(car3);
+      configurationService.add(configuration3_1);
+      extraFeatureService.add(extraFeature3_1_1);
+      extraFeatureService.add(extraFeature3_1_2);
+      extraFeatureService.add(extraFeature3_1_3);
+      providerService.add(provider3_1_1);
+      providerService.add(provider3_1_2);
+
+      // CAR 4
+
+      // Initialization
       Car car4 = new Car("Nissan", "Leaf", 2016);
+      Configuration configuration4_1 = new Configuration("Electric config", "Electric",
+                                                         "Automatic", 5, "Ålesund");
+      Provider provider4_1_1 = new Provider("Auto 9-9", 500);
+      Provider provider4_1_2 = new Provider("Auto 10-10", 500);
+
+      configuration4_1.setCar(car4);
+      provider4_1_1.setConfiguration(configuration4_1);
+      provider4_1_2.setConfiguration(configuration4_1);
+
+      // Loading into database
+      carService.add(car4);
+      configurationService.add(configuration4_1);
+      providerService.add(provider4_1_1);
+      providerService.add(provider4_1_2);
+
+      // CAR 5
+
+      // Initialization
       Car car5 = new Car("Mazda", "2", 2017);
+      Configuration configuration5_1 = new Configuration("Petrol config", "Petrol", "Automatic", 5,
+                                                      "Ålesund");
+      ExtraFeature extraFeature5_1_1 = new ExtraFeature("DAB radio");
+      Provider provider5_1_1 = new Provider("Bilikist", 400);
+
+      configuration5_1.setCar(car5);
+      extraFeature5_1_1.setConfiguration(configuration5_1);
+      provider5_1_1.setConfiguration(configuration5_1);
+
+      // Loading into database
+      carService.add(car5);
+      configurationService.add(configuration5_1);
+      extraFeatureService.add(extraFeature5_1_1);
+      providerService.add(provider5_1_1);
+
+      // CAR 6
+
+      // Initialization
       Car car6 = new Car("Volkswagen", "Transporter", 1978);
+      Configuration configuration6_1 = new Configuration("Petrol config", "Petrol", "Manual", 8,
+                                                      "Ålesund");
+      ExtraFeature extraFeature6_1_1 = new ExtraFeature("Yellow");
+      ExtraFeature extraFeature6_1_2 = new ExtraFeature("Retro");
+      Provider provider6_1_1 = new Provider("Ørsta kommune", 200);
+      Provider provider6_1_2 = new Provider("Sirkelsliper", 70);
+      Provider provider6_1_3 = new Provider("Peace Per", 180);
+
+      configuration6_1.setCar(car6);
+      extraFeature6_1_1.setConfiguration(configuration6_1);
+      extraFeature6_1_2.setConfiguration(configuration6_1);
+      provider6_1_1.setConfiguration(configuration6_1);
+      provider6_1_2.setConfiguration(configuration6_1);
+      provider6_1_3.setConfiguration(configuration6_1);
+
+      // Loading into database
+      carService.add(car6);
+      configurationService.add(configuration6_1);
+      extraFeatureService.add(extraFeature6_1_1);
+      extraFeatureService.add(extraFeature6_1_2);
+      providerService.add(provider6_1_1);
+      providerService.add(provider6_1_2);
+      providerService.add(provider6_1_3);
+
+      // CAR 7
+
+      // Initialization
       Car car7 = new Car("BMW", "M3 Evo", 1988);
+      Configuration configuration7_1 = new Configuration("Petrol config", "Petrol", "Manual", 4,
+                                                      "Ålesund");
+      ExtraFeature extraFeature7_1_1 = new ExtraFeature("Three stripes");
+      ExtraFeature extraFeature7_1_2 = new ExtraFeature("Original tire discs");
+      Provider provider7_1_1 = new Provider("Bilverksted", 400);
+      Provider provider7_1_2 = new Provider("Grabes", 450);
+      Provider provider7_1_3 = new Provider("Djarney", 449);
+
+      configuration7_1.setCar(car7);
+      extraFeature7_1_1.setConfiguration(configuration7_1);
+      extraFeature7_1_2.setConfiguration(configuration7_1);
+      provider7_1_1.setConfiguration(configuration7_1);
+      provider7_1_2.setConfiguration(configuration7_1);
+      provider7_1_3.setConfiguration(configuration7_1);
+
+      // Loading into database
+      carService.add(car7);
+      configurationService.add(configuration7_1);
+      extraFeatureService.add(extraFeature7_1_1);
+      extraFeatureService.add(extraFeature7_1_2);
+      providerService.add(provider7_1_1);
+      providerService.add(provider7_1_2);
+      providerService.add(provider7_1_3);
+
+      // CAR 8
+
+      // Initialization
       Car car8 = new Car("Skoda", "Fabia", 2011);
+      Configuration configuration8_1 = new Configuration("Diesel config", "Diesel", "Automatic", 5,
+                                                      "Ålesund");
+      ExtraFeature extraFeature8_1_1 = new ExtraFeature("Tow hook");
+      Provider provider8_1_1 = new Provider("Sprekksaver", 300);
+      Provider provider8_1_2 = new Provider("Smidig bilforhandler", 229);
+      Provider provider8_1_3 = new Provider("Fossefall bilforhandler", 700);
+
+      configuration8_1.setCar(car8);
+      extraFeature8_1_1.setConfiguration(configuration8_1);
+      provider8_1_1.setConfiguration(configuration8_1);
+      provider8_1_2.setConfiguration(configuration8_1);
+      provider8_1_3.setConfiguration(configuration8_1);
+
+      // Loading into database
+      carService.add(car8);
+      configurationService.add(configuration8_1);
+      extraFeatureService.add(extraFeature8_1_1);
+      providerService.add(provider8_1_1);
+      providerService.add(provider8_1_2);
+      providerService.add(provider8_1_3);
+
+      // CAR 9
+
+      // Initialization
       Car car9 = new Car("Peugeot", "307 SW", 2008);
+      Configuration configuration9_1 = new Configuration("Diesel config", "Diesel", "Manual", 7,
+                                                      "Ålesund");
+      ExtraFeature extraFeature9_1_1 = new ExtraFeature("Travel box on the roof");
+      Provider provider9_1_1 = new Provider("Bertel Ostein", 600);
+      Provider provider9_1_2 = new Provider("Auto 10-10", 550);
+
+      configuration9_1.setCar(car9);
+      extraFeature9_1_1.setConfiguration(configuration9_1);
+      provider9_1_1.setConfiguration(configuration9_1);
+      provider9_1_2.setConfiguration(configuration9_1);
+
+      // Loading into database
+      carService.add(car9);
+      configurationService.add(configuration9_1);
+      extraFeatureService.add(extraFeature9_1_1);
+      providerService.add(provider9_1_1);
+      providerService.add(provider9_1_2);
+
+      // CAR 10
+
+      // Initialization
       Car car10 = new Car("Peugeot", "207", 2007);
+      Configuration configuration10_1 = new Configuration("Diesel config", "Diesel", "Manual", 5,
+                                                      "Ålesund");
+      ExtraFeature extraFeature10_1_1 = new ExtraFeature("Glass window");
+      ExtraFeature extraFeature10_1_2 = new ExtraFeature("Warming in the seats");
+      ExtraFeature extraFeature10_1_3 = new ExtraFeature("Warming in the steering wheel");
+      ExtraFeature extraFeature10_1_4 = new ExtraFeature("Warming in the mirrors");
+      ExtraFeature extraFeature10_1_5 = new ExtraFeature("Warming in the tires");
+      ExtraFeature extraFeature10_1_6 = new ExtraFeature("Warming under the rubber rugs");
+      ExtraFeature extraFeature10_1_7 = new ExtraFeature("Warming 360");
+      Provider provider10_1_1 = new Provider("Bertel Ostein", 500);
+      Provider provider10_1_2 = new Provider("Auto 10-10", 550);
+
+      configuration10_1.setCar(car10);
+      extraFeature10_1_1.setConfiguration(configuration10_1);
+      extraFeature10_1_2.setConfiguration(configuration10_1);
+      extraFeature10_1_3.setConfiguration(configuration10_1);
+      extraFeature10_1_4.setConfiguration(configuration10_1);
+      extraFeature10_1_5.setConfiguration(configuration10_1);
+      extraFeature10_1_6.setConfiguration(configuration10_1);
+      extraFeature10_1_7.setConfiguration(configuration10_1);
+      provider10_1_1.setConfiguration(configuration10_1);
+      provider10_1_2.setConfiguration(configuration10_1);
+
+      // Loading into database
+      carService.add(car10);
+      configurationService.add(configuration10_1);
+      extraFeatureService.add(extraFeature10_1_1);
+      extraFeatureService.add(extraFeature10_1_2);
+      extraFeatureService.add(extraFeature10_1_3);
+      extraFeatureService.add(extraFeature10_1_3);
+      extraFeatureService.add(extraFeature10_1_3);
+      extraFeatureService.add(extraFeature10_1_3);
+      extraFeatureService.add(extraFeature10_1_3);
+      providerService.add(provider10_1_1);
+      providerService.add(provider10_1_2);
+
+      // CAR 11
+
+      // Initialization
       Car car11 = new Car("Peugeot", "3008", 2010);
+      Configuration configuration11_1 = new Configuration("Diesel config", "Diesel", "Manual", 5,
+                                                      "Ålesund");
+      ExtraFeature extraFeature11_1_1 = new ExtraFeature("FM radio");
+      ExtraFeature extraFeature11_1_2 = new ExtraFeature("CD player");
+      ExtraFeature extraFeature11_1_3 = new ExtraFeature("Metallic paint");
+      Provider provider11_1_1 = new Provider("Bertel Ostein", 600);
+      Provider provider11_1_2 = new Provider("Auto 10-10", 600);
+
+      configuration11_1.setCar(car11);
+      extraFeature11_1_1.setConfiguration(configuration11_1);
+      extraFeature11_1_2.setConfiguration(configuration11_1);
+      extraFeature11_1_3.setConfiguration(configuration11_1);
+      provider11_1_1.setConfiguration(configuration11_1);
+      provider11_1_2.setConfiguration(configuration11_1);
+
+      // Loading into database
+      carService.add(car11);
+      configurationService.add(configuration11_1);
+      extraFeatureService.add(extraFeature11_1_1);
+      extraFeatureService.add(extraFeature11_1_2);
+      extraFeatureService.add(extraFeature11_1_3);
+      providerService.add(provider11_1_1);
+      providerService.add(provider11_1_2);
+
+      // CAR 12
+
+      // Initialization
       Car car12 = new Car("Peugeot", "iOn", 2015);
-      
-      ExtraFeature exFeature1 = new ExtraFeature("Bluetooth");
-      ExtraFeature exFeature2 = new ExtraFeature("DAB radio");
-      ExtraFeature exFeature3 = new ExtraFeature("Warming in the chairs");
-      ExtraFeature exFeature4 = new ExtraFeature("Autonomous driving");
-      ExtraFeature exFeature5 = new ExtraFeature("Long range");
-      ExtraFeature exFeature6 = new ExtraFeature("Warming in the seats");
-      ExtraFeature exFeature7 = new ExtraFeature("Four wheel drive");
-      ExtraFeature exFeature8 = new ExtraFeature("Glass roof");
-      ExtraFeature exFeature9 = new ExtraFeature("Yellow");
-      ExtraFeature exFeature10 = new ExtraFeature("Retro");
-      ExtraFeature exFeature11 = new ExtraFeature("Three stripes");
-      ExtraFeature exFeature12 = new ExtraFeature("Original tire discs");
-      ExtraFeature exFeature13 = new ExtraFeature("Tow hook");
-      ExtraFeature exFeature14 = new ExtraFeature("Travel box on the roof");
-      ExtraFeature exFeature15 = new ExtraFeature("Glass window");
-      ExtraFeature exFeature16 = new ExtraFeature("Warming in the steering wheel");
-      ExtraFeature exFeature17 = new ExtraFeature("Warming in the mirrors");
-      ExtraFeature exFeature18 = new ExtraFeature("Warming in the tires");
-      ExtraFeature exFeature19 = new ExtraFeature("Warming under the rubber rugs");
-      ExtraFeature exFeature20 = new ExtraFeature("Warming 360");
-      ExtraFeature exFeature21 = new ExtraFeature("FM radio");
-      ExtraFeature exFeature22 = new ExtraFeature("CD player");
-      ExtraFeature exFeature23 = new ExtraFeature("Metallic paint");
-      ExtraFeature exFeature24 = new ExtraFeature("Five doors");
-      ExtraFeature exFeature25 = new ExtraFeature("Very economic");
+      Configuration configuration12_1 = new Configuration("Electric config", "Electric",
+                                                          "Automatic", 4, "Ålesund");
+      ExtraFeature extraFeature12_1_1 = new ExtraFeature("Five doors");
+      ExtraFeature extraFeature12_1_2 = new ExtraFeature("Very economic");
+      Provider provider12_1_1 = new Provider("Bertel Ostein", 200);
+      Provider provider12_1_2 = new Provider("Auto 10-10", 201);
 
-      Provider provider1 = new Provider("Miller Bil", 600);
-      Provider provider2 = new Provider("Biller Bil", 550);
-      Provider provider3 = new Provider("Biggernes Tesla", 700);
-      Provider provider4 = new Provider("Tesla Tom (private)", 500);
-      Provider provider5 = new Provider("Biggernes Tesla", 900);
-      Provider provider6 = new Provider("Tesla Tom (private)", 700);
-      Provider provider7 = new Provider("Auto 9-9", 500);
-      Provider provider8 = new Provider("Auto 10-10", 500);
-      Provider provider9 = new Provider("Bilikist", 400);
-      Provider provider10 = new Provider("Ørsta kommune", 200);
-      Provider provider11 = new Provider("Sirkelsliper", 70);
-      Provider provider12 = new Provider("Peace Per", 180);
-      Provider provider13 = new Provider("Bilverksted", 400);
-      Provider provider14 = new Provider("Grabes", 450);
-      Provider provider15 = new Provider("Djarney", 449);
-      Provider provider16 = new Provider("Sprekksaver", 300);
-      Provider provider17 = new Provider("Smidig bilforhandler", 229);
-      Provider provider18 = new Provider("Fossefall bilforhandler", 700);
-      Provider provider19 = new Provider("Bertel Ostein", 600);
-      Provider provider20 = new Provider("Auto 10-10", 550);
-      Provider provider21 = new Provider("Bertel Ostein", 500);
-      Provider provider22 = new Provider("Auto 10-10", 600);
-      Provider provider23 = new Provider("Bertel Ostein", 200);
-      Provider provider24 = new Provider("Auto 10-10", 201);
+      configuration12_1.setCar(car12);
+      extraFeature12_1_1.setConfiguration(configuration12_1);
+      extraFeature12_1_2.setConfiguration(configuration12_1);
+      provider12_1_1.setConfiguration(configuration12_1);
+      provider12_1_2.setConfiguration(configuration12_1);
 
-      Configuration config1 = new Configuration("Diesel 1", "Diesel", "Manual", 5,
-                                                       "Ålesund");
-      Configuration config2 = new Configuration("Electric 1", "Electric", "Automatic", 5,
-                                                       "Ålesund");
-      Configuration config3 = new Configuration("Electric 2", "Electric", "Automatic", 5,
-                                                       "Ålesund");
-      Configuration config4 = new Configuration("Electric 3", "Electric", "Automatic", 5,
-                                                       "Ålesund");
-      Configuration config5 = new Configuration("Petrol 1", "Petrol", "Automatic", 5,
-                                                       "Ålesund");
-      Configuration config6 = new Configuration("Petrol 2", "Petrol", "Manual", 8,
-                                                       "Ålesund");
-      Configuration config7 = new Configuration("Petrol 3", "Petrol", "Manual", 4,
-                                                       "Ålesund");
-      Configuration config8 = new Configuration("Diesel 2", "Diesel", "Automatic", 5,
-                                                       "Ålesund");
-      Configuration config9 = new Configuration("Diesel 3", "Diesel", "Manual", 7,
-                                                       "Ålesund");
-      Configuration config10 = new Configuration("Diesel 4", "Diesel", "Manual", 5,
-                                                        "Ålesund");
-      Configuration config11 = new Configuration("Diesel 5", "Diesel", "Manual", 5,
-                                                        "Ålesund");
-      Configuration config12 = new Configuration("Electric 4", "Electric", "Automatic", 4,
-                                                        "Ålesund");
-
-      config1.setCar(car1);
-      config1.addExtraFeature(exFeature1);
-      config1.addExtraFeature(exFeature2);
-      config1.addExtraFeature(exFeature3);
-      config1.addProvider(provider1);
-      config1.addProvider(provider2);
-
-      config2.setCar(car2);
-      config2.addExtraFeature(exFeature4);
-      config2.addExtraFeature(exFeature5);
-      config2.addExtraFeature(exFeature6);
-      config2.addProvider(provider3);
-      config2.addProvider(provider4);
-
-      config3.setCar(car3);
-      config3.addExtraFeature(exFeature7);
-      config3.addExtraFeature(exFeature8);
-      config3.addExtraFeature(exFeature4);
-      config3.addProvider(provider5);
-      config3.addProvider(provider6);
-
-      config4.setCar(car4);
-      config4.addProvider(provider7);
-      config4.addProvider(provider8);
-
-      config5.setCar(car5);
-      config5.addExtraFeature(exFeature2);
-      config5.addProvider(provider9);
-
-      config6.setCar(car6);
-      config6.addExtraFeature(exFeature9);
-      config6.addExtraFeature(exFeature10);
-      config6.addProvider(provider10);
-      config6.addProvider(provider11);
-      config6.addProvider(provider12);
-
-      config7.setCar(car7);
-      config7.addExtraFeature(exFeature11);
-      config7.addExtraFeature(exFeature12);
-      config7.addProvider(provider13);
-      config7.addProvider(provider14);
-      config7.addProvider(provider15);
-
-      config8.setCar(car8);
-      config8.addExtraFeature(exFeature13);
-      config8.addProvider(provider16);
-      config8.addProvider(provider17);
-      config8.addProvider(provider18);
-
-      config9.setCar(car9);
-      config9.addExtraFeature(exFeature14);
-      config9.addProvider(provider19);
-      config9.addProvider(provider20);
-
-      config10.setCar(car10);
-      config10.addExtraFeature(exFeature15);
-      config10.addExtraFeature(exFeature3);
-      config10.addExtraFeature(exFeature16);
-      config10.addExtraFeature(exFeature17);
-      config10.addExtraFeature(exFeature18);
-      config10.addExtraFeature(exFeature19);
-      config10.addExtraFeature(exFeature20);
-      config10.addProvider(provider21);
-      config10.addProvider(provider20);
-
-      config11.setCar(car11);
-      config11.addExtraFeature(exFeature21);
-      config11.addExtraFeature(exFeature22);
-      config11.addExtraFeature(exFeature23);
-      config11.addProvider(provider19);
-      config11.addProvider(provider22);
-
-      config12.setCar(car12);
-      config12.addExtraFeature(exFeature24);
-      config12.addExtraFeature(exFeature25);
-      config12.addProvider(provider23);
-      config12.addProvider(provider24);
-
-      this.carService.add(car1);
-      this.carService.add(car2);
-      this.carService.add(car3);
-      this.carService.add(car4);
-      this.carService.add(car5);
-      this.carService.add(car6);
-      this.carService.add(car7);
-      this.carService.add(car8);
-      this.carService.add(car9);
-      this.carService.add(car10);
-      this.carService.add(car11);
-      this.carService.add(car12);
-
-      this.extraFeatureService.add(exFeature1);
-      this.extraFeatureService.add(exFeature2);
-      this.extraFeatureService.add(exFeature3);
-      this.extraFeatureService.add(exFeature4);
-      this.extraFeatureService.add(exFeature5);
-      this.extraFeatureService.add(exFeature6);
-      this.extraFeatureService.add(exFeature7);
-      this.extraFeatureService.add(exFeature8);
-      this.extraFeatureService.add(exFeature9);
-      this.extraFeatureService.add(exFeature10);
-      this.extraFeatureService.add(exFeature11);
-      this.extraFeatureService.add(exFeature12);
-      this.extraFeatureService.add(exFeature13);
-      this.extraFeatureService.add(exFeature14);
-      this.extraFeatureService.add(exFeature15);
-      this.extraFeatureService.add(exFeature16);
-      this.extraFeatureService.add(exFeature17);
-      this.extraFeatureService.add(exFeature18);
-      this.extraFeatureService.add(exFeature19);
-      this.extraFeatureService.add(exFeature20);
-      this.extraFeatureService.add(exFeature21);
-      this.extraFeatureService.add(exFeature22);
-      this.extraFeatureService.add(exFeature23);
-      this.extraFeatureService.add(exFeature24);
-      this.extraFeatureService.add(exFeature25);
-
-      this.providerService.add(provider1);
-      this.providerService.add(provider2);
-      this.providerService.add(provider3);
-      this.providerService.add(provider4);
-      this.providerService.add(provider5);
-      this.providerService.add(provider6);
-      this.providerService.add(provider7);
-      this.providerService.add(provider8);
-      this.providerService.add(provider9);
-      this.providerService.add(provider10);
-      this.providerService.add(provider11);
-      this.providerService.add(provider12);
-      this.providerService.add(provider13);
-      this.providerService.add(provider14);
-      this.providerService.add(provider15);
-      this.providerService.add(provider16);
-      this.providerService.add(provider17);
-      this.providerService.add(provider18);
-      this.providerService.add(provider19);
-      this.providerService.add(provider20);
-      this.providerService.add(provider21);
-      this.providerService.add(provider22);
-      this.providerService.add(provider23);
-      this.providerService.add(provider24);
-
-      this.configurationService.add(config1);
-      this.configurationService.add(config2);
-      this.configurationService.add(config3);
-      this.configurationService.add(config4);
-      this.configurationService.add(config5);
-      this.configurationService.add(config6);
-      this.configurationService.add(config7);
-      this.configurationService.add(config8);
-      this.configurationService.add(config9);
-      this.configurationService.add(config10);
-      this.configurationService.add(config11);
-      this.configurationService.add(config12);
+      // Loading into database
+      carService.add(car12);
+      configurationService.add(configuration12_1);
+      extraFeatureService.add(extraFeature12_1_1);
+      extraFeatureService.add(extraFeature12_1_2);
+      providerService.add(provider12_1_1);
+      providerService.add(provider12_1_2);
 
       this.logger.info("Done loading car data");
     } else {
