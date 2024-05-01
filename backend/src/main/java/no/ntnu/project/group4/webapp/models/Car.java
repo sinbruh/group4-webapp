@@ -1,14 +1,12 @@
 package no.ntnu.project.group4.webapp.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+
 @Entity(name = "car")
 public class Car {
-  @JsonIgnore
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
@@ -16,6 +14,9 @@ public class Car {
   private String model;
   private int year;
 
+  /**
+   * Empty constructor needed for JPA.
+   */
   public Car() {
   }
 

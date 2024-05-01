@@ -142,7 +142,6 @@ public class AccessUserService implements UserDetailsService {
     return BCrypt.hashpw(password, BCrypt.gensalt());
   }
 
-  // TODO Fix return clause
   /**
    * Updates user information except password.
    *

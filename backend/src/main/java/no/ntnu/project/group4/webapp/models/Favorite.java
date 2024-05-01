@@ -6,39 +6,28 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 
-@Entity(name = "extra_feature")
-public class ExtraFeature {
+@Entity(name = "favorite")
+public class Favorite {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
-  private String name;
+  @ManyToOne
+  private User user;
   @ManyToOne
   private Configuration configuration;
 
   /**
    * Empty constructor needed for JPA.
    */
-  public ExtraFeature() {
+  public Favorite() {
   }
 
-  public ExtraFeature(String name) {
-    this.name = name;
+  public User getUser() {
+    return this.user;
   }
 
-  public Long getId() {
-    return this.id;
-  }
-
-  public void setId(Long id) {
-    this.id = id;
-  }
-
-  public String getName() {
-    return this.name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
+  public void setUser(User user) {
+    this.user = user;
   }
 
   public Configuration getConfiguration() {
@@ -47,9 +36,5 @@ public class ExtraFeature {
 
   public void setConfiguration(Configuration configuration) {
     this.configuration = configuration;
-  }
-
-  public boolean isValid() {
-    return !this.name.isBlank();
   }
 }
