@@ -3,12 +3,15 @@ package no.ntnu.project.group4.webapp.models;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 
 @Entity(name = "configuration")
 public class Configuration {
@@ -21,8 +24,15 @@ public class Configuration {
   private int numberOfSeats;
   private String location;
   private boolean available = true;
+  @JsonIgnore
   @ManyToOne
   private Car car;
+  @OneToMany(mappedBy = "configuration")
+  private Set<ExtraFeature> extraFeatures = new LinkedHashSet<>();
+  @OneToMany(mappedBy = "configuration")
+  private Set<Provider> providers = new LinkedHashSet<>();
+  @OneToMany(mappedBy = "configuration")
+  private Set<Rental> rentals = new LinkedHashSet<>();
   @ManyToMany(mappedBy = "favorites")
   private Set<User> favoritedUsers = new LinkedHashSet<>();
 
@@ -103,6 +113,30 @@ public class Configuration {
 
   public void setCar(Car car) {
     this.car = car;
+  }
+
+  public Set<ExtraFeature> getExtraFeatures() {
+    return this.extraFeatures;
+  }
+
+  public void setExtraFeatures(Set<ExtraFeature> extraFeatures) {
+    this.extraFeatures = extraFeatures;
+  }
+
+  public Set<Provider> getProviders() {
+    return this.providers;
+  }
+
+  public void setProviders(Set<Provider> providers) {
+    this.providers = providers;
+  }
+
+  public Set<Rental> getRentals() {
+    return this.rentals;
+  }
+
+  public void setRentals(Set<Rental> rentals) {
+    this.rentals = rentals;
   }
 
   public Set<User> getFavoritedUsers() {

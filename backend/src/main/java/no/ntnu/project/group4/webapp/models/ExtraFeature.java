@@ -1,5 +1,7 @@
 package no.ntnu.project.group4.webapp.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -12,6 +14,7 @@ public class ExtraFeature {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
   private String name;
+  @JsonIgnore
   @ManyToOne
   private Configuration configuration;
 

@@ -2,6 +2,8 @@ package no.ntnu.project.group4.webapp.models;
 
 import java.sql.Time;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -15,8 +17,10 @@ public class Rental {
   private Long id;
   private Time startTime;
   private Time endTime;
+  @JsonIgnore
   @ManyToOne
   private Configuration configuration;
+  @JsonIgnore
   @ManyToOne
   private User user;
 

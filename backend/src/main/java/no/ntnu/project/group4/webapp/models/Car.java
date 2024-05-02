@@ -1,9 +1,13 @@
 package no.ntnu.project.group4.webapp.models;
 
+import java.util.LinkedHashSet;
+import java.util.Set;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 
 @Entity(name = "car")
 public class Car {
@@ -13,6 +17,8 @@ public class Car {
   private String make;
   private String model;
   private int year;
+  @OneToMany(mappedBy = "car")
+  private Set<Configuration> configurations = new LinkedHashSet<>();
 
   /**
    * Empty constructor needed for JPA.
@@ -56,6 +62,14 @@ public class Car {
 
   public void setYear(int year) {
     this.year = year;
+  }
+
+  public Set<Configuration> getConfigurations() {
+    return this.configurations;
+  }
+
+  public void setConfigurations(Set<Configuration> configurations) {
+    this.configurations = configurations;
   }
 
   public boolean isValid() {
