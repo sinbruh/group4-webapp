@@ -28,12 +28,12 @@ public class ConfigurationController {
   @Autowired
   private CarService carService;
 
-  @GetMapping("/get")
+  @GetMapping
   public Iterable<Configuration> getAll() {
     return this.configurationService.getAll();
   }
 
-  @GetMapping("/get/{id}")
+  @GetMapping("/{id}")
   public ResponseEntity<Configuration> get(@PathVariable Long id) {
     ResponseEntity<Configuration> response;
     Optional<Configuration> configuration = this.configurationService.getOne(id);
@@ -52,7 +52,7 @@ public class ConfigurationController {
    * @param configuration The specified configuration
    * @return 201 CREATED on success or 400 BAD REQUEST or 404 NOT FOUND on error
    */
-  @PostMapping("/add/cars/{id}")
+  @PostMapping("/cars/{id}")
   public ResponseEntity<String> add(@PathVariable Long id,
                                     @RequestBody Configuration configuration) {
     ResponseEntity<String> response;
@@ -77,7 +77,7 @@ public class ConfigurationController {
    * @param id The specified ID
    * @return 200 OK on success or 404 NOT FOUND on error
    */
-  @DeleteMapping("/del/{id}")
+  @DeleteMapping("/{id}")
   public ResponseEntity<String> delete(@PathVariable Long id) {
     ResponseEntity<String> response;
     Optional<Configuration> configuration = this.configurationService.getOne(id);

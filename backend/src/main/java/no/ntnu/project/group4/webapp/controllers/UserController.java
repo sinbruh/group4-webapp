@@ -28,7 +28,7 @@ public class UserController {
    * @param email Email for which the user is requested
    * @return The user information or error code when not authorized
    */
-  @GetMapping("/get/{email}")
+  @GetMapping("/{email}")
   public ResponseEntity<?> getUser(@PathVariable String email) {
     User sessionUser = userService.getSessionUser();
     if (sessionUser != null && sessionUser.getEmail().equals(email)) {
@@ -52,7 +52,7 @@ public class UserController {
    * @param userData User data to update the user with
    * @return HTTP 200 OK or error code with error message
    */
-  @PutMapping("/upd/user/{email}")
+  @PutMapping("/user/{email}")
   public ResponseEntity<String> updateUser(@PathVariable String email,
                                            @RequestBody UserDto userData) {
     ResponseEntity<String> response;
@@ -85,7 +85,7 @@ public class UserController {
    * @param password Password to update the user password with
    * @return HTTP 200 OK or error code with error message
    */
-  @PutMapping("/upd/password/{email}")
+  @PutMapping("/password/{email}")
   public ResponseEntity<String> updateUserPassword(@PathVariable String email,
                                                    @RequestBody String password) {
     ResponseEntity<String> response;

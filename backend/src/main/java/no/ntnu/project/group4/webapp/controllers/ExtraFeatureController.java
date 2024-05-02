@@ -28,12 +28,12 @@ public class ExtraFeatureController {
   @Autowired
   private ConfigurationService configurationService;
 
-  @GetMapping("/get")
+  @GetMapping
   public Iterable<ExtraFeature> getAll() {
     return this.extraFeatureService.getAll();
   }
 
-  @GetMapping("/get/{id}")
+  @GetMapping("/{id}")
   public ResponseEntity<ExtraFeature> get(@PathVariable Long id) {
     ResponseEntity<ExtraFeature> response;
     Optional<ExtraFeature> extraFeature = this.extraFeatureService.getOne(id);
@@ -52,7 +52,7 @@ public class ExtraFeatureController {
    * @param extraFeature The specified extra feature
    * @return 201 CREATED on success or 400 BAD REQUEST or 404 NOT FOUND on error
    */
-  @PostMapping("/add/configurations/{id}")
+  @PostMapping("/configurations/{id}")
   public ResponseEntity<String> add(@PathVariable Long id,
                                     @RequestBody ExtraFeature extraFeature) {
     ResponseEntity<String> response;
@@ -77,7 +77,7 @@ public class ExtraFeatureController {
    * @param id The specified ID
    * @return 200 OK on success or 404 NOT FOUND on error
    */
-  @DeleteMapping("/del/{id}")
+  @DeleteMapping("/{id}")
   public ResponseEntity<String> delete(@PathVariable Long id) {
     ResponseEntity<String> response;
     Optional<ExtraFeature> extraFeature = this.extraFeatureService.getOne(id);

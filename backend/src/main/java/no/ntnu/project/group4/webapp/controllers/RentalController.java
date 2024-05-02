@@ -32,12 +32,12 @@ public class RentalController {
   @Autowired
   private ConfigurationService configurationService;
 
-  @GetMapping("/get")
+  @GetMapping
   public Iterable<Rental> getAll() {
     return rentalService.getAll();
   }
 
-  @GetMapping("/get/{id}")
+  @GetMapping("/{id}")
   public ResponseEntity<?> get(@PathVariable Long id) {
     ResponseEntity<?> response;
     User sessionUser = userService.getSessionUser();
@@ -67,7 +67,7 @@ public class RentalController {
    * @param rental The specified rental
    * @return 201 CREATED on success or 400 BAD REQUEST or 404 NOT FOUND on error
    */
-  @PostMapping("/add/configurations/{id}")
+  @PostMapping("/configurations/{id}")
   public ResponseEntity<String> addRental(@PathVariable Long id, @RequestBody Rental rental) {
     ResponseEntity<String> response;
     Optional<Configuration> configuration = this.configurationService.getOne(id);
@@ -92,7 +92,7 @@ public class RentalController {
    * @param id The specified ID
    * @return 200 OK on success or 401 UNAUTHORIZED, 403 FORBIDDEN or 404 NOT FOUND on error
    */
-  @DeleteMapping("/del/{id}")
+  @DeleteMapping("/{id}")
   public ResponseEntity<String> deleteRental(@PathVariable Long id) {
     ResponseEntity<String> response;
     User sessionUser = userService.getSessionUser();

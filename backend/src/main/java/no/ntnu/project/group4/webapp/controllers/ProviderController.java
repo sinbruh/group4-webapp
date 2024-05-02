@@ -28,12 +28,12 @@ public class ProviderController {
   @Autowired
   private ConfigurationService configurationService;
 
-  @GetMapping("/get")
+  @GetMapping
   public Iterable<Provider> getAll() {
     return this.providerService.getAll();
   }
 
-  @GetMapping("/get/{id}")
+  @GetMapping("/{id}")
   public ResponseEntity<Provider> get(@PathVariable Long id) {
     ResponseEntity<Provider> response;
     Optional<Provider> provider = this.providerService.getOne(id);
@@ -52,7 +52,7 @@ public class ProviderController {
    * @param provider The specified provider
    * @return 201 CREATED on success or 400 BAD REQUEST or 404 NOT FOUND on error
    */
-  @PostMapping("/add/configurations/{id}")
+  @PostMapping("/configurations/{id}")
   public ResponseEntity<String> add(@PathVariable Long id,
                                     @RequestBody Provider provider) {
     ResponseEntity<String> response;
@@ -77,7 +77,7 @@ public class ProviderController {
    * @param id The specified ID
    * @return 200 OK on success or 404 NOT FOUND on error
    */
-  @DeleteMapping("/del/{id}")
+  @DeleteMapping("/{id}")
   public ResponseEntity<String> delete(@PathVariable Long id) {
     ResponseEntity<String> response;
     Optional<Provider> provider = this.providerService.getOne(id);

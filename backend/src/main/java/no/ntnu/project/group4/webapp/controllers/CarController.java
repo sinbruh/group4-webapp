@@ -24,12 +24,12 @@ public class CarController {
   @Autowired
   private CarService carService;
 
-  @GetMapping("/get")
+  @GetMapping
   public Iterable<Car> getAll() {
     return this.carService.getAll();
   }
 
-  @GetMapping("/get/{id}")
+  @GetMapping("/{id}")
   public ResponseEntity<Car> get(@PathVariable Long id) {
     ResponseEntity<Car> response;
     Optional<Car> car = this.carService.getOne(id);
@@ -47,7 +47,7 @@ public class CarController {
    * @param car The specified car
    * @return 201 CREATED on success or 400 BAD REQUEST on error
    */
-  @PostMapping("/add")
+  @PostMapping
   public ResponseEntity<String> add(@RequestBody Car car) {
     ResponseEntity<String> response;
     try {
@@ -65,7 +65,7 @@ public class CarController {
    * @param id The specified ID
    * @return 200 OK on success or 404 NOT FOUND on error
    */
-  @DeleteMapping("/del/{id}")
+  @DeleteMapping("/{id}")
   public ResponseEntity<String> delete(@PathVariable Long id) {
     ResponseEntity<String> response;
     Optional<Car> car = this.carService.getOne(id);
