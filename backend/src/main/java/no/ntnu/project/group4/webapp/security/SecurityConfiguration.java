@@ -58,42 +58,36 @@ public class SecurityConfiguration {
         .cors(AbstractHttpConfigurer::disable)
         // The following is accessible only for admin users
         .authorizeHttpRequests(
-          (auth) -> auth.requestMatchers("/api/cars/del/{id}").hasRole("ADMIN")
+          (auth) -> auth.requestMatchers("/api/**/add").hasRole("ADMIN")
         )
         .authorizeHttpRequests(
-          (auth) -> auth.requestMatchers("/api/configurations/del/{id}").hasRole("ADMIN")
-        )
-        .authorizeHttpRequests(
-          (auth) -> auth.requestMatchers("/api/extrafeatures/del/{id}").hasRole("ADMIN")
-        )
-        .authorizeHttpRequests(
-          (auth) -> auth.requestMatchers("/api/providers/del/{id}").hasRole("ADMIN")
+          (auth) -> auth.requestMatchers("/api/**/del/**").hasRole("ADMIN")
         )
         .authorizeHttpRequests(
           (auth) -> auth.requestMatchers("/api/rentals/get").hasRole("ADMIN")
         )
         // The following is accessible for users
         .authorizeHttpRequests(
-          (auth) -> auth.requestMatchers("/api/rentals/get/{id}").hasRole("USER")
+          (auth) -> auth.requestMatchers("/api/rentals/get/**").hasRole("USER")
         )
         .authorizeHttpRequests(
-          (auth) -> auth.requestMatchers("/api/rentals/add").hasRole("USER")
+          (auth) -> auth.requestMatchers("/api/rentals/add/**").hasRole("USER")
         )
         .authorizeHttpRequests(
-          (auth) -> auth.requestMatchers("/api/rentals/del/{id}").hasRole("USER")
+          (auth) -> auth.requestMatchers("/api/rentals/del/**").hasRole("USER")
         )
         .authorizeHttpRequests(
-          (auth) -> auth.requestMatchers("/api/users").hasRole("USER")
+          (auth) -> auth.requestMatchers("/api/users/**").hasRole("USER")
         )
         // The following is accessible for everyone
         .authorizeHttpRequests((auth) -> auth.requestMatchers("/api/cars/get").permitAll())
-        .authorizeHttpRequests((auth) -> auth.requestMatchers("/api/cars/get/{id}").permitAll())
+        .authorizeHttpRequests((auth) -> auth.requestMatchers("/api/cars/get/**").permitAll())
         .authorizeHttpRequests((auth) -> auth.requestMatchers("/api/configurations/get").permitAll())
-        .authorizeHttpRequests((auth) -> auth.requestMatchers("/api/configurations/get/{id}").permitAll())
+        .authorizeHttpRequests((auth) -> auth.requestMatchers("/api/configurations/get/**").permitAll())
         .authorizeHttpRequests((auth) -> auth.requestMatchers("/api/extrafeatures/get").permitAll())
-        .authorizeHttpRequests((auth) -> auth.requestMatchers("/api/extrafeatures/get/{id}").permitAll())
+        .authorizeHttpRequests((auth) -> auth.requestMatchers("/api/extrafeatures/get/**").permitAll())
         .authorizeHttpRequests((auth) -> auth.requestMatchers("/api/providers/get").permitAll())
-        .authorizeHttpRequests((auth) -> auth.requestMatchers("/api/providers/get/{id}").permitAll())
+        .authorizeHttpRequests((auth) -> auth.requestMatchers("/api/providers/get/**").permitAll())
         // Authentication and registering is accessible for everyone
         .authorizeHttpRequests((auth) -> auth.requestMatchers("/api/authenticate").permitAll())
         .authorizeHttpRequests((auth) -> auth.requestMatchers("/api/register").permitAll())
