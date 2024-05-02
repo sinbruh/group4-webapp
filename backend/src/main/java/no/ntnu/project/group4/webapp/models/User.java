@@ -32,6 +32,12 @@ public class User {
     inverseJoinColumns = @JoinColumn(name = "role_id")
   )
   private Set<Role> roles = new LinkedHashSet<>();
+  @ManyToMany(fetch = FetchType.EAGER)
+  @JoinTable(name = "user_configuration",
+    joinColumns = @JoinColumn(name = "user_id"),
+    inverseJoinColumns = @JoinColumn(name = "configuration_id")
+  )
+  private Set<Configuration> favorites = new LinkedHashSet<>();
 
   /**
    * Empty constructor needed for JPA.
@@ -121,6 +127,14 @@ public class User {
     this.roles = roles;
   }
 
+  public Set<Configuration> getFavorites() {
+    return this.favorites;
+  }
+
+  public void setFavorites(Set<Configuration> favorites) {
+    this.favorites = favorites;
+  }
+
   /**
    * Adds the specified role to the user.
    * 
@@ -128,6 +142,15 @@ public class User {
    */
   public void addRole(Role role) {
     this.roles.add(role);
+  }
+
+  /**
+   * Adds the specified configuration to the user favorites.
+   * 
+   * @param configuration The specified configuration
+   */
+  public void addFavorite(Configuration configuration) {
+    this.favorites.add(configuration);
   }
 
   /**

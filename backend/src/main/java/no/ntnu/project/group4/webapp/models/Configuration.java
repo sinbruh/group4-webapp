@@ -1,9 +1,13 @@
 package no.ntnu.project.group4.webapp.models;
 
+import java.util.LinkedHashSet;
+import java.util.Set;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 
 @Entity(name = "configuration")
@@ -19,6 +23,8 @@ public class Configuration {
   private boolean available = true;
   @ManyToOne
   private Car car;
+  @ManyToMany(mappedBy = "favorites")
+  private Set<User> favoritedUsers = new LinkedHashSet<>();
 
   /**
    * Empty constructor needed for JPA.
@@ -97,6 +103,14 @@ public class Configuration {
 
   public void setCar(Car car) {
     this.car = car;
+  }
+
+  public Set<User> getFavoritedUsers() {
+    return this.favoritedUsers;
+  }
+
+  public void setFavoritedUsers(Set<User> favoritedUsers) {
+    this.favoritedUsers = favoritedUsers;
   }
 
   public boolean isValid() {
