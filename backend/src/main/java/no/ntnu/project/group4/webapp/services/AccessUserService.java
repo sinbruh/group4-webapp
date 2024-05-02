@@ -175,4 +175,13 @@ public class AccessUserService implements UserDetailsService {
     }
     return errorMessage;
   }
+
+  /**
+   * Deletes user from database.
+   * 
+   * @param user User to delete
+   */
+  public void deleteUser(User user) {
+    userRepository.delete(user);
+  }
 }

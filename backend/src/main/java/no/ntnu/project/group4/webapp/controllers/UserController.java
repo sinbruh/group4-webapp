@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -101,6 +102,29 @@ public class UserController {
       } else {
         response = new ResponseEntity<>("Password not supplied", HttpStatus.BAD_REQUEST);
       }
+    } else if (sessionUser == null) {
+      response = new ResponseEntity<>("User data accessible only to authenticated users",
+                                      HttpStatus.UNAUTHORIZED);
+    } else {
+      response = new ResponseEntity<>("User data for other users not accessible",
+                                      HttpStatus.FORBIDDEN);
+    }
+    return response;
+  }
+
+  /**
+   * Deletes user.
+   * 
+   * @param email Email for which the user is deleted
+   * @return HTTP 200 OK or error code when not authorized
+   */
+  @DeleteMapping("/{email}")
+  public ResponseEntity<String> deleteUser(@PathVariable String email) {
+    ResponseEntity<String> response;
+    User sessionUser = userService.getSessionUser();
+    if (sessionUser != null && sessionUser.getEmail().equals(email)) {
+      userService.deleteUser(sessionUser);
+      response = new ResponseEntity<>("", HttpStatus.OK);
     } else if (sessionUser == null) {
       response = new ResponseEntity<>("User data accessible only to authenticated users",
                                       HttpStatus.UNAUTHORIZED);
