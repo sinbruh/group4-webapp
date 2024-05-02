@@ -156,6 +156,15 @@ public class User {
   }
 
   /**
+   * Adds the specified rental to the user.
+   * 
+   * @param rental The specified rental
+   */
+  public void addRental(Rental rental) {
+    this.rentals.add(rental);
+  }
+
+  /**
    * Adds the specified configuration to the user favorites.
    * 
    * @param configuration The specified configuration
