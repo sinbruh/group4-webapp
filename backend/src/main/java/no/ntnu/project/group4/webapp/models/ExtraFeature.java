@@ -44,13 +44,13 @@ public class ExtraFeature {
     this.name = name;
   }
 
-  // public Configuration getConfiguration() {
-  //   return this.configuration;
-  // }
+  public Configuration getConfiguration() {
+    return this.configuration;
+  }
 
-  // public void setConfiguration(Configuration configuration) {
-  //   this.configuration = configuration;
-  // }
+  public void setConfiguration(Configuration configuration) {
+    this.configuration = configuration;
+  }
 
   public boolean isValid() {
     return !this.name.isBlank();

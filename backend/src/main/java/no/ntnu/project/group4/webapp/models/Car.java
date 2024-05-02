@@ -72,15 +72,6 @@ public class Car {
     this.configurations = configurations;
   }
 
-  /**
-   * Adds the specified configuraiton to the car.
-   * 
-   * @param configuration The specified configuraiton
-   */
-  public void addConfiguration(Configuration configuration) {
-    this.configurations.add(configuration);
-  }
-
   public boolean isValid() {
     return !this.make.isBlank() && !this.model.isBlank() && this.year >= 0;
   }

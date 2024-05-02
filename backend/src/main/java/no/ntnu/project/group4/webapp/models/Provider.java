@@ -54,13 +54,13 @@ public class Provider {
     this.price = price;
   }
 
-  // public Configuration getConfiguration() {
-  //   return this.configuration;
-  // }
+  public Configuration getConfiguration() {
+    return this.configuration;
+  }
 
-  // public void setConfiguration(Configuration configuration) {
-  //   this.configuration = configuration;
-  // }
+  public void setConfiguration(Configuration configuration) {
+    this.configuration = configuration;
+  }
 
   public boolean isValid() {
     return !this.name.isBlank() && this.price > 0;

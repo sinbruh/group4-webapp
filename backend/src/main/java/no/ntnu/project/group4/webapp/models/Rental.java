@@ -59,21 +59,21 @@ public class Rental {
     this.endTime = endTime;
   }
 
-  // public Configuration getConfiguration() {
-  //   return this.configuration;
-  // }
+  public Configuration getConfiguration() {
+    return this.configuration;
+  }
 
-  // public void setConfiguration(Configuration configuration) {
-  //   this.configuration = configuration;
-  // }
+  public void setConfiguration(Configuration configuration) {
+    this.configuration = configuration;
+  }
 
-  // public User getUser() {
-  //   return this.user;
-  // }
+  public User getUser() {
+    return this.user;
+  }
 
-  // public void setUser(User user) {
-  //   this.user = user;
-  // }
+  public void setUser(User user) {
+    this.user = user;
+  }
 
   public boolean isValid() {
     return this.startTime != null && this.endTime != null;

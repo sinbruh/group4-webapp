@@ -107,13 +107,13 @@ public class Configuration {
     this.available = available;
   }
 
-  // public Car getCar() {
-  //   return this.car;
-  // }
+  public Car getCar() {
+    return this.car;
+  }
 
-  // public void setCar(Car car) {
-  //   this.car = car;
-  // }
+  public void setCar(Car car) {
+    this.car = car;
+  }
 
   public Set<ExtraFeature> getExtraFeatures() {
     return this.extraFeatures;
@@ -145,24 +145,6 @@ public class Configuration {
 
   public void setFavoritedUsers(Set<User> favoritedUsers) {
     this.favoritedUsers = favoritedUsers;
-  }
-
-  /**
-   * Adds the specified extra feature to the configuraiton.
-   * 
-   * @param extraFeature The specified extra feature
-   */
-  public void addExtraFeature(ExtraFeature extraFeature) {
-    this.extraFeatures.add(extraFeature);
-  }
-
-  /**
-   * Adds the specified provider for the configuration.
-   * 
-   * @param provider The specified provider
-   */
-  public void addProvider(Provider provider) {
-    this.providers.add(provider);
   }
 
   public boolean isValid() {
