@@ -52,7 +52,7 @@ public class CarController {
     ResponseEntity<String> response;
     try {
       this.carService.add(car);
-      response = new ResponseEntity<>(HttpStatus.CREATED);
+      response = new ResponseEntity<>("", HttpStatus.CREATED);
     } catch (Exception e) {
       response = new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
     }
@@ -71,9 +71,9 @@ public class CarController {
     Optional<Car> car = this.carService.getOne(id);
     if (car.isPresent()) {
       this.carService.delete(id);
-      response = new ResponseEntity<>(HttpStatus.OK);
+      response = new ResponseEntity<>("", HttpStatus.OK);
     } else {
-      response = new ResponseEntity<>(HttpStatus.NOT_FOUND);
+      response = new ResponseEntity<>("", HttpStatus.NOT_FOUND);
     }
     return response;
   }

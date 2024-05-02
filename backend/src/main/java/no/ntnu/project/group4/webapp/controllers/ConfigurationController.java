@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import no.ntnu.project.group4.webapp.models.Car;
 import no.ntnu.project.group4.webapp.models.Configuration;
+import no.ntnu.project.group4.webapp.services.CarService;
 import no.ntnu.project.group4.webapp.services.ConfigurationService;
 
 @CrossOrigin
@@ -23,6 +25,8 @@ import no.ntnu.project.group4.webapp.services.ConfigurationService;
 public class ConfigurationController {
   @Autowired
   private ConfigurationService configurationService;
+  @Autowired
+  private CarService carService;
 
   @GetMapping("/get")
   public Iterable<Configuration> getAll() {
@@ -42,19 +46,27 @@ public class ConfigurationController {
   }
 
   /**
-   * Adds the specified configuration to the database.
+   * Adds the specified configuration to the car with the specified ID in the database.
    * 
+   * @param id The specified ID
    * @param configuration The specified configuration
-   * @return 201 CREATED on success or 400 BAD REQUEST on error
+   * @return 201 CREATED on success or 400 BAD REQUEST or 404 NOT FOUND on error
    */
-  @PostMapping("/add/")
-  public ResponseEntity<String> add(@RequestBody Configuration configuration) {
+  @PostMapping("/add/cars/{id}")
+  public ResponseEntity<String> add(@PathVariable Long id,
+                                    @RequestBody Configuration configuration) {
     ResponseEntity<String> response;
-    try {
-      this.configurationService.add(configuration);
-      response = new ResponseEntity<>(HttpStatus.CREATED);
-    } catch (Exception e) {
-      response = new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+    Optional<Car> car = this.carService.getOne(id);
+    if (car.isPresent()) {
+      configuration.setCar(car.get());
+      try {
+        this.configurationService.add(configuration);
+        response = new ResponseEntity<>("", HttpStatus.CREATED);
+      } catch (Exception e) {
+        response = new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+      }
+    } else {
+      response = new ResponseEntity<>("", HttpStatus.NOT_FOUND);
     }
     return response;
   }
@@ -71,9 +83,9 @@ public class ConfigurationController {
     Optional<Configuration> configuration = this.configurationService.getOne(id);
     if (configuration.isPresent()) {
       this.configurationService.delete(id);
-      response = new ResponseEntity<>(HttpStatus.OK);
+      response = new ResponseEntity<>("", HttpStatus.OK);
     } else {
-      response = new ResponseEntity<>(HttpStatus.NOT_FOUND);
+      response = new ResponseEntity<>("", HttpStatus.NOT_FOUND);
     }
     return response;
   }

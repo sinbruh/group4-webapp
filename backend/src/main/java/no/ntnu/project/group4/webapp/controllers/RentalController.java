@@ -12,9 +12,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import no.ntnu.project.group4.webapp.models.Configuration;
 import no.ntnu.project.group4.webapp.models.Rental;
 import no.ntnu.project.group4.webapp.models.User;
 import no.ntnu.project.group4.webapp.services.AccessUserService;
+import no.ntnu.project.group4.webapp.services.ConfigurationService;
 import no.ntnu.project.group4.webapp.services.RentalService;
 
 import java.util.Optional;
@@ -27,6 +29,8 @@ public class RentalController {
   private RentalService rentalService;
   @Autowired
   private AccessUserService userService;
+  @Autowired
+  private ConfigurationService configurationService;
 
   @GetMapping("/get")
   public Iterable<Rental> getAll() {
@@ -34,7 +38,7 @@ public class RentalController {
   }
 
   @GetMapping("/get/{id}")
-  public ResponseEntity<?> getOne(@PathVariable Long id) {
+  public ResponseEntity<?> get(@PathVariable Long id) {
     ResponseEntity<?> response;
     User sessionUser = userService.getSessionUser();
     Optional<Rental> rental = rentalService.getOne(id);
@@ -55,18 +59,39 @@ public class RentalController {
     return response;
   }
 
-  @PostMapping("/add")
-  public ResponseEntity<Rental> addRental(@RequestBody Rental rental) {
-    ResponseEntity<Rental> response;
-    try {
-      rentalService.add(rental);
-      response = ResponseEntity.ok().build();
-    } catch (IllegalArgumentException e) {
-      response = ResponseEntity.badRequest().build();
+  /**
+   * Adds the specified rental to the session user and the configuration with the specified ID in
+   * the database.
+   * 
+   * @param id The specified ID
+   * @param rental The specified rental
+   * @return 201 CREATED on success or 400 BAD REQUEST or 404 NOT FOUND on error
+   */
+  @PostMapping("/add/configurations/{id}")
+  public ResponseEntity<String> addRental(@PathVariable Long id, @RequestBody Rental rental) {
+    ResponseEntity<String> response;
+    Optional<Configuration> configuration = this.configurationService.getOne(id);
+    if (configuration.isPresent()) {
+      rental.setUser(this.userService.getSessionUser());
+      rental.setConfiguration(configuration.get());
+      try {
+        this.rentalService.add(rental);
+        response = new ResponseEntity<>("", HttpStatus.CREATED);
+      } catch (IllegalArgumentException e) {
+        response = new ResponseEntity<>("", HttpStatus.BAD_REQUEST);
+      }
+    } else {
+      response = new ResponseEntity<>("", HttpStatus.NOT_FOUND);
     }
     return response;
   }
 
+  /**
+   * Deletes the rental with the specified ID from the database.
+   * 
+   * @param id The specified ID
+   * @return 200 OK on success or 401 UNAUTHORIZED, 403 FORBIDDEN or 404 NOT FOUND on error
+   */
   @DeleteMapping("/del/{id}")
   public ResponseEntity<String> deleteRental(@PathVariable Long id) {
     ResponseEntity<String> response;
