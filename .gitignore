@@ -57,6 +57,7 @@ replay_pid*
 /coverage
 
 # next.js
+/frontend/.next/
 /.next/
 /out/
 .next/
