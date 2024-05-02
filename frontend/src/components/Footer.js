@@ -3,8 +3,10 @@ import Image from "next/image";
 import ntnu from "@/img/ntnu-logo.png";
 
 export function Footer() {
-    return (<footer>
+    return (<footer className="bg-[#00509E] gap-y-10px flex-row justify-center items-center" >
+        <div className="flex flex-row justify-center items-center">
             <Image src={ntnu} alt={"NTNU"} width={379} height={70}/>
+        </div>
             <p>
                 <em>
                     This website is a result of a university group project, performed in
