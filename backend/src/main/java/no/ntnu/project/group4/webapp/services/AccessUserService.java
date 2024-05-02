@@ -142,6 +142,7 @@ public class AccessUserService implements UserDetailsService {
     return BCrypt.hashpw(password, BCrypt.gensalt());
   }
 
+  // TODO Fix method so that email cannot be changed to one that already exists
   /**
    * Updates user information except password.
    *
