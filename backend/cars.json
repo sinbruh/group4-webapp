@@ -1,214 +1,544 @@
 {
     "cars": [
-        {
-            "carMaker": "Volkswagen",
-            "carModel": "Golf",
-            "year": 2007,
+      {
+        "id": 1,
+        "make": "Volkswagen",
+        "model": "Golf",
+        "year": 2007,
+        "configurations": [
+          {
+            "id": 1,
+            "name": "Diesel config",
             "fuelType": "Diesel",
-            "transmissionType": "Manual",
             "numberOfSeats": 5,
+            "location": "Ålesund",
+            "available": true,
             "extraFeatures": [
-                "Bluetooth",
-                "DAB radio",
-                "warming in the chairs"
+              {
+                "id": 1,
+                "name": "Bluetooth",
+                "valid": true
+              },
+              {
+                "id": 2,
+                "name": "DAB radio",
+                "valid": true
+              },
+              {
+                "id": 3,
+                "name": "Warming in the chairs",
+                "valid": true
+              }
             ],
-            "price": {
-                "Miller Bil": 600,
-                "Biller Bil": 550
-            },
+            "providers": [
+              {
+                "id": 2,
+                "name": "Biller Bil",
+                "price": 550,
+                "valid": true
+              },
+              {
+                "id": 1,
+                "name": "Miller Bil",
+                "price": 600,
+                "valid": true
+              }
+            ],
+            "rentals": [],
+            "favoritedUsers": [],
+            "valid": true,
+            "tranmissionType": "Manual",
             "img": "img/cars/carsLowRes/Volkswagen-Golf.jpg"
-        },
-        {
-            "carMaker": "Tesla",
-            "carModel": "Model 3",
-            "year": 2019,
+          }
+        ],
+        "valid": true
+      },
+      {
+        "id": 2,
+        "make": "Tesla",
+        "model": "Model 3",
+        "year": 2019,
+        "configurations": [
+          {
+            "id": 2,
+            "name": "Electric config",
             "fuelType": "Electric",
-            "transmissionType": "Automatic",
             "numberOfSeats": 5,
+            "location": "Ålesund",
+            "available": true,
             "extraFeatures": [
-                "autonomous driving",
-                "long range",
-                "warming in the seats"
+              {
+                "id": 5,
+                "name": "Long range",
+                "valid": true
+              },
+              {
+                "id": 4,
+                "name": "Autonomous driving",
+                "valid": true
+              },
+              {
+                "id": 6,
+                "name": "Warming in the seats",
+                "valid": true
+              }
             ],
-            "price": {
-                "Biggernes Tesla": 700,
-                "Tesla Tom (private)": 500
-            },
+            "providers": [
+              {
+                "id": 4,
+                "name": "Tesla Tom (private)",
+                "price": 500,
+                "valid": true
+              },
+              {
+                "id": 3,
+                "name": "Biggernes Tesla",
+                "price": 700,
+                "valid": true
+              }
+            ],
+            "rentals": [],
+            "favoritedUsers": [],
+            "valid": true,
+            "tranmissionType": "Automatic",
             "img": "img/cars/carsLowRes/Tesla-Model-3.jpg"
-        },
-        {
-            "carMaker": "Tesla",
-            "carModel": "Model Y",
-            "year": 2022,
+          }
+        ],
+        "valid": true
+      },
+      {
+        "id": 3,
+        "make": "Tesla",
+        "model": "Model Y",
+        "year": 2022,
+        "configurations": [
+          {
+            "id": 3,
+            "name": "Electric config",
             "fuelType": "Electric",
-            "transmissionType": "Automatic",
             "numberOfSeats": 5,
+            "location": "Ålesund",
+            "available": true,
             "extraFeatures": [
-                "Four wheel drive",
-                "glass roof",
-                "autonomous driving"
+              {
+                "id": 7,
+                "name": "Four wheel drive",
+                "valid": true
+              },
+              {
+                "id": 8,
+                "name": "Glass roof",
+                "valid": true
+              },
+              {
+                "id": 9,
+                "name": "Autonomous driving",
+                "valid": true
+              }
             ],
-            "price": {
-                "Biggernes Tesla": 900,
-                "Tesla Tom (private)": 700
-            },
+            "providers": [
+              {
+                "id": 5,
+                "name": "Biggernes Tesla",
+                "price": 900,
+                "valid": true
+              },
+              {
+                "id": 6,
+                "name": "Tesla Tom (private)",
+                "price": 700,
+                "valid": true
+              }
+            ],
+            "rentals": [],
+            "favoritedUsers": [],
+            "valid": true,
+            "tranmissionType": "Automatic",
             "img": "img/cars/carsLowRes/Tesla-Model-Y.jpg"
-        },
-        {
-            "carMaker": "Nissan",
-            "carModel": "Leaf",
-            "year": 2016,
+          }
+        ],
+        "valid": true
+      },
+      {
+        "id": 4,
+        "make": "Nissan",
+        "model": "Leaf",
+        "year": 2016,
+        "configurations": [
+          {
+            "id": 4,
+            "name": "Electric config",
             "fuelType": "Electric",
-            "transmissionType": "Automatic",
             "numberOfSeats": 5,
-            "extraFeatures": [
-                "None"
+            "location": "Ålesund",
+            "available": true,
+            "extraFeatures": [],
+            "providers": [
+              {
+                "id": 7,
+                "name": "Auto 9-9",
+                "price": 500,
+                "valid": true
+              },
+              {
+                "id": 8,
+                "name": "Auto 10-10",
+                "price": 500,
+                "valid": true
+              }
             ],
-            "price": {
-                "Auto 9-9": 500,
-                "Auto 10-10": 500
-            },
+            "rentals": [],
+            "favoritedUsers": [],
+            "valid": true,
+            "tranmissionType": "Automatic",
             "img": "img/cars/carsLowRes/Nissan-Leaf.jpg"
-        },
-        {
-            "carMaker": "Mazda",
-            "carModel": "2",
-            "year": 2017,
-            "fuelType": "Petrol (Bensin)",
-            "transmissionType": "Automatic",
+          }
+        ],
+        "valid": true
+      },
+      {
+        "id": 5,
+        "make": "Mazda",
+        "model": "2",
+        "year": 2017,
+        "configurations": [
+          {
+            "id": 5,
+            "name": "Petrol config",
+            "fuelType": "Petrol",
             "numberOfSeats": 5,
+            "location": "Ålesund",
+            "available": true,
             "extraFeatures": [
-                "DAB radio"
+              {
+                "id": 10,
+                "name": "DAB radio",
+                "valid": true
+              }
             ],
-            "price": {
-                "Bilikist": 400
-            },
+            "providers": [
+              {
+                "id": 9,
+                "name": "Bilikist",
+                "price": 400,
+                "valid": true
+              }
+            ],
+            "rentals": [],
+            "favoritedUsers": [],
+            "valid": true,
+            "tranmissionType": "Automatic",
             "img": "img/cars/carsLowRes/Mazda-2.jpg"
-        },
-        {
-            "carMaker": "Volkswagen",
-            "carModel": "Transporter",
-            "year": 1978,
-            "fuelType": "Petrol (Bensin)",
-            "transmissionType": "Manual",
+          }
+        ],
+        "valid": true
+      },
+      {
+        "id": 6,
+        "make": "Volkswagen",
+        "model": "Transporter",
+        "year": 1978,
+        "configurations": [
+          {
+            "id": 6,
+            "name": "Petrol config",
+            "fuelType": "Petrol",
             "numberOfSeats": 8,
+            "location": "Ålesund",
+            "available": true,
             "extraFeatures": [
-                "Yellow",
-                "retro"
+              {
+                "id": 12,
+                "name": "Retro",
+                "valid": true
+              },
+              {
+                "id": 11,
+                "name": "Yellow",
+                "valid": true
+              }
             ],
-            "price": {
-                "Ørsta kommune": 200,
-                "Sirkelsliper": 70,
-                "Peace Per": 180
-            },
+            "providers": [
+              {
+                "id": 10,
+                "name": "Ørsta kommune",
+                "price": 200,
+                "valid": true
+              },
+              {
+                "id": 11,
+                "name": "Sirkelsliper",
+                "price": 70,
+                "valid": true
+              },
+              {
+                "id": 12,
+                "name": "Peace Per",
+                "price": 180,
+                "valid": true
+              }
+            ],
+            "rentals": [],
+            "favoritedUsers": [],
+            "valid": true,
+            "tranmissionType": "Manual",
             "img": "img/cars/carsLowRes/Volkswagen-Transporter.jpg"
-        },
-        {
-            "carMaker": "BMW",
-            "carModel": "M3 Evo",
-            "year": 1988,
-            "fuelType": "Petrol (Bensin)",
-            "transmissionType": "Manual",
+          }
+        ],
+        "valid": true
+      },
+      {
+        "id": 7,
+        "make": "BMW",
+        "model": "M3 Evo",
+        "year": 1988,
+        "configurations": [
+          {
+            "id": 7,
+            "name": "Petrol config",
+            "fuelType": "Petrol",
             "numberOfSeats": 4,
+            "location": "Ålesund",
+            "available": true,
             "extraFeatures": [
-                "Three stripes",
-                "original tire discs"
+              {
+                "id": 14,
+                "name": "Original tire discs",
+                "valid": true
+              },
+              {
+                "id": 13,
+                "name": "Three stripes",
+                "valid": true
+              }
             ],
-            "price": {
-                "Bilverksted": 400,
-                "Grabes": 450,
-                "Djarney": 449
-            },
+            "providers": [
+              {
+                "id": 13,
+                "name": "Bilverksted",
+                "price": 400,
+                "valid": true
+              },
+              {
+                "id": 14,
+                "name": "Grabes",
+                "price": 450,
+                "valid": true
+              },
+              {
+                "id": 15,
+                "name": "Djarney",
+                "price": 449,
+                "valid": true
+              }
+            ],
+            "rentals": [],
+            "favoritedUsers": [],
+            "valid": true,
+            "tranmissionType": "Manual",
             "img": "img/cars/carsLowRes/BMW-M3-Evo.jpg"
-        },
-        {
-            "carMaker": "Skoda",
-            "carModel": "Fabia",
-            "year": 2011,
+          }
+        ],
+        "valid": true
+      },
+      {
+        "id": 8,
+        "make": "Skoda",
+        "model": "Fabia",
+        "year": 2011,
+        "configurations": [
+          {
+            "id": 8,
+            "name": "Diesel config",
             "fuelType": "Diesel",
-            "transmissionType": "Automatic",
             "numberOfSeats": 5,
+            "location": "Ålesund",
+            "available": true,
             "extraFeatures": [
-                "Tow hook"
+              {
+                "id": 15,
+                "name": "Tow hook",
+                "valid": true
+              }
             ],
-            "price": {
-                "Sprekksaver": 300,
-                "Smidig bilforhandler": 299,
-                "Fossefall bilforhandler": 700
-            },
+            "providers": [
+              {
+                "id": 16,
+                "name": "Sprekksaver",
+                "price": 300,
+                "valid": true
+              },
+              {
+                "id": 18,
+                "name": "Fossefall bilforhandler",
+                "price": 700,
+                "valid": true
+              },
+              {
+                "id": 17,
+                "name": "Smidig bilforhandler",
+                "price": 229,
+                "valid": true
+              }
+            ],
+            "rentals": [],
+            "favoritedUsers": [],
+            "valid": true,
+            "tranmissionType": "Automatic",
             "img": "img/cars/carsLowRes/Skoda-Fabia.jpg"
-        },
-        {
-            "carMaker": "Peugeot",
-            "carModel": "307 SW",
-            "year": 2008,
+          }
+        ],
+        "valid": true
+      },
+      {
+        "id": 9,
+        "make": "Peugeot",
+        "model": "307 SW",
+        "year": 2008,
+        "configurations": [
+          {
+            "id": 9,
+            "name": "Diesel config",
             "fuelType": "Diesel",
-            "transmissionType": "Manual",
             "numberOfSeats": 7,
+            "location": "Ålesund",
+            "available": true,
             "extraFeatures": [
-                "travel box on the roof"
+              {
+                "id": 16,
+                "name": "Travel box on the roof",
+                "valid": true
+              }
             ],
-            "price": {
-                "Betrel Ostein": 600,
-                "Auto 10-10": 550
-            },
+            "providers": [
+              {
+                "id": 20,
+                "name": "Auto 10-10",
+                "price": 550,
+                "valid": true
+              },
+              {
+                "id": 19,
+                "name": "Bertel Ostein",
+                "price": 600,
+                "valid": true
+              }
+            ],
+            "rentals": [],
+            "favoritedUsers": [],
+            "valid": true,
+            "tranmissionType": "Manual",
             "img": "img/cars/carsLowRes/Peugeot-307-SW.jpg"
-        },
-        {
-            "carMaker": "Peugeot",
-            "carModel": "207",
-            "year": 2007,
+          }
+        ],
+        "valid": true
+      },
+      {
+        "id": 10,
+        "make": "Peugeot",
+        "model": "207",
+        "year": 2007,
+        "configurations": [
+          {
+            "id": 10,
+            "name": "Diesel config",
             "fuelType": "Diesel",
-            "transmissionType": "Manual",
             "numberOfSeats": 5,
+            "location": "Ålesund",
+            "available": true,
             "extraFeatures": [
-                "glass window",
-                "warming in the seats",
-                "warming in the steering wheel",
-                "warming in the mirrors",
-                "warming in the tires",
-                "warming 360"
+              {
+                "id": 18,
+                "name": "Warming in the seats",
+                "valid": true
+              },
+              {
+                "id": 17,
+                "name": "Glass window",
+                "valid": true
+              },
+              {
+                "id": 19,
+                "name": "Warming in the steering wheel",
+                "valid": true
+              }
             ],
-            "price": {
-                "Betrel Ostein": 500,
-                "Auto 10-10": 550
-            },
+            "providers": [
+              {
+                "id": 22,
+                "name": "Auto 10-10",
+                "price": 550,
+                "valid": true
+              },
+              {
+                "id": 21,
+                "name": "Bertel Ostein",
+                "price": 500,
+                "valid": true
+              }
+            ],
+            "rentals": [],
+            "favoritedUsers": [],
+            "valid": true,
+            "tranmissionType": "Manual",
             "img": "img/cars/carsLowRes/Peugeot-207.jpg"
-        },
-        {
-            "carMaker": "Peugeot",
-            "carModel": "3008",
-            "year": 2010,
+          }
+        ],
+        "valid": true
+      },
+      {
+        "id": 11,
+        "make": "Peugeot",
+        "model": "3008",
+        "year": 2010,
+        "configurations": [
+          {
+            "id": 11,
+            "name": "Diesel config",
             "fuelType": "Diesel",
-            "transmissionType": "Manual",
             "numberOfSeats": 5,
+            "location": "Ålesund",
+            "available": true,
             "extraFeatures": [
-                "FM radio",
-                "CD player",
-                "Metallic paint"
+              {
+                "id": 21,
+                "name": "CD player",
+                "valid": true
+              },
+              {
+                "id": 22,
+                "name": "Metallic paint",
+                "valid": true
+              },
+              {
+                "id": 20,
+                "name": "FM radio",
+                "valid": true
+              }
             ],
-            "price": {
-                "Betrel Ostein": 600,
-                "Auto 10-10": 600
-            },
+            "providers": [
+              {
+                "id": 24,
+                "name": "Auto 10-10",
+                "price": 600,
+                "valid": true
+              },
+              {
+                "id": 23,
+                "name": "Bertel Ostein",
+                "price": 600,
+                "valid": true
+              }
+            ],
+            "rentals": [],
+            "favoritedUsers": [],
+            "valid": true,
+            "tranmissionType": "Manual",
             "img": "img/cars/carsLowRes/Peugeot-3008.jpg"
-        },
-        {
-            "carMaker": "Peugeot",
-            "carModel": "iOn",
-            "year": 2015,
-            "fuelType": "Electric",
-            "transmissionType": "Automatic",
-            "numberOfSeats": 4,
-            "extraFeatures": [
-                "five doors",
-                "very economic"
-            ],
-            "price": {
-                "Betrel Ostein": 200,
-                "Auto 10-10": 201
-            },
-            "img": "img/cars/carsLowRes/Peugeot-iOn.jpg"
-        }
+          }
+        ],
+        "valid": true
+      }
+      
     ]
-}
+  }
