@@ -34,7 +34,7 @@ public class ExtraFeatureController {
   }
 
   @GetMapping("/get/{id}")
-  public ResponseEntity<ExtraFeature> getOne(@PathVariable Long id) {
+  public ResponseEntity<ExtraFeature> get(@PathVariable Long id) {
     ResponseEntity<ExtraFeature> response;
     Optional<ExtraFeature> extraFeature = this.extraFeatureService.getOne(id);
     if (extraFeature.isPresent()) {

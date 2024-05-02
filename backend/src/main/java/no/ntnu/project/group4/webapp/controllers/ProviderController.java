@@ -34,7 +34,7 @@ public class ProviderController {
   }
 
   @GetMapping("/get/{id}")
-  public ResponseEntity<Provider> getOne(@PathVariable Long id) {
+  public ResponseEntity<Provider> get(@PathVariable Long id) {
     ResponseEntity<Provider> response;
     Optional<Provider> provider = this.providerService.getOne(id);
     if (provider.isPresent()) {
