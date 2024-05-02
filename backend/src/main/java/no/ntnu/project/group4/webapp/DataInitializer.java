@@ -96,9 +96,7 @@ public class DataInitializer implements ApplicationListener<ApplicationReadyEven
     }
     this.logger.info("Loading user data...");
     if (isEmpty) {
-      // TODO Figure out how to use Date with unix timestamp
-      long unixTimestamp = Long.valueOf(946684800 * 1000);
-      Date dateOfBirth = new Date(unixTimestamp);
+      Date dateOfBirth = new Date(946684800000l);
       // Create admin user with temporary password
       User admin = new User("Admin", "User", "admin@user.com", 12345678, "temp", dateOfBirth);
 
