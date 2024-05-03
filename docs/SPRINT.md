@@ -223,8 +223,8 @@ the goals of the sprint.
 ### Accomplishments
 
 All the goals set by the group for this sprint was accomplished to some degree; the group finished
-adding a Postman collection that covers most of all security functionalities, they implemented a
-React modal for user operations, and they converted most of the search bar in the landing page to
+adding a Postman test collection that covers most of all security functionalities, they implemented
+a React modal for user operations, and they converted most of the search bar in the landing page to
 React and styled it using Tailwind CSS.
 
 ### Retrospective
