@@ -136,7 +136,7 @@ public class SecurityConfiguration {
         )
         .authorizeHttpRequests(
           (auth) -> auth.requestMatchers("/api/users/**")
-                        .hasRole("USER")
+                        .permitAll()
         )
         // Authentication and registering is accessible for everyone
         .authorizeHttpRequests(
