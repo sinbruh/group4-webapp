@@ -35,7 +35,7 @@ public class UserController {
     if (sessionUser != null && sessionUser.getEmail().equals(email)) {
       UserDto userData = new UserDto(sessionUser.getFirstName(), sessionUser.getLastName(),
                                      sessionUser.getEmail(), sessionUser.getPhoneNumber(),
-                                     sessionUser.getDateOfBirth());
+                                     sessionUser.getDateOfBirth().getTime());
       return new ResponseEntity<>(userData, HttpStatus.OK);
     } else if (sessionUser == null) {
       return new ResponseEntity<>("User data accessible only to authenticated users",
