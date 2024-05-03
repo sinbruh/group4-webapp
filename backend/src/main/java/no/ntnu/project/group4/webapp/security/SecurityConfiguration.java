@@ -101,10 +101,6 @@ public class SecurityConfiguration {
           (auth) -> auth.requestMatchers("/api/rentals/**")
                         .hasRole("USER")
         )
-        .authorizeHttpRequests(
-          (auth) -> auth.requestMatchers("/api/users/**")
-                        .hasRole("USER")
-        )
         // The following is accessible for everyone
         .authorizeHttpRequests(
           (auth) -> auth.requestMatchers(HttpMethod.GET, "/api/cars")
@@ -137,6 +133,10 @@ public class SecurityConfiguration {
         .authorizeHttpRequests(
           (auth) -> auth.requestMatchers(HttpMethod.GET, "/api/providers/{id}")
                         .permitAll()
+        )
+        .authorizeHttpRequests(
+          (auth) -> auth.requestMatchers("/api/users/**")
+                        .hasRole("USER")
         )
         // Authentication and registering is accessible for everyone
         .authorizeHttpRequests(
