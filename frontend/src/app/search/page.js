@@ -6,6 +6,7 @@ import Image from "next/image";
 import carImage from "@/img/cars/BMW-M3.jpg";
 import Link from "next/link";
 import FilterBar from "@/components/FilterBar";
+import {Button} from "@/components/ui/button";
 
 export default function Search() {
     return (
@@ -61,7 +62,7 @@ export default function Search() {
                         <p>Owner: John Doe</p>
                         <p>Phone: 12345678</p>
                         <p>Email: matsern@email.com</p>
-                        <button>Book</button>
+                        <Button>Book</Button>
                     </div>
                 </div>
             </section>

@@ -14,12 +14,14 @@ export default function Home() {
             <div className="flex justify-center items-center h-screen gap-x-2">
                 <Locationbox />
                 <DatePickerWithRange />
-                <Button> Search </Button>
+                <Button asChild>
+                    <Link href="/search">Search</Link>
+                </Button>
             </div>
             <div className="bg-white text-center flex-row justify-center justify-items-center items-center">
-                <div className="p-15px">
+                <div className="p-10">
                     <div>
-                        <h2>How it works</h2>
+                        <h2 className="text-4xl">How it works</h2>
                         <p>
                             Rental Roulette is a service that helps you find a car to rent. You
                             simply enter your location and the dates you need the car, and we will
@@ -28,7 +30,7 @@ export default function Home() {
                         </p>
                     </div>
                     <div>
-                        <h2>Our reviews</h2>
+                        <h2 className="text-4xl">Our reviews</h2>
                         <p>
                             "I was very happy with the car I got from Rental Roulette. It was a
                             great car and the price was very good." - John Doe
