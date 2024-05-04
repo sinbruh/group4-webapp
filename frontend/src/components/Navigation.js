@@ -4,7 +4,7 @@ import logo from "@/img/temp-logo.png";
 import Image from "next/image";
 export function Navigation() {
     return (
-        <div id="nav-container" className="rounded-2xl m-2 p-2 bg-white min-h-16 flex items-center justify-between">
+        <div id="nav-container" className=" p-2 bg-white min-h-16 flex items-center justify-between">
             <header className="flex items-center">
                 <Link href="/">
                     <Image
@@ -15,7 +15,7 @@ export function Navigation() {
                     />
                 </Link>
                 <Link href="/">
-                    <h1>Rental Roulette</h1>
+                    <h1 className="px-2">Rental Roulette</h1>
                 </Link>
             </header>
             <nav className="flex items-center justify-center grow gap-x-10 m-10px">
