@@ -2,13 +2,13 @@
 	"info": {
 		"_postman_id": "4113a167-2d47-45c8-a85d-bc592d4472fd",
 		"name": "Security",
-		"description": "Test collection for testing security implementation in the backend of the project.",
+		"description": "Test collection for testing security implementation in the backend of the project.\n\n**NB!** The user is logged in again in the last login because its email got updated; when an email is updated, a new JWT token has to be generated as email is used as username, and JWT uses usernames to authorize users.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "33041998"
 	},
 	"item": [
 		{
-			"name": "GET /api/cars (no user)",
+			"name": "GET all cars with no user",
 			"event": [
 				{
 					"listen": "test",
@@ -17,6 +17,8 @@
 							"pm.test(\"Status code is 200 OK\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
 							"});\r",
+							"\r",
+							"pm.environment.set(\"size\", pm.response.json().length);\r",
 							""
 						],
 						"type": "text/javascript",
@@ -41,7 +43,7 @@
 			"response": []
 		},
 		{
-			"name": "GET /api/cars/1 (no user)",
+			"name": "GET car with ID 1 with no user",
 			"event": [
 				{
 					"listen": "test",
@@ -75,7 +77,7 @@
 			"response": []
 		},
 		{
-			"name": "POST /api/cars (no user)",
+			"name": "ADD car with no user",
 			"event": [
 				{
 					"listen": "test",
@@ -117,7 +119,7 @@
 			"response": []
 		},
 		{
-			"name": "DELETE /api/cars/1 (no user)",
+			"name": "DELETE car with ID 1 with no user",
 			"event": [
 				{
 					"listen": "test",
@@ -151,7 +153,7 @@
 			"response": []
 		},
 		{
-			"name": "POST /api/authenticate (invalid password)",
+			"name": "ADD login to admin user with invalid password",
 			"event": [
 				{
 					"listen": "test",
@@ -193,7 +195,7 @@
 			"response": []
 		},
 		{
-			"name": "POST /api/authenticate (valid)",
+			"name": "ADD login to admin user",
 			"event": [
 				{
 					"listen": "test",
@@ -237,7 +239,7 @@
 			"response": []
 		},
 		{
-			"name": "POST /api/cars (admin user)",
+			"name": "ADD car with admin user",
 			"event": [
 				{
 					"listen": "test",
@@ -259,7 +261,7 @@
 					{
 						"key": "Authorization",
 						"value": "Bearer {{jwt}}",
-						"uuid": "c3f05612-ed9c-4988-b51f-351c72443517"
+						"uuid": "dad3a0fe-d2eb-4324-9720-00163f849a43"
 					}
 				],
 				"body": {
@@ -285,7 +287,7 @@
 			"response": []
 		},
 		{
-			"name": "GET /api/cars (get ID of newly added car)",
+			"name": "GET all cars after new car was added with admin user",
 			"event": [
 				{
 					"listen": "test",
@@ -293,6 +295,10 @@
 						"exec": [
 							"pm.test(\"Status code is 200 OK\", function () {\r",
 							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Data set is incremented\", function () {\r",
+							"    pm.expect(pm.response.json().length).to.eql(pm.environment.get(\"size\") + 1);\r",
 							"});\r",
 							"\r",
 							"var jsonData = pm.response.json();\r",
@@ -310,7 +316,7 @@
 					{
 						"key": "Authorization",
 						"value": "Bearer {{jwt}}",
-						"uuid": "9f1b3045-c302-4979-afb3-40654d07c804"
+						"uuid": "90f7bf87-789e-4058-824a-f62fc8bd105c"
 					}
 				],
 				"url": {
@@ -327,7 +333,7 @@
 			"response": []
 		},
 		{
-			"name": "GET /api/cars/id (get new car)",
+			"name": "GET new car with admin user",
 			"event": [
 				{
 					"listen": "test",
@@ -349,7 +355,7 @@
 					{
 						"key": "Authorization",
 						"value": "Bearer {{jwt}}",
-						"uuid": "1b708aff-3117-42b3-8f46-5cbdb695b371"
+						"uuid": "23ed22dc-709f-4556-a964-eee253345da4"
 					}
 				],
 				"url": {
@@ -367,7 +373,7 @@
 			"response": []
 		},
 		{
-			"name": "DELETE /api/cars/id (admin user)",
+			"name": "DELETE new car with admin user",
 			"event": [
 				{
 					"listen": "test",
@@ -389,7 +395,7 @@
 					{
 						"key": "Authorization",
 						"value": "Bearer {{jwt}}",
-						"uuid": "64cfa4f5-ecc9-406c-b29c-c02aecd8eae9"
+						"uuid": "34c3f0aa-99c4-4e62-8cbe-38944d27fdd7"
 					}
 				],
 				"url": {
@@ -407,7 +413,7 @@
 			"response": []
 		},
 		{
-			"name": "POST /api/register (add user)",
+			"name": "ADD register user",
 			"event": [
 				{
 					"listen": "test",
@@ -451,14 +457,14 @@
 			"response": []
 		},
 		{
-			"name": "GET /api/users/email (no user)",
+			"name": "GET new user with no user",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
 						"exec": [
-							"pm.test(\"Status code is 403 FORBIDDEN\", function () {\r",
-							"    pm.response.to.have.status(403);\r",
+							"pm.test(\"Status code is 401 UNAUTHORIZED\", function () {\r",
+							"    pm.response.to.have.status(401);\r",
 							"});\r",
 							""
 						],
@@ -485,7 +491,7 @@
 			"response": []
 		},
 		{
-			"name": "GET /api/users/email (admin user)",
+			"name": "GET new user with admin user",
 			"event": [
 				{
 					"listen": "test",
@@ -507,7 +513,7 @@
 					{
 						"key": "Authorization",
 						"value": "Bearer {{jwt}}",
-						"uuid": "d7f191bd-2fd4-44c3-8a9a-aebb81b022d4"
+						"uuid": "dea13537-d214-43ed-9ee1-0a31448a16c1"
 					}
 				],
 				"url": {
@@ -525,7 +531,269 @@
 			"response": []
 		},
 		{
-			"name": "POST /api/authenticate (valid)",
+			"name": "UPDATE new user with no user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 401 UNAUTHORIZED\", function () {\r",
+							"    pm.response.to.have.status(401);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"firstName\": \"Jane\",\r\n    \"lastName\": \"Doe\",\r\n    \"email\": \"janedoe@user.com\",\r\n    \"phoneNumber\": 12345678,\r\n    \"dateOfBirth\": 631152000000\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/api/users/user/{{email}}",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"api",
+						"users",
+						"user",
+						"{{email}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UPDATE new user with admin user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 403 FORBIDDEN\", function () {\r",
+							"    pm.response.to.have.status(403);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{jwt}}",
+						"uuid": "1af45019-e65c-4e7e-b16f-59b166c4989c"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"firstName\": \"Jane\",\r\n    \"lastName\": \"Doe\",\r\n    \"email\": \"janedoe@user.com\",\r\n    \"phoneNumber\": 12345678,\r\n    \"dateOfBirth\": 631152000000\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/api/users/user/{{email}}",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"api",
+						"users",
+						"user",
+						"{{email}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UPDATE new user password with no user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 401 UNAUTHORIZED\", function () {\r",
+							"    pm.response.to.have.status(401);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "\"iamanothertestuser\"\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/api/users/password/{{email}}",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"api",
+						"users",
+						"password",
+						"{{email}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UPDATE new user password with admin user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 403 FORBIDDEN\", function () {\r",
+							"    pm.response.to.have.status(403);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{jwt}}",
+						"uuid": "f402b42b-dda8-40c1-993e-b1a8597c475f"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "\"iamanothertestuser\"\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/api/users/password/{{email}}",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"api",
+						"users",
+						"password",
+						"{{email}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE new user with no user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 401 UNAUTHORIZED\", function () {\r",
+							"    pm.response.to.have.status(401);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}/api/users/{{email}}",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"api",
+						"users",
+						"{{email}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE new user with admin user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 403 FORBIDDEN\", function () {\r",
+							"    pm.response.to.have.status(403);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{jwt}}",
+						"uuid": "4d2631cf-2e25-4a69-9f42-09ec0212c6b3"
+					}
+				],
+				"url": {
+					"raw": "{{BASE_URL}}/api/users/{{email}}",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"api",
+						"users",
+						"{{email}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ADD login to new user",
 			"event": [
 				{
 					"listen": "test",
@@ -569,7 +837,7 @@
 			"response": []
 		},
 		{
-			"name": "GET /api/users/email (user)",
+			"name": "GET new user with new user",
 			"event": [
 				{
 					"listen": "test",
@@ -591,7 +859,7 @@
 					{
 						"key": "Authorization",
 						"value": "Bearer {{jwt}}",
-						"uuid": "4cf2ec87-6da7-46c5-b73f-1400c87fa8e0"
+						"uuid": "4613f714-c42a-451e-9e9a-6fd8cd4b6274"
 					}
 				],
 				"url": {
@@ -609,7 +877,153 @@
 			"response": []
 		},
 		{
-			"name": "DELETE /api/users/email (user)",
+			"name": "UPDATE new user with new user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200 OK\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.environment.set(\"email\", JSON.parse(pm.request.body.raw)[\"email\"])\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{jwt}}",
+						"uuid": "5ae0c2a0-1639-46bc-b281-e1373ecb2c5e"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"firstName\": \"Jane\",\r\n    \"lastName\": \"Doe\",\r\n    \"email\": \"janedoe@user.com\",\r\n    \"phoneNumber\": 12345678,\r\n    \"dateOfBirth\": 631152000000\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/api/users/user/{{email}}",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"api",
+						"users",
+						"user",
+						"{{email}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ADD login to new user with updated email",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200 OK\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.environment.set(\"jwt\", pm.response.json()[\"jwt\"])\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"janedoe@user.com\",\r\n    \"password\": \"iamatestuser\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/api/authenticate",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"api",
+						"authenticate"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UPDATE new user password with new user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200 OK\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{jwt}}",
+						"uuid": "843e76ab-6cef-4ca0-8abb-3eb76ca55a96"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "\"iamanothertestuser\"\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/api/users/password/{{email}}",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"api",
+						"users",
+						"password",
+						"{{email}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE new user with new user",
 			"event": [
 				{
 					"listen": "test",
@@ -631,7 +1045,7 @@
 					{
 						"key": "Authorization",
 						"value": "Bearer {{jwt}}",
-						"uuid": "3832652f-2dfd-4513-947e-3df23a8d763e"
+						"uuid": "2d1cec0e-1845-4928-b8b7-48bf65d3fcbf"
 					}
 				],
 				"url": {
