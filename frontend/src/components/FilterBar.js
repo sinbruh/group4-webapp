@@ -6,7 +6,7 @@ import DatePickerWithRange from "@/components/ui/daterange";
 export default function FilterBar() {
     return (
         <div>
-            <section className={styles.filter}>
+            <section className="flex items-center bg-[#ffffff] rounded m-4 p-2">
                 <Locationbox />
                 <DatePickerWithRange />
                 <label>Min Price:</label>

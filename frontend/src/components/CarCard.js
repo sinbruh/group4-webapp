@@ -1,3 +1,7 @@
+import * as React from "react"
+import Image from "next/image"
+import carImage from "@/img/cars/BMW-M3.jpg"
+
 import {
     Card,
     CardContent,
@@ -7,19 +11,30 @@ import {
     CardTitle,
 } from "@/components/ui/card"
 
-export default function CarCard() {
+const CarCard = ({ carName, price, location, size, fuelType, transmission, description, availability }) => {
     return (
-        <Card>
-            <CardHeader>
-                <CardTitle>Card Title</CardTitle>
-                <CardDescription>Card Description</CardDescription>
-            </CardHeader>
-            <CardContent>
-                <p>Card Content</p>
-            </CardContent>
-            <CardFooter>
-                <p>Card Footer</p>
-            </CardFooter>
+        <Card className="flex flex-row">
+            <Image className="rounded" src={carImage} alt={carName} width={400} height={200} />
+            <div className="flex flex-col">
+                <CardHeader>
+                    <CardTitle>{carName}</CardTitle>
+                    <CardDescription>{description}</CardDescription>
+                </CardHeader>
+                <CardContent>
+                    {availability ? "available" : "unavailable"}
+                    <p>Price: {price} NOK/day</p>
+                    <p>Location: {location}</p>
+                </CardContent>
+                <CardFooter className="flex flex-row">
+                    <div>
+                        <div>Size: {size}</div>
+                        <div>Fuel type: {fuelType}</div>
+                        <div>Transmission: {transmission}</div>
+                    </div>
+                </CardFooter>
+            </div>
         </Card>
     )
 }
+
+export default CarCard;
