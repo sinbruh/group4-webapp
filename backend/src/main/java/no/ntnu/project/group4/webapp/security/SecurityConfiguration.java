@@ -44,6 +44,7 @@ public class SecurityConfiguration {
     auth.userDetailsService(userDetailsService);
   }
 
+  // TODO Investigate authorization on line 110
   /**
    * This method will be called automatically by the framework to find the authentication to use.
    * 
@@ -59,103 +60,54 @@ public class SecurityConfiguration {
         // Disable CSRF and CORS checks. Without this it will be hard to make automated tests
         .csrf(AbstractHttpConfigurer::disable)
         .cors(AbstractHttpConfigurer::disable)
-        // The following is accessible only for admin users
-        .authorizeHttpRequests(
-          (auth) -> auth.requestMatchers(HttpMethod.POST, "/api/cars")
-                        .hasRole("ADMIN")
-        )
-        .authorizeHttpRequests(
-          (auth) -> auth.requestMatchers(HttpMethod.DELETE, "/api/cars/{id}")
-                        .hasRole("ADMIN")
-        )
-        .authorizeHttpRequests(
-          (auth) -> auth.requestMatchers("/api/configurations/cars/{id}")
-                        .hasRole("ADMIN")
-        )
-        .authorizeHttpRequests(
-          (auth) -> auth.requestMatchers(HttpMethod.DELETE, "/api/configurations/{id}")
-                        .hasRole("ADMIN")
-        )
-        .authorizeHttpRequests(
-          (auth) -> auth.requestMatchers("/api/extrafeatures/configurations/{id}")
-                        .hasRole("ADMIN")
-        )
-        .authorizeHttpRequests(
-          (auth) -> auth.requestMatchers(HttpMethod.DELETE, "/api/extrafeatures/{id}")
-                        .hasRole("ADMIN")
-        )
-        .authorizeHttpRequests(
-          (auth) -> auth.requestMatchers("/api/providers/configurations/{id}")
-                        .hasRole("ADMIN")
-        )
-        .authorizeHttpRequests(
-          (auth) -> auth.requestMatchers(HttpMethod.DELETE, "/api/providers/{id}")
-                        .hasRole("ADMIN")
-        )
-        .authorizeHttpRequests(
-          (auth) -> auth.requestMatchers("/api/rentals")
-                        .hasRole("ADMIN")
-        )
-        // The following is accessible for users
-        .authorizeHttpRequests(
-          (auth) -> auth.requestMatchers("/api/rentals/**")
-                        .hasRole("USER")
-        )
         // The following is accessible for everyone
         .authorizeHttpRequests(
-          (auth) -> auth.requestMatchers(HttpMethod.GET, "/api/cars")
-                        .permitAll()
+          (auth) -> auth.requestMatchers("/api/cars").permitAll()
         )
         .authorizeHttpRequests(
-          (auth) -> auth.requestMatchers(HttpMethod.GET, "/api/cars/{id}")
-                        .permitAll()
+          (auth) -> auth.requestMatchers("/api/cars/**").permitAll()
         )
         .authorizeHttpRequests(
-          (auth) -> auth.requestMatchers("/api/configurations")
-                        .permitAll()
+          (auth) -> auth.requestMatchers("/api/configurations").permitAll()
         )
         .authorizeHttpRequests(
-          (auth) -> auth.requestMatchers(HttpMethod.GET, "/api/configurations/{id}")
-                        .permitAll()
+          (auth) -> auth.requestMatchers("/api/configurations/**").permitAll()
         )
         .authorizeHttpRequests(
-          (auth) -> auth.requestMatchers("/api/extrafeatures")
-                        .permitAll()
+          (auth) -> auth.requestMatchers("/api/extrafeatures").permitAll()
         )
         .authorizeHttpRequests(
-          (auth) -> auth.requestMatchers(HttpMethod.GET, "/api/extrafeatures/{id}")
-                        .permitAll()
+          (auth) -> auth.requestMatchers("/api/extrafeatures/**").permitAll()
         )
         .authorizeHttpRequests(
-          (auth) -> auth.requestMatchers("/api/providers")
-                        .permitAll()
+          (auth) -> auth.requestMatchers("/api/providers").permitAll()
         )
         .authorizeHttpRequests(
-          (auth) -> auth.requestMatchers(HttpMethod.GET, "/api/providers/{id}")
-                        .permitAll()
+          (auth) -> auth.requestMatchers("/api/providers/**").permitAll()
         )
         .authorizeHttpRequests(
-          (auth) -> auth.requestMatchers("/api/users/**")
-                        .permitAll()
+          (auth) -> auth.requestMatchers("/api/rentals").permitAll()
+        )
+        .authorizeHttpRequests(
+          (auth) -> auth.requestMatchers("/api/rentals/**").permitAll()
+        )
+        .authorizeHttpRequests(
+          (auth) -> auth.requestMatchers("/api/users/**").permitAll()
         )
         // Authentication and registering is accessible for everyone
         .authorizeHttpRequests(
-          (auth) -> auth.requestMatchers("/api/authenticate")
-                        .permitAll()
+          (auth) -> auth.requestMatchers("/api/authenticate").permitAll()
         )
         .authorizeHttpRequests(
-          (auth) -> auth.requestMatchers("/api/register")
-                        .permitAll()
+          (auth) -> auth.requestMatchers("/api/register").permitAll()
         )
         // Allow HTTP OPTIONS requests - CORS pre-flight requests
         .authorizeHttpRequests(
-          (auth) -> auth.requestMatchers(HttpMethod.OPTIONS)
-                        .permitAll()
+          (auth) -> auth.requestMatchers(HttpMethod.OPTIONS).permitAll()
         )
         // Any other request will be authenticated with a stateless policy
         .authorizeHttpRequests(
-          (auth) -> auth.anyRequest()
-                        .authenticated()
+          (auth) -> auth.anyRequest().authenticated()
         )
         // Enable stateless session policy
         .sessionManagement((session) ->
