@@ -52,7 +52,7 @@ public class CarController {
    * @return <p>201 CREATED on success</p>
    *         <p>400 BAD REQUEST on error</p>
    *         <p>401 UNAUTHORIZED if user is not authenticated</p>
-   *         <p>403 FORBIDDEN if user is authenticated but not admin</p>
+   *         <p>403 FORBIDDEN if user is not admin</p>
    */
   @PostMapping
   public ResponseEntity<String> add(@RequestBody Car car) {
@@ -82,7 +82,7 @@ public class CarController {
    * @return <p>200 OK on success</p>
    *         <p>404 NOT FOUND on error</p>
    *         <p>401 UNAUTHORIZED if user is not authenticated</p>
-   *         <p>403 FORBIDDEN if user is authenticated but not admin</p>
+   *         <p>403 FORBIDDEN if user is not admin</p>
    */
   @DeleteMapping("/{id}")
   public ResponseEntity<String> delete(@PathVariable Long id) {

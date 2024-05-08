@@ -58,7 +58,7 @@ public class ConfigurationController {
    *         <p>400 BAD REQUEST on error</p>
    *         <p>404 NOT FOUND if car was not found</p>
    *         <p>401 UNAUTHORIZED if user is not authenticated</p>
-   *         <p>403 FORBIDDEN if user is authenticated but not admin</p>
+   *         <p>403 FORBIDDEN if user is not admin</p>
    */
   @PostMapping("/cars/{id}")
   public ResponseEntity<String> add(@PathVariable Long id,
@@ -76,7 +76,7 @@ public class ConfigurationController {
           response = new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
       } else {
-        response = new ResponseEntity<>("The car with the specified ID was not found",
+        response = new ResponseEntity<>("Car with specified ID was not found",
                                         HttpStatus.NOT_FOUND);
       }
     } else if (sessionUser == null) {
@@ -96,7 +96,7 @@ public class ConfigurationController {
    * @return <p>200 OK on success</p>
    *         <p>404 NOT FOUND on error</p>
    *         <p>401 UNAUTHORIZED if user is not authenticated</p>
-   *         <p>403 FORBIDDEN if user is authenticated but not admin</p>
+   *         <p>403 FORBIDDEN if user is not admin</p>
    */
   @DeleteMapping("/{id}")
   public ResponseEntity<String> delete(@PathVariable Long id) {
