@@ -28,9 +28,9 @@ public class RentalController {
   @Autowired
   private RentalService rentalService;
   @Autowired
-  private AccessUserService userService;
-  @Autowired
   private ConfigurationService configurationService;
+  @Autowired
+  private AccessUserService userService;
 
   @GetMapping
   public Iterable<Rental> getAll() {
@@ -41,20 +41,22 @@ public class RentalController {
   public ResponseEntity<?> get(@PathVariable Long id) {
     ResponseEntity<?> response;
     User sessionUser = userService.getSessionUser();
-    Optional<Rental> rental = rentalService.getOne(id);
-    if (rental.isPresent()) {
-      Rental foundRental = rental.get();
-      if (sessionUser != null && sessionUser.getEmail().equals(foundRental.getUser().getEmail())) {
-        response = new ResponseEntity<>(foundRental, HttpStatus.OK);
-      } else if (sessionUser == null) {
-        response = new ResponseEntity<>("Rental data accessible only to authenticated users",
-                                        HttpStatus.UNAUTHORIZED);
+    if (sessionUser != null) {
+      Optional<Rental> rental = rentalService.getOne(id);
+      if (rental.isPresent()) {
+        Rental foundRental = rental.get();
+        if (sessionUser.getEmail().equals(foundRental.getUser().getEmail())) {
+          response = new ResponseEntity<>(foundRental, HttpStatus.OK);
+        } else {
+          response = new ResponseEntity<>("Users do not have access to rental data of other users",
+                                          HttpStatus.FORBIDDEN);
+        }
       } else {
-        response = new ResponseEntity<>("Rental data for other users not accessible",
-                                        HttpStatus.FORBIDDEN);
+        response = new ResponseEntity<>("", HttpStatus.NOT_FOUND);
       }
     } else {
-      response = new ResponseEntity<>("", HttpStatus.NOT_FOUND);
+      response = new ResponseEntity<>("Only authenticated users have access to rental data",
+                                      HttpStatus.UNAUTHORIZED);
     }
     return response;
   }
@@ -65,23 +67,33 @@ public class RentalController {
    * 
    * @param id The specified ID
    * @param rental The specified rental
-   * @return 201 CREATED on success or 400 BAD REQUEST or 404 NOT FOUND on error
+   * @return <p>201 CREATED on success</p>
+   *         <p>400 BAD REQUEST on error</p>
+   *         <p>404 NOT FOUND if configuration was not found</p>
+   *         <p>401 UNAUTHORIZED if user is not authenticated</p>
    */
   @PostMapping("/configurations/{id}")
   public ResponseEntity<String> addRental(@PathVariable Long id, @RequestBody Rental rental) {
     ResponseEntity<String> response;
-    Optional<Configuration> configuration = this.configurationService.getOne(id);
-    if (configuration.isPresent()) {
-      rental.setUser(this.userService.getSessionUser());
-      rental.setConfiguration(configuration.get());
-      try {
-        this.rentalService.add(rental);
-        response = new ResponseEntity<>("", HttpStatus.CREATED);
-      } catch (IllegalArgumentException e) {
-        response = new ResponseEntity<>("", HttpStatus.BAD_REQUEST);
+    User sessionUser = this.userService.getSessionUser();
+    if (sessionUser != null) {
+      Optional<Configuration> configuration = this.configurationService.getOne(id);
+      if (configuration.isPresent()) {
+        rental.setUser(this.userService.getSessionUser());
+        rental.setConfiguration(configuration.get());
+        try {
+          this.rentalService.add(rental);
+          response = new ResponseEntity<>("", HttpStatus.CREATED);
+        } catch (IllegalArgumentException e) {
+          response = new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+      } else {
+        response = new ResponseEntity<>("Configuration with specified ID was not found",
+                                        HttpStatus.NOT_FOUND);
       }
     } else {
-      response = new ResponseEntity<>("", HttpStatus.NOT_FOUND);
+      response = new ResponseEntity<>("Only authenticated users have access to add rentals",
+                                      HttpStatus.UNAUTHORIZED);
     }
     return response;
   }
@@ -90,27 +102,31 @@ public class RentalController {
    * Deletes the rental with the specified ID from the database.
    * 
    * @param id The specified ID
-   * @return 200 OK on success or 401 UNAUTHORIZED, 403 FORBIDDEN or 404 NOT FOUND on error
+   * @return <p>200 OK on success</p>
+   *         <p>403 FORBIDDEN if user is not owner of rental</p>
+   *         <p>404 NOT FOUND on error</p>
+   *         <p>401 UNAUTHORIZED if user is not authenticated</p>
    */
   @DeleteMapping("/{id}")
   public ResponseEntity<String> deleteRental(@PathVariable Long id) {
     ResponseEntity<String> response;
     User sessionUser = userService.getSessionUser();
-    Optional<Rental> rental = rentalService.getOne(id);
-    if (rental.isPresent()) {
-      if (sessionUser != null &&
-          sessionUser.getEmail().equals(rental.get().getUser().getEmail())) {
-        rentalService.delete(id);
-        response = new ResponseEntity<>("", HttpStatus.OK);
-      } else if (sessionUser == null) {
-        response = new ResponseEntity<>("Rental data accessible only to authenticated users",
-                                        HttpStatus.UNAUTHORIZED);
+    if (sessionUser != null) {
+      Optional<Rental> rental = rentalService.getOne(id);
+      if (rental.isPresent()) {
+        if (sessionUser.getEmail().equals(rental.get().getUser().getEmail())) {
+          rentalService.delete(id);
+          response = new ResponseEntity<>("", HttpStatus.OK);
+        } else {
+          response = new ResponseEntity<>("Users do not have access to delete rentals of other " +
+                                          "users", HttpStatus.FORBIDDEN);
+        }
       } else {
-        response = new ResponseEntity<>("Rental data for other users not accessible",
-                                        HttpStatus.FORBIDDEN);
+        response = new ResponseEntity<>("", HttpStatus.NOT_FOUND);
       }
     } else {
-      response = new ResponseEntity<>("", HttpStatus.NOT_FOUND);
+      response = new ResponseEntity<>("Only authenticated users have access to delete rentals",
+                                      HttpStatus.UNAUTHORIZED);
     }
     return response;
   }
