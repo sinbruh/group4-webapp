@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import no.ntnu.project.group4.webapp.models.Car;
 import no.ntnu.project.group4.webapp.models.Configuration;
+import no.ntnu.project.group4.webapp.models.User;
+import no.ntnu.project.group4.webapp.services.AccessUserService;
 import no.ntnu.project.group4.webapp.services.CarService;
 import no.ntnu.project.group4.webapp.services.ConfigurationService;
 
@@ -27,6 +29,8 @@ public class ConfigurationController {
   private ConfigurationService configurationService;
   @Autowired
   private CarService carService;
+  @Autowired
+  private AccessUserService userService;
 
   @GetMapping
   public Iterable<Configuration> getAll() {
@@ -50,23 +54,37 @@ public class ConfigurationController {
    * 
    * @param id The specified ID
    * @param configuration The specified configuration
-   * @return 201 CREATED on success or 400 BAD REQUEST or 404 NOT FOUND on error
+   * @return <p>201 CREATED on success</p>
+   *         <p>400 BAD REQUEST on error</p>
+   *         <p>404 NOT FOUND if car was not found</p>
+   *         <p>401 UNAUTHORIZED if user is not authenticated</p>
+   *         <p>403 FORBIDDEN if user is authenticated but not admin</p>
    */
   @PostMapping("/cars/{id}")
   public ResponseEntity<String> add(@PathVariable Long id,
                                     @RequestBody Configuration configuration) {
     ResponseEntity<String> response;
-    Optional<Car> car = this.carService.getOne(id);
-    if (car.isPresent()) {
-      configuration.setCar(car.get());
-      try {
-        this.configurationService.add(configuration);
-        response = new ResponseEntity<>("", HttpStatus.CREATED);
-      } catch (Exception e) {
-        response = new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+    User sessionUser = this.userService.getSessionUser();
+    if (sessionUser != null && sessionUser.isAdmin()) {
+      Optional<Car> car = this.carService.getOne(id);
+      if (car.isPresent()) {
+        configuration.setCar(car.get());
+        try {
+          this.configurationService.add(configuration);
+          response = new ResponseEntity<>("", HttpStatus.CREATED);
+        } catch (Exception e) {
+          response = new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+      } else {
+        response = new ResponseEntity<>("The car with the specified ID was not found",
+                                        HttpStatus.NOT_FOUND);
       }
+    } else if (sessionUser == null) {
+      response = new ResponseEntity<>("Only authenticated users have access to add configurations",
+                                      HttpStatus.UNAUTHORIZED);
     } else {
-      response = new ResponseEntity<>("", HttpStatus.NOT_FOUND);
+      response = new ResponseEntity<>("Only admin users have access to add configurations",
+                                      HttpStatus.FORBIDDEN);
     }
     return response;
   }
@@ -75,17 +93,29 @@ public class ConfigurationController {
    * Deletes the configuration with the specified ID from the database.
    * 
    * @param id The specified ID
-   * @return 200 OK on success or 404 NOT FOUND on error
+   * @return <p>200 OK on success</p>
+   *         <p>404 NOT FOUND on error</p>
+   *         <p>401 UNAUTHORIZED if user is not authenticated</p>
+   *         <p>403 FORBIDDEN if user is authenticated but not admin</p>
    */
   @DeleteMapping("/{id}")
   public ResponseEntity<String> delete(@PathVariable Long id) {
     ResponseEntity<String> response;
-    Optional<Configuration> configuration = this.configurationService.getOne(id);
-    if (configuration.isPresent()) {
-      this.configurationService.delete(id);
-      response = new ResponseEntity<>("", HttpStatus.OK);
+    User sessionUser = this.userService.getSessionUser();
+    if (sessionUser != null && sessionUser.isAdmin()) {
+      Optional<Configuration> configuration = this.configurationService.getOne(id);
+      if (configuration.isPresent()) {
+        this.configurationService.delete(id);
+        response = new ResponseEntity<>("", HttpStatus.OK);
+      } else {
+        response = new ResponseEntity<>("", HttpStatus.NOT_FOUND);
+      }
+    } else if (sessionUser == null) {
+      response = new ResponseEntity<>("Only authenticated users have access to delete " +
+                                      "configurations", HttpStatus.UNAUTHORIZED);
     } else {
-      response = new ResponseEntity<>("", HttpStatus.NOT_FOUND);
+      response = new ResponseEntity<>("Only admin users have access to delete configurations",
+                                      HttpStatus.FORBIDDEN);
     }
     return response;
   }
