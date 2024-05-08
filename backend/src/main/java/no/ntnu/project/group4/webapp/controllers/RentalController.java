@@ -34,15 +34,15 @@ public class RentalController {
 
   @GetMapping
   public Iterable<Rental> getAll() {
-    return rentalService.getAll();
+    return this.rentalService.getAll();
   }
 
   @GetMapping("/{id}")
   public ResponseEntity<?> get(@PathVariable Long id) {
     ResponseEntity<?> response;
-    User sessionUser = userService.getSessionUser();
+    User sessionUser = this.userService.getSessionUser();
     if (sessionUser != null) {
-      Optional<Rental> rental = rentalService.getOne(id);
+      Optional<Rental> rental = this.rentalService.getOne(id);
       if (rental.isPresent()) {
         Rental foundRental = rental.get();
         if (sessionUser.getEmail().equals(foundRental.getUser().getEmail())) {
@@ -69,11 +69,11 @@ public class RentalController {
    * @param rental The specified rental
    * @return <p>201 CREATED on success</p>
    *         <p>400 BAD REQUEST on error</p>
-   *         <p>404 NOT FOUND if configuration was not found</p>
    *         <p>401 UNAUTHORIZED if user is not authenticated</p>
+   *         <p>404 NOT FOUND if configuration was not found</p>
    */
   @PostMapping("/configurations/{id}")
-  public ResponseEntity<String> addRental(@PathVariable Long id, @RequestBody Rental rental) {
+  public ResponseEntity<String> add(@PathVariable Long id, @RequestBody Rental rental) {
     ResponseEntity<String> response;
     User sessionUser = this.userService.getSessionUser();
     if (sessionUser != null) {
@@ -103,26 +103,27 @@ public class RentalController {
    * 
    * @param id The specified ID
    * @return <p>200 OK on success</p>
-   *         <p>403 FORBIDDEN if user is not owner of rental</p>
-   *         <p>404 NOT FOUND on error</p>
    *         <p>401 UNAUTHORIZED if user is not authenticated</p>
+   *         <p>403 FORBIDDEN if user is not owner of rental</p>
+   *         <p>404 NOT FOUND if rental was not found</p>
    */
   @DeleteMapping("/{id}")
-  public ResponseEntity<String> deleteRental(@PathVariable Long id) {
+  public ResponseEntity<String> delete(@PathVariable Long id) {
     ResponseEntity<String> response;
-    User sessionUser = userService.getSessionUser();
+    User sessionUser = this.userService.getSessionUser();
     if (sessionUser != null) {
-      Optional<Rental> rental = rentalService.getOne(id);
+      Optional<Rental> rental = this.rentalService.getOne(id);
       if (rental.isPresent()) {
         if (sessionUser.getEmail().equals(rental.get().getUser().getEmail())) {
-          rentalService.delete(id);
+          this.rentalService.delete(id);
           response = new ResponseEntity<>("", HttpStatus.OK);
         } else {
           response = new ResponseEntity<>("Users do not have access to delete rentals of other " +
                                           "users", HttpStatus.FORBIDDEN);
         }
       } else {
-        response = new ResponseEntity<>("", HttpStatus.NOT_FOUND);
+        response = new ResponseEntity<>("Rental with specified ID was not found",
+                                        HttpStatus.NOT_FOUND);
       }
     } else {
       response = new ResponseEntity<>("Only authenticated users have access to delete rentals",

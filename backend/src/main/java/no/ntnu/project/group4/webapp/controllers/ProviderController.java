@@ -56,9 +56,9 @@ public class ProviderController {
    * @param provider The specified provider
    * @return <p>201 CREATED on success</p>
    *         <p>400 BAD REQUEST</p>
-   *         <p>404 NOT FOUND if configuration was not found</p>
    *         <p>401 UNAUTHORIZED if user is not authenticated</p>
    *         <p>403 FORBIDDEN if user is not admin</p>
+   *         <p>404 NOT FOUND if configuration was not found</p>
    */
   @PostMapping("/configurations/{id}")
   public ResponseEntity<String> add(@PathVariable Long id,
@@ -94,9 +94,9 @@ public class ProviderController {
    * 
    * @param id The specified ID
    * @return <p>200 OK on success</p>
-   *         <p>404 NOT FOUND on error</p>
    *         <p>401 UNAUTHORIZED if user is not authenticated</p>
    *         <p>403 FORBIDDEN if user is not admin</p>
+   *         <p>404 NOT FOUND if provider was not found</p>
    */
   @DeleteMapping("/{id}")
   public ResponseEntity<String> delete(@PathVariable Long id) {
@@ -108,7 +108,8 @@ public class ProviderController {
         this.providerService.delete(id);
         response = new ResponseEntity<>("", HttpStatus.OK);
       } else {
-        response = new ResponseEntity<>("", HttpStatus.NOT_FOUND);
+        response = new ResponseEntity<>("Provider with specified ID was not found",
+                                        HttpStatus.NOT_FOUND);
       }
     } else if (sessionUser == null) {
       response = new ResponseEntity<>("Only authenticated users have access to delete providers",

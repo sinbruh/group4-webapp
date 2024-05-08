@@ -80,9 +80,9 @@ public class CarController {
    * 
    * @param id The specified ID
    * @return <p>200 OK on success</p>
-   *         <p>404 NOT FOUND on error</p>
    *         <p>401 UNAUTHORIZED if user is not authenticated</p>
    *         <p>403 FORBIDDEN if user is not admin</p>
+   *         <p>404 NOT FOUND if car was not found</p>
    */
   @DeleteMapping("/{id}")
   public ResponseEntity<String> delete(@PathVariable Long id) {
@@ -94,7 +94,8 @@ public class CarController {
         this.carService.delete(id);
         response = new ResponseEntity<>("", HttpStatus.OK);
       } else {
-        response = new ResponseEntity<>("", HttpStatus.NOT_FOUND);
+        response = new ResponseEntity<>("Car with specified ID was not found",
+                                        HttpStatus.NOT_FOUND);
       }
     } else if (sessionUser == null) {
       response = new ResponseEntity<>("Only authenticated users have access to delete cars",

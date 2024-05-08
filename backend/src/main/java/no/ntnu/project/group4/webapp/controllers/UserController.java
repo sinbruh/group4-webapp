@@ -24,43 +24,60 @@ public class UserController {
   private AccessUserService userService;
 
   /**
-   * Returns user information.
+   * Returns a HTTP response to the request of getting user data of the user with the specified
+   * email.
+   * 
+   * <p>The response body contains either (1) a string that contains a message or (2) a user DTO
+   * with user data.</p>
    *
-   * @param email Email for which the user is requested
-   * @return The user information or error code when not authorized
+   * @param email The specified email
+   * @return <p>200 OK on success + user data</p>
+   *         <p>401 UNAUTHORIZED if user is not authenticated</p>
+   *         <p>403 FORBIDDEN if user email does not match email</p>
    */
   @GetMapping("/{email}")
-  public ResponseEntity<?> getUser(@PathVariable String email) {
-    User sessionUser = userService.getSessionUser();
+  public ResponseEntity<?> get(@PathVariable String email) {
+    ResponseEntity<?> response;
+    User sessionUser = this.userService.getSessionUser();
     if (sessionUser != null && sessionUser.getEmail().equals(email)) {
       UserDto userData = new UserDto(sessionUser.getFirstName(), sessionUser.getLastName(),
                                      sessionUser.getEmail(), sessionUser.getPhoneNumber(),
                                      sessionUser.getDateOfBirth().getTime());
-      return new ResponseEntity<>(userData, HttpStatus.OK);
+      response = new ResponseEntity<>(userData, HttpStatus.OK);
     } else if (sessionUser == null) {
-      return new ResponseEntity<>("User data accessible only to authenticated users",
-                                  HttpStatus.UNAUTHORIZED);
+      response = new ResponseEntity<>("Only authenticated users have access to user data",
+                                      HttpStatus.UNAUTHORIZED);
     } else {
-      return new ResponseEntity<>("User data for other users not accessible",
-                                  HttpStatus.FORBIDDEN);
+      response = new ResponseEntity<>("Users do not have access to user data of other users",
+                                      HttpStatus.FORBIDDEN);
     }
+    return response;
   }
 
+  // TODO Investigate HTTP response 500 INTERNAL SERVER ERROR
   /**
-   * Updates user information except password.
+   * Returns a HTTP response to the request of updating user data of the user with the specified
+   * email to the specified user data.
+   * 
+   * <p>The request updates all user data except password.</p>
+   * 
+   * <p>The response body contains a string that is either empty or contains a message.</p>
    *
-   * @param email Email for which the user is updated
-   * @param userData User data to update the user with
-   * @return HTTP 200 OK or error code with error message
+   * @param email The specified email
+   * @param userData The specified user data
+   * @return <p>200 OK on success</p>
+   *         <p>400 BAD REQUEST on error</p>
+   *         <p>401 UNAUTHORIZED if user is not authenticated</p>
+   *         <p>403 FORBIDDEN if user email does not match email</p>
+   *         <p>500 INTERNAL SERVER ERROR on error when updating user data</p>
    */
   @PutMapping("/user/{email}")
-  public ResponseEntity<String> updateUser(@PathVariable String email,
-                                           @RequestBody UserDto userData) {
+  public ResponseEntity<String> update(@PathVariable String email, @RequestBody UserDto userData) {
     ResponseEntity<String> response;
-    User sessionUser = userService.getSessionUser();
+    User sessionUser = this.userService.getSessionUser();
     if (sessionUser != null && sessionUser.getEmail().equals(email)) {
       if (userData != null) {
-        if (userService.updateUser(sessionUser, userData)) {
+        if (this.userService.updateUser(sessionUser, userData)) {
           response = new ResponseEntity<>("", HttpStatus.OK);
         } else {
           response = new ResponseEntity<>("Could not update user data",
@@ -70,30 +87,36 @@ public class UserController {
         response = new ResponseEntity<>("User data not supplied", HttpStatus.BAD_REQUEST);
       }
     } else if (sessionUser == null) {
-      response = new ResponseEntity<>("User data accessible only to authenticated users",
+      response = new ResponseEntity<>("Only authenticated users have access to update user data",
                                       HttpStatus.UNAUTHORIZED);
     } else {
-      response = new ResponseEntity<>("User data for other users not accessible",
-                                      HttpStatus.FORBIDDEN);
+      response = new ResponseEntity<>("Users do not have access to update user data of other " +
+                                      "users", HttpStatus.FORBIDDEN);
     }
     return response;
   }
 
   /**
-   * Updates user password.
+   * Returns a HTTP response to the request of updating user password of the user with the
+   * specified email to the specified password.
    * 
-   * @param email Email for which the user is updated
-   * @param password Password to update the user password with
-   * @return HTTP 200 OK or error code with error message
+   * <p>The response body contains a string that is either empty or contains a message.</p>
+   * 
+   * @param email The specified email
+   * @param password The specified password
+   * @return <p>200 OK on success</p>
+   *         <p>400 BAD REQUEST on error</p>
+   *         <p>401 UNAUTHORIZED if user is not authenticated</p>
+   *         <p>403 FORBIDDEN if user email does not match email</p>
    */
   @PutMapping("/password/{email}")
-  public ResponseEntity<String> updateUserPassword(@PathVariable String email,
-                                                   @RequestBody String password) {
+  public ResponseEntity<String> updatePassword(@PathVariable String email,
+                                               @RequestBody String password) {
     ResponseEntity<String> response;
-    User sessionUser = userService.getSessionUser();
+    User sessionUser = this.userService.getSessionUser();
     if (sessionUser != null && sessionUser.getEmail().equals(email)) {
       if (password != null) {
-        String errorMessage = userService.updateUserPassword(sessionUser, password);
+        String errorMessage = this.userService.updateUserPassword(sessionUser, password);
         if (errorMessage == null) {
           response = new ResponseEntity<>("", HttpStatus.OK);
         } else {
@@ -103,33 +126,37 @@ public class UserController {
         response = new ResponseEntity<>("Password not supplied", HttpStatus.BAD_REQUEST);
       }
     } else if (sessionUser == null) {
-      response = new ResponseEntity<>("User data accessible only to authenticated users",
-                                      HttpStatus.UNAUTHORIZED);
+      response = new ResponseEntity<>("Only authenticated users have access to update user " +
+                                      "password", HttpStatus.UNAUTHORIZED);
     } else {
-      response = new ResponseEntity<>("User data for other users not accessible",
-                                      HttpStatus.FORBIDDEN);
+      response = new ResponseEntity<>("Users do not have access to update user password of other" +
+                                      "users", HttpStatus.FORBIDDEN);
     }
     return response;
   }
 
   /**
-   * Deletes user.
+   * Returns a HTTP response to the request of deleting the user with the specified email.
    * 
-   * @param email Email for which the user is deleted
-   * @return HTTP 200 OK or error code when not authorized
+   * <p>The response body contains a string that is either empty or contains a message.</p>
+   * 
+   * @param email The specified email
+   * @return <p>200 OK on success</p>
+   *         <p>401 UNAUTHORIZED if user is not authenticated</p>
+   *         <p>403 FORBIDDEN if user email does not match email</p>
    */
   @DeleteMapping("/{email}")
-  public ResponseEntity<String> deleteUser(@PathVariable String email) {
+  public ResponseEntity<String> delete(@PathVariable String email) {
     ResponseEntity<String> response;
-    User sessionUser = userService.getSessionUser();
+    User sessionUser = this.userService.getSessionUser();
     if (sessionUser != null && sessionUser.getEmail().equals(email)) {
-      userService.deleteUser(sessionUser);
+      this.userService.deleteUser(sessionUser);
       response = new ResponseEntity<>("", HttpStatus.OK);
     } else if (sessionUser == null) {
-      response = new ResponseEntity<>("User data accessible only to authenticated users",
+      response = new ResponseEntity<>("Only authenticated users have access to delete users",
                                       HttpStatus.UNAUTHORIZED);
     } else {
-      response = new ResponseEntity<>("User data for other users not accessible",
+      response = new ResponseEntity<>("Users do not have access to delete other users",
                                       HttpStatus.FORBIDDEN);
     }
     return response;
