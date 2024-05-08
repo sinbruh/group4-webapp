@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import no.ntnu.project.group4.webapp.models.Configuration;
 import no.ntnu.project.group4.webapp.models.Provider;
+import no.ntnu.project.group4.webapp.models.User;
+import no.ntnu.project.group4.webapp.services.AccessUserService;
 import no.ntnu.project.group4.webapp.services.ConfigurationService;
 import no.ntnu.project.group4.webapp.services.ProviderService;
 
@@ -27,6 +29,8 @@ public class ProviderController {
   private ProviderService providerService;
   @Autowired
   private ConfigurationService configurationService;
+  @Autowired
+  private AccessUserService userService;
 
   @GetMapping
   public Iterable<Provider> getAll() {
@@ -50,23 +54,37 @@ public class ProviderController {
    * 
    * @param id The specified ID
    * @param provider The specified provider
-   * @return 201 CREATED on success or 400 BAD REQUEST or 404 NOT FOUND on error
+   * @return <p>201 CREATED on success</p>
+   *         <p>400 BAD REQUEST</p>
+   *         <p>404 NOT FOUND if configuration was not found</p>
+   *         <p>401 UNAUTHORIZED if user is not authenticated</p>
+   *         <p>403 FORBIDDEN if user is not admin</p>
    */
   @PostMapping("/configurations/{id}")
   public ResponseEntity<String> add(@PathVariable Long id,
                                     @RequestBody Provider provider) {
     ResponseEntity<String> response;
-    Optional<Configuration> configuration = this.configurationService.getOne(id);
-    if (configuration.isPresent()) {
-      provider.setConfiguration(configuration.get());
-      try {
-        this.providerService.add(provider);
-        response = new ResponseEntity<>("", HttpStatus.CREATED);
-      } catch (Exception e) {
-        response = new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+    User sessionUser = this.userService.getSessionUser();
+    if (sessionUser != null && sessionUser.isAdmin()) {
+      Optional<Configuration> configuration = this.configurationService.getOne(id);
+      if (configuration.isPresent()) {
+        provider.setConfiguration(configuration.get());
+        try {
+          this.providerService.add(provider);
+          response = new ResponseEntity<>("", HttpStatus.CREATED);
+        } catch (Exception e) {
+          response = new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+      } else {
+        response = new ResponseEntity<>("Configuration with specified ID was not found",
+                                        HttpStatus.NOT_FOUND);
       }
+    } else if (sessionUser == null) {
+      response = new ResponseEntity<>("Only authenticated users have access to add providers",
+                                      HttpStatus.UNAUTHORIZED);
     } else {
-      response = new ResponseEntity<>("", HttpStatus.NOT_FOUND);
+      response = new ResponseEntity<>("Only admin users have access to add providers",
+                                      HttpStatus.FORBIDDEN);
     }
     return response;
   }
@@ -75,17 +93,29 @@ public class ProviderController {
    * Deletes the provider with the specified ID from the database.
    * 
    * @param id The specified ID
-   * @return 200 OK on success or 404 NOT FOUND on error
+   * @return <p>200 OK on success</p>
+   *         <p>404 NOT FOUND on error</p>
+   *         <p>401 UNAUTHORIZED if user is not authenticated</p>
+   *         <p>403 FORBIDDEN if user is not admin</p>
    */
   @DeleteMapping("/{id}")
   public ResponseEntity<String> delete(@PathVariable Long id) {
     ResponseEntity<String> response;
-    Optional<Provider> provider = this.providerService.getOne(id);
-    if (provider.isPresent()) {
-      this.providerService.delete(id);
-      response = new ResponseEntity<>("", HttpStatus.OK);
+    User sessionUser = this.userService.getSessionUser();
+    if (sessionUser != null && sessionUser.isAdmin()) {
+      Optional<Provider> provider = this.providerService.getOne(id);
+      if (provider.isPresent()) {
+        this.providerService.delete(id);
+        response = new ResponseEntity<>("", HttpStatus.OK);
+      } else {
+        response = new ResponseEntity<>("", HttpStatus.NOT_FOUND);
+      }
+    } else if (sessionUser == null) {
+      response = new ResponseEntity<>("Only authenticated users have access to delete providers",
+                                      HttpStatus.UNAUTHORIZED);
     } else {
-      response = new ResponseEntity<>("", HttpStatus.NOT_FOUND);
+      response = new ResponseEntity<>("Only admin users have access to delete providers",
+                                      HttpStatus.FORBIDDEN);
     }
     return response;
   }
