@@ -27,8 +27,8 @@ public class UserController {
    * Returns a HTTP response to the request of getting user data of the user with the specified
    * email.
    * 
-   * <p>The response body contains either (1) a string that contains a message or (2) a user DTO
-   * with user data.</p>
+   * <p>The response body contains (1) a string that contains a message or (2) a user DTO with user
+   * data.</p>
    *
    * @param email The specified email
    * @return <p>200 OK on success + user data</p>
@@ -61,7 +61,7 @@ public class UserController {
    * 
    * <p>The request updates all user data except password.</p>
    * 
-   * <p>The response body contains a string that is either empty or contains a message.</p>
+   * <p>The response body contains a string that is empty or contains a message.</p>
    *
    * @param email The specified email
    * @param userData The specified user data
@@ -69,7 +69,7 @@ public class UserController {
    *         <p>400 BAD REQUEST on error</p>
    *         <p>401 UNAUTHORIZED if user is not authenticated</p>
    *         <p>403 FORBIDDEN if user email does not match email</p>
-   *         <p>500 INTERNAL SERVER ERROR on error when updating user data</p>
+   *         <p>500 INTERNAL SERVER ERROR if an error occured when updating user data</p>
    */
   @PutMapping("/user/{email}")
   public ResponseEntity<String> update(@PathVariable String email, @RequestBody UserDto userData) {
@@ -100,7 +100,7 @@ public class UserController {
    * Returns a HTTP response to the request of updating user password of the user with the
    * specified email to the specified password.
    * 
-   * <p>The response body contains a string that is either empty or contains a message.</p>
+   * <p>The response body contains a string that is empty or contains a message.</p>
    * 
    * @param email The specified email
    * @param password The specified password
@@ -138,7 +138,7 @@ public class UserController {
   /**
    * Returns a HTTP response to the request of deleting the user with the specified email.
    * 
-   * <p>The response body contains a string that is either empty or contains a message.</p>
+   * <p>The response body contains a string that is empty or contains a message.</p>
    * 
    * @param email The specified email
    * @return <p>200 OK on success</p>
