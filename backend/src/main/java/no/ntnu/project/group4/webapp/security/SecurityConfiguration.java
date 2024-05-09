@@ -44,7 +44,6 @@ public class SecurityConfiguration {
     auth.userDetailsService(userDetailsService);
   }
 
-  // TODO Investigate authorization on line 110
   /**
    * This method will be called automatically by the framework to find the authentication to use.
    * 
@@ -62,31 +61,16 @@ public class SecurityConfiguration {
         .cors(AbstractHttpConfigurer::disable)
         // The following is accessible for everyone
         .authorizeHttpRequests(
-          (auth) -> auth.requestMatchers("/api/cars").permitAll()
-        )
-        .authorizeHttpRequests(
           (auth) -> auth.requestMatchers("/api/cars/**").permitAll()
-        )
-        .authorizeHttpRequests(
-          (auth) -> auth.requestMatchers("/api/configurations").permitAll()
         )
         .authorizeHttpRequests(
           (auth) -> auth.requestMatchers("/api/configurations/**").permitAll()
         )
         .authorizeHttpRequests(
-          (auth) -> auth.requestMatchers("/api/extrafeatures").permitAll()
-        )
-        .authorizeHttpRequests(
           (auth) -> auth.requestMatchers("/api/extrafeatures/**").permitAll()
         )
         .authorizeHttpRequests(
-          (auth) -> auth.requestMatchers("/api/providers").permitAll()
-        )
-        .authorizeHttpRequests(
           (auth) -> auth.requestMatchers("/api/providers/**").permitAll()
-        )
-        .authorizeHttpRequests(
-          (auth) -> auth.requestMatchers("/api/rentals").permitAll()
         )
         .authorizeHttpRequests(
           (auth) -> auth.requestMatchers("/api/rentals/**").permitAll()
