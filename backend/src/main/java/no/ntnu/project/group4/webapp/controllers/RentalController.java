@@ -27,7 +27,7 @@ import java.util.Optional;
  * <p>All HTTP requests affiliated with rentals are handeled in this class.</p>
  * 
  * @author Group 4
- * @version v1.0 (2024.05.09)
+ * @version v1.1 (2024.05.09)
  */
 @CrossOrigin
 @RestController
@@ -41,14 +41,29 @@ public class RentalController {
   private AccessUserService userService;
 
   /**
-   * Returns an iterable containing all providers. When this endpoint is requested, a HTTP 200 OK
-   * response will automatically be sent back.
+   * Returns a response to the request of getting all rentals.
    * 
-   * @return 200 OK + rental data
+   * <p>The response body contains (1) rental data or (2) a string that contains an error
+   * message.</p>
+   * 
+   * @return <p>200 OK on success + rental data</p>
+   *         <p>401 UNAUTHORIZED if user is not authorized</p>
+   *         <p>403 FORBIDDEN if user is not admin</p>
    */
   @GetMapping
-  public Iterable<Rental> getAll() {
-    return this.rentalService.getAll();
+  public ResponseEntity<?> getAll() {
+    ResponseEntity<?> response;
+    User sessionUser = this.userService.getSessionUser();
+    if (sessionUser != null && sessionUser.isAdmin()) {
+      response = new ResponseEntity<>(this.rentalService.getAll(), HttpStatus.OK);
+    } else if (sessionUser == null) {
+      response = new ResponseEntity<>("Only authenticated users have access to rental data",
+                                      HttpStatus.UNAUTHORIZED);
+    } else {
+      response = new ResponseEntity<>("Only admin users have access to rental data",
+                                      HttpStatus.FORBIDDEN);
+    }
+    return response;
   }
 
   /**
@@ -58,7 +73,7 @@ public class RentalController {
    * message.</p>
    * 
    * @param id The specified ID
-   * @return <p>200 OK + rental data</p>
+   * @return <p>200 OK on success + rental data</p>
    *         <p>401 UNAUTHORIZED if user is not authenticated</p>
    *         <p>403 FORBIDDEN if user email does not match email of rental user</p>
    *         <p>404 NOT FOUND if rental is not found</p>
@@ -71,7 +86,8 @@ public class RentalController {
       Optional<Rental> rental = this.rentalService.getOne(id);
       if (rental.isPresent()) {
         Rental foundRental = rental.get();
-        if (sessionUser.getEmail().equals(foundRental.getUser().getEmail())) {
+        if (sessionUser.getEmail().equals(foundRental.getUser().getEmail()) ||
+            sessionUser.isAdmin()) {
           response = new ResponseEntity<>(foundRental, HttpStatus.OK);
         } else {
           response = new ResponseEntity<>("Users do not have access to rental data of other users",
@@ -88,7 +104,7 @@ public class RentalController {
   }
 
   /**
-   * Returns a respons to the request of adding the specified rental to the session user and the
+   * Returns a response to the request of adding the specified rental to the session user and the
    * configuration with the specified ID.
    * 
    * <p>The response body contains a string that is empty or contains an error message.</p>
@@ -107,7 +123,7 @@ public class RentalController {
     if (sessionUser != null) {
       Optional<Configuration> configuration = this.configurationService.getOne(id);
       if (configuration.isPresent()) {
-        rental.setUser(this.userService.getSessionUser());
+        rental.setUser(sessionUser);
         rental.setConfiguration(configuration.get());
         try {
           this.rentalService.add(rental);
