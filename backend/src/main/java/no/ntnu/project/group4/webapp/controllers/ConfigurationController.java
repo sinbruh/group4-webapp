@@ -21,6 +21,14 @@ import no.ntnu.project.group4.webapp.services.AccessUserService;
 import no.ntnu.project.group4.webapp.services.CarService;
 import no.ntnu.project.group4.webapp.services.ConfigurationService;
 
+/**
+ * The ConfigurationController class represents the REST API controller class for configurations.
+ * 
+ * <p>All HTTP requests affiliated with configurations are handeled in this class.</p>
+ * 
+ * @author Group 4
+ * @version v1.0 (2024.05.09)
+ */
 @CrossOrigin
 @RestController
 @RequestMapping("/api/configurations")
@@ -32,25 +40,45 @@ public class ConfigurationController {
   @Autowired
   private AccessUserService userService;
 
+  /**
+   * Returns an iterable containing all configurations. When this endpoint is requested, a HTTP 200
+   * OK response will automatically be sent back.
+   * 
+   * @return 200 OK + configuration data
+   */
   @GetMapping
   public Iterable<Configuration> getAll() {
     return this.configurationService.getAll();
   }
 
+  /**
+   * Returns a response to the request of getting the configuration with the specified ID.
+   * 
+   * <p>The response body contains (1) configuration data or (2) a string that contains an error
+   * message.</p>
+   * 
+   * @param id The specified ID
+   * @return <p>200 OK on success + configuration data</p>
+   *         <p>404 NOT FOUND if configuration is not found</p>
+   */
   @GetMapping("/{id}")
-  public ResponseEntity<Configuration> get(@PathVariable Long id) {
-    ResponseEntity<Configuration> response;
+  public ResponseEntity<?> get(@PathVariable Long id) {
+    ResponseEntity<?> response;
     Optional<Configuration> configuration = this.configurationService.getOne(id);
     if (configuration.isPresent()) {
-      response = ResponseEntity.ok(configuration.get());
+      response = new ResponseEntity<>(configuration.get(), HttpStatus.OK);
     } else {
-      response = ResponseEntity.notFound().build();
+      response = new ResponseEntity<>("Configuration with specified ID not found",
+                                      HttpStatus.NOT_FOUND);
     }
     return response;
   }
 
   /**
-   * Adds the specified configuration to the car with the specified ID in the database.
+   * Returns a response to the request of adding the specified configuration to the car with the
+   * specified ID.
+   * 
+   * <p>The response body contains a string that is empty or contains an error message.</p>
    * 
    * @param id The specified ID
    * @param configuration The specified configuration
@@ -58,7 +86,7 @@ public class ConfigurationController {
    *         <p>400 BAD REQUEST on error</p>
    *         <p>401 UNAUTHORIZED if user is not authenticated</p>
    *         <p>403 FORBIDDEN if user is not admin</p>
-   *         <p>404 NOT FOUND if car was not found</p>
+   *         <p>404 NOT FOUND if car is not found</p>
    */
   @PostMapping("/cars/{id}")
   public ResponseEntity<String> add(@PathVariable Long id,
@@ -76,7 +104,7 @@ public class ConfigurationController {
           response = new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
       } else {
-        response = new ResponseEntity<>("Car with specified ID was not found",
+        response = new ResponseEntity<>("Car with specified ID not found",
                                         HttpStatus.NOT_FOUND);
       }
     } else if (sessionUser == null) {
@@ -90,13 +118,15 @@ public class ConfigurationController {
   }
 
   /**
-   * Deletes the configuration with the specified ID from the database.
+   * Returns a response to the request of deleting the configuration with the specified ID.
+   * 
+   * <p>The response body contains a string that is empty or contains an error message.</p>
    * 
    * @param id The specified ID
    * @return <p>200 OK on success</p>
    *         <p>401 UNAUTHORIZED if user is not authenticated</p>
    *         <p>403 FORBIDDEN if user is not admin</p>
-   *         <p>404 NOT FOUND if configuration was not found</p>
+   *         <p>404 NOT FOUND if configuration is not found</p>
    */
   @DeleteMapping("/{id}")
   public ResponseEntity<String> delete(@PathVariable Long id) {
@@ -108,7 +138,7 @@ public class ConfigurationController {
         this.configurationService.delete(id);
         response = new ResponseEntity<>("", HttpStatus.OK);
       } else {
-        response = new ResponseEntity<>("Configuration with specified ID was not found",
+        response = new ResponseEntity<>("Configuration with specified ID not found",
                                         HttpStatus.NOT_FOUND);
       }
     } else if (sessionUser == null) {

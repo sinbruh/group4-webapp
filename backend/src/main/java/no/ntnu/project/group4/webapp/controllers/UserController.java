@@ -16,6 +16,14 @@ import no.ntnu.project.group4.webapp.dto.UserDto;
 import no.ntnu.project.group4.webapp.models.User;
 import no.ntnu.project.group4.webapp.services.AccessUserService;
 
+/**
+ * The UserController class represents the REST API controller class for users.
+ * 
+ * <p>All HTTP requests affiliated with users are handeled in this class.</p>
+ * 
+ * @author Group 4
+ * @version v1.0 (2024.05.09)
+ */
 @CrossOrigin
 @RestController
 @RequestMapping("/api/users")
@@ -24,11 +32,11 @@ public class UserController {
   private AccessUserService userService;
 
   /**
-   * Returns a HTTP response to the request of getting user data of the user with the specified
+   * Returns a HTTP response to the request of getting the user data of the user with the specified
    * email.
    * 
-   * <p>The response body contains (1) a string that contains a message or (2) a user DTO with user
-   * data.</p>
+   * <p>The response body contains (1) user data or (2) a string that contains an error
+   * message.</p>
    *
    * @param email The specified email
    * @return <p>200 OK on success + user data</p>
@@ -56,12 +64,12 @@ public class UserController {
 
   // TODO Investigate HTTP response 500 INTERNAL SERVER ERROR
   /**
-   * Returns a HTTP response to the request of updating user data of the user with the specified
-   * email to the specified user data.
+   * Returns a HTTP response to the request of updating the user data of the user with the
+   * specified email with the specified user data.
    * 
-   * <p>The request updates all user data except password.</p>
+   * <p>All the user data is updated except the user password.</p>
    * 
-   * <p>The response body contains a string that is empty or contains a message.</p>
+   * <p>The response body contains a string that is empty or contains an error message.</p>
    *
    * @param email The specified email
    * @param userData The specified user data
@@ -97,10 +105,10 @@ public class UserController {
   }
 
   /**
-   * Returns a HTTP response to the request of updating user password of the user with the
-   * specified email to the specified password.
+   * Returns a HTTP response to the request of updating the user password of the user with the
+   * specified email with the specified password.
    * 
-   * <p>The response body contains a string that is empty or contains a message.</p>
+   * <p>The response body contains a string that is empty or contains an error message.</p>
    * 
    * @param email The specified email
    * @param password The specified password
@@ -138,7 +146,7 @@ public class UserController {
   /**
    * Returns a HTTP response to the request of deleting the user with the specified email.
    * 
-   * <p>The response body contains a string that is empty or contains a message.</p>
+   * <p>The response body contains a string that is empty or contains an error message.</p>
    * 
    * @param email The specified email
    * @return <p>200 OK on success</p>

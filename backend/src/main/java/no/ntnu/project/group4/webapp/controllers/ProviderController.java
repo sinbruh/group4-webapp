@@ -21,6 +21,14 @@ import no.ntnu.project.group4.webapp.services.AccessUserService;
 import no.ntnu.project.group4.webapp.services.ConfigurationService;
 import no.ntnu.project.group4.webapp.services.ProviderService;
 
+/**
+ * The ProviderController class represents the REST API controller class for providers.
+ * 
+ * <p>All HTTP requests affiliated with providers are handeled in this class.</p>
+ * 
+ * @author Group 4
+ * @version v1.0 (2024.05.09)
+ */
 @CrossOrigin
 @RestController
 @RequestMapping("/api/providers")
@@ -32,33 +40,53 @@ public class ProviderController {
   @Autowired
   private AccessUserService userService;
 
+  /**
+   * Returns an iterable containing all providers. When this endpoint is requested, a HTTP 200 OK
+   * response will automatically be sent back.
+   * 
+   * @return 200 OK + provider data
+   */
   @GetMapping
   public Iterable<Provider> getAll() {
     return this.providerService.getAll();
   }
 
+  /**
+   * Returns a response to the request of getting the provider with the specified ID.
+   * 
+   * <p>The response body contains (1) provider data or (2) a string that contains an error
+   * message.</p>
+   * 
+   * @param id The specified ID
+   * @return <p>200 OK on success</p>
+   *         <p>404 NOT FOUND if provider is not found</p>
+   */
   @GetMapping("/{id}")
-  public ResponseEntity<Provider> get(@PathVariable Long id) {
-    ResponseEntity<Provider> response;
+  public ResponseEntity<?> get(@PathVariable Long id) {
+    ResponseEntity<?> response;
     Optional<Provider> provider = this.providerService.getOne(id);
     if (provider.isPresent()) {
-      response = ResponseEntity.ok(provider.get());
+      response = new ResponseEntity<>(provider.get(), HttpStatus.OK);
     } else {
-      response = ResponseEntity.notFound().build();
+      response = new ResponseEntity<>("Provider with specified ID not found",
+                                      HttpStatus.NOT_FOUND);
     }
     return response;
   }
 
   /**
-   * Adds the specified provider for the configuration with the specified ID in the database.
+   * Returns a response to the request of adding the specified provider to the configuration with
+   * the specified ID.
+   * 
+   * <p>The response body contains a string that is empty or contains an error message.</p>
    * 
    * @param id The specified ID
    * @param provider The specified provider
    * @return <p>201 CREATED on success</p>
-   *         <p>400 BAD REQUEST</p>
+   *         <p>400 BAD REQUEST on error</p>
    *         <p>401 UNAUTHORIZED if user is not authenticated</p>
    *         <p>403 FORBIDDEN if user is not admin</p>
-   *         <p>404 NOT FOUND if configuration was not found</p>
+   *         <p>404 NOT FOUND if configuration is not found</p>
    */
   @PostMapping("/configurations/{id}")
   public ResponseEntity<String> add(@PathVariable Long id,
@@ -76,7 +104,7 @@ public class ProviderController {
           response = new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
       } else {
-        response = new ResponseEntity<>("Configuration with specified ID was not found",
+        response = new ResponseEntity<>("Configuration with specified ID not found",
                                         HttpStatus.NOT_FOUND);
       }
     } else if (sessionUser == null) {
@@ -90,13 +118,15 @@ public class ProviderController {
   }
 
   /**
-   * Deletes the provider with the specified ID from the database.
+   * Returns a reponse to the request of deleting the provider with the specified ID.
+   * 
+   * <p>The response body contains a string that is empty or contains an error message.</p>
    * 
    * @param id The specified ID
    * @return <p>200 OK on success</p>
    *         <p>401 UNAUTHORIZED if user is not authenticated</p>
    *         <p>403 FORBIDDEN if user is not admin</p>
-   *         <p>404 NOT FOUND if provider was not found</p>
+   *         <p>404 NOT FOUND if provider is not found</p>
    */
   @DeleteMapping("/{id}")
   public ResponseEntity<String> delete(@PathVariable Long id) {
@@ -108,7 +138,7 @@ public class ProviderController {
         this.providerService.delete(id);
         response = new ResponseEntity<>("", HttpStatus.OK);
       } else {
-        response = new ResponseEntity<>("Provider with specified ID was not found",
+        response = new ResponseEntity<>("Provider with specified ID not found",
                                         HttpStatus.NOT_FOUND);
       }
     } else if (sessionUser == null) {

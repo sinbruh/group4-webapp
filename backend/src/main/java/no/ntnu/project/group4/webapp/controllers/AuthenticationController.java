@@ -21,7 +21,12 @@ import no.ntnu.project.group4.webapp.security.JwtUtil;
 import no.ntnu.project.group4.webapp.services.AccessUserService;
 
 /**
- * Controller responsible for authentication.
+ * The AuthenticationController class represents the REST API controller class for authentication.
+ * 
+ * <p>All HTTP requests affiliated with authentication is handeled in this class.</p>
+ * 
+ * @author Group 4
+ * @version v1.0 (2024.05.09)
  */
 @CrossOrigin
 @RestController
@@ -35,9 +40,13 @@ public class AuthenticationController {
   private JwtUtil jwtUtil;
 
   /**
-   * HTTP POST request to /authenticate.
+   * Returns a response to the request of authenticating the user in the specified authentication
+   * request.
+   * 
+   * <p>The response body contains (1) a JWT token or (2) a string that contains an error
+   * message.</p>
    *
-   * @param authenticationRequest The request JSON object containing email and password
+   * @param authenticationRequest The specified authentication request
    * @return <p>200 OK on success + JWT token</p>
    *         <p>401 UNAUTHORIZED if invalid email or password</p>
    */
@@ -61,7 +70,9 @@ public class AuthenticationController {
   }
 
   /**
-   * This method processes data received from the register form (HTTP POST).
+   * Returns a response to the request of registering the user in the specified register DTO.
+   * 
+   * <p>The response body contains a string that is empty or contains an error message.</p>
    *
    * @return <p>200 OK on success</p>
    *         <p>400 BAD REQUEST on error</p>
