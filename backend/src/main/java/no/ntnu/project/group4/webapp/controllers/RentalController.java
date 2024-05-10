@@ -28,7 +28,7 @@ import java.util.Optional;
  * <p>All HTTP requests affiliated with rentals are handeled in this class.</p>
  * 
  * @author Group 4
- * @version v1.1 (2024.05.09)
+ * @version v1.1 (2024.05.10)
  */
 @CrossOrigin
 @RestController
