@@ -33,6 +33,16 @@ public class UserService {
   }
 
   /**
+   * Try to find a user with the given email regardless of if it exists or not.
+   * 
+   * @param email The given email
+   * @return A user with the given email regardless of if it exists or not
+   */
+  public Optional<User> getOneByEmail(String email) {
+    return this.userRepository.findByEmail(email);
+  }
+
+  /**
    * Add the given user to the database.
    * 
    * @param user The given user

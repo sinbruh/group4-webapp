@@ -18,6 +18,7 @@ import no.ntnu.project.group4.webapp.models.User;
 import no.ntnu.project.group4.webapp.services.AccessUserService;
 import no.ntnu.project.group4.webapp.services.ConfigurationService;
 import no.ntnu.project.group4.webapp.services.RentalService;
+import no.ntnu.project.group4.webapp.services.UserService;
 
 import java.util.Optional;
 
@@ -38,7 +39,9 @@ public class RentalController {
   @Autowired
   private ConfigurationService configurationService;
   @Autowired
-  private AccessUserService userService;
+  private AccessUserService accessUserService;
+  @Autowired
+  private UserService userService;
 
   /**
    * Returns a response to the request of getting all rentals.
@@ -53,7 +56,7 @@ public class RentalController {
   @GetMapping
   public ResponseEntity<?> getAll() {
     ResponseEntity<?> response;
-    User sessionUser = this.userService.getSessionUser();
+    User sessionUser = this.accessUserService.getSessionUser();
     if (sessionUser != null && sessionUser.isAdmin()) {
       response = new ResponseEntity<>(this.rentalService.getAll(), HttpStatus.OK);
     } else if (sessionUser == null) {
@@ -81,7 +84,7 @@ public class RentalController {
   @GetMapping("/{id}")
   public ResponseEntity<?> get(@PathVariable Long id) {
     ResponseEntity<?> response;
-    User sessionUser = this.userService.getSessionUser();
+    User sessionUser = this.accessUserService.getSessionUser();
     if (sessionUser != null) {
       Optional<Rental> rental = this.rentalService.getOne(id);
       if (rental.isPresent()) {
@@ -119,7 +122,7 @@ public class RentalController {
   @PostMapping("/configurations/{id}")
   public ResponseEntity<String> add(@PathVariable Long id, @RequestBody Rental rental) {
     ResponseEntity<String> response;
-    User sessionUser = this.userService.getSessionUser();
+    User sessionUser = this.accessUserService.getSessionUser();
     if (sessionUser != null) {
       Optional<Configuration> configuration = this.configurationService.getOne(id);
       if (configuration.isPresent()) {
@@ -142,6 +145,20 @@ public class RentalController {
     return response;
   }
 
+  @PostMapping("/users/{email}/configurations/{id}")
+  public ResponseEntity<String> add(@PathVariable String email, @PathVariable Long id,
+                                    @RequestBody Rental rental) {
+    ResponseEntity<String> response;
+    User sessionUser = this.accessUserService.getSessionUser();
+    if (sessionUser != null && sessionUser.isAdmin()) {
+    } else if (!sessionUser.isAdmin()) {
+      // Normal user access
+    } else {
+      // User must log in
+    }
+    return response;
+  }
+
   /**
    * Returns a response to the request of deleting the rental with the specified ID.
    * 
@@ -156,7 +173,7 @@ public class RentalController {
   @DeleteMapping("/{id}")
   public ResponseEntity<String> delete(@PathVariable Long id) {
     ResponseEntity<String> response;
-    User sessionUser = this.userService.getSessionUser();
+    User sessionUser = this.accessUserService.getSessionUser();
     if (sessionUser != null) {
       Optional<Rental> rental = this.rentalService.getOne(id);
       if (rental.isPresent()) {
