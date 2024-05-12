@@ -52,7 +52,7 @@ export function Navigation() {
             >
                 Login
             </button>
-            {isLoginOpen && <LoginModalClient />}
+            {isLoginOpen && <LoginModalClient isOpen={isLoginOpen} onClose={() => setIsLoginOpen(false)}/>}
         <Image src={userIcon} alt="User icon" width={32} height={32} />
         </div>
     )
