@@ -7,6 +7,7 @@ import { LoginModalClient } from "@/app/modal/LoginModal.client";
 
 
 
+import userIcon from "@/img/icons/person.svg";
 export function Navigation() {
 
     let isLoginOpen, setIsLoginOpen;
@@ -24,7 +25,7 @@ export function Navigation() {
                     />
                 </Link>
                 <Link href="/">
-                    <h1 className="px-2">Rental Roulette</h1>
+                    <h1 className="px-2 font-bold">Rental Roulette</h1>
                 </Link>
             </header>
             <nav className="flex items-center justify-center grow gap-x-10 m-10px">
@@ -52,6 +53,7 @@ export function Navigation() {
                 Login
             </button>
             {isLoginOpen && <LoginModalClient />}
+        <Image src={userIcon} alt="User icon" width={32} height={32} />
         </div>
     )
 }

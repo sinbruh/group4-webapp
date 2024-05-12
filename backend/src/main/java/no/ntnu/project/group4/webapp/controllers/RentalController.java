@@ -28,7 +28,7 @@ import java.util.Optional;
  * <p>All HTTP requests affiliated with rentals are handeled in this class.</p>
  * 
  * @author Group 4
- * @version v1.1 (2024.05.09)
+ * @version v1.1 (2024.05.10)
  */
 @CrossOrigin
 @RestController
@@ -107,8 +107,8 @@ public class RentalController {
   }
 
   /**
-   * Returns a response to the request of adding the specified rental to the session user and the
-   * configuration with the specified ID.
+   * Returns a response to the request of adding the specified rental to the user with the
+   * specified email and the configuration with the specified ID.
    * 
    * <p>The response body contains a string that is empty or contains an error message.</p>
    * 
@@ -117,23 +117,34 @@ public class RentalController {
    * @return <p>201 CREATED on success</p>
    *         <p>400 BAD REQUEST on error</p>
    *         <p>401 UNAUTHORIZED if user is not authenticated</p>
-   *         <p>404 NOT FOUND if configuration is not found</p>
+   *         <p>403 FORBIDDEN if user email does not match email of rental user</p>
+   *         <p>404 NOT FOUND if user or configuration is not found</p>
    */
-  @PostMapping("/configurations/{id}")
-  public ResponseEntity<String> add(@PathVariable Long id, @RequestBody Rental rental) {
+  @PostMapping("/users/{email}/configurations/{id}")
+  public ResponseEntity<String> add(@PathVariable String email, @PathVariable Long id,
+                                    @RequestBody Rental rental) {
     ResponseEntity<String> response;
     User sessionUser = this.accessUserService.getSessionUser();
     if (sessionUser != null) {
+      Optional<User> user = this.userService.getOneByEmail(email);
       Optional<Configuration> configuration = this.configurationService.getOne(id);
-      if (configuration.isPresent()) {
-        rental.setUser(sessionUser);
-        rental.setConfiguration(configuration.get());
-        try {
-          this.rentalService.add(rental);
-          response = new ResponseEntity<>("", HttpStatus.CREATED);
-        } catch (IllegalArgumentException e) {
-          response = new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+      if (user.isPresent() && configuration.isPresent()) {
+        if (sessionUser.getEmail().equals(email) || sessionUser.isAdmin()) {
+          rental.setUser(user.get());
+          rental.setConfiguration(configuration.get());
+          try {
+            this.rentalService.add(rental);
+            response = new ResponseEntity<>("", HttpStatus.CREATED);
+          } catch (IllegalArgumentException e) {
+            response = new ResponseEntity<>("", HttpStatus.BAD_REQUEST);
+          }
+        } else {
+          response = new ResponseEntity<>("Users do not have access to add rental data of other " +
+                                          "users", HttpStatus.FORBIDDEN);
         }
+      } else if (!user.isPresent()) {
+        response = new ResponseEntity<>("User with specified email not found",
+                                        HttpStatus.NOT_FOUND);
       } else {
         response = new ResponseEntity<>("Configuration with specified ID not found",
                                         HttpStatus.NOT_FOUND);
@@ -141,20 +152,6 @@ public class RentalController {
     } else {
       response = new ResponseEntity<>("Only authenticated users have access to add rentals",
                                       HttpStatus.UNAUTHORIZED);
-    }
-    return response;
-  }
-
-  @PostMapping("/users/{email}/configurations/{id}")
-  public ResponseEntity<String> add(@PathVariable String email, @PathVariable Long id,
-                                    @RequestBody Rental rental) {
-    ResponseEntity<String> response;
-    User sessionUser = this.accessUserService.getSessionUser();
-    if (sessionUser != null && sessionUser.isAdmin()) {
-    } else if (!sessionUser.isAdmin()) {
-      // Normal user access
-    } else {
-      // User must log in
     }
     return response;
   }
@@ -177,7 +174,8 @@ public class RentalController {
     if (sessionUser != null) {
       Optional<Rental> rental = this.rentalService.getOne(id);
       if (rental.isPresent()) {
-        if (sessionUser.getEmail().equals(rental.get().getUser().getEmail())) {
+        if (sessionUser.getEmail().equals(rental.get().getUser().getEmail()) ||
+            sessionUser.isAdmin()) {
           this.rentalService.delete(id);
           response = new ResponseEntity<>("", HttpStatus.OK);
         } else {
