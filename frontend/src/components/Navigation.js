@@ -47,12 +47,12 @@ export function Navigation() {
             </nav>
             {/* User icon */}
             <button
-                className="btn btn-primary text-white bg-green-800 hover:bg-green-500 font-bold py-2 px-4 rounded-full"
+                className="btn btn-primary text-white bg-blue-950 hover:bg-blue-800 font-bold py-2 px-4 rounded-full"
                 onClick={() => setIsLoginOpen(true)}
             >
                 Login
             </button>
-            {isLoginOpen && <LoginModalClient />}
+            {isLoginOpen && <LoginModalClient isOpen={isLoginOpen} onClose={() => setIsLoginOpen(false)}/>}
         <Image src={userIcon} alt="User icon" width={32} height={32} />
         </div>
     )
