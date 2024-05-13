@@ -29,7 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * The UserController class represents the REST API controller class for users.
  *
- * <p>All HTTP requests affiliated with users are handeled in this class.</p>
+ * <p>All HTTP requests affiliated with users are handled in this class.</p>
  *
  * @author Group 4
  * @version v1.1 (2024.05.10)

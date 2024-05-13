@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * The ExtraFeatureController class represents the REST API controller class for extra features.
  *
- * <p>All HTTP requests affiliated with extra features are handeled in this class.</p>
+ * <p>All HTTP requests affiliated with extra features are handeld in this class.</p>
  *
  * @author Group 4
  * @version v1.0 (2024.05.09)
