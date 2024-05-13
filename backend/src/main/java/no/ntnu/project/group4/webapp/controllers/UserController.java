@@ -167,7 +167,9 @@ public class UserController {
         if (sessionUser.getEmail().equals(email) || sessionUser.isAdmin()) {
           if (userData != null) {
             if (this.accessUserService.updateUser(user.get(), userData)) {
-              final UserDetails userDetails = this.accessUserService.loadUserByUsername(email);
+              final UserDetails userDetails = this.accessUserService.loadUserByUsername(
+                userData.getEmail()
+              );
               final String jwt = this.jwtUtil.generateToken(userDetails);
               response = new ResponseEntity<>(new AuthenticationResponse(jwt), HttpStatus.OK);
             } else {
