@@ -1,10 +1,10 @@
 'use client';
-import React, {useState} from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import logo from "@/img/temp-logo.png";
 import Image from "next/image";
-import { LoginModalClient } from "@/app/modal/LoginModal.client";
-
+import { LoginModalClient } from "@/components/modal/LoginModal.client";
+import { Button } from "@/components/ui/button";
 
 
 import userIcon from "@/img/icons/person.svg";
@@ -30,24 +30,20 @@ export function Navigation() {
             </header>
             <nav className="flex items-center justify-center grow gap-x-10 m-10px">
                 <p>
-                        <Link href="/" className="p-2 rounded hover:bg-gray-200 font-bold">Home</Link>
+                    <Link href="/" className="p-2 rounded hover:bg-gray-200 font-bold">Home</Link>
                 </p>
                 <p>
-                        <Link href="about" className="p-2 rounded hover:bg-gray-200 font-bold">About</Link>
+                    <Link href="about" className="p-2 rounded hover:bg-gray-200 font-bold">About</Link>
                 </p>
                 <p>
-                        <Link href="contact" className="p-2 rounded hover:bg-gray-200 font-bold">Contact</Link>
+                    <Link href="contact" className="p-2 rounded hover:bg-gray-200 font-bold">Contact</Link>
                 </p>
             </nav>
             {/* User icon */}
-            <button
-                className="btn btn-primary text-white bg-blue-950 hover:bg-blue-800 font-bold py-2 px-4 rounded-full"
-                onClick={() => setIsLoginOpen(true)}
-            >
-                Login
-            </button>
-            {isLoginOpen && <LoginModalClient isOpen={isLoginOpen} onClose={() => setIsLoginOpen(false)}/>}
-        <Image src={userIcon} alt="User icon" width={32} height={32} />
+            <Button variant="ghost" size="icon" onClick={() => setIsLoginOpen(true)}>
+                <Image src={userIcon} alt="User icon" width={32} height={32} />
+            </Button>
+            {isLoginOpen && <LoginModalClient isOpen={isLoginOpen} onClose={() => setIsLoginOpen(false)} />}
         </div>
     )
 }
