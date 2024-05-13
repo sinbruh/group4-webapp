@@ -72,13 +72,23 @@ export  function LoginModalClient({ isOpen, onClose}) {
                             />
                         </label>
                     </div>
-                    <div className="flex items-center justify-between">
+                    <div className="flex flex-col items-center space-y-5">
                         <button
                             type="submit"
                             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                         >
                             Log in
                         </button>
+                        <p className={"text-center"}>
+                            Don't have an account? &nbsp;
+                            <a
+                                href={"#"}
+                                onClick={"handleSignup"}
+                                className={"text-blue-500 hover:text-blue-700 text-sm font focus:outline-none hover:underline"}
+                            >
+                                Sign up
+                            </a>
+                        </p>
                     </div>
                 </form>
                 <button onClick={onClose}
