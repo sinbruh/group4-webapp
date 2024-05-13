@@ -151,7 +151,7 @@ public class RentalController {
       Optional<User> user = this.userService.getOneByEmail(email);
       Optional<Configuration> configuration = this.configurationService.getOne(id);
       if (user.isPresent() && configuration.isPresent()) {
-        if (sessionUser.getEmail().equals(email) || sessionUser.isAdmin()) {
+        if (sessionUser.getEmail().equals(user.get().getEmail()) || sessionUser.isAdmin()) {
           rental.setUser(user.get());
           rental.setConfiguration(configuration.get());
           try {

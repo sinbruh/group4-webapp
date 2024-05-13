@@ -106,7 +106,7 @@ public class UserController {
     if (sessionUser != null) {
       Optional<User> user = this.userService.getOneByEmail(email);
       if (user.isPresent()) {
-        if (sessionUser.getEmail().equals(email) || sessionUser.isAdmin()) {
+        if (sessionUser.getEmail().equals(user.get().getEmail()) || sessionUser.isAdmin()) {
           User foundUser = user.get();
           UserDto userData = new UserDto(foundUser.getFirstName(), foundUser.getLastName(),
               foundUser.getEmail(), foundUser.getPhoneNumber(),
@@ -164,7 +164,7 @@ public class UserController {
     if (sessionUser != null) {
       Optional<User> user = this.userService.getOneByEmail(email);
       if (user.isPresent()) {
-        if (sessionUser.getEmail().equals(email) || sessionUser.isAdmin()) {
+        if (sessionUser.getEmail().equals(user.get().getEmail()) || sessionUser.isAdmin()) {
           if (userData != null) {
             if (this.accessUserService.updateUser(user.get(), userData)) {
               final UserDetails userDetails = this.accessUserService.loadUserByUsername(
@@ -224,9 +224,9 @@ public class UserController {
     if (sessionUser != null) {
       Optional<User> user = this.userService.getOneByEmail(email);
       if (user.isPresent()) {
-        if (sessionUser.getEmail().equals(email) || sessionUser.isAdmin()) {
+        if (sessionUser.getEmail().equals(user.get().getEmail()) || sessionUser.isAdmin()) {
           if (password != null) {
-            String errorMessage = this.accessUserService.updateUserPassword(sessionUser, password);
+            String errorMessage = this.accessUserService.updateUserPassword(user.get(), password);
             if (errorMessage == null) {
               response = new ResponseEntity<>("", HttpStatus.OK);
             } else {
@@ -275,7 +275,7 @@ public class UserController {
     if (sessionUser != null) {
       Optional<User> user = this.userService.getOneByEmail(email);
       if (user.isPresent()) {
-        if (sessionUser.getEmail().equals(email) || sessionUser.isAdmin()) {
+        if (sessionUser.getEmail().equals(user.get().getEmail()) || sessionUser.isAdmin()) {
           this.accessUserService.deleteUser(user.get());
           response = new ResponseEntity<>("", HttpStatus.OK);
         } else {
