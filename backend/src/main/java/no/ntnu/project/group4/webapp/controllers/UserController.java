@@ -6,13 +6,17 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import java.util.LinkedHashSet;
 import java.util.Optional;
 import java.util.Set;
+
+import no.ntnu.project.group4.webapp.dto.AuthenticationResponse;
 import no.ntnu.project.group4.webapp.dto.UserDto;
 import no.ntnu.project.group4.webapp.models.User;
+import no.ntnu.project.group4.webapp.security.JwtUtil;
 import no.ntnu.project.group4.webapp.services.AccessUserService;
 import no.ntnu.project.group4.webapp.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,6 +42,8 @@ public class UserController {
   private AccessUserService accessUserService;
   @Autowired
   private UserService userService;
+  @Autowired
+  private JwtUtil jwtUtil;
 
   /**
    * Returns a response to the request of getting all user data.
@@ -125,15 +131,17 @@ public class UserController {
 
   /**
    * Returns a response to the request of updating the user data of the user with the specified
-   * email with the specified user data.
+   * email with the specified user data. Every time the user is updated, a new JWT token is
+   * generated for the user, as JWT tokens use email as subject for the users.
    *
    * <p>All the user data is updated except the user password.</p>
    *
-   * <p>The response body contains a string that is empty or contains an error message.</p>
+   * <p>The response body contains (1) a JWT token or (2) a string that contains an error
+   * message.</p>
    *
    * @param email    The specified email
    * @param userData The specified user data
-   * @return <p>200 OK on success</p>
+   * @return <p>200 OK on success + JWT token</p>
    * <p>400 BAD REQUEST on error</p>
    * <p>401 UNAUTHORIZED if user is not authenticated</p>
    * <p>403 FORBIDDEN if user email does not match email</p>
@@ -150,8 +158,8 @@ public class UserController {
       @ApiResponse(responseCode = "500", description = "Could not update user data")
   })
   @PutMapping("/user/{email}")
-  public ResponseEntity<String> update(@PathVariable String email, @RequestBody UserDto userData) {
-    ResponseEntity<String> response;
+  public ResponseEntity<?> update(@PathVariable String email, @RequestBody UserDto userData) {
+    ResponseEntity<?> response;
     User sessionUser = this.accessUserService.getSessionUser();
     if (sessionUser != null) {
       Optional<User> user = this.userService.getOneByEmail(email);
@@ -159,7 +167,9 @@ public class UserController {
         if (sessionUser.getEmail().equals(email) || sessionUser.isAdmin()) {
           if (userData != null) {
             if (this.accessUserService.updateUser(user.get(), userData)) {
-              response = new ResponseEntity<>("", HttpStatus.OK);
+              final UserDetails userDetails = this.accessUserService.loadUserByUsername(email);
+              final String jwt = this.jwtUtil.generateToken(userDetails);
+              response = new ResponseEntity<>(new AuthenticationResponse(jwt), HttpStatus.OK);
             } else {
               response = new ResponseEntity<>("Could not update user data",
                   HttpStatus.INTERNAL_SERVER_ERROR);
