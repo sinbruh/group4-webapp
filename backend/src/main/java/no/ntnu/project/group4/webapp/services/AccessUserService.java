@@ -142,6 +142,7 @@ public class AccessUserService implements UserDetailsService {
     return BCrypt.hashpw(password, BCrypt.gensalt());
   }
 
+  // TODO Fix method so that email cannot be changed to one that already exists
   /**
    * Updates user information except password.
    *
@@ -173,5 +174,14 @@ public class AccessUserService implements UserDetailsService {
       userRepository.save(user);
     }
     return errorMessage;
+  }
+
+  /**
+   * Deletes user from database.
+   * 
+   * @param user User to delete
+   */
+  public void deleteUser(User user) {
+    userRepository.delete(user);
   }
 }

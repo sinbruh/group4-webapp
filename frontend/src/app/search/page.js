@@ -1,15 +1,15 @@
 import styles from "./search.module.css";
 import React from 'react';
 import Navigation from "@/components/Navigation";
-import {Footer} from "@/components/Footer";
-import Image from "next/image";
-import carImage from "@/img/cars/BMW-M3.jpg";
+import { Footer } from "@/components/Footer";
 import Link from "next/link";
 import FilterBar from "@/components/FilterBar";
+import CarCard from "@/components/CarCard";
+import ExpandedCard from "@/components/ExpandedCard";
 
 export default function Search() {
     return (
-        <>
+        <div className="bg-[url('../img/temp-background-image.jpg')] bg-cover bg-center">
             <Navigation />
             <section className={styles.breadcrumb}>
                 <p>
@@ -17,55 +17,20 @@ export default function Search() {
                 </p>
             </section>
             <FilterBar />
-            <section className={styles.hero}>
-                <section className={styles.cards}>
-                    <div className={styles.card} id={"mercedez"}>
-                        <Image src={carImage} alt={"car img"} width={300} height={200} />
-                        <div className={"card-info"}>
-                            <h2>mercedez</h2>
-                            <p>Price: 500 NOK/day</p>
-                            <p>Location: Ålesund</p>
-                        </div>
-                    </div>
-                    <div className={styles.card} id={"bmw"}>
-                        <Image src={carImage} alt="car img" width={300} height={200} />
-                        <div className={"card-info"}>
-                            <h2>bmw</h2>
-                            <p>Price: 500 NOK/day</p>
-                            <p>Location: Ålesund</p>
-                        </div>
-                    </div>
-                    <div className={styles.card} id={"audi"}>
-                        <Image src={carImage} alt={"car img"} width={300} height={200} />
-                        <div className={"card-info"}>
-                            <h2>audi</h2>
-                            <p>Price: 500 NOK/day</p>
-                            <p>Location: Ålesund</p>
-                        </div>
-                    </div>
-                    <div className={styles.card} id={"audi"}>
-                        <Image src={carImage} alt={"car img"} width={300} height={200} />
-                        <div className={"card-info"}>
-                            <h2>audi</h2>
-                            <p>Price: 500 NOK/day</p>
-                            <p>Location: Ålesund</p>
-                        </div>
-                    </div>
+            <section className="flex flex-row justify-between h-screen p-2">
+                <section className="flex flex-col p-2 overflow-auto max-h-fit max-w-[50%] min-w-[45%]">
+                    <CarCard carName="BMW-M3" price={500} location="stryn"
+                        size={5} fuelType="diesel" transmission="manual"
+                        description="1.5 liter" availability={true} />
                 </section>
-                <div className={styles.expandedCard} id={"expandedCard"}>
-                    <Image src={carImage} alt={"car img"} width={300} height={200} />
-                    <div className={styles.cardi}>
-                        <h2>mercedez</h2>
-                        <p>Price: 500 NOK/day</p>
-                        <p>Location: Ålesund</p>
-                        <p>Owner: John Doe</p>
-                        <p>Phone: 12345678</p>
-                        <p>Email: matsern@email.com</p>
-                        <button>Book</button>
-                    </div>
-                </div>
+
+                <section className="flex flex-col p-2 overflow-auto max-h-fit h-svh max-w-[55%] min-w-[55%]">
+                    <ExpandedCard carName="BMW-M3" price={500} location="stryn"
+                        size={5} fuelType="diesel" transmission="manual"
+                        description="1.5 liter" availability={true} />
+                </section>
             </section>
             <Footer />
-        </>
+        </div>
     );
 };

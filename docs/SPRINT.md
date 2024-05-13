@@ -216,7 +216,84 @@ reach certain goals of this sprint:
    functionalities
 2. Mathias is responsible for converting the pop-up for user operations to React
 3. Sindre is responsible for converting the search bar in the landing page to React
-4. TBD
+
+Even though group members have different responsibilities, all members should contribute to reaching
+the goals of the sprint.
+
+### Accomplishments
+
+All the goals set by the group for this sprint was accomplished to some degree; the group finished
+adding a Postman test collection that covers most of all security functionalities, they implemented
+a React modal for user operations, and they converted most of the search bar in the landing page to
+React and styled it using Tailwind CSS.
+
+### Retrospective
+
+The group is still working weekly on the project and is satisfied with the workflow. The group feel
+like the workload has been distributed better since the last sprint, and thinks this is caused by
+more precise and clearer points of accomplishment. The group will continue to make precise goals,
+as they think this has a positive effect on the workflow. The group feels like there are no points
+of improvement for the next sprint.
+
+## Week 18
+
+This sprint starts in week 18 and ends in week 19.
+
+Deadline: 10.05.2024
+
+### Goals
+
+The goals of this sprint is to finish the backend in the current state of the project, to make
+styled cards in the search page using Tailwind CSS and to finish the first React modal pop-up.
+
+### Work distribution
+
+The work is slightly distributed for this sprint, meaning certain group members is responsible to
+reach certain goals of this sprint:
+
+1. Mats is responsible for finishing the backend in the current state of the project
+2. Sindre and Leander are responsible for making styled cards in the search page using Tailwind CSS
+3. Mathias is responsible for finishing the first React modal pop-up
+
+Even though group members have different responsibilities, all members should contribute to reaching
+the goals of the sprint.
+
+### Accomplishments
+
+Only one of the goals set by the group for this sprint was accomplished; the group finished making
+styled cards in the search page using Tailwind CSS. The group was not able to finish the backend in
+the current state of the project or finish the first React modal pop-up, as group members were not
+able to work as much on the project because of other exams.
+
+### Retrospective
+
+The group is still working weekly on the project and is satisfied with the workflow. The group
+feels like there is still work remaining in the project, and might have to step-it-up if they want
+a result they are satisfied with. Because of this, the group thinks the point of improvement for
+the next sprint is to work as much as possible on the project. The group will try to meet daily in
+work days from here on, in order to finish the project.
+
+## Week 19
+
+This sprint starts in week 19 and ends in week 20.
+
+Deadline: 15.05.2024
+
+### Goals
+
+The goals of this sprint is to continue finishing the backend in the current state of the project,
+continue finishing the first React modal pop-up, extend styled cards in the search page and make
+cards generate from data gathered from backend.
+
+### Work distribution
+
+The work is slightly distributed for this sprint, meaning certain group members is responsible to
+reach certain goals of this sprint:
+
+1. Mats is responsible for continuing finishing the backend in the current state of the project
+2. Mathias is responsible for continuing finishing the first React modal pop-up
+3. Sindre is responsible for extending styled cards in the search page
+4. Leander is responsible for making cards generate from data gathered from backend
 
 Even though group members have different responsibilities, all members should contribute to reaching
 the goals of the sprint.

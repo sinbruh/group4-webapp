@@ -21,7 +21,12 @@ import no.ntnu.project.group4.webapp.security.JwtUtil;
 import no.ntnu.project.group4.webapp.services.AccessUserService;
 
 /**
- * Controller responsible for authentication.
+ * The AuthenticationController class represents the REST API controller class for authentication.
+ * 
+ * <p>All HTTP requests affiliated with authentication is handeled in this class.</p>
+ * 
+ * @author Group 4
+ * @version v1.0 (2024.05.09)
  */
 @CrossOrigin
 @RestController
@@ -35,41 +40,51 @@ public class AuthenticationController {
   private JwtUtil jwtUtil;
 
   /**
-   * HTTP POST request to /authenticate.
+   * Returns a response to the request of authenticating the user in the specified authentication
+   * request.
+   * 
+   * <p>The response body contains (1) a JWT token or (2) a string that contains an error
+   * message.</p>
    *
-   * @param authenticationRequest The request JSON object containing email and password
-   * @return OK + JWT token or UNAUTHORIZED
+   * @param authenticationRequest The specified authentication request
+   * @return <p>200 OK on success + JWT token</p>
+   *         <p>401 UNAUTHORIZED if invalid email or password</p>
    */
   @PostMapping("/authenticate")
   public ResponseEntity<?> authenticate(@RequestBody AuthenticationRequest authenticationRequest) {
+    ResponseEntity<?> response;
     try {
-      authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
+      this.authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
         authenticationRequest.getEmail(),
         authenticationRequest.getPassword())
       );
+      final UserDetails userDetails = this.userService.loadUserByUsername(
+        authenticationRequest.getEmail()
+      );
+      final String jwt = this.jwtUtil.generateToken(userDetails);
+      response = new ResponseEntity<>(new AuthenticationResponse(jwt), HttpStatus.OK);
     } catch (BadCredentialsException e) {
-      return new ResponseEntity<>("Invalid email or password", HttpStatus.UNAUTHORIZED);
+      response = new ResponseEntity<>("Invalid email or password", HttpStatus.UNAUTHORIZED);
     }
-    final UserDetails userDetails = userService.loadUserByUsername(
-      authenticationRequest.getEmail()
-    );
-    final String jwt = jwtUtil.generateToken(userDetails);
-    return ResponseEntity.ok(new AuthenticationResponse(jwt));
+    return response;
   }
 
   /**
-   * This method processes data received from the register form (HTTP POST).
+   * Returns a response to the request of registering the user in the specified register DTO.
+   * 
+   * <p>The response body contains a string that is empty or contains an error message.</p>
    *
-   * @return OK or BAD REQUEST
+   * @return <p>200 OK on success</p>
+   *         <p>400 BAD REQUEST on error</p>
    */
   @PostMapping("/register")
   public ResponseEntity<String> registerProcess(@RequestBody RegisterDto registerData) {
     ResponseEntity<String> response;
     try {
-      userService.tryCreateNewUser(registerData.getFirstName(), registerData.getLastName(),
-                                   registerData.getEmail(), registerData.getPhoneNumber(),
-                                   registerData.getPassword(), registerData.getDateOfBirth());
-      response = new ResponseEntity<>(HttpStatus.OK);
+      this.userService.tryCreateNewUser(registerData.getFirstName(), registerData.getLastName(),
+                                        registerData.getEmail(), registerData.getPhoneNumber(),
+                                        registerData.getPassword(), registerData.getDateOfBirth());
+      response = new ResponseEntity<>("", HttpStatus.OK);
     } catch (IOException e) {
       response = new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
     }

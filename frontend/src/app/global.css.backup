@@ -1,0 +1,244 @@
+/* Element styling */
+
+body {
+  margin: 0;
+  background-image: url("../img/temp-background-image.jpg");
+  background-size: 100%;
+}
+
+footer {
+  padding: 20px;
+  background-color: #00509E;
+}
+
+footer p {
+  margin-bottom: 0;
+}
+
+.primary-button {
+  background-image: linear-gradient(to right, #45B649, #DCE35B);
+}
+
+.primary-button:hover {
+  background-image: linear-gradient(to right, #3EA442, #C6CC52);
+}
+
+#nav-container img {
+  margin: 10px 10px 6px 10px;
+}
+
+#nav-container svg {
+  margin: 5px;
+}
+
+#nav-container .primary-button {
+  width: 336px;
+}
+
+#shade-container {
+  width: 100%;
+  height: 100%;
+  background-color: #808080;
+  opacity: 0.8;
+}
+
+#user-operations > * {
+  padding-bottom: 44px;
+  background-color: #FFFFFF;
+}
+
+#user-operations > * > * {
+  margin: 10px;
+}
+
+#user-operations input {
+  height: 50px;
+  padding-left: 15px;
+}
+
+#login-container {
+  width: 440px;
+}
+
+#login-container input {
+  width: 320px;
+}
+
+#secondary-button {
+  width: 333px;
+  /* Code gathered from
+     https://stackoverflow.com/questions/5706963/possible-to-use-border-radius-together-with-a-border-image-which-has-a-gradient
+     at 2024.03.07 */
+  background-image: linear-gradient(#FFFFFF, #FFFFFF), linear-gradient(to right, #45B649, #DCE35B);
+  background-origin: border-box;
+  background-clip: content-box, border-box;
+}
+
+#secondary-button:hover {
+  background-image: linear-gradient(#FFFFFF, #FFFFFF), linear-gradient(to right, #3EA442, #C6CC52);
+}
+
+#secondary-button:hover p {
+  background: linear-gradient(to right, #3EA442, #C6CC52);
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+}
+
+#secondary-button p {
+  /* Code gathered from
+     https://www.geeksforgeeks.org/how-to-create-linear-gradient-text-using-html-and-css/ at
+     2024.03.07 */
+  background: linear-gradient(to right, #45B649, #DCE35B);
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+}
+
+#register-container {
+  width: 740px;
+}
+
+#register-container input {
+  width: 622px;
+}
+
+#name {
+  width: 640px;
+}
+
+#name input {
+  width: 291px;
+}
+
+/* Font styling */
+
+body {
+  font-family: "Montserrat", sans-serif;
+}
+
+header a, nav a {
+  text-decoration: none;
+  color: #000000;
+}
+
+nav a:hover {
+  color: #808080;
+}
+
+footer {
+  text-align: center;
+  color: #FFFFFF;
+}
+
+.primary-button {
+  color: #FFFFFF;
+}
+
+#user-operations > * div {
+  text-align: center;
+  font-weight: bold;
+}
+
+#user-operations input {
+  font-size: 1rem;
+  font-family: 'Montserrat', sans-serif;
+}
+
+/* Border styling */
+
+#user-operations > * {
+  border-radius: 1rem;
+}
+
+#user-operations > * div {
+  border-radius: 1rem;
+}
+
+#user-operations input {
+  border: 1px solid;
+  border-radius: 1rem;
+}
+
+#secondary-button {
+  border: 3px solid transparent;
+}
+
+/* Positioning */
+
+#shade-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+#user-operations {
+  position: fixed;
+}
+
+#user-operations > * {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* Display */
+
+footer {
+  display: flex;
+}
+
+#shade-container {
+  display: none;
+}
+
+#user-operations > * {
+  display: none;
+}
+
+#name {
+  display: flex;
+}
+
+/* Flexbox styling */
+
+footer {
+  flex-direction: column;
+  align-items: center;
+}
+
+#user-operations > * {
+  flex-direction: column;
+  align-items: center;
+}
+
+#user-operations svg {
+  align-self: flex-start;
+}
+
+#name {
+  justify-content: space-between;
+}
+
+/* Canvas styling */
+
+#nav-container svg:hover {
+  stroke: #808080;
+}
+
+/* Cursor display */
+
+.primary-button {
+  cursor: pointer;
+}
+
+#shade-container {
+  cursor: pointer;
+}
+
+#nav-container svg:hover {
+  cursor: pointer;
+}
+
+#secondary-button {
+  cursor: pointer;
+}

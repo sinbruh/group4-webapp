@@ -1,20 +1,19 @@
 import React from 'react';
 import Navigation from "@/components/Navigation";
-import {Footer} from "@/components/Footer";
+import { Footer } from "@/components/Footer";
 import Link from "next/link";
-import styles from "@/styles/style.css";
 
 export default function Page() {
     return (
-        <div>
+        <div className="">
             <Navigation />
-            <section className={styles.breadcrumb}>
+            <section className="text-black">
                 <p>
                     <Link href="/">Home</Link> &gt; <Link href="/about">About</Link>
                 </p>
             </section>
-            <section className={styles.about}>`
-                <h1>About Rental Roulette</h1>
+            <section className="m-2 p-2 bg-white h-dvh rounded ">
+                <h1 className="text-xl">About Rental Roulette</h1>
                 <p>
                     Welcome to Rental Roulette, where your journey begins with a spin of the wheel and ends with
                     the perfect ride tailored just for you. At Rental Roulette, we've revolutionized the car rental
@@ -24,6 +23,7 @@ export default function Page() {
                     vacation, or simply need a reliable set of wheels for your daily commute, Rental Roulette
                     ensures that you're always in the driver's seat when it comes to choice and affordability.
                 </p>
+                <br />
                 <p>
                     Our commitment extends beyond just providing competitive prices; we prioritize transparency,
                     convenience, and a touch of excitement. With our user-friendly interface, you can effortlessly
@@ -34,6 +34,7 @@ export default function Page() {
                     hassle-free, cost-effective, and enjoyable travels &mdash; where every rental is a winning
                     spin!
                 </p>
+                <br />
                 <p>
                     Nestled in the picturesque landscapes of Ålesund, Rental Roulette takes pride in catering
                     specifically to the vibrant community of this stunning coastal town. Our focus is on providing

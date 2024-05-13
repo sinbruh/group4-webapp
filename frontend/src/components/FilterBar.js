@@ -1,19 +1,14 @@
 import React from 'react';
 import styles from "@/styles/filter.module.css";
+import Locationbox from "@/components/ui/locationbox";
+import DatePickerWithRange from "@/components/ui/daterange";
 
 export default function FilterBar() {
     return (
         <div>
-            <section className={styles.filter}>
-                <label>Location:</label>
-                <input type="text" name="location" list="locations" />
-                <datalist id="locations">
-                    <option>Ålesund</option>
-                </datalist>
-                <label>From:</label>
-                <input type="date" name="fromDate" />
-                <label>To:</label>
-                <input type="date" name="toDate" />
+            <section className="flex gap-2 items-center bg-[#ffffff] rounded m-4 p-2">
+                <Locationbox />
+                <DatePickerWithRange />
                 <label>Min Price:</label>
                 <input
                     type="range"

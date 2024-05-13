@@ -12,12 +12,12 @@ public class UserDto {
   private int phoneNumber;
   private Date dateOfBirth;
 
-  public UserDto(String firstName, String lastName, String email, int phoneNumber,
-                 Date dateOfBirth) {
+  public UserDto(String firstName, String lastName, String email, int phoneNumber, long dateLong) {
     this.firstName = firstName;
     this.lastName = lastName;
     this.email = email;
     this.phoneNumber = phoneNumber;
+    Date dateOfBirth = new Date(dateLong);
     this.dateOfBirth = dateOfBirth;
   }
 
@@ -57,7 +57,8 @@ public class UserDto {
     return this.dateOfBirth;
   }
 
-  public void setDateOfBirth(Date dateOfBirth) {
+  public void setDateOfBirth(long dateLong) {
+    Date dateOfBirth = new Date(dateLong);
     this.dateOfBirth = dateOfBirth;
   }
 }

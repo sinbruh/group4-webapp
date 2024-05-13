@@ -57,6 +57,7 @@ replay_pid*
 /coverage
 
 # next.js
+/frontend/.next/
 /.next/
 /out/
 .next/
@@ -76,6 +77,8 @@ yarn-error.log*
 
 # local env files
 .env*.local
+/backend/.env
+.env
 
 # vercel
 .vercel

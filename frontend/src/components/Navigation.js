@@ -1,11 +1,21 @@
-import React from "react";
+'use client';
+import React, {useState} from "react";
 import Link from "next/link";
 import logo from "@/img/temp-logo.png";
 import Image from "next/image";
+import { LoginModalClient } from "@/app/modal/LoginModal.client";
+
+
+
+import userIcon from "@/img/icons/person.svg";
 export function Navigation() {
+
+    let isLoginOpen, setIsLoginOpen;
+    [isLoginOpen, setIsLoginOpen] = useState(false);
+
     return (
-        <div id="nav-container">
-            <header>
+        <div id="nav-container" className=" p-2 bg-white min-h-16 flex items-center justify-between">
+            <header className="flex items-center">
                 <Link href="/">
                     <Image
                         src={logo}
@@ -15,32 +25,35 @@ export function Navigation() {
                     />
                 </Link>
                 <Link href="/">
-                    <h1>Rental Roulette</h1>
+                    <h1 className="px-2 font-bold">Rental Roulette</h1>
                 </Link>
             </header>
-            <nav>
+            <nav className="flex items-center justify-center grow gap-x-10 m-10px">
                 <p>
                     <b>
-                        <Link href="/" style={{marginRight: '100px'}}>Home</Link>
+                        <Link href="/">Home</Link>
                     </b>
                 </p>
                 <p>
                     <b>
-                        <Link href="about" style={{marginRight: '100px'}}>About</Link>
+                        <Link href="about">About</Link>
                     </b>
                 </p>
                 <p>
                     <b>
-                        <Link href="contact" style={{marginRight: '100px'}}>Contact</Link>
-                    </b>
-                </p>
-                <p>
-                    <b>
-                        <button style={{marginRight: '100px'}}>Login</button>
+                        <Link href="contact">Contact</Link>
                     </b>
                 </p>
             </nav>
-
+            {/* User icon */}
+            <button
+                className="btn btn-primary text-white bg-green-800 hover:bg-green-500 font-bold py-2 px-4 rounded-full"
+                onClick={() => setIsLoginOpen(true)}
+            >
+                Login
+            </button>
+            {isLoginOpen && <LoginModalClient />}
+        <Image src={userIcon} alt="User icon" width={32} height={32} />
         </div>
     )
 }
