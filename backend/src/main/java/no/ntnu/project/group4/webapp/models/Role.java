@@ -1,5 +1,6 @@
 package no.ntnu.project.group4.webapp.models;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -8,6 +9,7 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Entity(name = "role")
+@Schema(name = "Role", description = "A role entity, representing a role of a user.")
 public class Role {
   @Id
   @GeneratedValue

@@ -30,19 +30,13 @@ export function Navigation() {
             </header>
             <nav className="flex items-center justify-center grow gap-x-10 m-10px">
                 <p>
-                    <b>
-                        <Link href="/">Home</Link>
-                    </b>
+                        <Link href="/" className="p-2 rounded hover:bg-gray-200 font-bold">Home</Link>
                 </p>
                 <p>
-                    <b>
-                        <Link href="about">About</Link>
-                    </b>
+                        <Link href="about" className="p-2 rounded hover:bg-gray-200 font-bold">About</Link>
                 </p>
                 <p>
-                    <b>
-                        <Link href="contact">Contact</Link>
-                    </b>
+                        <Link href="contact" className="p-2 rounded hover:bg-gray-200 font-bold">Contact</Link>
                 </p>
             </nav>
             {/* User icon */}
