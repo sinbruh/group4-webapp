@@ -78,6 +78,22 @@ public class SecurityConfiguration {
         .authorizeHttpRequests(
           (auth) -> auth.requestMatchers("/api/users/**").permitAll()
         )
+        .authorizeHttpRequests(
+            (auth) -> auth.requestMatchers("/swagger-ui.html").permitAll()
+        )
+        .authorizeHttpRequests(
+            (auth) -> auth.requestMatchers("/swagger-ui/**").permitAll()
+        )
+        .authorizeHttpRequests(
+            (auth) -> auth.requestMatchers("/v3/api-docs/**").permitAll()
+        )
+        .authorizeHttpRequests(
+            (auth) -> auth.requestMatchers("/api-docs").permitAll()
+        )
+        .authorizeHttpRequests(
+            (auth) -> auth.requestMatchers("/api-docs/**").permitAll()
+        )
+
         // Authentication and registering is accessible for everyone
         .authorizeHttpRequests(
           (auth) -> auth.requestMatchers("/api/authenticate").permitAll()

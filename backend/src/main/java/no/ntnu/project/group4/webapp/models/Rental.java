@@ -1,5 +1,6 @@
 package no.ntnu.project.group4.webapp.models;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.sql.Time;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -11,6 +12,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 
 @Entity(name = "rental")
+@Schema(name = "Rental", description = "A rental entity, representing a rental of a car configuration.")
 public class Rental {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

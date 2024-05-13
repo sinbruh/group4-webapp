@@ -1,5 +1,6 @@
 package no.ntnu.project.group4.webapp.models;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -10,6 +11,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 
 @Entity(name = "car")
+@Schema(name = "Car", description = "A car entity")
 public class Car {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
