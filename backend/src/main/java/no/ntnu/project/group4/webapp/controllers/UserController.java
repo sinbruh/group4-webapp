@@ -1,9 +1,15 @@
 package no.ntnu.project.group4.webapp.controllers;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import java.util.LinkedHashSet;
 import java.util.Optional;
 import java.util.Set;
-
+import no.ntnu.project.group4.webapp.dto.UserDto;
+import no.ntnu.project.group4.webapp.models.User;
+import no.ntnu.project.group4.webapp.services.AccessUserService;
+import no.ntnu.project.group4.webapp.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,16 +22,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import no.ntnu.project.group4.webapp.dto.UserDto;
-import no.ntnu.project.group4.webapp.models.User;
-import no.ntnu.project.group4.webapp.services.AccessUserService;
-import no.ntnu.project.group4.webapp.services.UserService;
-
 /**
  * The UserController class represents the REST API controller class for users.
- * 
+ *
  * <p>All HTTP requests affiliated with users are handeled in this class.</p>
- * 
+ *
  * @author Group 4
  * @version v1.1 (2024.05.10)
  */
@@ -40,14 +41,15 @@ public class UserController {
 
   /**
    * Returns a response to the request of getting all user data.
-   * 
+   *
    * <p>The response body contains (1) user transfer data or (2) a string that contains an error
    * message.</p>
-   * 
+   *
    * @return <p>200 OK on success + user transfer data</p>
-   *         <p>401 UNAUTHORIZED if user is not authorized</p>
-   *         <p>403 FORBIDDEN if user is not admin</p>
+   * <p>401 UNAUTHORIZED if user is not authorized</p>
+   * <p>403 FORBIDDEN if user is not admin</p>
    */
+  @Operation(summary = "Get all users")
   @GetMapping
   public ResponseEntity<?> getAll() {
     ResponseEntity<?> response;
@@ -57,16 +59,16 @@ public class UserController {
       Set<UserDto> userData = new LinkedHashSet<>();
       for (User user : users) {
         UserDto userDataObj = new UserDto(user.getFirstName(), user.getLastName(), user.getEmail(),
-                                          user.getPhoneNumber(), user.getDateOfBirth().getTime());
+            user.getPhoneNumber(), user.getDateOfBirth().getTime());
         userData.add(userDataObj);
       }
       response = new ResponseEntity<>(userData, HttpStatus.OK);
     } else if (sessionUser == null) {
       response = new ResponseEntity<>("Only authenticated users have access to all user data",
-                                      HttpStatus.UNAUTHORIZED);
+          HttpStatus.UNAUTHORIZED);
     } else {
       response = new ResponseEntity<>("Only admin users have access to all user data",
-                                      HttpStatus.FORBIDDEN);
+          HttpStatus.FORBIDDEN);
     }
     return response;
   }
@@ -74,16 +76,23 @@ public class UserController {
   /**
    * Returns a response to the request of getting the user data of the user with the specified
    * email.
-   * 
+   *
    * <p>The response body contains (1) user transfer data or (2) a string that contains an error
    * message.</p>
    *
    * @param email The specified email
    * @return <p>200 OK on success + user transfer data</p>
-   *         <p>401 UNAUTHORIZED if user is not authenticated</p>
-   *         <p>403 FORBIDDEN if user email does not match email</p>
-   *         <p>404 NOT FOUND if user is not found</p>
+   * <p>401 UNAUTHORIZED if user is not authenticated</p>
+   * <p>403 FORBIDDEN if user email does not match email</p>
+   * <p>404 NOT FOUND if user is not found</p>
    */
+  @Operation(summary = "Get user by email", description = "Returns the user with the specified email")
+  @ApiResponses(value = {
+      @ApiResponse(responseCode = "200", description = "User data"),
+      @ApiResponse(responseCode = "401", description = "Only authenticated users have access to user data"),
+      @ApiResponse(responseCode = "403", description = "Users do not have access to user data of other users"),
+      @ApiResponse(responseCode = "404", description = "User with specified email not found")
+  })
   @GetMapping("/{email}")
   public ResponseEntity<?> get(@PathVariable String email) {
     ResponseEntity<?> response;
@@ -94,42 +103,52 @@ public class UserController {
         if (sessionUser.getEmail().equals(email) || sessionUser.isAdmin()) {
           User foundUser = user.get();
           UserDto userData = new UserDto(foundUser.getFirstName(), foundUser.getLastName(),
-                                         foundUser.getEmail(), foundUser.getPhoneNumber(),
-                                         foundUser.getDateOfBirth().getTime());
+              foundUser.getEmail(), foundUser.getPhoneNumber(),
+              foundUser.getDateOfBirth().getTime());
           response = new ResponseEntity<>(userData, HttpStatus.OK);
         } else {
           response = new ResponseEntity<>("Users do not have access to user data of other users",
-                                          HttpStatus.FORBIDDEN);
+              HttpStatus.FORBIDDEN);
         }
       } else {
         response = new ResponseEntity<>("User with specified email not found",
-                                        HttpStatus.NOT_FOUND);
+            HttpStatus.NOT_FOUND);
       }
     } else {
       response = new ResponseEntity<>("Only authenticated users have access to user data",
-                                      HttpStatus.UNAUTHORIZED);
+          HttpStatus.UNAUTHORIZED);
     }
     return response;
   }
 
   // TODO Investigate HTTP response 500 INTERNAL SERVER ERROR
+
   /**
    * Returns a response to the request of updating the user data of the user with the specified
    * email with the specified user data.
-   * 
+   *
    * <p>All the user data is updated except the user password.</p>
-   * 
+   *
    * <p>The response body contains a string that is empty or contains an error message.</p>
    *
-   * @param email The specified email
+   * @param email    The specified email
    * @param userData The specified user data
    * @return <p>200 OK on success</p>
-   *         <p>400 BAD REQUEST on error</p>
-   *         <p>401 UNAUTHORIZED if user is not authenticated</p>
-   *         <p>403 FORBIDDEN if user email does not match email</p>
-   *         <p>404 NOT FOUND if user is not found</p>
-   *         <p>500 INTERNAL SERVER ERROR if an error occured when updating user data</p>
+   * <p>400 BAD REQUEST on error</p>
+   * <p>401 UNAUTHORIZED if user is not authenticated</p>
+   * <p>403 FORBIDDEN if user email does not match email</p>
+   * <p>404 NOT FOUND if user is not found</p>
+   * <p>500 INTERNAL SERVER ERROR if an error occured when updating user data</p>
    */
+  @Operation(summary = "Update user by email", description = "Updates the user with the specified email")
+  @ApiResponses(value = {
+      @ApiResponse(responseCode = "200", description = "User data updated"),
+      @ApiResponse(responseCode = "400", description = "Error updating user data"),
+      @ApiResponse(responseCode = "401", description = "Only authenticated users have access to update user data"),
+      @ApiResponse(responseCode = "403", description = "Users do not have access to update user data of other users"),
+      @ApiResponse(responseCode = "404", description = "User with specified email not found"),
+      @ApiResponse(responseCode = "500", description = "Could not update user data")
+  })
   @PutMapping("/user/{email}")
   public ResponseEntity<String> update(@PathVariable String email, @RequestBody UserDto userData) {
     ResponseEntity<String> response;
@@ -143,22 +162,22 @@ public class UserController {
               response = new ResponseEntity<>("", HttpStatus.OK);
             } else {
               response = new ResponseEntity<>("Could not update user data",
-                                              HttpStatus.INTERNAL_SERVER_ERROR);
+                  HttpStatus.INTERNAL_SERVER_ERROR);
             }
           } else {
             response = new ResponseEntity<>("User data not supplied", HttpStatus.BAD_REQUEST);
           }
         } else {
           response = new ResponseEntity<>("Users do not have access to update user data of " +
-                                          "other users", HttpStatus.FORBIDDEN);
+              "other users", HttpStatus.FORBIDDEN);
         }
       } else {
         response = new ResponseEntity<>("User with specified email not found",
-                                        HttpStatus.NOT_FOUND);
+            HttpStatus.NOT_FOUND);
       }
     } else {
       response = new ResponseEntity<>("Only authenticated users have access to update user data",
-                                      HttpStatus.UNAUTHORIZED);
+          HttpStatus.UNAUTHORIZED);
     }
     return response;
   }
@@ -166,17 +185,25 @@ public class UserController {
   /**
    * Returns a response to the request of updating the user password of the user with the specified
    * email with the specified password.
-   * 
+   *
    * <p>The response body contains a string that is empty or contains an error message.</p>
-   * 
-   * @param email The specified email
+   *
+   * @param email    The specified email
    * @param password The specified password
    * @return <p>200 OK on success</p>
-   *         <p>400 BAD REQUEST on error</p>
-   *         <p>401 UNAUTHORIZED if user is not authenticated</p>
-   *         <p>403 FORBIDDEN if user email does not match email</p>
-   *         <p>404 NOT FOUND if user is not found</p>
+   * <p>400 BAD REQUEST on error</p>
+   * <p>401 UNAUTHORIZED if user is not authenticated</p>
+   * <p>403 FORBIDDEN if user email does not match email</p>
+   * <p>404 NOT FOUND if user is not found</p>
    */
+  @Operation(summary = "Update user password by email", description = "Updates the user password with the specified email")
+  @ApiResponses(value = {
+      @ApiResponse(responseCode = "200", description = "User password updated"),
+      @ApiResponse(responseCode = "400", description = "Error updating user password"),
+      @ApiResponse(responseCode = "401", description = "Only authenticated users have access to update user password"),
+      @ApiResponse(responseCode = "403", description = "Users do not have access to update user password of other users"),
+      @ApiResponse(responseCode = "404", description = "User with specified email not found")
+  })
   @PutMapping("/password/{email}")
   public ResponseEntity<String> updatePassword(@PathVariable String email,
                                                @RequestBody String password) {
@@ -198,30 +225,37 @@ public class UserController {
           }
         } else {
           response = new ResponseEntity<>("Users do not have access to update user password of " +
-                                          "other users", HttpStatus.FORBIDDEN);
+              "other users", HttpStatus.FORBIDDEN);
         }
       } else {
         response = new ResponseEntity<>("User with specified email not found",
-                                        HttpStatus.NOT_FOUND);
+            HttpStatus.NOT_FOUND);
       }
     } else {
       response = new ResponseEntity<>("Only authenticated users have access to update user " +
-                                      "password", HttpStatus.UNAUTHORIZED);
+          "password", HttpStatus.UNAUTHORIZED);
     }
     return response;
   }
 
   /**
    * Returns a response to the request of deleting the user with the specified email.
-   * 
+   *
    * <p>The response body contains a string that is empty or contains an error message.</p>
-   * 
+   *
    * @param email The specified email
    * @return <p>200 OK on success</p>
-   *         <p>401 UNAUTHORIZED if user is not authenticated</p>
-   *         <p>403 FORBIDDEN if user email does not match email</p>
-   *         <p>404 NOT FOUND if user is not found</p>
+   * <p>401 UNAUTHORIZED if user is not authenticated</p>
+   * <p>403 FORBIDDEN if user email does not match email</p>
+   * <p>404 NOT FOUND if user is not found</p>
    */
+  @Operation(summary = "Delete user by email", description = "Deletes the user with the specified email")
+  @ApiResponses(value = {
+      @ApiResponse(responseCode = "200", description = "User deleted"),
+      @ApiResponse(responseCode = "401", description = "Only authenticated users have access to delete users"),
+      @ApiResponse(responseCode = "403", description = "Users do not have access to delete other users"),
+      @ApiResponse(responseCode = "404", description = "User with specified email not found")
+  })
   @DeleteMapping("/{email}")
   public ResponseEntity<String> delete(@PathVariable String email) {
     ResponseEntity<String> response;
@@ -234,15 +268,15 @@ public class UserController {
           response = new ResponseEntity<>("", HttpStatus.OK);
         } else {
           response = new ResponseEntity<>("Users do not have access to delete other users",
-                                          HttpStatus.FORBIDDEN);
+              HttpStatus.FORBIDDEN);
         }
       } else {
         response = new ResponseEntity<>("User with specified email not found",
-                                        HttpStatus.NOT_FOUND);
+            HttpStatus.NOT_FOUND);
       }
     } else {
       response = new ResponseEntity<>("Only authenticated users have access to delete users",
-                                      HttpStatus.UNAUTHORIZED);
+          HttpStatus.UNAUTHORIZED);
     }
     return response;
   }

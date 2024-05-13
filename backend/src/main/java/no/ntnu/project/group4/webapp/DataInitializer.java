@@ -44,7 +44,7 @@ public class DataInitializer implements ApplicationListener<ApplicationReadyEven
   @Autowired
   private ProviderService providerService;
 
-  private final Logger logger = LoggerFactory.getLogger("DataInit");
+  private final Logger logger = LoggerFactory.getLogger(DataInitializer.class);
 
   /**
    * This method is called when the application is ready (loaded).
@@ -96,7 +96,7 @@ public class DataInitializer implements ApplicationListener<ApplicationReadyEven
     }
     this.logger.info("Loading user data...");
     if (isEmpty) {
-      Date dateOfBirth = new Date(946684800000l);
+      Date dateOfBirth = new Date(946684800000L);
       // Create admin user with temporary password
       User admin = new User("Admin", "User", "admin@user.com", 12345678, "temp", dateOfBirth);
 
