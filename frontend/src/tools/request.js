@@ -1,7 +1,7 @@
 import {getCookie} from "@/tools/cookies";
 import {HttpResponseError} from "@/tools/HttpResponseError";
 
-const API_URL = process.env.VUE_APP_API_URL;
+const API_BASE_URL = process.env.VUE_APP_API_URL;
 
 export function asyncApiRequest(method, url, requestBody = null, returnPlainText = false) {
     const fullUrl = API_BASE_URL + url;
