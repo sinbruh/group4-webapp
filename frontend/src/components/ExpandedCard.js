@@ -18,7 +18,7 @@ import {
 
 const expandedCard = ({ carName, price, location, size, fuelType, transmission, description, availability }) => {
     return (
-        <Card className="h-4/5">
+        <Card className="h-full">
             <CardHeader>
                 <CardTitle>{carName}</CardTitle>
                 <CardDescription>{description}</CardDescription>

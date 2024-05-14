@@ -18,9 +18,9 @@ export default function Search() {
                 </p>
             </section>
             <FilterBar />
-            <section className="flex flex-row justify-between h-screen p-2">
+            <section className="flex flex-row justify-between h-screen px-2">
 
-                <ScrollArea className="rounded m-2 w-[45%] max-h-[80%]">
+                <ScrollArea className="rounded-lg m-2 w-[45%] max-h-[78%]">
                     <CarCard carName="BMW-M3" price={500} location="stryn"
                         size={5} fuelType="diesel" transmission="manual"
                         description="1.5 liter" availability={true} />
@@ -35,7 +35,7 @@ export default function Search() {
                         description="1.5 liter" availability={true} />
                 </ScrollArea>
 
-                <section className="flex flex-col p-2 overflow-auto max-h-fit h-svh max-w-[55%] min-w-[55%]">
+                <section className="rounded m-2 max-h-[78%] w-[55%]">
                     <ExpandedCard carName="BMW-M3" price={500} location="stryn"
                         size={5} fuelType="diesel" transmission="manual"
                         description="1.5 liter" availability={true} />
