@@ -1,18 +1,33 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from "@/styles/filter.module.css";
 import Locationbox from "@/components/ui/locationbox";
 import DatePickerWithRange from "@/components/ui/daterange";
 import PricePicker from "@/components/ui/pricePicker";
 
-export default function FilterBar({defaultLocation, defaultStart, defaultEnd}) {
+export default function FilterBar({defaultLocation, defaultStart, defaultEnd, setLocation, setDates, setPrice}) {
+    const [location, setLocationState] = useState(defaultLocation);
+    const [dates, setDatesState] = useState({start: defaultStart, end: defaultEnd});
+    const [price, setPriceState] = useState({min: null, max: null});
+
+
+   
+
+    useEffect(() => {
+        setLocation(location);
+        setDates(dates);
+        setPrice(price);
+    }, [location, dates, price]);
+
     return (
         <div>
             <section className="flex gap-2 items-center bg-[#ffffff] rounded m-4 p-2">
-            <Locationbox defaultValue={defaultLocation} />
-            <DatePickerWithRange defaultStart={defaultStart} defaultEnd={defaultEnd} />
-            <PricePicker />
+            <Locationbox defaultValue={defaultLocation} setLocation={setLocation} />
+            <DatePickerWithRange defaultStart={defaultStart} defaultEnd={defaultEnd} setDates={setDates} />
+            <PricePicker defaultValue={price} setPrice={setPrice}/>
             </section>
         </div>
+
+        
     );
 
 

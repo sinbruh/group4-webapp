@@ -1,8 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
-export default function PricePicker(defaultValue) {
-    const [minPrice, setMinPrice] = useState(0);
-    const [maxPrice, setMaxPrice] = useState(1000);
+export default function PricePicker({defaultValue, setPrice}) {
+    const [minPrice, setMinPrice] = useState(defaultValue.min || 0);
+    const [maxPrice, setMaxPrice] = useState(defaultValue.max || 1000);
+
+    useEffect(() => {
+        if (typeof setPrice === 'function') {
+            setPrice({ min: minPrice, max: maxPrice });
+        }
+    }, [minPrice, maxPrice, setPrice]);
+
 
     const handlePriceChange = (event) => {
         const { name, value } = event.target;

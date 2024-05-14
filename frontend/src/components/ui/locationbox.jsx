@@ -41,15 +41,22 @@ const locations = [
     },
 ]
 
-export default function Locationbox({ defaultValue, onChange}) {
+export default function Locationbox({ defaultValue, onChange,  setLocation}) {
     const [value, setValue] = React.useState(defaultValue || false)
     const [open, setOpen] = React.useState("")
     
 
     const handleSelect = (locationValue) => {
         setValue(locationValue);
-        onChange(locationValue);
+        if (typeof onChange === 'function') {
+            onChange(locationValue);
+        }
+        if (typeof setLocation === 'function') {
+            setLocation(locationValue);
+        }
     };
+
+    
 
 
     

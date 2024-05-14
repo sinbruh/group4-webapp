@@ -2,41 +2,48 @@ import React, { useEffect, useState } from 'react';
 import CarCard from "@/components/CarCard";
 import ExpandedCard from "@/components/ExpandedCard";
 
-const CarReader = () => {
+export default function CarReader({ location, dates, price }) {
     const [cars, setCars] = useState([]);
-    const [expandedCar, setExpandedCar] = useState(null);
-    //const [fromPrice, setFromPrice] = useState(0);
-    //const [toPrice, setToPrice] = useState(Infinity);
+    const [expandedCar, setExpandedCar] = useState(null); 
 
     const updateJsonFile = async () => {
         try {
-            //clean old data
-            localStorage.removeItem('cars');
+            
 
-            //get data
+            //check data
             const response = await fetch('http://localhost:8080/api/cars');
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
-            const data = await response.json();
 
-            
+            let data = await response.json();
+
+            if (data) {
+
+
+            // Add img property to each car configuration
+            data = data.map(item => {
+                item.configurations = item.configurations.map(config => {
+                    config.img = `${item.make.replace(/ /g, '-')}-${item.model.replace(/ /g, '-')}.jpg`;
+                    return config;
+                });
+                return item;
+            });
+        }
 
             //update CarCards
             setCars(data);
-
-
-            console.log('Cars:', data);
         } catch (error) {
             console.error('Error updating JSON file:', error);
         }
     };
         
         useEffect(() => {
+          
+
             updateJsonFile().catch(console.error);
-            console.log('CarReader component has mounted');
-            console.log('Cars:', cars);
-        }, []);
+            
+        }, [location, dates, price]);
 
     const handleCardClick = (car) => {
         setExpandedCar(car);
@@ -44,31 +51,47 @@ const CarReader = () => {
 
     return (
         <div>
-             
-
             <div id="cards">
                 {cars
-                    // cars.filter(car => {
-                   // const prices = car.configurations[0].providers.map(provider => provider.price);
-                   // const lowestPrice = Math.min(...prices);
-                   // return lowestPrice >= fromPrice && lowestPrice <= toPrice;
-                   // })
-                .map(car => (
-                    <CarCard 
-                        key={car.id} 
-                        carName={`${car.make} ${car.model}`} 
-                        price={Math.min(...car.configurations[0].providers.map(provider => provider.price))} 
-                        location={car.configurations[0].location} 
-                        size={car.configurations[0].numberOfSeats} 
-                        fuelType={car.configurations[0].fuelType} 
-                        transmission={car.configurations[0].tranmissionType} 
-                        description={car.description} 
-                        availability={car.availability} 
-                        onClick={() => handleCardClick(car)} 
-                    />
-                ))
-            }
+                    .filter(car => {
+                        const prices = car.configurations[0].providers.map(provider => provider.price);
+                        const lowestPrice = Math.min(...prices);
+                        const fromPriceNumber = Number(price.min);
+                        const toPriceNumber = Number(price.max);
+                        const carLocation = car.configurations[0].location;
+                        const locationLowercase = location.toLowerCase();
+                        const carAvailability = car.configurations[0].available;
 
+                        
+
+                        if (fromPriceNumber && toPriceNumber && !isNaN(fromPriceNumber) && !isNaN(toPriceNumber)) {
+                            return lowestPrice >= fromPriceNumber && lowestPrice <= toPriceNumber;
+                        } else {
+                            return lowestPrice;
+                        }
+                    })
+                    .map(car => {
+                        console.log(car);
+                        console.log(car.configurations);
+                        const carImageName = car.configurations[0].img || 'default.jpg';
+                        console.log(carImageName); 
+                        return (
+                        <CarCard 
+                            key={car.id} 
+                            carImageInput={carImageName}
+                            carName={`${car.make} ${car.model}`} 
+                            price={Math.min(...car.configurations[0].providers.map(provider => provider.price))} 
+                            location={car.configurations[0].location} 
+                            size={car.configurations[0].numberOfSeats} 
+                            fuelType={car.configurations[0].fuelType} 
+                            transmission={car.configurations[0].tranmissionType} 
+                            description={car.description} 
+                            availability={car.configurations[0] && car.configurations[0].available ? 'Available' : 'Unavailable'}
+                            onClick={() => handleCardClick(car)} 
+                        />
+                    );
+                })
+            }
             </div>
 
             {expandedCar && 
@@ -87,4 +110,3 @@ const CarReader = () => {
     );
 };
 
-export default CarReader;

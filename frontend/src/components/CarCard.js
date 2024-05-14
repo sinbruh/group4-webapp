@@ -1,6 +1,6 @@
 import * as React from "react"
 import Image from "next/image"
-import carImage from "@/img/cars/BMW-M3.jpg"
+import carDefaultImage from "@/img/cars/BMW-M3.jpg"
 import carIcon from "@/img/icons/car.svg";
 import checkIcon from "@/img/icons/checkmark.svg";
 import closeIcon from "@/img/icons/close.svg";
@@ -17,7 +17,10 @@ import {
     CardTitle,
 } from "@/components/ui/card"
 
-const CarCard = ({ carName, price, location, size, fuelType, transmission, description, availability }) => {
+const CarCard = ({ carImageInput, carName, price, location, size, fuelType, transmission, description, availability }) => {
+    const carImage = carImageInput ? `/carsLowRes/${carImageInput}` : carDefaultImage;
+    console.log(carImage);
+    console.log(carImageInput);
     return (
         <Card className="flex flex-row items-start justify-between mb-4">
 

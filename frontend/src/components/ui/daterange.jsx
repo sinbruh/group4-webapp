@@ -16,7 +16,7 @@ import {
     PopoverTrigger,
 } from "@/components/ui/popover"
 
-export default function DatePickerWithRange({ className, defaultStart, defaultEnd, value, onChange }) {
+export default function DatePickerWithRange({ className, defaultStart, defaultEnd, setDates, value, onChange }) {
 
     const [date, setDate] = React.useState({
         from: defaultStart ? parse(defaultStart, 'T', new Date()) : new Date(Date.now()),
@@ -26,6 +26,9 @@ export default function DatePickerWithRange({ className, defaultStart, defaultEn
     React.useEffect(() => {
         if (onChange) {
             onChange(date);
+        }
+        if (setDates) {
+            setDates(date);
         }
     }, [date]);
 
