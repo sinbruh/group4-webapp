@@ -3,7 +3,12 @@ package no.ntnu.project.group4.webapp.controllers;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+
+import java.util.LinkedHashSet;
 import java.util.Optional;
+import java.util.Set;
+
+import no.ntnu.project.group4.webapp.dto.CarDto;
 import no.ntnu.project.group4.webapp.models.Car;
 import no.ntnu.project.group4.webapp.models.User;
 import no.ntnu.project.group4.webapp.services.AccessUserService;
@@ -26,7 +31,7 @@ import org.springframework.web.bind.annotation.RestController;
  * <p>All HTTP requests affiliated with cars are handled in this class.</p>
  *
  * @author Group 4
- * @version v1.0 (2024.05.09)
+ * @version v2.0 (2024.05.14)
  */
 @CrossOrigin
 @RestController
@@ -38,15 +43,21 @@ public class CarController {
   private AccessUserService userService;
 
   /**
-   * Returns an iterable containing all cars. When this endpoint is requested, a HTTP 200 OK
-   * response will automatically be sent back.
+   * Returns a response to the request of getting all cars.
+   * 
+   * <p>The response body contains car data.</p>
    *
    * @return 200 OK + car data
    */
   @Operation(summary = "Get all cars")
   @GetMapping
-  public Iterable<Car> getAll() {
-    return this.carService.getAll();
+  public ResponseEntity<Set<CarDto>> getAll() {
+    Set<CarDto> carData = new LinkedHashSet<>();
+    for (Car car : this.carService.getAll()) {
+      CarDto carDataObj = new CarDto(car.getMake(), car.getModel(), car.getYear());
+      carData.add(carDataObj);
+    }
+    return new ResponseEntity<>(carData, HttpStatus.OK);
   }
 
   /**
@@ -56,21 +67,23 @@ public class CarController {
    *
    * @param id The specified ID
    * @return <p>200 OK on success + car data</p>
-   * <p>404 NOT FOUND if car is not found</p>
+   *         <p>404 NOT FOUND if car is not found</p>
    */
   @GetMapping("/{id}")
   @Operation(
-      summary = "Get car by ID",
-      description = "Returns the car with the specified ID")
+    summary = "Get car by ID",
+    description = "Returns the car with the specified ID")
   @ApiResponses(value = {
-      @ApiResponse(responseCode = "200", description = "Car data"),
-      @ApiResponse(responseCode = "404", description = "Car with specified ID not found")
+    @ApiResponse(responseCode = "200", description = "Car data"),
+    @ApiResponse(responseCode = "404", description = "Car with specified ID not found")
   })
   public ResponseEntity<?> get(@PathVariable Long id) {
     ResponseEntity<?> response;
     Optional<Car> car = this.carService.getOne(id);
     if (car.isPresent()) {
-      response = new ResponseEntity<>(car.get(), HttpStatus.OK);
+      Car foundCar = car.get();
+      CarDto carData = new CarDto(foundCar.getMake(), foundCar.getModel(), foundCar.getYear());
+      response = new ResponseEntity<>(carData, HttpStatus.OK);
     } else {
       response = new ResponseEntity<>("Car with specified ID not found", HttpStatus.NOT_FOUND);
     }
@@ -78,31 +91,32 @@ public class CarController {
   }
 
   /**
-   * Returns a response to the request of adding the specified car.
+   * Returns a response to the request of adding the specified car data.
    *
    * <p>The response body contains a string that is empty or contains an error message.</p>
    *
    * @param car The specified car
    * @return <p>201 CREATED on success</p>
-   * <p>400 BAD REQUEST on error</p>
-   * <p>401 UNAUTHORIZED if user is not authenticated</p>
-   * <p>403 FORBIDDEN if user is not admin</p>
+   *         <p>400 BAD REQUEST on error</p>
+   *         <p>401 UNAUTHORIZED if user is not authenticated</p>
+   *         <p>403 FORBIDDEN if user is not admin</p>
    */
   @Operation(
-      summary = "Add car",
-      description = "Adds the specified car")
+    summary = "Add car",
+    description = "Adds the specified car")
   @ApiResponses(value = {
-      @ApiResponse(responseCode = "201", description = "Car added"),
-      @ApiResponse(responseCode = "400", description = "Error adding car"),
-      @ApiResponse(responseCode = "401", description = "Only authenticated users have access to add cars"),
-      @ApiResponse(responseCode = "403", description = "Only admin users have access to add cars")
+    @ApiResponse(responseCode = "201", description = "Car added"),
+    @ApiResponse(responseCode = "400", description = "Error adding car"),
+    @ApiResponse(responseCode = "401", description = "Only authenticated users have access to add cars"),
+    @ApiResponse(responseCode = "403", description = "Only admin users have access to add cars")
   })
   @PostMapping
-  public ResponseEntity<String> add(@RequestBody Car car) {
+  public ResponseEntity<String> add(@RequestBody CarDto carData) {
     ResponseEntity<String> response;
     User sessionUser = this.userService.getSessionUser();
     if (sessionUser != null && sessionUser.isAdmin()) {
       try {
+        Car car = new Car(carData.getMake(), carData.getModel(), carData.getYear());
         this.carService.add(car);
         response = new ResponseEntity<>("", HttpStatus.CREATED);
       } catch (Exception e) {
@@ -110,10 +124,10 @@ public class CarController {
       }
     } else if (sessionUser == null) {
       response = new ResponseEntity<>("Only authenticated users have access to add cars",
-          HttpStatus.UNAUTHORIZED);
+                                      HttpStatus.UNAUTHORIZED);
     } else {
       response = new ResponseEntity<>("Only admin users have access to add cars",
-          HttpStatus.FORBIDDEN);
+                                      HttpStatus.FORBIDDEN);
     }
     return response;
   }
@@ -125,9 +139,9 @@ public class CarController {
    *
    * @param id The specified ID
    * @return <p>200 OK on success</p>
-   * <p>401 UNAUTHORIZED if user is not authenticated</p>
-   * <p>403 FORBIDDEN if user is not admin</p>
-   * <p>404 NOT FOUND if car is not found</p>
+   *         <p>401 UNAUTHORIZED if user is not authenticated</p>
+   *         <p>403 FORBIDDEN if user is not admin</p>
+   *         <p>404 NOT FOUND if car is not found</p>
    */
   @Operation(
       summary = "Delete car",
@@ -149,14 +163,14 @@ public class CarController {
         response = new ResponseEntity<>("", HttpStatus.OK);
       } else {
         response = new ResponseEntity<>("Car with specified ID not found",
-            HttpStatus.NOT_FOUND);
+                                        HttpStatus.NOT_FOUND);
       }
     } else if (sessionUser == null) {
       response = new ResponseEntity<>("Only authenticated users have access to delete cars",
-          HttpStatus.UNAUTHORIZED);
+                                      HttpStatus.UNAUTHORIZED);
     } else {
       response = new ResponseEntity<>("Only admin users have access to delete cars",
-          HttpStatus.FORBIDDEN);
+                                      HttpStatus.FORBIDDEN);
     }
     return response;
   }
