@@ -43,13 +43,13 @@ public class CarController {
   private AccessUserService userService;
 
   /**
-   * Returns a response to the request of getting all cars.
+   * Returns a HTTP response to the request requesting to get all car data.
    * 
    * <p>The response body contains car data.</p>
    *
    * @return 200 OK + car data
    */
-  @Operation(summary = "Get all cars")
+  @Operation(summary = "Get all car data")
   @GetMapping
   public ResponseEntity<Set<CarDto>> getAll() {
     Set<CarDto> carData = new LinkedHashSet<>();
@@ -61,9 +61,11 @@ public class CarController {
   }
 
   /**
-   * Returns a response to the request of getting the car with the specified ID.
+   * Returns a HTTP response to the request requesting to get the car data of the car with the
+   * specified ID.
    *
-   * <p>The response body contains (1) car data or (2) a string that contains an error message.</p>
+   * <p>The response body contains car data on success or a string that contains an error message
+   * otherwise.</p>
    *
    * @param id The specified ID
    * @return <p>200 OK on success + car data</p>
@@ -71,8 +73,8 @@ public class CarController {
    */
   @GetMapping("/{id}")
   @Operation(
-    summary = "Get car by ID",
-    description = "Returns the car with the specified ID")
+    summary = "Get car data of car by ID",
+    description = "Returns the car data of the car with the specified ID")
   @ApiResponses(value = {
     @ApiResponse(responseCode = "200", description = "Car data"),
     @ApiResponse(responseCode = "404", description = "Car with specified ID not found")
@@ -91,9 +93,10 @@ public class CarController {
   }
 
   /**
-   * Returns a response to the request of adding the specified car data.
+   * Returns a HTTP response to the request requesting to add the specified car data.
    *
-   * <p>The response body contains a string that is empty or contains an error message.</p>
+   * <p>The response body contains a string that is empty on success or contains an error message
+   * otherwise.</p>
    *
    * @param car The specified car
    * @return <p>201 CREATED on success</p>
@@ -133,9 +136,10 @@ public class CarController {
   }
 
   /**
-   * Returns a response to the request of deleting the car with the specified ID.
+   * Returns a HTTP response to the request requesting to delete the car with the specified ID.
    *
-   * <p>The response body contains a string that is empty or contains an error message.</p>
+   * <p>The response body contains a string that is empty on success or contains an error message
+   * otherwise.</p>
    *
    * @param id The specified ID
    * @return <p>200 OK on success</p>
