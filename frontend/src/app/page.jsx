@@ -1,4 +1,6 @@
-import React from "react";
+'use client'
+import { useRouter} from 'next/navigation';
+import React, { useState} from "react";
 import Locationbox from "@/components/ui/locationbox";
 import { Button } from "@/components/ui/button";
 import DatePickerWithRange from "@/components/ui/daterange";
@@ -7,16 +9,30 @@ import Navigation from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 
 export default function Home() {
-    return (
-        <div className="bg-[url('../img/temp-background-image.jpg')] bg-cover bg-center">
-            <Navigation />
+    const router = useRouter();
+    const [location, setLocation] = useState('');
+    const [dateRange, setDateRange] = useState({ from: '', to: '' });
+    
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        // Navigate to the search page with query parameters
+        router.push(`/search?location=${location}&start=${dateRange.from}&end=${dateRange.to}`);
+        
+        };
+    
 
-            <div className="flex justify-center items-center h-screen gap-x-2">
-                <Locationbox />
-                <DatePickerWithRange />
-                <Button asChild>
-                    <Link href="/search">Search</Link>
-                </Button>
+    return (
+        <>
+        <div className="bg-[url('../img/temp-background-image.jpg')] bg-cover bg-center">
+                <Navigation />
+
+                <form onSubmit={handleSubmit} className="flex justify-center items-center h-screen gap-x-2">
+                    <Locationbox value={location} onChange={setLocation} />
+                    <DatePickerWithRange value={dateRange} onChange={setDateRange} />
+                    <Button  type="submit" >
+                        Search
+                    </Button>
+                </form>
             </div>
             <div className="bg-white text-center flex-row justify-center justify-items-center items-center">
                 <div className="">
@@ -48,6 +64,6 @@ export default function Home() {
 
                 <Footer />
             </div>
-        </div>
+        </>  
     );
 }

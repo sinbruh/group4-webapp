@@ -3,12 +3,12 @@ import styles from "@/styles/filter.module.css";
 import Locationbox from "@/components/ui/locationbox";
 import DatePickerWithRange from "@/components/ui/daterange";
 
-export default function FilterBar() {
+export default function FilterBar({defaultLocation, defaultStart, defaultEnd}) {
     return (
         <div>
             <section className="flex gap-2 items-center bg-[#ffffff] rounded m-4 p-2">
-                <Locationbox />
-                <DatePickerWithRange />
+            <Locationbox defaultValue={defaultLocation} />
+            <DatePickerWithRange defaultStart={defaultStart} defaultEnd={defaultEnd} />
                 <label>Min Price:</label>
                 <input
                     type="range"

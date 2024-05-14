@@ -1,7 +1,9 @@
 "use client"
 
 import * as React from "react"
-import { addDays, format } from "date-fns"
+import { addDays, format, isValid } from "date-fns"
+import { parseISO } from 'date-fns';
+
 import { Calendar as CalendarIcon } from "lucide-react"
 import { DateRange } from "react-day-picker"
 
@@ -14,11 +16,18 @@ import {
     PopoverTrigger,
 } from "@/components/ui/popover"
 
-export default function DatePickerWithRange({ className }) {
+export default function DatePickerWithRange({ className, defaultStart, defaultEnd, value, onChange }) {
+   
     const [date, setDate] = React.useState({
-        from: new Date(2022, 0, 20),
-        to: new Date(2022, 0, 20),
+        from: defaultStart ? new Date(Date.parse(defaultStart)) : new Date(2022, 0, 20),
+        to: defaultEnd ? new Date(Date.parse(defaultEnd)) : new Date(2022, 0, 20),
     });
+
+    React.useEffect(() => {
+        if (onChange) {
+            onChange(date);
+        }
+    }, [date]);
 
     return (
         <div className={cn("grid gap-2", className)}>
@@ -40,7 +49,7 @@ export default function DatePickerWithRange({ className }) {
                                     {format(date.to, "LLL dd, y")}
                                 </>
                             ) : (
-                                format(date.from, "LLL dd, y")
+                                isValid(new Date(date.from)) && format(new Date(date.from), "LLL dd, y")
                             )
                         ) : (
                             <span>Pick a date</span>

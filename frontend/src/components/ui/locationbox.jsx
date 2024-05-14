@@ -41,9 +41,18 @@ const locations = [
     },
 ]
 
-export default function Locationbox() {
-    const [open, setOpen] = React.useState(false)
-    const [value, setValue] = React.useState("")
+export default function Locationbox({ defaultValue, onChange}) {
+    const [value, setValue] = React.useState(defaultValue || false)
+    const [open, setOpen] = React.useState("")
+    
+
+    const handleSelect = (locationValue) => {
+        setValue(locationValue);
+        onChange(locationValue);
+    };
+
+
+    
 
     return (
         <Popover open={open} onOpenChange={setOpen}>
@@ -66,22 +75,22 @@ export default function Locationbox() {
                     <CommandEmpty>No location found.</CommandEmpty>
                     <CommandGroup>
                         {locations.map((location) => (
-                            <CommandItem
-                                key={location.value}
-                                value={location.value}
-                                onSelect={(currentValue) => {
-                                    setValue(currentValue === value ? "" : currentValue)
-                                    setOpen(false)
-                                }}
-                            >
-                                <Check
-                                    className={cn(
-                                        "mr-2 h-4 w-4",
-                                        value === location.value ? "opacity-100" : "opacity-0"
-                                    )}
-                                />
-                                {location.label}
-                            </CommandItem>
+                           <CommandItem
+                            key={location.value}
+                            value={location.value}
+                            onSelect={() => {
+                                handleSelect(location.value);
+                                setOpen(false);
+                            }}
+                       >
+                           <Check
+                               className={cn(
+                                   "mr-2 h-4 w-4",
+                                   value === location.value ? "opacity-100" : "opacity-0"
+                               )}
+                           />
+                           {location.label}
+                       </CommandItem>
                         ))}
                     </CommandGroup>
                 </Command>

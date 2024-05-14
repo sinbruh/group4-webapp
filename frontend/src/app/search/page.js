@@ -1,3 +1,5 @@
+'use client'
+import { useSearchParams } from 'next/navigation';
 import styles from "./search.module.css";
 import React from 'react';
 import Navigation from "@/components/Navigation";
@@ -9,6 +11,11 @@ import ExpandedCard from "@/components/ExpandedCard";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
 export default function Search() {
+    const searchParams = useSearchParams ();
+    const location = searchParams.get('location');
+    const start = searchParams.get('start');
+    const end = searchParams.get('end');
+
     return (
         <div className="bg-[url('../img/temp-background-image.jpg')] bg-cover bg-center">
             <Navigation />
@@ -17,7 +24,7 @@ export default function Search() {
                     <Link href="/">Home</Link> &gt; <Link href="/search">Search</Link>
                 </p>
             </section>
-            <FilterBar />
+            <FilterBar defaultLocation={location} defaultStart = {start} defaultEnd = {end} />   
             <section className="flex flex-row justify-between h-screen px-2">
 
                 <ScrollArea className="rounded-lg m-2 w-[45%] max-h-[78%]">
