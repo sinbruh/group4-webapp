@@ -11,7 +11,7 @@ import jakarta.persistence.ManyToOne;
 
 @Entity(name = "rental")
 @Schema(name = "Rental", description = "A rental entity, representing a rental of a car " +
-                                       "configuration.")
+        "configuration.")
 public class Rental {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

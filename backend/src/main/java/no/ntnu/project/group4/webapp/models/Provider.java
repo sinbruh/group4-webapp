@@ -9,7 +9,7 @@ import jakarta.persistence.ManyToOne;
 
 @Entity(name = "provider")
 @Schema(name = "Provider", description = "A provider entity, representing a provider of a car " +
-                                         "configuration.")
+        "configuration.")
 public class Provider {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

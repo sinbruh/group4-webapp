@@ -13,9 +13,8 @@ import jakarta.persistence.ManyToOne;
 
 @Entity(name = "configuration")
 @Schema(name = "Configuration", description = "A configuration entity, representing a specific " +
-                                              "car configuration. One car can have multiple " +
-                                              "configurations, each with different features and " +
-                                              "providers.")
+        "car configuration. One car can have multiple configurations, each with different " +
+        "features and providers.")
 public class Configuration {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

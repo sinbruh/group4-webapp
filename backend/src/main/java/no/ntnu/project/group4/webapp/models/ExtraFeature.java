@@ -9,7 +9,7 @@ import jakarta.persistence.ManyToOne;
 
 @Entity(name = "extra_feature")
 @Schema(name = "ExtraFeature", description = "An extra feature entity, representing an extra " +
-                                             "feature that can be added to a car configuration.")
+        "feature that can be added to a car configuration.")
 public class ExtraFeature {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
