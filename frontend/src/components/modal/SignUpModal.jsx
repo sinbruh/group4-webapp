@@ -42,7 +42,7 @@ export default function SignUpModal({ onClose, onSwitchToLogin }) {
     };
 
     const isFormValid = () => {
-        return Object.values(formData).everyu(x => x) && Object.values(errors).every(x => !x);
+        return Object.values(formData).every(x => x) && Object.values(errors).every(x => !x);
     };
 
     const handleCreateUser = () => {
@@ -60,7 +60,6 @@ export default function SignUpModal({ onClose, onSwitchToLogin }) {
 
     return showModal ? (
         <div className="modal-box">
-            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" onClick={handleClose}>✕</button>
             <h3 className="font-bold text-lg">Sign up</h3>
             <div className="divider"></div>
 
