@@ -1,6 +1,5 @@
 package no.ntnu.project.group4.webapp.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -9,13 +8,13 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 
 @Entity(name = "extra_feature")
-@Schema(name = "ExtraFeature", description = "An extra feature entity, representing an extra feature that can be added to a car configuration.")
+@Schema(name = "ExtraFeature", description = "An extra feature entity, representing an extra " +
+                                             "feature that can be added to a car configuration.")
 public class ExtraFeature {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
   private String name;
-  @JsonIgnore
   @ManyToOne
   private Configuration configuration;
 

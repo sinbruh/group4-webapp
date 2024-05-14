@@ -9,7 +9,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToMany;
 
 import java.sql.Date;
 import java.util.Iterator;
@@ -17,7 +16,7 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Entity(name = "user")
-@Schema(name = "User", description = "A user entity")
+@Schema(name = "User", description = "A user entity.")
 public class User {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,8 +34,6 @@ public class User {
     inverseJoinColumns = @JoinColumn(name = "role_id")
   )
   private Set<Role> roles = new LinkedHashSet<>();
-  @OneToMany(mappedBy = "user")
-  private Set<Rental> rentals = new LinkedHashSet<>();
   @ManyToMany(fetch = FetchType.EAGER)
   @JoinTable(name = "user_configuration",
     joinColumns = @JoinColumn(name = "user_id"),
@@ -130,14 +127,6 @@ public class User {
 
   public void setRoles(Set<Role> roles) {
     this.roles = roles;
-  }
-
-  public Set<Rental> getRentals() {
-    return this.rentals;
-  }
-
-  public void setRentals(Set<Rental> rentals) {
-    this.rentals = rentals;
   }
 
   public Set<Configuration> getFavorites() {

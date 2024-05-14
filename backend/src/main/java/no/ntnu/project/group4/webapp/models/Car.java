@@ -1,17 +1,14 @@
 package no.ntnu.project.group4.webapp.models;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import java.util.LinkedHashSet;
-import java.util.Set;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 
 @Entity(name = "car")
-@Schema(name = "Car", description = "A car entity")
+@Schema(name = "Car", description = "A car entity.")
 public class Car {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,8 +16,6 @@ public class Car {
   private String make;
   private String model;
   private int year;
-  @OneToMany(mappedBy = "car")
-  private Set<Configuration> configurations = new LinkedHashSet<>();
 
   /**
    * Empty constructor needed for JPA.
@@ -64,14 +59,6 @@ public class Car {
 
   public void setYear(int year) {
     this.year = year;
-  }
-
-  public Set<Configuration> getConfigurations() {
-    return this.configurations;
-  }
-
-  public void setConfigurations(Set<Configuration> configurations) {
-    this.configurations = configurations;
   }
 
   public boolean isValid() {

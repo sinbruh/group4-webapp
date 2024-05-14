@@ -4,19 +4,18 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 
 @Entity(name = "configuration")
-@Schema(name = "Configuration", description = "A configuration entitity, representing a specific car configuration." +
-    "One car can have multiple configurations, each with different features and providers.")
+@Schema(name = "Configuration", description = "A configuration entity, representing a specific " +
+                                              "car configuration. One car can have multiple " +
+                                              "configurations, each with different features and " +
+                                              "providers.")
 public class Configuration {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,15 +26,8 @@ public class Configuration {
   private int numberOfSeats;
   private String location;
   private boolean available = true;
-  @JsonIgnore
   @ManyToOne
   private Car car;
-  @OneToMany(mappedBy = "configuration")
-  private Set<ExtraFeature> extraFeatures = new LinkedHashSet<>();
-  @OneToMany(mappedBy = "configuration")
-  private Set<Provider> providers = new LinkedHashSet<>();
-  @OneToMany(mappedBy = "configuration")
-  private Set<Rental> rentals = new LinkedHashSet<>();
   @ManyToMany(mappedBy = "favorites")
   private Set<User> favoritedUsers = new LinkedHashSet<>();
 
@@ -116,30 +108,6 @@ public class Configuration {
 
   public void setCar(Car car) {
     this.car = car;
-  }
-
-  public Set<ExtraFeature> getExtraFeatures() {
-    return this.extraFeatures;
-  }
-
-  public void setExtraFeatures(Set<ExtraFeature> extraFeatures) {
-    this.extraFeatures = extraFeatures;
-  }
-
-  public Set<Provider> getProviders() {
-    return this.providers;
-  }
-
-  public void setProviders(Set<Provider> providers) {
-    this.providers = providers;
-  }
-
-  public Set<Rental> getRentals() {
-    return this.rentals;
-  }
-
-  public void setRentals(Set<Rental> rentals) {
-    this.rentals = rentals;
   }
 
   public Set<User> getFavoritedUsers() {

@@ -1,7 +1,5 @@
 package no.ntnu.project.group4.webapp.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -10,14 +8,14 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 
 @Entity(name = "provider")
-@Schema(name = "Provider", description = "A provider entity, representing a provider of a car configuration.")
+@Schema(name = "Provider", description = "A provider entity, representing a provider of a car " +
+                                         "configuration.")
 public class Provider {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
   private String name;
   private int price;
-  @JsonIgnore
   @ManyToOne
   private Configuration configuration;
 

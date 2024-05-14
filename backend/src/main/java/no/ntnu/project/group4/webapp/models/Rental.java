@@ -3,8 +3,6 @@ package no.ntnu.project.group4.webapp.models;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.sql.Time;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -12,17 +10,16 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 
 @Entity(name = "rental")
-@Schema(name = "Rental", description = "A rental entity, representing a rental of a car configuration.")
+@Schema(name = "Rental", description = "A rental entity, representing a rental of a car " +
+                                       "configuration.")
 public class Rental {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
   private Time startTime;
   private Time endTime;
-  @JsonIgnore
   @ManyToOne
   private Configuration configuration;
-  @JsonIgnore
   @ManyToOne
   private User user;
 
