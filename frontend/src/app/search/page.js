@@ -24,7 +24,8 @@ export default function Search() {
                     <Link href="/">Home</Link> &gt; <Link href="/search">Search</Link>
                 </p>
             </section>
-            <FilterBar defaultLocation={location} defaultStart = {start} defaultEnd = {end} />   
+            {console.log(start + " " + end)}
+            <FilterBar defaultLocation={location} defaultStart = {start} defaultEnd = {end} />
             <section className="flex flex-row justify-between h-screen px-2">
 
                 <ScrollArea className="rounded-lg m-2 w-[45%] max-h-[78%]">

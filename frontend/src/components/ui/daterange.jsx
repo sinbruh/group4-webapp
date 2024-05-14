@@ -2,7 +2,7 @@
 
 import * as React from "react"
 import { addDays, format, isValid } from "date-fns"
-import { parseISO } from 'date-fns';
+import { parse } from 'date-fns';
 
 import { Calendar as CalendarIcon } from "lucide-react"
 import { DateRange } from "react-day-picker"
@@ -17,10 +17,10 @@ import {
 } from "@/components/ui/popover"
 
 export default function DatePickerWithRange({ className, defaultStart, defaultEnd, value, onChange }) {
-   
+
     const [date, setDate] = React.useState({
-        from: defaultStart ? new Date(Date.parse(defaultStart)) : new Date(2022, 0, 20),
-        to: defaultEnd ? new Date(Date.parse(defaultEnd)) : new Date(2022, 0, 20),
+        from: defaultStart ? parse(defaultStart, 'T', new Date()) : new Date(Date.now()),
+        to: defaultEnd ? parse(defaultEnd, 'T', new Date()) : addDays(new Date(Date.now()), 7),
     });
 
     React.useEffect(() => {

@@ -7,19 +7,20 @@ import DatePickerWithRange from "@/components/ui/daterange";
 import Link from "next/link";
 import Navigation from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
+import { format } from 'date-fns';
 
 export default function Home() {
     const router = useRouter();
     const [location, setLocation] = useState('');
     const [dateRange, setDateRange] = useState({ from: '', to: '' });
-    
+
     const handleSubmit = (e) => {
         e.preventDefault();
         // Navigate to the search page with query parameters
-        router.push(`/search?location=${location}&start=${dateRange.from}&end=${dateRange.to}`);
-        
+        router.push(`/search?location=${location}&start=${format(dateRange.from, 'T')}&end=${format(dateRange.to, 'T')}`);
+
         };
-    
+
 
     return (
         <>
@@ -64,6 +65,6 @@ export default function Home() {
 
                 <Footer />
             </div>
-        </>  
+        </>
     );
 }
