@@ -1,10 +1,10 @@
-async function updateJsonFile() {
+export async function updateJsonFile() {
     try {
         //clean old data
         localStorage.removeItem('cars');
 
         //get data
-        const response = await fetch('http://localhost:8080/api/cars/get');
+        const response = await fetch('http://localhost:8080/api/cars');
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }

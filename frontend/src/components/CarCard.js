@@ -19,7 +19,7 @@ import {
 
 const CarCard = ({ carName, price, location, size, fuelType, transmission, description, availability }) => {
     return (
-        <Card className="flex flex-row items-start justify-between">
+        <Card className="flex flex-row items-start justify-between mb-4">
 
             <div className="flex flex-row">
                 <Image className="rounded" src={carImage} alt={carName} width={400} height={200} />
