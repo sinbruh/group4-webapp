@@ -2,6 +2,7 @@ import React from 'react';
 import styles from "@/styles/filter.module.css";
 import Locationbox from "@/components/ui/locationbox";
 import DatePickerWithRange from "@/components/ui/daterange";
+import PricePicker from "@/components/ui/pricePicker";
 
 export default function FilterBar({defaultLocation, defaultStart, defaultEnd}) {
     return (
@@ -9,35 +10,11 @@ export default function FilterBar({defaultLocation, defaultStart, defaultEnd}) {
             <section className="flex gap-2 items-center bg-[#ffffff] rounded m-4 p-2">
             <Locationbox defaultValue={defaultLocation} />
             <DatePickerWithRange defaultStart={defaultStart} defaultEnd={defaultEnd} />
-                <label>Min Price:</label>
-                <input
-                    type="range"
-                    id="fromPrice"
-                    name="fromPrice"
-                    defaultValue={0}
-                    min={0}
-                    max={1000}
-                />
-                <span id="fromPriceValue">0</span>
-                <p className={styles.nokPerDay}>
-                    <b>NOK/day </b>
-                </p>
-                <label>Max Price:</label>
-                <input
-                    type="range"
-                    id="toPrice"
-                    name="toPrice"
-                    defaultValue={1000}
-                    min={0}
-                    max={1000}
-                />
-                <span id="toPriceValue">1000</span>
-                <p className="nokPerDay">
-                    <b>NOK/day</b>
-                </p>
+            <PricePicker />
             </section>
         </div>
     );
+
 
     /* function updateValue(sliderid, outputid) {
         var fromprice = document.getelementbyid('fromprice');
