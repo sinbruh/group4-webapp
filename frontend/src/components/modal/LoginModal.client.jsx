@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import SignupModal from './SignUpModal.jsx';
 
+
 export function LoginModalClient({ isOpen, onClose }) {
     const [formData, setFormData] = useState({ 'username': '', 'password': '' });
     const [errors, setErrors] = useState(null);
