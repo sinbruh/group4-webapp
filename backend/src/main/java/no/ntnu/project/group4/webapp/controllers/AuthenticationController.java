@@ -1,5 +1,8 @@
 package no.ntnu.project.group4.webapp.controllers;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import java.io.IOException;
 import no.ntnu.project.group4.webapp.dto.AuthenticationRequest;
 import no.ntnu.project.group4.webapp.dto.AuthenticationResponse;
@@ -49,6 +52,11 @@ public class AuthenticationController {
    * @return <p>200 OK on success + JWT token</p>
    * <p>401 UNAUTHORIZED if invalid email or password</p>
    */
+  @Operation(summary = "Authenticate a user")
+  @ApiResponses(value = {
+      @ApiResponse(responseCode = "200", description = "User authenticated"),
+      @ApiResponse(responseCode = "401", description = "Invalid email or password")
+  })
   @PostMapping("/authenticate")
   public ResponseEntity<?> authenticate(@RequestBody AuthenticationRequest authenticationRequest) {
     ResponseEntity<?> response;
@@ -76,6 +84,11 @@ public class AuthenticationController {
    * @return <p>200 OK on success</p>
    * <p>400 BAD REQUEST on error</p>
    */
+  @Operation(summary = "Register a new user")
+  @ApiResponses(value = {
+      @ApiResponse(responseCode = "200", description = "User registered"),
+      @ApiResponse(responseCode = "400", description = "Error registering user")
+  })
   @PostMapping("/register")
   public ResponseEntity<String> registerProcess(@RequestBody RegisterDto registerData) {
     ResponseEntity<String> response;
