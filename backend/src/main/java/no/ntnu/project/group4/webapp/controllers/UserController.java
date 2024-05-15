@@ -9,9 +9,11 @@ import java.util.Set;
 
 import no.ntnu.project.group4.webapp.dto.AuthenticationResponse;
 import no.ntnu.project.group4.webapp.dto.UserDto;
+import no.ntnu.project.group4.webapp.models.Configuration;
 import no.ntnu.project.group4.webapp.models.User;
 import no.ntnu.project.group4.webapp.security.JwtUtil;
 import no.ntnu.project.group4.webapp.services.AccessUserService;
+import no.ntnu.project.group4.webapp.services.ConfigurationService;
 import no.ntnu.project.group4.webapp.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -42,6 +44,8 @@ public class UserController {
   private AccessUserService accessUserService;
   @Autowired
   private UserService userService;
+  @Autowired
+  private ConfigurationService configService;
   @Autowired
   private JwtUtil jwtUtil;
 
@@ -289,6 +293,48 @@ public class UserController {
     } else {
       response = new ResponseEntity<>("Only authenticated users have access to delete users",
           HttpStatus.UNAUTHORIZED);
+    }
+    return response;
+  }
+
+  /**
+   * Returns a HTTP response to the request requesting to favorite the configuration with the
+   * specified configuration ID.
+   * 
+   * @param configId The specified configuration ID
+   * @return <p>200 OK on success</p>
+   *         <p>401 UNAUTHORIZED if user is not authenticated</p>
+   *         <p>404 NOT FOUND if configuration with specified configuration ID is not found</p>
+   *         <p>500 INTERNAL SERVER ERROR if an error occured when updating user</p>
+   */
+  @PutMapping("/{configId}")
+  public ResponseEntity<String> toggleFavorite(@PathVariable Long configId) {
+    ResponseEntity<String> response;
+    User sessionUser = this.accessUserService.getSessionUser();
+    if (sessionUser != null) {
+      Optional<Configuration> config = this.configService.getOne(configId);
+      if (config.isPresent()) {
+        Configuration foundConfig = config.get();
+        Set<Configuration> favorites = sessionUser.getFavorites();
+        if (!favorites.contains(foundConfig)) {
+          favorites.add(foundConfig);
+        } else {
+          favorites.remove(foundConfig);
+        }
+        try {
+          this.userService.update(sessionUser.getId(), sessionUser);
+          response = new ResponseEntity<>("", HttpStatus.OK);
+        } catch (IllegalArgumentException e) {
+          response = new ResponseEntity<>("Could not favorite configuration with specified " +
+                                          "configuration ID", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+      } else {
+        response = new ResponseEntity<>("Configuration with specified configuration ID not found",
+                                        HttpStatus.NOT_FOUND);
+      }
+    } else {
+      response = new ResponseEntity<>("Only authenticated users have access to favorite " +
+                                      "configurations", HttpStatus.UNAUTHORIZED);
     }
     return response;
   }
