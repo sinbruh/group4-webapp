@@ -27,7 +27,7 @@ public class Configuration {
   private int numberOfSeats;
   private String location;
   private boolean available = true;
-  private boolean visible = false;
+  private boolean visible = true;
   @JsonIgnore
   @ManyToOne
   private Car car;
