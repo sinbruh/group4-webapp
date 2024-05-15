@@ -26,7 +26,7 @@ export default function Search() {
     console.log('Price in page:', price);
 
     return (
-        <div className="bg-[url('../img/temp-background-image.jpg')] bg-cover bg-center">
+        <div className="bg-[url('/temp-background-image-low.webp')] bg-cover bg-center">
             <Navigation />
 
             <section className={styles.breadcrumb}>

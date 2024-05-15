@@ -24,7 +24,7 @@ export default function Home() {
 
     return (
         <>
-        <div className="bg-[url('../img/temp-background-image.jpg')] bg-cover bg-center">
+        <div className="bg-[url('../img/temp-background-image-low.webp')] bg-cover bg-center">
                 <Navigation />
 
                 <form onSubmit={handleSubmit} className="flex justify-center items-center h-screen gap-x-2">
