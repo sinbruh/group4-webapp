@@ -1,17 +1,16 @@
 "use client"
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { Button } from "@/components/ui/button"
 import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
+    Form,
+    FormControl,
+    FormField,
+    FormItem,
+    FormLabel,
+    FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 
@@ -23,11 +22,7 @@ const formSchema = z.object({
     password: z.string().min(8),
 });
 
-function handleSubmit(values) {
-    console.log('Submitted values:', values);
-}
-
-export default function SignUpForm () {
+export default function SignUpForm() {
     const form = useForm({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -42,81 +37,95 @@ export default function SignUpForm () {
     function onSubmit(values) {
         //TODO implement API call
 
+        fetch('http://localhost:8080/api/register', {
+            method: 'POST',
+            body: JSON.stringify(values),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(response => {
+                if (response.ok) {
+                    console.log('User created successfully');
+                    onClose();
+                }
+            });
+
         console.log('Submitted values:', values);
     }
 
     return (
         <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-         <FormField
-            control={form.control}
-            name="firstName"
-            render={({ field}) => (
-                <FormItem>
-                    <FormLabel>First Name</FormLabel>
-                    <FormControl>
-                    <Input {...field} />
-                    </FormControl>
-                    <FormMessage>{form.formState.errors.firstName?.message}</FormMessage>
-                </FormItem>
-            )}
-        />
-        <FormField
-            control={form.control}
-            name="lastName"
-            render={({ field}) => (
-                <FormItem>
-                    <FormLabel htmlFor={field.name}>Last Name</FormLabel>
-                    <FormControl>
-                    <Input {...field} />
-                    </FormControl>
-                    <FormMessage>{form.formState.errors.lastName?.message}</FormMessage>
-                </FormItem>
-            )}
-        />
-        <FormField
-            control={form.control}
-            name="email"
-            render={({ field}) => (
-                <FormItem>
-                    <FormLabel>Email</FormLabel>
-                    <FormControl>
-                    <Input {...field} />
-                    </FormControl>
-                    <FormMessage>{form.formState.errors.email?.message}</FormMessage>
-                </FormItem>
-            )}
-        />
-        <FormField
-            control={form.control}
-            name="phoneNumber"
-            render={({ field}) => (
-                <FormItem>
-                    <FormLabel>Phone Number</FormLabel>
-                    <FormControl>
-                    <Input {...field} />
-                    </FormControl>
-                    <FormMessage>{form.formState.errors.phoneNumber?.message}</FormMessage>
-                </FormItem>
-            )}
-        />
-        <FormField
-            control={form.control}
-            name="password"
-            render={({ field}) => (
-                <FormItem>
-                    <FormLabel>Password</FormLabel>
-                    <FormControl>
-                    <Input {...field} />
-                    </FormControl>
-                    <FormMessage>{form.formState.errors.password?.message}</FormMessage>
-                </FormItem>
-            )}
-        />
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+                <FormField
+                    control={form.control}
+                    name="firstName"
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>First Name</FormLabel>
+                            <FormControl>
+                                <Input {...field} />
+                            </FormControl>
+                            <FormMessage>{form.formState.errors.firstName?.message}</FormMessage>
+                        </FormItem>
+                    )}
+                />
+                <FormField
+                    control={form.control}
+                    name="lastName"
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel htmlFor={field.name}>Last Name</FormLabel>
+                            <FormControl>
+                                <Input {...field} />
+                            </FormControl>
+                            <FormMessage>{form.formState.errors.lastName?.message}</FormMessage>
+                        </FormItem>
+                    )}
+                />
+                <FormField
+                    control={form.control}
+                    name="email"
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Email</FormLabel>
+                            <FormControl>
+                                <Input {...field} />
+                            </FormControl>
+                            <FormMessage>{form.formState.errors.email?.message}</FormMessage>
+                        </FormItem>
+                    )}
+                />
+                <FormField
+                    control={form.control}
+                    name="phoneNumber"
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Phone Number</FormLabel>
+                            <FormControl>
+                                <Input {...field} />
+                            </FormControl>
+                            <FormMessage>{form.formState.errors.phoneNumber?.message}</FormMessage>
+                        </FormItem>
+                    )}
+                />
+                <FormField
+                    control={form.control}
+                    name="password"
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Password</FormLabel>
+                            <FormControl>
+                                <Input {...field} />
+                            </FormControl>
+                            <FormMessage>{form.formState.errors.password?.message}</FormMessage>
+                        </FormItem>
+                    )}
+                />
 
 
-        <Button type="submit">Submit</Button>
-        </form>
+                <Button type="submit">Submit</Button>
+            </form>
         </Form>
     )
 }

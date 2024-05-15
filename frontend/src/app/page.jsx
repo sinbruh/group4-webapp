@@ -4,12 +4,12 @@ import React, { useState} from "react";
 import Locationbox from "@/components/ui/locationbox";
 import { Button } from "@/components/ui/button";
 import DatePickerWithRange from "@/components/ui/daterange";
-import Link from "next/link";
 import Navigation from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { format } from 'date-fns';
 
 export default function Home() {
+    const [user, setUser] = useState(null);
     const router = useRouter();
     const [location, setLocation] = useState('');
     const [dateRange, setDateRange] = useState({ from: '', to: '' });

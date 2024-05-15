@@ -52,6 +52,7 @@ public class AuthenticationController {
    * @return <p>200 OK on success + JWT token</p>
    * <p>401 UNAUTHORIZED if invalid email or password</p>
    */
+
   @Operation(summary = "Authenticate a user")
   @ApiResponses(value = {
       @ApiResponse(responseCode = "200", description = "User authenticated"),
@@ -59,21 +60,17 @@ public class AuthenticationController {
   })
   @PostMapping("/authenticate")
   public ResponseEntity<?> authenticate(@RequestBody AuthenticationRequest authenticationRequest) {
-    ResponseEntity<?> response;
     try {
       this.authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
           authenticationRequest.getEmail(),
-          authenticationRequest.getPassword())
-      );
-      final UserDetails userDetails = this.userService.loadUserByUsername(
-          authenticationRequest.getEmail()
-      );
-      final String jwt = this.jwtUtil.generateToken(userDetails);
-      response = new ResponseEntity<>(new AuthenticationResponse(jwt), HttpStatus.OK);
+          authenticationRequest.getPassword()));
     } catch (BadCredentialsException e) {
-      response = new ResponseEntity<>("Invalid email or password", HttpStatus.UNAUTHORIZED);
+      return new ResponseEntity<>("Invalid email or password", HttpStatus.UNAUTHORIZED);
     }
-    return response;
+    final UserDetails userDetails = this.userService.loadUserByUsername(
+        authenticationRequest.getEmail());
+    final String jwt = this.jwtUtil.generateToken(userDetails);
+    return new ResponseEntity<>(new AuthenticationResponse(jwt), HttpStatus.OK);
   }
 
   /**

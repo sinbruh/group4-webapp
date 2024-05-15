@@ -3,12 +3,8 @@ import React, { useState } from "react";
 import Link from "next/link";
 import logo from "@/img/temp-logo.png";
 import Image from "next/image";
-import { LoginModalClient } from "@/components/modal/LoginModal.client";
-import { Button } from "@/components/ui/button";
+import LoginModal from "@/components/modal/LoginModal.jsx";
 
-
-
-import userIcon from "@/img/icons/person.svg";
 export function Navigation() {
 
     let isLoginOpen, setIsLoginOpen;
@@ -41,10 +37,7 @@ export function Navigation() {
                 </p>
             </nav>
             {/* User icon */}
-            <Button variant="ghost" size="icon" onClick={() => setIsLoginOpen(true)}>
-                <Image src={userIcon} alt="User icon" width={32} height={32} />
-            </Button>
-            {isLoginOpen && <LoginModalClient isOpen={isLoginOpen} onClose={() => setIsLoginOpen(false)} />}
+            <LoginModal />
         </div>
     )
 }
