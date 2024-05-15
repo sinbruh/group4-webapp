@@ -23,6 +23,7 @@ import {
 } from "@/components/ui/dialog"
 import userIcon from "@/img/icons/person.svg";
 import Image from 'next/image';
+import {sendAuthenticationRequest} from "@/tools/authentication";
 
 
 const formSchema = z.object({
@@ -41,24 +42,15 @@ export default function LoginModalClient() {
     });
 
 
-    function onSubmit(values) {
-        //TODO implement API call
+    async function onSubmit(values) {
+        try {
+            const user = await sendAuthenticationRequest(values.email, values.password);
+            console.log('User logged in:', user);
+        } catch (error) {
+            console.error('Error:', error);
+        }
 
-        fetch('http://localhost:8080/api/authenticate', {
-            method: 'POST',
-            body: JSON.stringify(values),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-            .then(response => {
-                if (response.ok) {
-                    console.log('User logged in successfully');
-                    window.location.reload();
-                }
-            });
-
-        console.log('Submitted values:', values);
+        // TODO implement API call
     }
 
     function handleShowSignup() {
