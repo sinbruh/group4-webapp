@@ -47,12 +47,22 @@ export default function Locationbox({ defaultValue, onChange,  setLocation}) {
     
 
     const handleSelect = (locationValue) => {
-        setValue(locationValue);
-        if (typeof onChange === 'function') {
-            onChange(locationValue);
-        }
-        if (typeof setLocation === 'function') {
-            setLocation(locationValue);
+        if (value === locationValue) {
+            setValue("");
+            if (typeof onChange === 'function') {
+                onChange("");
+            }
+            if (typeof setLocation === 'function') {
+                setLocation("");
+            }
+        } else {
+            setValue(locationValue);
+            if (typeof onChange === 'function') {
+                onChange(locationValue);
+            }
+            if (typeof setLocation === 'function') {
+                setLocation(locationValue);
+            }
         }
     };
 
