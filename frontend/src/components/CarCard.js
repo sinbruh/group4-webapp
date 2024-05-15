@@ -19,7 +19,7 @@ import {
 import { document } from "postcss";
 
 const CarCard = ({ carInfo, setExpandedCarInfo }) => {
-    const carImage = carInfo.carImageInput ? `/carsLowRes/${carImageInput}` : carDefaultImage;
+    const carImage = carInfo.carImageInput ? `/carsLowResWEBP/${carInfo.carImageInput}` : carDefaultImage;
     console.log(carImage);
     console.log(carInfo.carImageInput);
 

@@ -24,7 +24,7 @@ export default function CarReader({ location, dates, price, setExpandedCarInfo }
             // Add img property to each car configuration
             data = data.map(item => {
                 item.configurations = item.configurations.map(config => {
-                    config.img = `${item.make.replace(/ /g, '-')}-${item.model.replace(/ /g, '-')}.jpg`;
+                    config.img = `${item.make.replace(/ /g, '-')}-${item.model.replace(/ /g, '-')}.webp`;
                     return config;
                 });
                 return item;
@@ -59,25 +59,31 @@ export default function CarReader({ location, dates, price, setExpandedCarInfo }
                         const fromPriceNumber = Number(price.min);
                         const toPriceNumber = Number(price.max);
                         const carLocation = car.configurations[0].location;
+                        const carLocationLowercase = car.configurations[0].location.toLowerCase();
                         const locationLowercase = location.toLowerCase();
                         const carAvailability = car.configurations[0].available;
 
 
 
-                        if (fromPriceNumber && toPriceNumber && !isNaN(fromPriceNumber) && !isNaN(toPriceNumber)) {
-                            return lowestPrice >= fromPriceNumber && lowestPrice <= toPriceNumber;
-                        } else {
-                            return lowestPrice;
+                        if (!isNaN(fromPriceNumber) && !isNaN(toPriceNumber)) {
+                            const isFromPriceLower = fromPriceNumber <= lowestPrice;
+                            const isToPriceHigher = toPriceNumber >= lowestPrice || toPriceNumber === 0;
+                            const isLocationMatch = carLocationLowercase  === locationLowercase;
+                            if (isFromPriceLower && isToPriceHigher && isLocationMatch) {
+                                return lowestPrice;
+                            }
                         }
+                        return false;
                     })
                     .map(car => {
+
                         const carImageName = car.configurations[0].img || 'default.jpg';
-                        console.log(carImageName);
+                        console.log(car);
 
                         const carInfo = {
                             key : car.id,
                             configId : car.configurations[0].id,
-                            carImageInput : car.carImageName,
+                            carImageInput : carImageName,
                             carName : `${car.make} ${car.model}`,
                             price : Math.min(...car.configurations[0].providers.map(provider => provider.price)),
                             location : car.configurations[0].location,
