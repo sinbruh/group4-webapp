@@ -1,6 +1,8 @@
 package no.ntnu.project.group4.webapp.models;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+
+import java.sql.Date;
 import java.sql.Time;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -17,6 +19,8 @@ public class Rental {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
+  private Date startDate;
+  private Date endDate;
   private Time startTime;
   private Time endTime;
   @JsonIgnore
@@ -32,7 +36,9 @@ public class Rental {
   public Rental() {
   }
 
-  public Rental(Time startTime, Time endTime) {
+  public Rental(Date startDate, Date endDate, Time startTime, Time endTime) {
+    this.startDate = startDate;
+    this.endDate = endDate;
     this.startTime = startTime;
     this.endTime = endTime;
   }
@@ -43,6 +49,42 @@ public class Rental {
 
   public void setId(Long id) {
     this.id = id;
+  }
+
+  /**
+   * Getter for start date.
+   * 
+   * @return Start date
+   */
+  public Date getStartDate() {
+    return this.startDate;
+  }
+
+  /**
+   * Setter for start date.
+   * 
+   * @param startDate The specified start date
+   */
+  public void setStartDate(Date startDate) {
+    this.startDate = startDate;
+  }
+
+  /**
+   * Getter for end date.
+   * 
+   * @return End date
+   */
+  public Date getEndDate() {
+    return this.endDate;
+  }
+
+  /**
+   * Setter for end date.
+   * 
+   * @param endDate The specified end date
+   */
+  public void setEndDate(Date endDate) {
+    this.endDate = endDate;
   }
 
   public Time getStartTime() {
