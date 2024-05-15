@@ -17,7 +17,7 @@ import {
     CardTitle,
 } from "@/components/ui/card"
 
-const CarCard = ({ carImageInput, carName, price, location, size, fuelType, transmission, description, availability }) => {
+const CarCard = ({ carImageInput, carName, price, location, size, fuelType, transmission, description, availability, configID }) => {
     const carImage = carImageInput ? `/carsLowRes/${carImageInput}` : carDefaultImage;
     console.log(carImage);
     console.log(carImageInput);
@@ -55,7 +55,7 @@ const CarCard = ({ carImageInput, carName, price, location, size, fuelType, tran
                 </div>
             </div>
             <div className="m-4">
-                <FavoriteButton />
+                <FavoriteButton configID={configID}/>
             </div>
 
         </Card>
