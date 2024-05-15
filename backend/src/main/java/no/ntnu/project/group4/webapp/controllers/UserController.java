@@ -308,7 +308,7 @@ public class UserController {
    * @return <p>200 OK on success</p>
    *         <p>401 UNAUTHORIZED if user is not authenticated</p>
    *         <p>404 NOT FOUND if configuration with specified configuration ID is not found</p>
-   *         <p>500 INTERNAL SERVER ERROR if an error occured when updating user</p>
+   *         <p>500 INTERNAL SERVER ERROR if an error occurs when updating user</p>
    */
   @Operation(summary = "Favorite configuration",
              description = "Favorites or unfavorites the configuration with the specified " +

@@ -27,6 +27,7 @@ public class Configuration {
   private int numberOfSeats;
   private String location;
   private boolean available = true;
+  private boolean visible = false;
   @JsonIgnore
   @ManyToOne
   private Car car;
@@ -108,6 +109,24 @@ public class Configuration {
 
   public void setAvailable(boolean available) {
     this.available = available;
+  }
+
+  /**
+   * Checks if configuration is visible.
+   * 
+   * @return True if configuration is visible or false otherwise
+   */
+  public boolean isVisible() {
+    return this.visible;
+  }
+
+  /**
+   * Setter for visibility.
+   * 
+   * @param visible The specified visibility
+   */
+  public void setVisible(boolean visible) {
+    this.visible = visible;
   }
 
   public Car getCar() {
