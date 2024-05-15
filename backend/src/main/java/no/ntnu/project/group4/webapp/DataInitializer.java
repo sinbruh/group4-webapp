@@ -4,6 +4,7 @@ import no.ntnu.project.group4.webapp.models.Car;
 import no.ntnu.project.group4.webapp.models.Configuration;
 import no.ntnu.project.group4.webapp.models.ExtraFeature;
 import no.ntnu.project.group4.webapp.models.Provider;
+import no.ntnu.project.group4.webapp.models.Rental;
 import no.ntnu.project.group4.webapp.models.Role;
 import no.ntnu.project.group4.webapp.models.User;
 import no.ntnu.project.group4.webapp.repositories.RoleRepository;
@@ -12,9 +13,11 @@ import no.ntnu.project.group4.webapp.services.CarService;
 import no.ntnu.project.group4.webapp.services.ConfigurationService;
 import no.ntnu.project.group4.webapp.services.ExtraFeatureService;
 import no.ntnu.project.group4.webapp.services.ProviderService;
+import no.ntnu.project.group4.webapp.services.RentalService;
 import no.ntnu.project.group4.webapp.services.UserService;
 
 import java.sql.Date;
+import java.sql.Time;
 import java.util.Iterator;
 
 import org.slf4j.Logger;
@@ -43,6 +46,8 @@ public class DataInitializer implements ApplicationListener<ApplicationReadyEven
   private ExtraFeatureService extraFeatureService;
   @Autowired
   private ProviderService providerService;
+  @Autowired
+  private RentalService rentalService;
 
   private final Logger logger = LoggerFactory.getLogger(DataInitializer.class);
 
@@ -60,6 +65,7 @@ public class DataInitializer implements ApplicationListener<ApplicationReadyEven
     this.loadUserRoles();
     this.loadUsers();
     this.loadCars();
+    this.loadRentals();
     this.logger.info("Done importing data");
   }
 
@@ -87,6 +93,9 @@ public class DataInitializer implements ApplicationListener<ApplicationReadyEven
     }
   }
 
+  /**
+   * Loads the admin user into the database if it is not already there.
+   */
   private void loadUsers() {
     boolean isEmpty = true; // Guard condition
     Iterable<User> existingUsers = this.userService.getAll();
@@ -96,20 +105,37 @@ public class DataInitializer implements ApplicationListener<ApplicationReadyEven
     }
     this.logger.info("Loading user data...");
     if (isEmpty) {
-      Date dateOfBirth = new Date(946684800000L);
       // Create admin user with temporary password
-      User admin = new User("Admin", "User", "admin@user.com", 12345678, "temp", dateOfBirth);
+      User admin = new User("Admin", "User", "admin@user.com", 12345678, "temp",
+                            new Date(946684800000l));
+
+      // Create users with temporary password
+      User user1 = new User("John", "Doe", "johndoe@user.com", 13572468, "temp",
+                            new Date(315532800000l));
+      User user2 = new User("Jane", "Doe", "janedoe@user.com", 24681357, "temp",
+                            new Date(631152000000l));
+      User user3 = new User("Joe", "Doe", "joedoe@user.com", 12457836, "temp",
+                            new Date(1104537600000l));
 
       Role userRole = this.roleRepository.findOneByName("ROLE_USER");
       Role adminRole = this.roleRepository.findOneByName("ROLE_ADMIN");
 
       admin.addRole(userRole);
       admin.addRole(adminRole);
+      user1.addRole(userRole);
+      user2.addRole(userRole);
+      user3.addRole(userRole);
 
       this.userService.add(admin);
+      this.userService.add(user1);
+      this.userService.add(user2);
+      this.userService.add(user3);
 
       // Update admin user password to a proper password that uses BCrypt hashing
       this.accessUserService.updateUserPassword(admin, "adminuser");
+      this.accessUserService.updateUserPassword(user1, "johnuser");
+      this.accessUserService.updateUserPassword(user1, "janeuser");
+      this.accessUserService.updateUserPassword(user1, "joeuser1");
 
       this.logger.info("Done loading user data");
     } else {
@@ -162,7 +188,7 @@ public class DataInitializer implements ApplicationListener<ApplicationReadyEven
       // Initialization
       Car car2 = new Car("Tesla", "Model 3", 2019);
       Configuration configuration2_1 = new Configuration("Electric config", "Electric",
-                                                         "Automatic", 5, "Ålesund");
+                                                         "Automatic", 5, "Stryn");
       ExtraFeature extraFeature2_1_1 = new ExtraFeature("Autonomous driving");
       ExtraFeature extraFeature2_1_2 = new ExtraFeature("Long range");
       ExtraFeature extraFeature2_1_3 = new ExtraFeature("Warming in the seats");
@@ -190,7 +216,7 @@ public class DataInitializer implements ApplicationListener<ApplicationReadyEven
       // Initialization
       Car car3 = new Car("Tesla", "Model Y", 2022);
       Configuration configuration3_1 = new Configuration("Electric config", "Electric",
-                                                         "Automatic", 5, "Ålesund");
+                                                         "Automatic", 5, "Alta");
       ExtraFeature extraFeature3_1_1 = new ExtraFeature("Four wheel drive");
       ExtraFeature extraFeature3_1_2 = new ExtraFeature("Glass roof");
       ExtraFeature extraFeature3_1_3 = new ExtraFeature("Autonomous driving");
@@ -218,7 +244,7 @@ public class DataInitializer implements ApplicationListener<ApplicationReadyEven
       // Initialization
       Car car4 = new Car("Nissan", "Leaf", 2016);
       Configuration configuration4_1 = new Configuration("Electric config", "Electric",
-                                                         "Automatic", 5, "Ålesund");
+                                                         "Automatic", 5, "Oslo");
       Provider provider4_1_1 = new Provider("Auto 9-9", 500);
       Provider provider4_1_2 = new Provider("Auto 10-10", 500);
 
@@ -237,7 +263,7 @@ public class DataInitializer implements ApplicationListener<ApplicationReadyEven
       // Initialization
       Car car5 = new Car("Mazda", "2", 2017);
       Configuration configuration5_1 = new Configuration("Petrol config", "Petrol", "Automatic", 5,
-                                                      "Ålesund");
+                                                      "Stavanger");
       ExtraFeature extraFeature5_1_1 = new ExtraFeature("DAB radio");
       Provider provider5_1_1 = new Provider("Bilikist", 400);
 
@@ -284,7 +310,7 @@ public class DataInitializer implements ApplicationListener<ApplicationReadyEven
       // Initialization
       Car car7 = new Car("BMW", "M3 Evo", 1988);
       Configuration configuration7_1 = new Configuration("Petrol config", "Petrol", "Manual", 4,
-                                                      "Ålesund");
+                                                      "Stryn");
       ExtraFeature extraFeature7_1_1 = new ExtraFeature("Three stripes");
       ExtraFeature extraFeature7_1_2 = new ExtraFeature("Original tire discs");
       Provider provider7_1_1 = new Provider("Bilverksted", 400);
@@ -312,7 +338,7 @@ public class DataInitializer implements ApplicationListener<ApplicationReadyEven
       // Initialization
       Car car8 = new Car("Skoda", "Fabia", 2011);
       Configuration configuration8_1 = new Configuration("Diesel config", "Diesel", "Automatic", 5,
-                                                      "Ålesund");
+                                                      "Alta");
       ExtraFeature extraFeature8_1_1 = new ExtraFeature("Tow hook");
       Provider provider8_1_1 = new Provider("Sprekksaver", 300);
       Provider provider8_1_2 = new Provider("Smidig bilforhandler", 229);
@@ -337,7 +363,7 @@ public class DataInitializer implements ApplicationListener<ApplicationReadyEven
       // Initialization
       Car car9 = new Car("Peugeot", "307 SW", 2008);
       Configuration configuration9_1 = new Configuration("Diesel config", "Diesel", "Manual", 7,
-                                                      "Ålesund");
+                                                      "Oslo");
       ExtraFeature extraFeature9_1_1 = new ExtraFeature("Travel box on the roof");
       Provider provider9_1_1 = new Provider("Bertel Ostein", 600);
       Provider provider9_1_2 = new Provider("Auto 10-10", 550);
@@ -359,7 +385,7 @@ public class DataInitializer implements ApplicationListener<ApplicationReadyEven
       // Initialization
       Car car10 = new Car("Peugeot", "207", 2007);
       Configuration configuration10_1 = new Configuration("Diesel config", "Diesel", "Manual", 5,
-                                                      "Ålesund");
+                                                      "Stavanger");
       ExtraFeature extraFeature10_1_1 = new ExtraFeature("Glass window");
       ExtraFeature extraFeature10_1_2 = new ExtraFeature("Warming in the seats");
       ExtraFeature extraFeature10_1_3 = new ExtraFeature("Warming in the steering wheel");
@@ -452,4 +478,40 @@ public class DataInitializer implements ApplicationListener<ApplicationReadyEven
       this.logger.info("Cars already in the database, not loading data");
     }
   }
+
+  /**
+     * Loads rentals into the database if they are not already there.
+     */
+    private void loadRentals() {
+      boolean isEmpty = true; // Guard condition
+      Iterable<Rental> existingRentals = this.rentalService.getAll();
+      Iterator<Rental> rentalsIt = existingRentals.iterator();
+      if (rentalsIt.hasNext()) {
+        isEmpty = false;
+      }
+      this.logger.info("Loading rental data...");
+      if (isEmpty) {
+        Rental rental1 = new Rental(new Date(1716163200000l), new Date(1747699200000l),
+                                    new Time(1716206400000l), new Time(1747742400000l));
+        Rental rental2 = new Rental(new Date(1716249600000l), new Date(1717459200000l),
+                                    new Time(1716300000000l), new Time(1717509600000l));
+        Rental rental3 = new Rental(new Date(1716336000000l), new Date(1716508800000l),
+                                    new Time(1716393600000l), new Time(1716566400000l));
+
+        rental1.setUser(this.userService.getOneByEmail("johndoe@user.com").get());
+        rental2.setUser(this.userService.getOneByEmail("janedoe@user.com").get());
+        rental3.setUser(this.userService.getOneByEmail("joedoe@user.com").get());
+        rental1.setConfiguration(this.configurationService.getOne(1l).get());
+        rental2.setConfiguration(this.configurationService.getOne(3l).get());
+        rental3.setConfiguration(this.configurationService.getOne(5l).get());
+
+        this.rentalService.add(rental1);
+        this.rentalService.add(rental2);
+        this.rentalService.add(rental3);
+
+        this.logger.info("Done loading rental data");
+      } else {
+        this.logger.info("Rentals already in the database, not loading data");
+      }
+    }
 }
