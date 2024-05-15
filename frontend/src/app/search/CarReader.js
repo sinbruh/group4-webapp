@@ -2,13 +2,13 @@ import React, { useEffect, useState } from 'react';
 import CarCard from "@/components/CarCard";
 import ExpandedCard from "@/components/ExpandedCard";
 
-export default function CarReader({ location, dates, price }) {
+export default function CarReader({ location, dates, price, setExpandedCarInfo }) {
     const [cars, setCars] = useState([]);
-    const [expandedCar, setExpandedCar] = useState(null); 
+    const [expandedCar, setExpandedCar] = useState(null);
 
     const updateJsonFile = async () => {
         try {
-            
+
 
             //check data
             const response = await fetch('http://localhost:8080/api/cars');
@@ -24,7 +24,7 @@ export default function CarReader({ location, dates, price }) {
             // Add img property to each car configuration
             data = data.map(item => {
                 item.configurations = item.configurations.map(config => {
-                    config.img = `${item.make.replace(/ /g, '-')}-${item.model.replace(/ /g, '-')}.jpg`;
+                    config.img = `${item.make.replace(/ /g, '-')}-${item.model.replace(/ /g, '-')}.webp`;
                     return config;
                 });
                 return item;
@@ -37,12 +37,12 @@ export default function CarReader({ location, dates, price }) {
             console.error('Error updating JSON file:', error);
         }
     };
-        
+
         useEffect(() => {
-          
+
 
             updateJsonFile().catch(console.error);
-            
+
         }, [location, dates, price]);
 
     const handleCardClick = (car) => {
@@ -59,52 +59,50 @@ export default function CarReader({ location, dates, price }) {
                         const fromPriceNumber = Number(price.min);
                         const toPriceNumber = Number(price.max);
                         const carLocation = car.configurations[0].location;
+                        const carLocationLowercase = car.configurations[0].location.toLowerCase();
                         const locationLowercase = location.toLowerCase();
                         const carAvailability = car.configurations[0].available;
 
-                        
 
-                        if (fromPriceNumber && toPriceNumber && !isNaN(fromPriceNumber) && !isNaN(toPriceNumber)) {
-                            return lowestPrice >= fromPriceNumber && lowestPrice <= toPriceNumber;
-                        } else {
-                            return lowestPrice;
+
+                        if (!isNaN(fromPriceNumber) && !isNaN(toPriceNumber)) {
+                            const isFromPriceLower = fromPriceNumber <= lowestPrice;
+                            const isToPriceHigher = toPriceNumber >= lowestPrice || toPriceNumber === 0;
+                            const isLocationMatch = carLocationLowercase  === locationLowercase;
+                            if (isFromPriceLower && isToPriceHigher && isLocationMatch) {
+                                return lowestPrice;
+                            }
                         }
+                        return false;
                     })
                     .map(car => {
-                        console.log(car);
-                        console.log(car.configurations);
+
                         const carImageName = car.configurations[0].img || 'default.jpg';
-                        console.log(carImageName); 
+                        console.log(car);
+
+                        const carInfo = {
+                            key : car.id,
+                            configId : car.configurations[0].id,
+                            carImageInput : carImageName,
+                            carName : `${car.make} ${car.model}`,
+                            price : Math.min(...car.configurations[0].providers.map(provider => provider.price)),
+                            location : car.configurations[0].location,
+                            size : car.configurations[0].numberOfSeats,
+                            fuelType : car.configurations[0].fuelType,
+                            transmission : car.configurations[0].tranmissionType,
+                            description : car.description,
+                            availability : car.configurations[0] && car.configurations[0].available ? 'Available' : 'Unavailable'
+                        }
+
                         return (
-                        <CarCard 
-                            key={car.id} 
-                            carImageInput={carImageName}
-                            carName={`${car.make} ${car.model}`} 
-                            price={Math.min(...car.configurations[0].providers.map(provider => provider.price))} 
-                            location={car.configurations[0].location} 
-                            size={car.configurations[0].numberOfSeats} 
-                            fuelType={car.configurations[0].fuelType} 
-                            transmission={car.configurations[0].tranmissionType} 
-                            description={car.description} 
-                            availability={car.configurations[0] && car.configurations[0].available ? 'Available' : 'Unavailable'}
-                            onClick={() => handleCardClick(car)} 
-                        />
+                        <CarCard carInfo={carInfo} setExpandedCarInfo={setExpandedCarInfo}/>
                     );
                 })
             }
             </div>
 
-            {expandedCar && 
-            <ExpandedCard 
-            carName={`${expandedCard.make} ${expandedCard.model}`} 
-            price={Math.min(...expandedCard.configurations[0].providers.map(provider => provider.price))} 
-            location={expandedCard.configurations[0].location} 
-            size={expandedCard.configurations[0].numberOfSeats} 
-            fuelType={expandedCard.configurations[0].fuelType} 
-            transmission={expandedCard.configurations[0].tranmissionType} 
-            description={expandedCard.description} 
-            availability={expandedCard.availability} 
-            />
+            {expandedCar &&
+            <ExpandedCard carInfo={carInfo}/>
             }
         </div>
     );
