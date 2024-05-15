@@ -16,28 +16,37 @@ import {
     CardTitle,
 } from "@/components/ui/card"
 
-const expandedCard = ({ carName, price, location, size, fuelType, transmission, description, availability }) => {
+const expandedCard = ({ carInfo }) => {
+    var expandedCarInfo = carInfo;
     return (
-        <Card className="h-full">
-            <CardHeader>
-                <CardTitle>{carName}</CardTitle>
-                <CardDescription>{description}</CardDescription>
-            </CardHeader>
-            <CardContent>
-                <Image className="rounded" src={carImage} alt={carName} width={400} height={200} />
-                {availability ?
-                    <div className="text-[#326D0D] font-bold flex gap-2 items-center"><Image src={checkIcon} width={32} height={32} /> Available </div> :
-                    <div className="text-red-500 font-bold flex gap-2 items-center"><Image src={closeIcon} width={32} height={32} /> Unavailable </div>}
-                <p>Price: {price} NOK/day</p>
-                <p>Location: {location}</p>
-            </CardContent>
-            <CardFooter className="flex flex-row">
-                <div className="flex gap-2">
-                    <div className="flex items-center"><Image src={peopleIcon} alt="people" width={32} height={32} /> {size}</div>
-                    <div className="flex items-center"><Image src={carIcon} alt="fuel type" widht={32} height={32} /> {fuelType}</div>
-                    <div className="flex items-center"><Image src={cogIcon} alt="transmission" width={32} height={32} /> {transmission}</div>
+        <Card id="expandedCard" className="h-full">
+            {(expandedCarInfo != null )? (
+                <div>
+                    <CardHeader>
+                        <CardTitle>{carInfo.carName}</CardTitle>
+                        <CardDescription>{carInfo.description}</CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                        <Image className="rounded" src={carImage} alt={carInfo.carName} width={400} height={200} />
+                        {carInfo.availability ?
+                            <div className="text-[#326D0D] font-bold flex gap-2 items-center"><Image src={checkIcon} width={32} height={32} /> Available </div> :
+                            <div className="text-red-500 font-bold flex gap-2 items-center"><Image src={closeIcon} width={32} height={32} /> Unavailable </div>}
+                        <p>Price: {carInfo.price} NOK/day</p>
+                        <p>Location: {carInfo.location}</p>
+                    </CardContent>
+                    <CardFooter className="flex flex-row">
+                        <div className="flex gap-2">
+                            <div className="flex items-center"><Image src={peopleIcon} alt="people" width={32} height={32} /> {carInfo.size}</div>
+                            <div className="flex items-center"><Image src={carIcon} alt="fuel type" widht={32} height={32} /> {carInfo.fuelType}</div>
+                            <div className="flex items-center"><Image src={cogIcon} alt="transmission" width={32} height={32} /> {carInfo.transmission}</div>
+                        </div>
+                    </CardFooter>
                 </div>
-            </CardFooter>
+            ) : (
+                <CardHeader>
+                    <CardTitle>Choose a car to see more details</CardTitle>
+                </CardHeader>
+            )}
         </Card>
     )
 }
