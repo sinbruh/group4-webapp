@@ -1,6 +1,6 @@
 
 
-export class HttpResponseError implements Error {
+export class HttpResponseError extends Error {
 
 
     constructor(statusCode, message) {
