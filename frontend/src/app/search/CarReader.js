@@ -68,7 +68,7 @@ export default function CarReader({ location, dates, price, setExpandedCarInfo }
                         if (!isNaN(fromPriceNumber) && !isNaN(toPriceNumber)) {
                             const isFromPriceLower = fromPriceNumber <= lowestPrice;
                             const isToPriceHigher = toPriceNumber >= lowestPrice || toPriceNumber === 0;
-                            const isLocationMatch = carLocationLowercase  === locationLowercase;
+                            const isLocationMatch = carLocationLowercase  === locationLowercase || location === '';
                             if (isFromPriceLower && isToPriceHigher && isLocationMatch) {
                                 return lowestPrice;
                             }
@@ -76,9 +76,9 @@ export default function CarReader({ location, dates, price, setExpandedCarInfo }
                         return false;
                     })
                     .map(car => {
-
+                        console.log(location);
                         const carImageName = car.configurations[0].img || 'default.jpg';
-                        console.log(car);
+                        
 
                         const carInfo = {
                             key : car.id,
