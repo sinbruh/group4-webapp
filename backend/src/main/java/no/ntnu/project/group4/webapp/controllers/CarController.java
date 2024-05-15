@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,7 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
  * <p>All HTTP requests affiliated with cars are handled in this class.</p>
  *
  * @author Group 4
- * @version v1.0 (2024.05.09)
+ * @version v1.1 (2024.05.15)
  */
 @CrossOrigin
 @RestController
@@ -105,7 +106,7 @@ public class CarController {
       try {
         this.carService.add(car);
         response = new ResponseEntity<>("", HttpStatus.CREATED);
-      } catch (Exception e) {
+      } catch (IllegalArgumentException e) {
         response = new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
       }
     } else if (sessionUser == null) {
@@ -114,6 +115,63 @@ public class CarController {
     } else {
       response = new ResponseEntity<>("Only admin users have access to add cars",
           HttpStatus.FORBIDDEN);
+    }
+    return response;
+  }
+
+  /**
+   * Returns a HTTP response to the request requesting to update the car with the specified ID with
+   * the specified car.
+   * 
+   * <p>The response body contains an empty string on success or a string with an error message on
+   * error.</p>
+   * 
+   * @param id The specified ID
+   * @param car The specified car
+   * @return <p>200 OK on success</p>
+   *         <p>400 BAD REQUEST on error</p>
+   *         <p>401 UNAUTHORIZED if user is not authorized</p>
+   *         <p>403 FORBIDDEN if user is not admin</p>
+   */
+  @Operation(
+    summary = "Update car",
+    description = "Updates the car with the specified ID with the specified car"
+  )
+  @ApiResponses(value = {
+    @ApiResponse(
+      responseCode = "200",
+      description = "Car updated"
+    ),
+    @ApiResponse(
+      responseCode = "400",
+      description = "Error adding car"
+    ),
+    @ApiResponse(
+      responseCode = "401",
+      description = "Only authenticated users have access to add cars"
+    ),
+    @ApiResponse(
+      responseCode = "403",
+      description = "Only admin users have access to add cars"
+    )
+  })
+  @PutMapping("/{id}")
+  public ResponseEntity<String> update(@PathVariable Long id, @RequestBody Car car) {
+    ResponseEntity<String> response;
+    User sessionUser = this.userService.getSessionUser();
+    if (sessionUser != null && sessionUser.isAdmin()) {
+      try {
+        this.carService.update(id, car);
+        response = new ResponseEntity<>("", HttpStatus.OK);
+      } catch (IllegalArgumentException e) {
+        response = new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+      }
+    } else if (sessionUser == null) {
+      response = new ResponseEntity<>("Only authenticated users have access to update cars",
+                                      HttpStatus.UNAUTHORIZED);
+    } else {
+      response = new ResponseEntity<>("Only admin users have access to update cars",
+                                      HttpStatus.FORBIDDEN);
     }
     return response;
   }
