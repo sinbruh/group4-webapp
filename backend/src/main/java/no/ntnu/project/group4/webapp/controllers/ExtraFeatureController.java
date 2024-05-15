@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,7 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
  * <p>All HTTP requests affiliated with extra features are handeld in this class.</p>
  *
  * @author Group 4
- * @version v1.0 (2024.05.09)
+ * @version v1.1 (2024.05.15)
  */
 @CrossOrigin
 @RestController
@@ -123,7 +124,7 @@ public class ExtraFeatureController {
         try {
           this.extraFeatureService.add(extraFeature);
           response = new ResponseEntity<>("", HttpStatus.CREATED);
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
           response = new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
       } else {
@@ -136,6 +137,68 @@ public class ExtraFeatureController {
     } else {
       response = new ResponseEntity<>("Only admin users have access to add extra features",
           HttpStatus.FORBIDDEN);
+    }
+    return response;
+  }
+
+  /**
+   * Returns a HTTP response to the request requesting to update the extra feature with the
+   * specified ID with the specified extra feature.
+   * 
+   * <p>The response body contains an empty string on success or a string with an error message on
+   * error.</p>
+   * 
+   * <p><b>NB!</b> This method does not allow updating which configuration the extra feature
+   * belongs to.</p>
+   * 
+   * @param id The specified ID
+   * @param extraFeature The specified extra feature
+   * @return <p>200 OK success</p>
+   *         <p>400 BAD REQUEST on error</p>
+   *         <p>401 UNAUTHORIZED if user is not authorized</p>
+   *         <p>403 FORBIDDEN if user is not admin</p>
+   */
+  @Operation(
+    summary = "Update extra feature",
+    description = "Updates the extra feature with the specified ID with the specified extra " +
+                  "feature"
+  )
+  @ApiResponses(value = {
+    @ApiResponse(
+      responseCode = "200",
+      description = "Extra feature updated"
+    ),
+    @ApiResponse(
+      responseCode = "400",
+      description = "Error updating extra feature"
+    ),
+    @ApiResponse(
+      responseCode = "401",
+      description = "Only authenticated users have access to add extra features"
+    ),
+    @ApiResponse(
+      responseCode = "403",
+      description = "Only admin users have access to add extra features"
+    ),
+  })
+  @PutMapping("/{id}")
+  public ResponseEntity<String> update(@PathVariable Long id,
+                                       @RequestBody ExtraFeature extraFeature) {
+    ResponseEntity<String> response;
+    User sessionUser = this.userService.getSessionUser();
+    if (sessionUser != null && sessionUser.isAdmin()) {
+      try {
+        this.extraFeatureService.update(id, extraFeature);
+        response = new ResponseEntity<>("", HttpStatus.OK);
+      } catch (IllegalArgumentException e) {
+        response = new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+      }
+    } else if (sessionUser == null) {
+      response = new ResponseEntity<>("Only authenticated users have access to update extra " +
+                                      "features", HttpStatus.UNAUTHORIZED);
+    } else {
+      response = new ResponseEntity<>("Only admin users have access to update extra features",
+                                      HttpStatus.FORBIDDEN);
     }
     return response;
   }

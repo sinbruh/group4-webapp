@@ -159,17 +159,21 @@ public class ConfigurationController {
                   "configuration"
   )
   @ApiResponses(value = {
-    @ApiResponse(responseCode = "200",
-                 description = "Configuration updated"
+    @ApiResponse(
+      responseCode = "200",
+      description = "Configuration updated"
     ),
-    @ApiResponse(responseCode = "400",
-                 description = "Error updating configuration"
+    @ApiResponse(
+      responseCode = "400",
+      description = "Error updating configuration"
     ),
-    @ApiResponse(responseCode = "401",
-                 description = "Only authenticated users have access to add configurations"
+    @ApiResponse(
+      responseCode = "401",
+      description = "Only authenticated users have access to add configurations"
     ),
-    @ApiResponse(responseCode = "403",
-                 description = "Only admin users have access to add configurations"
+    @ApiResponse(
+      responseCode = "403",
+      description = "Only admin users have access to add configurations"
     )
   })
   @PutMapping("/{id}")
