@@ -307,6 +307,24 @@ public class UserController {
    *         <p>404 NOT FOUND if configuration with specified configuration ID is not found</p>
    *         <p>500 INTERNAL SERVER ERROR if an error occured when updating user</p>
    */
+  @Operation(summary = "Favorite configuration",
+             description = "Favorites or unfavorites the configuration with the specified " +
+                           "configuration ID"
+  )
+  @ApiResponses(value = {
+    @ApiResponse(responseCode = "200",
+                 description = "Configuration favortied or unfavorited"
+    ),
+    @ApiResponse(responseCode = "401",
+                 description = "Only authenticated users have access to favorite configurations"
+    ),
+    @ApiResponse(responseCode = "404",
+                 description = "Configuration with specified configuration ID not found"
+    ),
+    @ApiResponse(responseCode = "500",
+                 description = "Could not favorite configuration with specified configuration ID"
+    )
+  })
   @PutMapping("/{configId}")
   public ResponseEntity<String> toggleFavorite(@PathVariable Long configId) {
     ResponseEntity<String> response;
