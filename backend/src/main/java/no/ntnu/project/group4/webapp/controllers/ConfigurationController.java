@@ -281,7 +281,7 @@ public class ConfigurationController {
       description = "Could not toggle visibility for configuration with specified ID"
     )
   })
-  @PutMapping("/{id}")
+  @PutMapping("visibility/{id}")
   public ResponseEntity<String> toggleVisibility(@PathVariable Long id) {
     ResponseEntity<String> response;
     User sessionUser = this.userService.getSessionUser();
