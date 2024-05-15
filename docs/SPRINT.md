@@ -268,10 +268,10 @@ able to work as much on the project because of other exams.
 ### Retrospective
 
 The group is still working weekly on the project and is satisfied with the workflow. The group
-feels like there is still work remaining in the project, and might have to step-it-up if they want
-a result they are satisfied with. Because of this, the group thinks the point of improvement for
-the next sprint is to work as much as possible on the project. The group will try to meet daily in
-work days from here on, in order to finish the project.
+feels like there is still much work remaining in the project, and might have to step-it-up if they
+want a result they are satisfied with. Because of this, the group thinks the point of improvement
+for the next sprint is to work as much as possible on the project. The group will try to meet daily
+in work days from here on, in order to finish the project.
 
 ## Week 19
 
@@ -293,7 +293,46 @@ reach certain goals of this sprint:
 1. Mats is responsible for continuing finishing the backend in the current state of the project
 2. Mathias is responsible for continuing finishing the first React modal pop-up
 3. Sindre is responsible for extending styled cards in the search page
-4. Leander is responsible for making cards generate from data gathered from backend
+4. Leander is responsible for making cards generate from data fetched from backend
+
+Even though group members have different responsibilities, all members should contribute to reaching
+the goals of the sprint.
+
+### Accomplishments
+
+All the goals set by the group for this sprint was accomplished; the group continued finishing the
+backend in the current state of the project and is soon done with it. The group continued finishing
+the first React modal pop-up, and has now finished pop-up for sign-in and sign-up. The group also
+extended styled cars in the search page, and made cards generate from data fetched from backend.
+
+### Retrospective
+
+The group is still working weekly on the project and is satisfied with the workflow. The group has
+been working daily as mentioned in the last sprint, in order to finish the project. There is still
+much work remaining, so the group will continue with this until they achieve a result they are
+satisfied with. The group thinks there are no points of improvement for the next sprint.
+
+## Week 20
+
+This sprint starts in week 20 and ends in week 21.
+
+Deadline: 22.05.2024
+
+### Goals
+
+The main goals of this sprint is to finish the project. This is the last sprint, so the group has
+to finish all remaining work in this sprint. However, the group has set some goals to finish the
+most important work. The goals of this sprint is to add missing endpoints in the backend, add
+remaining user functionality and finish the search page.
+
+### Work distribution
+
+The work is slightly distributed for this sprint, meaning certain group members is responsible to
+reach certain goals of this sprint:
+
+1. Mats is responsible for adding missing endpoints in the backend
+2. Mathias is responsible for adding remaining user functionality
+3. Sindre and Leander are responsible for finishing the seach page
 
 Even though group members have different responsibilities, all members should contribute to reaching
 the goals of the sprint.
