@@ -8,7 +8,6 @@ import Link from "next/link";
 import FilterBar from "@/components/FilterBar";
 import ExpandedCard from "@/components/ExpandedCard";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { updateJsonFile } from './parseSpringBootData.js';
 import CarReader from './CarReader.js';
 
 export default function Search() {
@@ -25,11 +24,6 @@ export default function Search() {
     console.log('Location in page:', location);
     console.log('Dates in page:', dates);
     console.log('Price in page:', price);
-
-    useEffect(() => {
-        updateJsonFile().catch(console.error);
-    }, []);
-
 
     return (
         <div className="bg-[url('../img/temp-background-image.jpg')] bg-cover bg-center">

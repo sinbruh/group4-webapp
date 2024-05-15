@@ -71,8 +71,6 @@ export default function CarReader({ location, dates, price, setExpandedCarInfo }
                         }
                     })
                     .map(car => {
-                        console.log(car);
-                        console.log(car.configurations);
                         const carImageName = car.configurations[0].img || 'default.jpg';
                         console.log(carImageName);
 
