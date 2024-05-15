@@ -19,8 +19,6 @@ import {
 
 const CarCard = ({ carImageInput, carName, price, location, size, fuelType, transmission, description, availability, configID }) => {
     const carImage = carImageInput ? `/carsLowRes/${carImageInput}` : carDefaultImage;
-    console.log(carImage);
-    console.log(carImageInput);
     return (
         <Card className="flex flex-row items-start justify-between mb-4">
 

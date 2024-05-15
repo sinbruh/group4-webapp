@@ -71,13 +71,11 @@ export default function CarReader({ location, dates, price }) {
                         }
                     })
                     .map(car => {
-                        console.log(car);
-                        console.log(car.configurations);
                         const carImageName = car.configurations[0].img || 'default.jpg';
-                        console.log(carImageName); 
                         return (
                         <CarCard 
                             key={car.id} 
+                            configID={car.configurations[0].id} 
                             carImageInput={carImageName}
                             carName={`${car.make} ${car.model}`} 
                             price={Math.min(...car.configurations[0].providers.map(provider => provider.price))} 
@@ -85,7 +83,7 @@ export default function CarReader({ location, dates, price }) {
                             size={car.configurations[0].numberOfSeats} 
                             fuelType={car.configurations[0].fuelType} 
                             transmission={car.configurations[0].tranmissionType} 
-                            description={car.description} 
+                            description={car.description}
                             availability={car.configurations[0] && car.configurations[0].available ? 'Available' : 'Unavailable'}
                             onClick={() => handleCardClick(car)} 
                         />
