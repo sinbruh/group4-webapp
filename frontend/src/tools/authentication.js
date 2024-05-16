@@ -16,7 +16,7 @@ export function getAuthenticatedUser() {
 }
 
 export function isAdmin(user) {
-    return user && user.roles && user.roles.includes("admin");
+    return user && user.roles && user.roles.includes("ROLE_ADMIN");
 }
 
 export async function sendAuthenticationRequest(
