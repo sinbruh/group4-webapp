@@ -3,12 +3,12 @@ import {asyncApiRequest} from "./request";
 
 export function getAuthenticatedUser() {
     let user = null;
-    const username = getCookie("current_username");
+    const email = getCookie("current_email");
     const commaSeparatedRoles = getCookie("current_user_roles");
-    if (username && commaSeparatedRoles) {
+    if (email && commaSeparatedRoles) {
         const roles = commaSeparatedRoles.split(",");
         user = {
-            username: username,
+            email: email,
             roles: roles,
         };
     }
@@ -20,21 +20,24 @@ export function isAdmin(user) {
 }
 
 export async function sendAuthenticationRequest(
-    username,
+    email,
     password,
     successCallBack,
     errorCallBack
 ){
     const postData = {
-        username: username,
+        email: email,
         password: password,
     };
     try {
-        const jwtResponse = await asyncApiRequest("POST", "/authenticate", postData);
+        const jwtResponse = await asyncApiRequest("POST", "/api/authenticate", postData);
+        console.log("JWT response: ", jwtResponse);
         if (jwtResponse && jwtResponse.jwt) {
+            const userData = parseJwtUser(jwtResponse.jwt);
+            console.log("Parsed User data: ", userData)
             setCookie("jwt", jwtResponse.jwt);
             if (userData) {
-                setCookie("current_username", userData.username);
+                setCookie("current_email", userData.email);
                 setCookie("current_user_roles", userData.roles.join(","));
                 successCallBack(userData);
             }
@@ -63,7 +66,7 @@ function parseJwtUser(jwtString) {
     const jwtObject = parseJwt(jwtString);
     if (jwtObject) {
         user = {
-            username: jwtObject.sub,
+            email: jwtObject.sub,
             roles: jwtObject.roles.map((r) => r.authority),
         };
     }
@@ -72,7 +75,7 @@ function parseJwtUser(jwtString) {
 
 export function deleteAuthorizationCookies() {
     deleteCookie("jwt");
-    deleteCookie("current_username");
+    deleteCookie("current_email");
     deleteCookie("current_user_roles");
 }
 
