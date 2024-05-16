@@ -3,8 +3,6 @@ package no.ntnu.project.group4.webapp.models;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
@@ -20,11 +18,9 @@ import java.util.Set;
 @Schema(name = "User", description = "A user entity")
 public class User {
   @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
+  private String email;
   private String firstName;
   private String lastName;
-  private String email;
   private int phoneNumber;
   private String password;
   private Date dateOfBirth;
@@ -50,22 +46,22 @@ public class User {
   public User() {
   }
 
-  public User(String firstName, String lastName, String email, int phoneNumber, String password,
+  public User(String email, String firstName, String lastName, int phoneNumber, String password,
               Date dateOfBirth) {
+    this.email = email;
     this.firstName = firstName;
     this.lastName = lastName;
-    this.email = email;
     this.phoneNumber = phoneNumber;
     this.password = password;
     this.dateOfBirth = dateOfBirth;
   }
 
-  public Long getId() {
-    return this.id;
+  public String getEmail() {
+    return this.email;
   }
 
-  public void setId(Long id) {
-    this.id = id;
+  public void setEmail(String email) {
+    this.email = email;
   }
 
   public String getFirstName() {
@@ -82,14 +78,6 @@ public class User {
 
   public void setLastName(String lastName) {
     this.lastName = lastName;
-  }
-
-  public String getEmail() {
-    return this.email;
-  }
-
-  public void setEmail(String email) {
-    this.email = email;
   }
 
   public int getPhoneNumber() {
@@ -202,8 +190,8 @@ public class User {
    * @return True if the user has valid custom fields or false otherwise
    */
   public boolean isValid() {
-    return this.firstName != null && !this.firstName.isBlank() && this.lastName != null &&
-           !this.lastName.isBlank() && this.email != null && !this.email.isBlank() &&
+    return this.email != null && !this.email.isBlank() && this.firstName != null &&
+           !this.firstName.isBlank() && this.lastName != null && !this.lastName.isBlank() &&
            this.phoneNumber > 0 && this.password != null && !this.password.isBlank() &&
            this.dateOfBirth != null;
   }

@@ -108,7 +108,7 @@ public class UserController {
     ResponseEntity<?> response;
     User sessionUser = this.accessUserService.getSessionUser();
     if (sessionUser != null) {
-      Optional<User> user = this.userService.getOneByEmail(email);
+      Optional<User> user = this.userService.getOne(email);
       if (user.isPresent()) {
         if (sessionUser.getEmail().equals(user.get().getEmail()) || sessionUser.isAdmin()) {
           User foundUser = user.get();
@@ -166,7 +166,7 @@ public class UserController {
     ResponseEntity<?> response;
     User sessionUser = this.accessUserService.getSessionUser();
     if (sessionUser != null) {
-      Optional<User> user = this.userService.getOneByEmail(email);
+      Optional<User> user = this.userService.getOne(email);
       if (user.isPresent()) {
         if (sessionUser.getEmail().equals(user.get().getEmail()) || sessionUser.isAdmin()) {
           if (userData != null) {
@@ -226,7 +226,7 @@ public class UserController {
     ResponseEntity<String> response;
     User sessionUser = this.accessUserService.getSessionUser();
     if (sessionUser != null) {
-      Optional<User> user = this.userService.getOneByEmail(email);
+      Optional<User> user = this.userService.getOne(email);
       if (user.isPresent()) {
         if (sessionUser.getEmail().equals(user.get().getEmail()) || sessionUser.isAdmin()) {
           if (password != null) {
@@ -277,7 +277,7 @@ public class UserController {
     ResponseEntity<String> response;
     User sessionUser = this.accessUserService.getSessionUser();
     if (sessionUser != null) {
-      Optional<User> user = this.userService.getOneByEmail(email);
+      Optional<User> user = this.userService.getOne(email);
       if (user.isPresent()) {
         if (sessionUser.getEmail().equals(user.get().getEmail()) || sessionUser.isAdmin()) {
           this.accessUserService.deleteUser(user.get());
@@ -343,7 +343,7 @@ public class UserController {
           favorites.remove(foundConfig);
         }
         try {
-          this.userService.update(sessionUser.getId(), sessionUser);
+          this.userService.update(sessionUser.getEmail(), sessionUser);
           response = new ResponseEntity<>("", HttpStatus.OK);
         } catch (IllegalArgumentException e) {
           response = new ResponseEntity<>("Could not favorite configuration with specified " +
