@@ -23,59 +23,69 @@ public class UserService {
   }
 
   /**
-   * Try to find a user with the given email regardless of if it exists or not
+   * Try to find a user with the given ID regardless of if it exists or not
    * 
-   * @param id The given email
+   * @param id The given ID
+   * @return A user with the given ID regardless of if it exists or not
+   */
+  public Optional<User> getOne(Long id) {
+    return this.userRepository.findById(id);
+  }
+
+  /**
+   * Try to find a user with the given email regardless of if it exists or not.
+   * 
+   * @param email The given email
    * @return A user with the given email regardless of if it exists or not
    */
-  public Optional<User> getOne(String email) {
-    return this.userRepository.findById(email);
+  public Optional<User> getOneByEmail(String email) {
+    return this.userRepository.findByEmail(email);
   }
 
   /**
    * Add the given user to the database.
    * 
    * @param user The given user
-   * @return The email of the given user
+   * @return The ID of the given user
    * @throws IllegalArgumentException If the given user is invalid
    */
-  public String add(User user) {
+  public Long add(User user) {
     if (!user.isValid()) {
       throw new IllegalArgumentException("User is invalid");
     }
     this.userRepository.save(user);
-    return user.getEmail();
+    return user.getId();
   }
 
   /**
-   * Try to delete a user with the given email.
+   * Try to delete a user with the given ID.
    * 
-   * @param id The given email
+   * @param id The given ID
    * @return True if the user was found and thus deleted or false otherwise
    */
-  public boolean delete(String email) {
-    Optional<User> user = this.userRepository.findById(email);
+  public boolean delete(Long id) {
+    Optional<User> user = this.userRepository.findById(id);
     if (user.isPresent()) {
-      this.userRepository.deleteById(email);
+      this.userRepository.deleteById(id);
     }
     return user.isPresent();
   }
 
   /**
-   * Try to update a user with the given email.
+   * Try to update a user with the given ID.
    * 
-   * @param id The given email
+   * @param id The given ID
    * @param user The updated user metadata
    * @throws IllegalArgumentException If the current user is not found or the updated user metadata
-   *                                  has an email mismatch or is invalid
+   *                                  has an ID mismatch or is invalid
    */
-  public void update(String email, User user) {
-    Optional<User> currentUser = this.userRepository.findById(email);
+  public void update(Long id, User user) {
+    Optional<User> currentUser = this.userRepository.findById(id);
     if (!currentUser.isPresent()) {
       throw new IllegalArgumentException("User not found");
     }
-    if (user.getEmail() != email) {
-      throw new IllegalArgumentException("Email mismatch");
+    if (user.getId() != id) {
+      throw new IllegalArgumentException("ID mismatch");
     }
     if (!user.isValid()) {
       throw new IllegalArgumentException("User is invalid");

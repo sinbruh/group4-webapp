@@ -148,7 +148,7 @@ public class RentalController {
     ResponseEntity<String> response;
     User sessionUser = this.accessUserService.getSessionUser();
     if (sessionUser != null) {
-      Optional<User> user = this.userService.getOne(email);
+      Optional<User> user = this.userService.getOneByEmail(email);
       Optional<Configuration> configuration = this.configurationService.getOne(id);
       if (user.isPresent() && configuration.isPresent()) {
         if (sessionUser.getEmail().equals(user.get().getEmail()) || sessionUser.isAdmin()) {

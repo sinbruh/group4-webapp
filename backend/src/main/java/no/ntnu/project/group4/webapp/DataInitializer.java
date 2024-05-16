@@ -65,6 +65,7 @@ public class DataInitializer implements ApplicationListener<ApplicationReadyEven
     this.loadUserRoles();
     this.loadUsers();
     this.loadCars();
+    this.loadRentals();
     this.logger.info("Done importing data");
   }
 
@@ -473,8 +474,6 @@ public class DataInitializer implements ApplicationListener<ApplicationReadyEven
       providerService.add(provider12_1_2);
 
       this.logger.info("Done loading car data");
-
-      this.loadRentals();
     } else {
       this.logger.info("Cars already in the database, not loading data");
     }
@@ -499,9 +498,9 @@ public class DataInitializer implements ApplicationListener<ApplicationReadyEven
         Rental rental3 = new Rental(new Date(1716336000000l), new Date(1716508800000l),
                                     new Time(1716393600000l), new Time(1716566400000l));
 
-        rental1.setUser(this.userService.getOne("johndoe@user.com").get());
-        rental2.setUser(this.userService.getOne("janedoe@user.com").get());
-        rental3.setUser(this.userService.getOne("joedoe@user.com").get());
+        rental1.setUser(this.userService.getOneByEmail("johndoe@user.com").get());
+        rental2.setUser(this.userService.getOneByEmail("janedoe@user.com").get());
+        rental3.setUser(this.userService.getOneByEmail("joedoe@user.com").get());
         rental1.setConfiguration(this.configurationService.getOne(1l).get());
         rental2.setConfiguration(this.configurationService.getOne(3l).get());
         rental3.setConfiguration(this.configurationService.getOne(5l).get());

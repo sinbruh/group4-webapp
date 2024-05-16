@@ -32,11 +32,11 @@ public class AccessUserService implements UserDetailsService {
 
   @Override
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-    Optional<User> user = userRepository.findById(username);
+    Optional<User> user = userRepository.findByEmail(username);
     if (user.isPresent()) {
       return new AccessUserDetails(user.get());
     } else {
-      throw new UsernameNotFoundException("User " + username + " not found");
+      throw new UsernameNotFoundException("User " + username + "not found");
     }
   }
 
@@ -49,7 +49,7 @@ public class AccessUserService implements UserDetailsService {
     SecurityContext securityContext = SecurityContextHolder.getContext();
     Authentication authentication = securityContext.getAuthentication();
     String username = authentication.getName();
-    return userRepository.findById(username).orElse(null);
+    return userRepository.findByEmail(username).orElse(null);
   }
 
   /**
