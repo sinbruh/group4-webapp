@@ -1,7 +1,7 @@
 import {getCookie} from "@/tools/cookies";
 import {HttpResponseError} from "@/tools/HttpResponseError";
 
-const API_BASE_URL = process.env.VUE_APP_API_URL;
+const API_BASE_URL = 'http://localhost:8080';
 
 export function asyncApiRequest(method, url, requestBody = null, returnPlainText = false) {
     const fullUrl = API_BASE_URL + url;
@@ -13,7 +13,7 @@ export function asyncApiRequest(method, url, requestBody = null, returnPlainText
     }
     const jwtToken = getCookie("jwt");
     if (jwtToken) {
-        headers["Authorization"] = "Bearer" + jwtToken;
+        headers["Authorization"] = "Bearer " + jwtToken;
     }
 
     return fetch(fullUrl, {
