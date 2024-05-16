@@ -1,6 +1,6 @@
 import * as React from "react"
 import Image from "next/image"
-import carImage from "@/img/cars/BMW-M3.jpg"
+import carDefaultImage from "@/img/cars/BMW-M3.jpg"
 import carIcon from "@/img/icons/car.svg";
 import checkIcon from "@/img/icons/checkmark.svg";
 import closeIcon from "@/img/icons/close.svg";
@@ -18,7 +18,10 @@ import {
 } from "@/components/ui/card"
 
 const expandedCard = ({ carInfo }) => {
-    const carImage = carInfo.carImageInput ? `/carsLowResWEBP/${carInfo.carImageInput}` : carDefaultImage;
+    let carImage;
+    if (carInfo && carInfo.carImageInput) {
+        carImage = carInfo.carImageInput ? `/carsLowResWEBP/${carInfo.carImageInput}` : carDefaultImage;
+    }
 
     const handleClick = () => {
         console.log("Book now button clicked")
