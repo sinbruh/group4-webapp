@@ -133,8 +133,8 @@ public class DataInitializer implements ApplicationListener<ApplicationReadyEven
       // Update admin user password to a proper password that uses BCrypt hashing
       this.accessUserService.updateUserPassword(admin, "adminuser");
       this.accessUserService.updateUserPassword(user1, "johnuser");
-      this.accessUserService.updateUserPassword(user2, "janeuser");
-      this.accessUserService.updateUserPassword(user3, "joeuser1");
+      this.accessUserService.updateUserPassword(user1, "janeuser");
+      this.accessUserService.updateUserPassword(user1, "joeuser1");
 
       this.logger.info("Done loading user data");
     } else {
