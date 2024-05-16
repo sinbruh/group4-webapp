@@ -63,9 +63,6 @@ public class DataInitializer implements ApplicationListener<ApplicationReadyEven
   public void onApplicationEvent(ApplicationReadyEvent event) {
     this.logger.info("Importing data...");
     this.loadUserRoles();
-    this.loadUsers();
-    this.loadCars();
-    this.loadRentals();
     this.logger.info("Done importing data");
   }
 
@@ -91,6 +88,7 @@ public class DataInitializer implements ApplicationListener<ApplicationReadyEven
     } else {
       this.logger.info("User roles already in the database, not loading data");
     }
+    this.loadUsers();
   }
 
   /**
@@ -134,13 +132,14 @@ public class DataInitializer implements ApplicationListener<ApplicationReadyEven
       // Update admin user password to a proper password that uses BCrypt hashing
       this.accessUserService.updateUserPassword(admin, "adminuser");
       this.accessUserService.updateUserPassword(user1, "johnuser");
-      this.accessUserService.updateUserPassword(user1, "janeuser");
-      this.accessUserService.updateUserPassword(user1, "joeuser1");
+      this.accessUserService.updateUserPassword(user2, "janeuser");
+      this.accessUserService.updateUserPassword(user3, "joeuser1");
 
       this.logger.info("Done loading user data");
     } else {
       this.logger.info("Users already in the database, not loading data");
     }
+    this.loadCars();
   }
 
   /**
@@ -477,6 +476,7 @@ public class DataInitializer implements ApplicationListener<ApplicationReadyEven
     } else {
       this.logger.info("Cars already in the database, not loading data");
     }
+    this.loadRentals();
   }
 
   /**
