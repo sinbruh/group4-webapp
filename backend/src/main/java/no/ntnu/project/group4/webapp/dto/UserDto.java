@@ -17,8 +17,7 @@ public class UserDto {
     this.lastName = lastName;
     this.email = email;
     this.phoneNumber = phoneNumber;
-    Date dateOfBirth = new Date(dateLong);
-    this.dateOfBirth = dateOfBirth;
+    this.dateOfBirth = new Date(dateLong);
   }
 
   public String getFirstName() {

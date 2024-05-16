@@ -142,22 +142,30 @@ public class AccessUserService implements UserDetailsService {
     return BCrypt.hashpw(password, BCrypt.gensalt());
   }
 
-  // TODO Fix method so that email cannot be changed to one that already exists
   /**
    * Updates user information except password.
    *
    * @param user User to update
-   * @param profileData Profile data to set for the user
-   * @return True on success or false otherwise
+   * @param userData User data to set for the user
+   * @return A string containing an error message, null if no errors occured.
    */
-  public boolean updateUser(User user, UserDto userData) {
-    user.setFirstName(userData.getFirstName());
-    user.setLastName(userData.getLastName());
-    user.setEmail(userData.getEmail());
-    user.setPhoneNumber(userData.getPhoneNumber());
-    user.setDateOfBirth(userData.getDateOfBirth());
-    userRepository.save(user);
-    return true;
+  public String updateUser(User user, UserDto userData) {
+    String errorMessage = null;
+    if (!userExists(userData.getEmail())) {
+      user.setFirstName(userData.getFirstName());
+      user.setLastName(userData.getLastName());
+      user.setEmail(userData.getEmail());
+      user.setPhoneNumber(userData.getPhoneNumber());
+      user.setDateOfBirth(userData.getDateOfBirth());
+      if (user.isValid()) {
+        userRepository.save(user);
+      } else {
+        errorMessage = "User data not valid";
+      }
+    } else {
+      errorMessage = "Email already used";
+    }
+    return errorMessage;
   }
 
   /**
@@ -174,14 +182,5 @@ public class AccessUserService implements UserDetailsService {
       userRepository.save(user);
     }
     return errorMessage;
-  }
-
-  /**
-   * Deletes user from database.
-   * 
-   * @param user User to delete
-   */
-  public void deleteUser(User user) {
-    userRepository.delete(user);
   }
 }
