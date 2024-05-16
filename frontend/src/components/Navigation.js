@@ -1,7 +1,7 @@
 'use client';
 import React, { useState } from "react";
 import Link from "next/link";
-import logo from "@/img/temp-logo.png";
+import logo from "/public/temp-logo-low.webp";
 import Image from "next/image";
 import LoginModal from "@/components/modal/LoginModal.jsx";
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import Image from "next/image";
-import ntnu from "@/img/ntnu-logo.png";
+import ntnu from "/public/ntnu-logo.webp";
 import Link from "next/link";
 
 export function Footer() {

@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
  * <p>All HTTP requests affiliated with providers are handled in this class.</p>
  *
  * @author Group 4
- * @version v1.0 (2024.05.09)
+ * @version v1.1 (2024.05.15)
  */
 @CrossOrigin
 @RestController
@@ -119,7 +119,7 @@ public class ProviderController {
         try {
           this.providerService.add(provider);
           response = new ResponseEntity<>("", HttpStatus.CREATED);
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
           response = new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
       } else {
@@ -132,6 +132,65 @@ public class ProviderController {
     } else {
       response = new ResponseEntity<>("Only admin users have access to add providers",
           HttpStatus.FORBIDDEN);
+    }
+    return response;
+  }
+
+  /**
+   * Returns a HTTP response to the request requesting to update the provider with the specified ID
+   * with the specified provider.
+   * 
+   * <p>The response body contains an empty string on success or a string with an error message on
+   * error.</p>
+   * 
+   * <p><b>NB!</b> This method does not allow updating which configuration the provider belongs
+   * to.</p>
+   * 
+   * @param id The specified ID
+   * @param provider The specified provider
+   * @return <p>200 OK on success</p>
+   *         <p>400 BAD REQUEST on error</p>
+   *         <p>401 UNAUTHORIZED if user is not authorized</p>
+   *         <p>403 FORBIDDEN if user is not admin</p>
+   */
+  @Operation(
+    summary = "Update provider",
+    description = "Updates the provider with the specified ID with the specified provider"
+  )
+  @ApiResponses(value = {
+    @ApiResponse(
+      responseCode = "200",
+      description = "Provider was updated"
+    ),
+    @ApiResponse(
+      responseCode = "400",
+      description = "Error adding provider"
+    ),
+    @ApiResponse(
+      responseCode = "401",
+      description = "Only authenticated users have access to add providers"
+    ),
+    @ApiResponse(
+      responseCode = "403",
+      description = "Only admin users have access to add providers"
+    ),
+  })
+  public ResponseEntity<String> update(@PathVariable Long id, @RequestBody Provider provider) {
+    ResponseEntity<String> response;
+    User sessionUser = this.userService.getSessionUser();
+    if (sessionUser != null && sessionUser.isAdmin()) {
+      try {
+        this.providerService.update(id, provider);
+        response = new ResponseEntity<>("", HttpStatus.OK);
+      } catch (IllegalArgumentException e) {
+        response = new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+      }
+    } else if (sessionUser == null) {
+      response = new ResponseEntity<>("Only authenticated users have access to update providers",
+                                      HttpStatus.UNAUTHORIZED);
+    } else {
+      response = new ResponseEntity<>("Only admin users have access to update users",
+                                      HttpStatus.FORBIDDEN);
     }
     return response;
   }

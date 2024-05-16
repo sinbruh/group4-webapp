@@ -34,7 +34,7 @@ import org.springframework.web.bind.annotation.RestController;
  * <p>All HTTP requests affiliated with users are handled in this class.</p>
  *
  * @author Group 4
- * @version v1.1 (2024.05.10)
+ * @version v1.2 (2024.05.15)
  */
 @CrossOrigin
 @RestController
@@ -301,11 +301,14 @@ public class UserController {
    * Returns a HTTP response to the request requesting to favorite the configuration with the
    * specified configuration ID.
    * 
+   * <p>The response body contains an empty string on success or a string with an error message on
+   * error.</p>
+   * 
    * @param configId The specified configuration ID
    * @return <p>200 OK on success</p>
    *         <p>401 UNAUTHORIZED if user is not authenticated</p>
    *         <p>404 NOT FOUND if configuration with specified configuration ID is not found</p>
-   *         <p>500 INTERNAL SERVER ERROR if an error occured when updating user</p>
+   *         <p>500 INTERNAL SERVER ERROR if an error occurs when updating user</p>
    */
   @Operation(summary = "Favorite configuration",
              description = "Favorites or unfavorites the configuration with the specified " +
