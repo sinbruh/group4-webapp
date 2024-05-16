@@ -78,7 +78,7 @@ export default function CarReader({ location, dates, price, setExpandedCarInfo }
                     .map(car => {
                         console.log(location);
                         const carImageName = car.configurations[0].img || 'default.jpg';
-                        
+
 
                         const carInfo = {
                             key : car.id,
@@ -91,7 +91,8 @@ export default function CarReader({ location, dates, price, setExpandedCarInfo }
                             fuelType : car.configurations[0].fuelType,
                             transmission : car.configurations[0].tranmissionType,
                             description : car.description,
-                            availability : car.configurations[0] && car.configurations[0].available ? 'Available' : 'Unavailable'
+                            availability : car.configurations[0] && car.configurations[0].available ? 'Available' : 'Unavailable',
+                            providers : car.configurations[0].providers,
                         }
 
                         return (

@@ -6,6 +6,7 @@ import checkIcon from "@/img/icons/checkmark.svg";
 import closeIcon from "@/img/icons/close.svg";
 import cogIcon from "@/img/icons/cog.svg";
 import peopleIcon from "@/img/icons/people.svg";
+import PriceSelector from "@/components/PriceSelector"
 
 import {
     Card,
@@ -17,10 +18,14 @@ import {
 } from "@/components/ui/card"
 
 const expandedCard = ({ carInfo }) => {
-    var expandedCarInfo = carInfo;
+
+    const handleClick = () => {
+        console.log("Book now button clicked")
+    }
+
     return (
         <Card id="expandedCard" className="h-full">
-            {(expandedCarInfo != null )? (
+            {(carInfo != null )? (
                 <div>
                     <CardHeader>
                         <CardTitle>{carInfo.carName}</CardTitle>
@@ -39,6 +44,12 @@ const expandedCard = ({ carInfo }) => {
                             <div className="flex items-center"><Image src={peopleIcon} alt="people" width={32} height={32} /> {carInfo.size}</div>
                             <div className="flex items-center"><Image src={carIcon} alt="fuel type" widht={32} height={32} /> {carInfo.fuelType}</div>
                             <div className="flex items-center"><Image src={cogIcon} alt="transmission" width={32} height={32} /> {carInfo.transmission}</div>
+                        </div>
+                    </CardFooter>
+                    <CardFooter>
+                        <div className="flex gap-5">
+                        <button onClick={handleClick()} className="bg-[#326D0D] text-white font-bold py-2 px-4 rounded">Book now</button>
+                        <PriceSelector providers={carInfo.providers} />
                         </div>
                     </CardFooter>
                 </div>
