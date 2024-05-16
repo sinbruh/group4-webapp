@@ -18,6 +18,7 @@ import {
 } from "@/components/ui/card"
 
 const expandedCard = ({ carInfo }) => {
+    const carImage = carInfo.carImageInput ? `/carsLowResWEBP/${carInfo.carImageInput}` : carDefaultImage;
 
     const handleClick = () => {
         console.log("Book now button clicked")
