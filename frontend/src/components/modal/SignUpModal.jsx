@@ -23,6 +23,7 @@ const formSchema = z.object({
 });
 
 export default function SignUpForm() {
+    const [open, setOpen] = React.useState(true);
     const form = useForm({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -34,9 +35,7 @@ export default function SignUpForm() {
         }
     });
 
-    function onSubmit(values) {
-        //TODO implement API call
-
+    const onSubmit = values => {
         fetch('http://localhost:8080/api/register', {
             method: 'POST',
             body: JSON.stringify(values),
@@ -44,14 +43,16 @@ export default function SignUpForm() {
                 'Content-Type': 'application/json'
             }
         })
-            .then(response => {
-                if (response.ok) {
+            .then(response => response.json())
+            .then(data => {
+                if (data.statusCode === 200) {
                     console.log('User created successfully');
-                    onClose();
+                    setOpen(false); // Close the modal
+                } else {
+                    console.log('Failed to create user:', data.message);
                 }
-            });
-
-        console.log('Submitted values:', values);
+            })
+            .catch(error => console.error('Error:', error));
     }
 
     return (
