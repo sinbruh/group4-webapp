@@ -8,9 +8,7 @@ export default function FilterBar({defaultLocation, defaultStart, defaultEnd, se
     const [location, setLocationState] = useState(defaultLocation);
     const [dates, setDatesState] = useState({start: defaultStart, end: defaultEnd});
     const [price, setPriceState] = useState({min: null, max: null});
-
-
-   
+    
 
     useEffect(() => {
         setLocation(location);

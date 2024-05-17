@@ -5,6 +5,8 @@ import ExpandedCard from "@/components/ExpandedCard";
 export default function CarReader({ location, dates, price, setExpandedCarInfo }) {
     const [cars, setCars] = useState([]);
     const [expandedCar, setExpandedCar] = useState(null);
+    const fromDate = dates.from;
+    const toDate = dates.to;
 
     const updateJsonFile = async () => {
         try {
@@ -76,9 +78,14 @@ export default function CarReader({ location, dates, price, setExpandedCarInfo }
                         return false;
                     })
                     .map(car => {
-                        console.log(location);
                         const carImageName = car.configurations[0].img || 'default.jpg';
 
+                        const rentals = car.configurations[0].rentals;
+                        const isAvailable = rentals.every(rental => {
+                            const rentalStartDate = new Date(rental.startDate);
+                            const rentalEndDate = new Date(rental.endDate);
+                            return rentalStartDate > toDate || rentalEndDate < fromDate;
+                        });
 
                         const carInfo = {
                             key : car.id,
@@ -91,7 +98,7 @@ export default function CarReader({ location, dates, price, setExpandedCarInfo }
                             fuelType : car.configurations[0].fuelType,
                             transmission : car.configurations[0].tranmissionType,
                             description : car.description,
-                            availability : car.configurations[0] && car.configurations[0].available ? 'Available' : 'Unavailable',
+                            availability : isAvailable,
                             providers : car.configurations[0].providers,
                         }
 
