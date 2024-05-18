@@ -33,8 +33,6 @@ public class Configuration {
   private Set<ExtraFeature> extraFeatures = new LinkedHashSet<>();
   @OneToMany(mappedBy = "configuration")
   private Set<Provider> providers = new LinkedHashSet<>();
-  @OneToMany(mappedBy = "configuration")
-  private Set<Rental> rentals = new LinkedHashSet<>();
   @ManyToMany(mappedBy = "favorites")
   private Set<User> favoritedUsers = new LinkedHashSet<>();
 
@@ -131,14 +129,6 @@ public class Configuration {
 
   public void setProviders(Set<Provider> providers) {
     this.providers = providers;
-  }
-
-  public Set<Rental> getRentals() {
-    return this.rentals;
-  }
-
-  public void setRentals(Set<Rental> rentals) {
-    this.rentals = rentals;
   }
 
   public Set<User> getFavoritedUsers() {
