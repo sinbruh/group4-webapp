@@ -158,13 +158,12 @@ public class DataInitializer implements ApplicationListener<ApplicationReadyEven
 
       // Initialization
       Car car1 = new Car("Volkswagen", "Golf", 2007);
-      Configuration configuration1_1 = new Configuration("Diesel config", "Diesel", "Manual", 5,
-                                                      "Ålesund");
+      Configuration configuration1_1 = new Configuration("Diesel config", "Diesel", "Manual", 5);
       ExtraFeature extraFeature1_1_1 = new ExtraFeature("Bluetooth");
       ExtraFeature extraFeature1_1_2 = new ExtraFeature("DAB radio");
       ExtraFeature extraFeature1_1_3 = new ExtraFeature("Warming in the chairs");
-      Provider provider1_1_1 = new Provider("Miller Bil", 600);
-      Provider provider1_1_2 = new Provider("Biller Bil", 550);
+      Provider provider1_1_1 = new Provider("Miller Bil", 600, "Ålesund");
+      Provider provider1_1_2 = new Provider("Biller Bil", 550, "Stryn");
 
       configuration1_1.setCar(car1);
       extraFeature1_1_1.setConfiguration(configuration1_1);
@@ -187,12 +186,12 @@ public class DataInitializer implements ApplicationListener<ApplicationReadyEven
       // Initialization
       Car car2 = new Car("Tesla", "Model 3", 2019);
       Configuration configuration2_1 = new Configuration("Electric config", "Electric",
-                                                         "Automatic", 5, "Stryn");
+                                                         "Automatic", 5);
       ExtraFeature extraFeature2_1_1 = new ExtraFeature("Autonomous driving");
       ExtraFeature extraFeature2_1_2 = new ExtraFeature("Long range");
       ExtraFeature extraFeature2_1_3 = new ExtraFeature("Warming in the seats");
-      Provider provider2_1_1 = new Provider("Biggernes Tesla", 700);
-      Provider provider2_1_2 = new Provider("Tesla Tom (private)", 500);
+      Provider provider2_1_1 = new Provider("Biggernes Tesla", 700, "Alta");
+      Provider provider2_1_2 = new Provider("Tesla Tom (private)", 500, "Oslo");
 
       configuration2_1.setCar(car2);
       extraFeature2_1_1.setConfiguration(configuration2_1);
@@ -215,12 +214,12 @@ public class DataInitializer implements ApplicationListener<ApplicationReadyEven
       // Initialization
       Car car3 = new Car("Tesla", "Model Y", 2022);
       Configuration configuration3_1 = new Configuration("Electric config", "Electric",
-                                                         "Automatic", 5, "Alta");
+                                                         "Automatic", 5);
       ExtraFeature extraFeature3_1_1 = new ExtraFeature("Four wheel drive");
       ExtraFeature extraFeature3_1_2 = new ExtraFeature("Glass roof");
       ExtraFeature extraFeature3_1_3 = new ExtraFeature("Autonomous driving");
-      Provider provider3_1_1 = new Provider("Biggernes Tesla", 900);
-      Provider provider3_1_2 = new Provider("Tesla Tom (private)", 700);
+      Provider provider3_1_1 = new Provider("Biggernes Tesla", 900, "Alta");
+      Provider provider3_1_2 = new Provider("Tesla Tom (private)", 700, "Oslo");
 
       configuration3_1.setCar(car3);
       extraFeature3_1_1.setConfiguration(configuration3_1);
@@ -243,9 +242,9 @@ public class DataInitializer implements ApplicationListener<ApplicationReadyEven
       // Initialization
       Car car4 = new Car("Nissan", "Leaf", 2016);
       Configuration configuration4_1 = new Configuration("Electric config", "Electric",
-                                                         "Automatic", 5, "Oslo");
-      Provider provider4_1_1 = new Provider("Auto 9-9", 500);
-      Provider provider4_1_2 = new Provider("Auto 10-10", 500);
+                                                         "Automatic", 5);
+      Provider provider4_1_1 = new Provider("Auto 9-9", 500, "Stavanger");
+      Provider provider4_1_2 = new Provider("Auto 10-10", 500, "Ålesund");
 
       configuration4_1.setCar(car4);
       provider4_1_1.setConfiguration(configuration4_1);
@@ -261,10 +260,10 @@ public class DataInitializer implements ApplicationListener<ApplicationReadyEven
 
       // Initialization
       Car car5 = new Car("Mazda", "2", 2017);
-      Configuration configuration5_1 = new Configuration("Petrol config", "Petrol", "Automatic", 5,
-                                                      "Stavanger");
+      Configuration configuration5_1 = new Configuration("Petrol config", "Petrol", "Automatic",
+                                                         5);
       ExtraFeature extraFeature5_1_1 = new ExtraFeature("DAB radio");
-      Provider provider5_1_1 = new Provider("Bilikist", 400);
+      Provider provider5_1_1 = new Provider("Bilikist", 400, "Stryn");
 
       configuration5_1.setCar(car5);
       extraFeature5_1_1.setConfiguration(configuration5_1);
@@ -280,13 +279,12 @@ public class DataInitializer implements ApplicationListener<ApplicationReadyEven
 
       // Initialization
       Car car6 = new Car("Volkswagen", "Transporter", 1978);
-      Configuration configuration6_1 = new Configuration("Petrol config", "Petrol", "Manual", 8,
-                                                      "Ålesund");
+      Configuration configuration6_1 = new Configuration("Petrol config", "Petrol", "Manual", 8);
       ExtraFeature extraFeature6_1_1 = new ExtraFeature("Yellow");
       ExtraFeature extraFeature6_1_2 = new ExtraFeature("Retro");
-      Provider provider6_1_1 = new Provider("Ørsta kommune", 200);
-      Provider provider6_1_2 = new Provider("Sirkelsliper", 70);
-      Provider provider6_1_3 = new Provider("Peace Per", 180);
+      Provider provider6_1_1 = new Provider("Ørsta kommune", 200, "Alta");
+      Provider provider6_1_2 = new Provider("Sirkelsliper", 70, "Oslo");
+      Provider provider6_1_3 = new Provider("Peace Per", 180, "Stavanger");
 
       configuration6_1.setCar(car6);
       extraFeature6_1_1.setConfiguration(configuration6_1);
@@ -308,13 +306,12 @@ public class DataInitializer implements ApplicationListener<ApplicationReadyEven
 
       // Initialization
       Car car7 = new Car("BMW", "M3 Evo", 1988);
-      Configuration configuration7_1 = new Configuration("Petrol config", "Petrol", "Manual", 4,
-                                                      "Stryn");
+      Configuration configuration7_1 = new Configuration("Petrol config", "Petrol", "Manual", 4);
       ExtraFeature extraFeature7_1_1 = new ExtraFeature("Three stripes");
       ExtraFeature extraFeature7_1_2 = new ExtraFeature("Original tire discs");
-      Provider provider7_1_1 = new Provider("Bilverksted", 400);
-      Provider provider7_1_2 = new Provider("Grabes", 450);
-      Provider provider7_1_3 = new Provider("Djarney", 449);
+      Provider provider7_1_1 = new Provider("Bilverksted", 400, "Ålesund");
+      Provider provider7_1_2 = new Provider("Grabes", 450, "Stryn");
+      Provider provider7_1_3 = new Provider("Djarney", 449, "Alta");
 
       configuration7_1.setCar(car7);
       extraFeature7_1_1.setConfiguration(configuration7_1);
@@ -336,12 +333,12 @@ public class DataInitializer implements ApplicationListener<ApplicationReadyEven
 
       // Initialization
       Car car8 = new Car("Skoda", "Fabia", 2011);
-      Configuration configuration8_1 = new Configuration("Diesel config", "Diesel", "Automatic", 5,
-                                                      "Alta");
+      Configuration configuration8_1 = new Configuration("Diesel config", "Diesel", "Automatic",
+                                                         5);
       ExtraFeature extraFeature8_1_1 = new ExtraFeature("Tow hook");
-      Provider provider8_1_1 = new Provider("Sprekksaver", 300);
-      Provider provider8_1_2 = new Provider("Smidig bilforhandler", 229);
-      Provider provider8_1_3 = new Provider("Fossefall bilforhandler", 700);
+      Provider provider8_1_1 = new Provider("Sprekksaver", 300, "Oslo");
+      Provider provider8_1_2 = new Provider("Smidig bilforhandler", 229, "Stavanger");
+      Provider provider8_1_3 = new Provider("Fossefall bilforhandler", 700, "Ålesund");
 
       configuration8_1.setCar(car8);
       extraFeature8_1_1.setConfiguration(configuration8_1);
@@ -361,11 +358,10 @@ public class DataInitializer implements ApplicationListener<ApplicationReadyEven
 
       // Initialization
       Car car9 = new Car("Peugeot", "307 SW", 2008);
-      Configuration configuration9_1 = new Configuration("Diesel config", "Diesel", "Manual", 7,
-                                                      "Oslo");
+      Configuration configuration9_1 = new Configuration("Diesel config", "Diesel", "Manual", 7);
       ExtraFeature extraFeature9_1_1 = new ExtraFeature("Travel box on the roof");
-      Provider provider9_1_1 = new Provider("Bertel Ostein", 600);
-      Provider provider9_1_2 = new Provider("Auto 10-10", 550);
+      Provider provider9_1_1 = new Provider("Bertel Ostein", 600, "Stryn");
+      Provider provider9_1_2 = new Provider("Auto 10-10", 550, "Ålesund");
 
       configuration9_1.setCar(car9);
       extraFeature9_1_1.setConfiguration(configuration9_1);
@@ -383,8 +379,7 @@ public class DataInitializer implements ApplicationListener<ApplicationReadyEven
 
       // Initialization
       Car car10 = new Car("Peugeot", "207", 2007);
-      Configuration configuration10_1 = new Configuration("Diesel config", "Diesel", "Manual", 5,
-                                                      "Stavanger");
+      Configuration configuration10_1 = new Configuration("Diesel config", "Diesel", "Manual", 5);
       ExtraFeature extraFeature10_1_1 = new ExtraFeature("Glass window");
       ExtraFeature extraFeature10_1_2 = new ExtraFeature("Warming in the seats");
       ExtraFeature extraFeature10_1_3 = new ExtraFeature("Warming in the steering wheel");
@@ -392,8 +387,8 @@ public class DataInitializer implements ApplicationListener<ApplicationReadyEven
       ExtraFeature extraFeature10_1_5 = new ExtraFeature("Warming in the tires");
       ExtraFeature extraFeature10_1_6 = new ExtraFeature("Warming under the rubber rugs");
       ExtraFeature extraFeature10_1_7 = new ExtraFeature("Warming 360");
-      Provider provider10_1_1 = new Provider("Bertel Ostein", 500);
-      Provider provider10_1_2 = new Provider("Auto 10-10", 550);
+      Provider provider10_1_1 = new Provider("Bertel Ostein", 500, "Stryn");
+      Provider provider10_1_2 = new Provider("Auto 10-10", 550, "Ålesund");
 
       configuration10_1.setCar(car10);
       extraFeature10_1_1.setConfiguration(configuration10_1);
@@ -423,13 +418,12 @@ public class DataInitializer implements ApplicationListener<ApplicationReadyEven
 
       // Initialization
       Car car11 = new Car("Peugeot", "3008", 2010);
-      Configuration configuration11_1 = new Configuration("Diesel config", "Diesel", "Manual", 5,
-                                                      "Ålesund");
+      Configuration configuration11_1 = new Configuration("Diesel config", "Diesel", "Manual", 5);
       ExtraFeature extraFeature11_1_1 = new ExtraFeature("FM radio");
       ExtraFeature extraFeature11_1_2 = new ExtraFeature("CD player");
       ExtraFeature extraFeature11_1_3 = new ExtraFeature("Metallic paint");
-      Provider provider11_1_1 = new Provider("Bertel Ostein", 600);
-      Provider provider11_1_2 = new Provider("Auto 10-10", 600);
+      Provider provider11_1_1 = new Provider("Bertel Ostein", 600, "Stryn");
+      Provider provider11_1_2 = new Provider("Auto 10-10", 600, "Ålesund");
 
       configuration11_1.setCar(car11);
       extraFeature11_1_1.setConfiguration(configuration11_1);
@@ -452,11 +446,11 @@ public class DataInitializer implements ApplicationListener<ApplicationReadyEven
       // Initialization
       Car car12 = new Car("Peugeot", "iOn", 2015);
       Configuration configuration12_1 = new Configuration("Electric config", "Electric",
-                                                          "Automatic", 4, "Ålesund");
+                                                          "Automatic", 4);
       ExtraFeature extraFeature12_1_1 = new ExtraFeature("Five doors");
       ExtraFeature extraFeature12_1_2 = new ExtraFeature("Very economic");
-      Provider provider12_1_1 = new Provider("Bertel Ostein", 200);
-      Provider provider12_1_2 = new Provider("Auto 10-10", 201);
+      Provider provider12_1_1 = new Provider("Bertel Ostein", 200, "Stryn");
+      Provider provider12_1_2 = new Provider("Auto 10-10", 201, "Ålesund");
 
       configuration12_1.setCar(car12);
       extraFeature12_1_1.setConfiguration(configuration12_1);
@@ -480,38 +474,38 @@ public class DataInitializer implements ApplicationListener<ApplicationReadyEven
   }
 
   /**
-     * Loads rentals into the database if they are not already there.
-     */
-    private void loadRentals() {
-      boolean isEmpty = true; // Guard condition
-      Iterable<Rental> existingRentals = this.rentalService.getAll();
-      Iterator<Rental> rentalsIt = existingRentals.iterator();
-      if (rentalsIt.hasNext()) {
-        isEmpty = false;
-      }
-      this.logger.info("Loading rental data...");
-      if (isEmpty) {
-        Rental rental1 = new Rental(new Date(1716163200000l), new Date(1747699200000l),
-                                    new Time(1716206400000l), new Time(1747742400000l));
-        Rental rental2 = new Rental(new Date(1716249600000l), new Date(1717459200000l),
-                                    new Time(1716300000000l), new Time(1717509600000l));
-        Rental rental3 = new Rental(new Date(1716336000000l), new Date(1716508800000l),
-                                    new Time(1716393600000l), new Time(1716566400000l));
-
-        rental1.setUser(this.userService.getOneByEmail("johndoe@user.com").get());
-        rental2.setUser(this.userService.getOneByEmail("janedoe@user.com").get());
-        rental3.setUser(this.userService.getOneByEmail("joedoe@user.com").get());
-        rental1.setConfiguration(this.configurationService.getOne(1l).get());
-        rental2.setConfiguration(this.configurationService.getOne(3l).get());
-        rental3.setConfiguration(this.configurationService.getOne(5l).get());
-
-        this.rentalService.add(rental1);
-        this.rentalService.add(rental2);
-        this.rentalService.add(rental3);
-
-        this.logger.info("Done loading rental data");
-      } else {
-        this.logger.info("Rentals already in the database, not loading data");
-      }
+   * Loads rentals into the database if they are not already there.
+   */
+  private void loadRentals() {
+    boolean isEmpty = true; // Guard condition
+    Iterable<Rental> existingRentals = this.rentalService.getAll();
+    Iterator<Rental> rentalsIt = existingRentals.iterator();
+    if (rentalsIt.hasNext()) {
+      isEmpty = false;
     }
+    this.logger.info("Loading rental data...");
+    if (isEmpty) {
+      Rental rental1 = new Rental(new Date(1716163200000l), new Date(1747699200000l),
+                                  new Time(1716206400000l), new Time(1747742400000l));
+      Rental rental2 = new Rental(new Date(1716249600000l), new Date(1717459200000l),
+                                  new Time(1716300000000l), new Time(1717509600000l));
+      Rental rental3 = new Rental(new Date(1716336000000l), new Date(1716508800000l),
+                                  new Time(1716393600000l), new Time(1716566400000l));
+
+      rental1.setUser(this.userService.getOneByEmail("johndoe@user.com").get());
+      rental2.setUser(this.userService.getOneByEmail("janedoe@user.com").get());
+      rental3.setUser(this.userService.getOneByEmail("joedoe@user.com").get());
+      rental1.setProvider(this.providerService.getOne(1l).get());
+      rental2.setProvider(this.providerService.getOne(3l).get());
+      rental3.setProvider(this.providerService.getOne(5l).get());
+
+      this.rentalService.add(rental1);
+      this.rentalService.add(rental2);
+      this.rentalService.add(rental3);
+
+      this.logger.info("Done loading rental data");
+    } else {
+      this.logger.info("Rentals already in the database, not loading data");
+    }
+  }
 }
