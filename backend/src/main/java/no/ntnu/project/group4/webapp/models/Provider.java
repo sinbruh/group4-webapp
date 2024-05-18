@@ -17,6 +17,8 @@ public class Provider {
   private Long id;
   private String name;
   private int price;
+  private String location;
+  private boolean available = true;
   @JsonIgnore
   @ManyToOne
   private Configuration configuration;
@@ -27,9 +29,10 @@ public class Provider {
   public Provider() {
   }
 
-  public Provider(String name, int price) {
+  public Provider(String name, int price, String location) {
     this.name = name;
     this.price = price;
+    this.location = location;
   }
 
   public Long getId() {
@@ -56,6 +59,42 @@ public class Provider {
     this.price = price;
   }
 
+  /**
+   * Getter for location.
+   * 
+   * @return Location
+   */
+  public String getLocation() {
+    return this.location;
+  }
+
+  /**
+   * Setter for location.
+   * 
+   * @param location The specified location
+   */
+  public void setLocation(String location) {
+    this.location = location;
+  }
+
+  /**
+   * Checks if provider is available.
+   * 
+   * @return True if provider is available or false otherwise
+   */
+  public boolean isAvailable() {
+    return this.available;
+  }
+
+  /**
+   * Setter for availability.
+   * 
+   * @param available The specified availability
+   */
+  public void setAvailable(boolean available) {
+    this.available = available;
+  }
+
   public Configuration getConfiguration() {
     return this.configuration;
   }
@@ -65,6 +104,6 @@ public class Provider {
   }
 
   public boolean isValid() {
-    return !this.name.isBlank() && this.price > 0;
+    return !this.name.isBlank() && this.price > 0 && !this.location.isBlank();
   }
 }

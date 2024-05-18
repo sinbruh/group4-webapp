@@ -25,8 +25,6 @@ public class Configuration {
   private String fuelType;
   private String transmissionType;
   private int numberOfSeats;
-  private String location;
-  private boolean available = true;
   private boolean visible = true;
   @JsonIgnore
   @ManyToOne
@@ -46,13 +44,11 @@ public class Configuration {
   public Configuration() {
   }
 
-  public Configuration(String name, String fuelType, String transmissionType, int numberOfSeats,
-                       String location) {
+  public Configuration(String name, String fuelType, String transmissionType, int numberOfSeats) {
     this.name = name;
     this.fuelType = fuelType;
     this.transmissionType = transmissionType;
     this.numberOfSeats = numberOfSeats;
-    this.location = location;
   }
 
   public Long getId() {
@@ -93,22 +89,6 @@ public class Configuration {
 
   public void setNumberOfSeats(int numberOfSeats) {
     this.numberOfSeats = numberOfSeats;
-  }
-
-  public String getLocation() {
-    return this.location;
-  }
-
-  public void setLocation(String location) {
-    this.location = location;
-  }
-
-  public boolean isAvailable() {
-    return this.available;
-  }
-
-  public void setAvailable(boolean available) {
-    this.available = available;
   }
 
   /**
@@ -171,6 +151,6 @@ public class Configuration {
 
   public boolean isValid() {
     return !this.name.isBlank() && !this.fuelType.isBlank() && !this.transmissionType.isBlank() &&
-           this.numberOfSeats > 0 && !this.location.isBlank();
+           this.numberOfSeats > 0;
   }
 }

@@ -25,7 +25,7 @@ public class Rental {
   private Time endTime;
   @JsonIgnore
   @ManyToOne
-  private Configuration configuration;
+  private Provider provider;
   @JsonIgnore
   @ManyToOne
   private User user;
@@ -103,12 +103,22 @@ public class Rental {
     this.endTime = endTime;
   }
 
-  public Configuration getConfiguration() {
-    return this.configuration;
+  /**
+   * Getter for provider.
+   * 
+   * @return Provider
+   */
+  public Provider getProvider() {
+    return this.provider;
   }
 
-  public void setConfiguration(Configuration configuration) {
-    this.configuration = configuration;
+  /**
+   * Setter for provider.
+   * 
+   * @param provider The specified provider
+   */
+  public void setProvider(Provider provider) {
+    this.provider = provider;
   }
 
   public User getUser() {
