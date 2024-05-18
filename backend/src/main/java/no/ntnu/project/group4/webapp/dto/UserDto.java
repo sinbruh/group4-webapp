@@ -57,7 +57,6 @@ public class UserDto {
   }
 
   public void setDateOfBirth(long dateLong) {
-    Date dateOfBirth = new Date(dateLong);
-    this.dateOfBirth = dateOfBirth;
+    this.dateOfBirth = new Date(dateLong);
   }
 }
