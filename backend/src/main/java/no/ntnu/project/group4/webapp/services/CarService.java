@@ -75,9 +75,6 @@ public class CarService {
     if (existingcar.isEmpty()) {
       throw new IllegalArgumentException("Car not found");
     }
-    if (car.getId() != id) {
-      throw new IllegalArgumentException("ID mismatch");
-    }
     if (!car.isValid()) {
       throw new IllegalArgumentException("Car is invalid");
     }

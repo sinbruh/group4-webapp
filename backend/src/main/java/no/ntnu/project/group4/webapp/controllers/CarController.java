@@ -27,7 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
  * <p>All HTTP requests affiliated with cars are handled in this class.</p>
  *
  * @author Group 4
- * @version v1.1 (2024.05.15)
+ * @version v1.2 (2024.05.18)
  */
 @CrossOrigin
 @RestController
@@ -59,7 +59,6 @@ public class CarController {
    * @return <p>200 OK on success + car data</p>
    * <p>404 NOT FOUND if car is not found</p>
    */
-  @GetMapping("/{id}")
   @Operation(
       summary = "Get car by ID",
       description = "Returns the car with the specified ID")
@@ -67,6 +66,7 @@ public class CarController {
       @ApiResponse(responseCode = "200", description = "Car data"),
       @ApiResponse(responseCode = "404", description = "Car with specified ID not found")
   })
+  @GetMapping("/{id}")
   public ResponseEntity<?> get(@PathVariable Long id) {
     ResponseEntity<?> response;
     Optional<Car> car = this.carService.getOne(id);
@@ -79,33 +79,34 @@ public class CarController {
   }
 
   /**
-   * Returns a response to the request of adding the specified car.
+   * Returns a HTTP response to the request requesting to add the specified car.
    *
-   * <p>The response body contains a string that is empty or contains an error message.</p>
+   * <p>The response body contains the ID of the specified car on success or a string with an error
+   * message on error.</p>
    *
    * @param car The specified car
-   * @return <p>201 CREATED on success</p>
-   * <p>400 BAD REQUEST on error</p>
-   * <p>401 UNAUTHORIZED if user is not authenticated</p>
-   * <p>403 FORBIDDEN if user is not admin</p>
+   * @return <p>201 CREATED on success + ID</p>
+   *         <p>400 BAD REQUEST on error</p>
+   *         <p>401 UNAUTHORIZED if user is not authenticated</p>
+   *         <p>403 FORBIDDEN if user is not admin</p>
    */
   @Operation(
-      summary = "Add car",
-      description = "Adds the specified car")
+    summary = "Add car",
+    description = "Adds the specified car")
   @ApiResponses(value = {
-      @ApiResponse(responseCode = "201", description = "Car added"),
-      @ApiResponse(responseCode = "400", description = "Error adding car"),
-      @ApiResponse(responseCode = "401", description = "Only authenticated users have access to add cars"),
-      @ApiResponse(responseCode = "403", description = "Only admin users have access to add cars")
+    @ApiResponse(responseCode = "201", description = "ID of car"),
+    @ApiResponse(responseCode = "400", description = "Error message"),
+    @ApiResponse(responseCode = "401", description = "Only authenticated users have access to add cars"),
+    @ApiResponse(responseCode = "403", description = "Only admin users have access to add cars")
   })
   @PostMapping
-  public ResponseEntity<String> add(@RequestBody Car car) {
-    ResponseEntity<String> response;
+  public ResponseEntity<?> add(@RequestBody Car car) {
+    ResponseEntity<?> response;
     User sessionUser = this.userService.getSessionUser();
     if (sessionUser != null && sessionUser.isAdmin()) {
       try {
         this.carService.add(car);
-        response = new ResponseEntity<>("", HttpStatus.CREATED);
+        response = new ResponseEntity<>(car.getId(), HttpStatus.CREATED);
       } catch (IllegalArgumentException e) {
         response = new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
       }
