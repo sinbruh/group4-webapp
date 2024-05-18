@@ -25,6 +25,8 @@ import userIcon from "@/img/icons/person.svg";
 import Image from 'next/image';
 import {sendAuthenticationRequest} from "@/tools/authentication";
 
+import { useStore } from '@/tools/authentication';
+
 const formSchema = z.object({
     email: z.string().email(),
     password: z.string().min(),
@@ -33,6 +35,8 @@ const formSchema = z.object({
 export default function LoginModalClient() {
     const [open, setOpen] = useState(false);
     const [showLogin, setShowLogin] = useState(true);
+
+    const setUser = useStore((state) => state.setUser);
 
     const form = useForm({
         resolver: zodResolver(formSchema),
@@ -44,23 +48,18 @@ export default function LoginModalClient() {
 
 
     async function onSubmit(values) {
-        try {
-            const user = await sendAuthenticationRequest(values.email, values.password, onSuccessfulLogin, onFailedLogin);
-            console.log('User logged in:', user);
-            setOpen(false);
-        } catch (error) {
-            console.error('Error:', error);
-        }
-
-
-        // TODO implement API call
+            sendAuthenticationRequest(values.email, values.password, onSuccessfulLogin, onFailedLogin);
     }
 
-    function onSuccessfulLogin() {
+    function onSuccessfulLogin(user) {
+        setUser(user)
+        console.log(user.email + " has logged in");
+
         setOpen(false);
     }
 
     function onFailedLogin() {
+        console.error('Error:', error);
         console.error('Login failed');
     }
 

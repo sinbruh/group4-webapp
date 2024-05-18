@@ -1,5 +1,12 @@
-import {deleteCookie, getCookie, setCookie} from "./cookies";
-import {asyncApiRequest} from "./request";
+import { deleteCookie, getCookie, setCookie } from "./cookies";
+import { asyncApiRequest } from "./request";
+import { create } from "zustand";
+
+export const useStore = create((set) => ({
+    user: null,
+    setUser: (user) => set({ user }),
+    logout: () => set({ user: null }),
+}));
 
 export function getAuthenticatedUser() {
     let user = null;
@@ -24,7 +31,7 @@ export async function sendAuthenticationRequest(
     password,
     successCallBack,
     errorCallBack
-){
+) {
     const postData = {
         email: email,
         password: password,
@@ -53,7 +60,7 @@ function parseJwt(token) {
     const jsonPayload = decodeURIComponent(
         atob(base64)
             .split("")
-            .map(function (c) {
+            .map(function(c) {
                 return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
             })
             .join("")
