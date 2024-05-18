@@ -22,8 +22,7 @@ const formSchema = z.object({
     password: z.string().min(8),
 });
 
-export default function SignUpForm() {
-    const [open, setOpen] = React.useState(true);
+export default function SignUpForm({ setOpen }) {
     const form = useForm({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -43,13 +42,12 @@ export default function SignUpForm() {
                 'Content-Type': 'application/json'
             }
         })
-            .then(response => response.json())
-            .then(data => {
-                if (data.statusCode === 200) {
+            .then(response => {
+                if (response.ok) {
                     console.log('User created successfully');
                     setOpen(false); // Close the modal
                 } else {
-                    console.log('Failed to create user:', data.message);
+                    console.log('Failed to create user:', response.statusText);
                 }
             })
             .catch(error => console.error('Error:', error));

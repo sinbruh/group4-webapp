@@ -25,14 +25,15 @@ import userIcon from "@/img/icons/person.svg";
 import Image from 'next/image';
 import {sendAuthenticationRequest} from "@/tools/authentication";
 
-
 const formSchema = z.object({
     email: z.string().email(),
     password: z.string().min(),
 });
 
 export default function LoginModalClient() {
+    const [open, setOpen] = useState(false);
     const [showLogin, setShowLogin] = useState(true);
+
     const form = useForm({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -44,13 +45,23 @@ export default function LoginModalClient() {
 
     async function onSubmit(values) {
         try {
-            const user = await sendAuthenticationRequest(values.email, values.password);
+            const user = await sendAuthenticationRequest(values.email, values.password, onSuccessfulLogin, onFailedLogin);
             console.log('User logged in:', user);
+            setOpen(false);
         } catch (error) {
             console.error('Error:', error);
         }
 
+
         // TODO implement API call
+    }
+
+    function onSuccessfulLogin() {
+        setOpen(false);
+    }
+
+    function onFailedLogin() {
+        console.error('Login failed');
     }
 
     function handleShowSignup() {
@@ -62,7 +73,7 @@ export default function LoginModalClient() {
     }
 
     return (
-        <Dialog>
+        <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
                 <Button variant="ghost" size="icon">
                     <Image src={userIcon} alt="User icon" width={32} height={32} />
@@ -132,7 +143,7 @@ export default function LoginModalClient() {
                         </form>
                     </Form>
                 ) : (
-                    <SignupModal />
+                    <SignupModal setOpen={setOpen} />
                 )}
             </DialogContent>
         </Dialog>
