@@ -4,11 +4,11 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import java.util.Optional;
-import no.ntnu.project.group4.webapp.models.Configuration;
+import no.ntnu.project.group4.webapp.models.Provider;
 import no.ntnu.project.group4.webapp.models.Rental;
 import no.ntnu.project.group4.webapp.models.User;
 import no.ntnu.project.group4.webapp.services.AccessUserService;
-import no.ntnu.project.group4.webapp.services.ConfigurationService;
+import no.ntnu.project.group4.webapp.services.ProviderService;
 import no.ntnu.project.group4.webapp.services.RentalService;
 import no.ntnu.project.group4.webapp.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
  * <p>All HTTP requests affiliated with rentals are handled in this class.</p>
  *
  * @author Group 4
- * @version v1.1 (2024.05.10)
+ * @version v1.2 (2024.05.18)
  */
 @CrossOrigin
 @RestController
@@ -38,7 +38,7 @@ public class RentalController {
   @Autowired
   private RentalService rentalService;
   @Autowired
-  private ConfigurationService configurationService;
+  private ProviderService providerService;
   @Autowired
   private AccessUserService accessUserService;
   @Autowired
@@ -119,42 +119,42 @@ public class RentalController {
 
   /**
    * Returns a response to the request of adding the specified rental to the user with the
-   * specified email and the configuration with the specified configuration ID.
+   * specified email and the provider with the specified provider ID.
    *
    * <p>The response body contains a string that is empty or contains an error message.</p>
    *
-   * @param email    The specified email
-   * @param configId The specified configuration ID
-   * @param rental   The specified rental
+   * @param email The specified email
+   * @param providerId The specified provider ID
+   * @param rental The specified rental
    * @return <p>201 CREATED on success</p>
-   * <p>400 BAD REQUEST on error</p>
-   * <p>401 UNAUTHORIZED if user is not authenticated</p>
-   * <p>403 FORBIDDEN if user email does not match email of rental user</p>
-   * <p>404 NOT FOUND if user or configuration is not found</p>
+   *         <p>400 BAD REQUEST on error</p>
+   *         <p>401 UNAUTHORIZED if user is not authenticated</p>
+   *         <p>403 FORBIDDEN if user email does not match email of rental user</p>
+   *         <p>404 NOT FOUND if user or provider is not found</p>
    */
   @Operation(
       summary = "Add rental",
       description = "Adds the specified rental to the user with the specified email and the " +
-          "configuration with the specified configuration ID")
+                    "provider with the specified provider ID")
   @ApiResponses(value = {
       @ApiResponse(responseCode = "201", description = "Rental added"),
       @ApiResponse(responseCode = "400", description = "Error adding rental"),
       @ApiResponse(responseCode = "401", description = "Only authenticated users have access to add rentals"),
       @ApiResponse(responseCode = "403", description = "Users do not have access to add rental data of other users"),
-      @ApiResponse(responseCode = "404", description = "User with specified email not found or configuration with specified configuration ID not found")
+      @ApiResponse(responseCode = "404", description = "User with specified email not found or provider with specified provider ID not found")
   })
-  @PostMapping("/{email}/{configId}")
-  public ResponseEntity<String> add(@PathVariable String email, @PathVariable Long configId,
+  @PostMapping("/{email}/{providerId}")
+  public ResponseEntity<String> add(@PathVariable String email, @PathVariable Long providerId,
                                     @RequestBody Rental rental) {
     ResponseEntity<String> response;
     User sessionUser = this.accessUserService.getSessionUser();
     if (sessionUser != null) {
       Optional<User> user = this.userService.getOneByEmail(email);
-      Optional<Configuration> configuration = this.configurationService.getOne(configId);
-      if (user.isPresent() && configuration.isPresent()) {
+      Optional<Provider> provider = this.providerService.getOne(providerId);
+      if (user.isPresent() && provider.isPresent()) {
         if (sessionUser.getEmail().equals(user.get().getEmail()) || sessionUser.isAdmin()) {
           rental.setUser(user.get());
-          rental.setConfiguration(configuration.get());
+          rental.setProvider(provider.get());
           try {
             this.rentalService.add(rental);
             response = new ResponseEntity<>("", HttpStatus.CREATED);
@@ -169,7 +169,7 @@ public class RentalController {
         response = new ResponseEntity<>("User with specified email not found",
             HttpStatus.NOT_FOUND);
       } else {
-        response = new ResponseEntity<>("Configuration with specified ID not found",
+        response = new ResponseEntity<>("Provider with specified provider ID not found",
             HttpStatus.NOT_FOUND);
       }
     } else {
