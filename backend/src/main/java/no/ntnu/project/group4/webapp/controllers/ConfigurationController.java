@@ -29,7 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
  * <p>All HTTP requests affiliated with configurations are handled in this class.</p>
  *
  * @author Group 4
- * @version v1.1 (2024.05.15)
+ * @version v1.2 (2024.05.18)
  */
 @CrossOrigin
 @RestController
@@ -86,11 +86,11 @@ public class ConfigurationController {
 
   /**
    * Returns a response to the request of adding the specified configuration to the car with the
-   * specified ID.
+   * specified car ID.
    *
    * <p>The response body contains a string that is empty or contains an error message.</p>
    *
-   * @param id            The specified ID
+   * @param carId         The specified car ID
    * @param configuration The specified configuration
    * @return <p>201 CREATED on success</p>
    * <p>400 BAD REQUEST on error</p>
@@ -100,21 +100,21 @@ public class ConfigurationController {
    */
   @Operation(
       summary = "Add configuration",
-      description = "Adds the specified configuration to the car with the specified ID")
+      description = "Adds the specified configuration to the car with the specified car ID")
   @ApiResponses(value = {
       @ApiResponse(responseCode = "201", description = "Configuration added"),
       @ApiResponse(responseCode = "400", description = "Error adding configuration"),
       @ApiResponse(responseCode = "401", description = "Only authenticated users have access to add configurations"),
       @ApiResponse(responseCode = "403", description = "Only admin users have access to add configurations"),
-      @ApiResponse(responseCode = "404", description = "Car with specified ID not found")
+      @ApiResponse(responseCode = "404", description = "Car with specified car ID not found")
   })
-  @PostMapping("/cars/{id}")
-  public ResponseEntity<String> add(@PathVariable Long id,
+  @PostMapping("/{carId}")
+  public ResponseEntity<String> add(@PathVariable Long carId,
                                     @RequestBody Configuration configuration) {
     ResponseEntity<String> response;
     User sessionUser = this.userService.getSessionUser();
     if (sessionUser != null && sessionUser.isAdmin()) {
-      Optional<Car> car = this.carService.getOne(id);
+      Optional<Car> car = this.carService.getOne(carId);
       if (car.isPresent()) {
         configuration.setCar(car.get());
         try {

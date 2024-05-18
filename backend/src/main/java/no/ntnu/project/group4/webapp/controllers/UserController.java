@@ -159,7 +159,7 @@ public class UserController {
     @ApiResponse(responseCode = "404", description = "User with specified email not found"),
     @ApiResponse(responseCode = "500", description = "Could not update user data")
   })
-  @PutMapping("/user/{email}")
+  @PutMapping("/{email}")
   public ResponseEntity<?> update(@PathVariable String email, @RequestBody UserDto userData) {
     ResponseEntity<?> response;
     User sessionUser = this.accessUserService.getSessionUser();

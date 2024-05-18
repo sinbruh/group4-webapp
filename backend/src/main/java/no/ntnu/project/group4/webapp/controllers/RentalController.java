@@ -119,12 +119,13 @@ public class RentalController {
 
   /**
    * Returns a response to the request of adding the specified rental to the user with the
-   * specified email and the configuration with the specified ID.
+   * specified email and the configuration with the specified configuration ID.
    *
    * <p>The response body contains a string that is empty or contains an error message.</p>
    *
-   * @param id     The specified ID
-   * @param rental The specified rental
+   * @param email    The specified email
+   * @param configId The specified configuration ID
+   * @param rental   The specified rental
    * @return <p>201 CREATED on success</p>
    * <p>400 BAD REQUEST on error</p>
    * <p>401 UNAUTHORIZED if user is not authenticated</p>
@@ -134,22 +135,22 @@ public class RentalController {
   @Operation(
       summary = "Add rental",
       description = "Adds the specified rental to the user with the specified email and the " +
-          "configuration with the specified ID")
+          "configuration with the specified configuration ID")
   @ApiResponses(value = {
       @ApiResponse(responseCode = "201", description = "Rental added"),
       @ApiResponse(responseCode = "400", description = "Error adding rental"),
       @ApiResponse(responseCode = "401", description = "Only authenticated users have access to add rentals"),
       @ApiResponse(responseCode = "403", description = "Users do not have access to add rental data of other users"),
-      @ApiResponse(responseCode = "404", description = "User with specified email not found or Configuration with specified ID not found")
+      @ApiResponse(responseCode = "404", description = "User with specified email not found or configuration with specified configuration ID not found")
   })
-  @PostMapping("/users/{email}/configurations/{id}")
-  public ResponseEntity<String> add(@PathVariable String email, @PathVariable Long id,
+  @PostMapping("/{email}/{configId}")
+  public ResponseEntity<String> add(@PathVariable String email, @PathVariable Long configId,
                                     @RequestBody Rental rental) {
     ResponseEntity<String> response;
     User sessionUser = this.accessUserService.getSessionUser();
     if (sessionUser != null) {
       Optional<User> user = this.userService.getOneByEmail(email);
-      Optional<Configuration> configuration = this.configurationService.getOne(id);
+      Optional<Configuration> configuration = this.configurationService.getOne(configId);
       if (user.isPresent() && configuration.isPresent()) {
         if (sessionUser.getEmail().equals(user.get().getEmail()) || sessionUser.isAdmin()) {
           rental.setUser(user.get());

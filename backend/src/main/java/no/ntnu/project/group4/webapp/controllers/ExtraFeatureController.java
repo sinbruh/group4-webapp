@@ -29,7 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
  * <p>All HTTP requests affiliated with extra features are handeld in this class.</p>
  *
  * @author Group 4
- * @version v1.1 (2024.05.15)
+ * @version v1.2 (2024.05.18)
  */
 @CrossOrigin
 @RestController
@@ -86,11 +86,11 @@ public class ExtraFeatureController {
 
   /**
    * Returns a response to the request of adding the specified extra feature to the configuration
-   * with the specified ID.
+   * with the specified configuration ID.
    *
    * <p>The response body contains a string that is empty or contains an error message.</p>
    *
-   * @param id           The specified ID
+   * @param configId     The specified configuration ID
    * @param extraFeature The specified extra feature
    * @return <p>201 CREATED on success</p>
    * <p>400 BAD REQUEST on error</p>
@@ -100,7 +100,7 @@ public class ExtraFeatureController {
    */
   @Operation(
       summary = "Add extra feature",
-      description = "Adds the specified extra feature to the configuration with the specified ID")
+      description = "Adds the specified extra feature to the configuration with the specified configuration ID")
   @ApiResponses(value = {
       @ApiResponse(responseCode = "201", description = "Extra feature added"),
       @ApiResponse(responseCode = "400", description = "Error adding extra feature"),
@@ -110,15 +110,15 @@ public class ExtraFeatureController {
       @ApiResponse(responseCode = "403", description =
           "Only admin users have access to add extra " +
               "features"),
-      @ApiResponse(responseCode = "404", description = "Configuration with specified ID not found")
+      @ApiResponse(responseCode = "404", description = "Configuration with specified configuration ID not found")
   })
-  @PostMapping("/configurations/{id}")
-  public ResponseEntity<String> add(@PathVariable Long id,
+  @PostMapping("/{configId}")
+  public ResponseEntity<String> add(@PathVariable Long configId,
                                     @RequestBody ExtraFeature extraFeature) {
     ResponseEntity<String> response;
     User sessionUser = this.userService.getSessionUser();
     if (sessionUser != null && sessionUser.isAdmin()) {
-      Optional<Configuration> configuration = this.configurationService.getOne(id);
+      Optional<Configuration> configuration = this.configurationService.getOne(configId);
       if (configuration.isPresent()) {
         extraFeature.setConfiguration(configuration.get());
         try {
