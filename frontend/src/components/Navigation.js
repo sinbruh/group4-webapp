@@ -52,11 +52,15 @@ export function Navigation() {
                     <Link href="contact" className="p-2 rounded hover:bg-[#F1F5F9] font-bold">Contact</Link>
                 </p>
             </nav>
-            {/* User icon */}
+            {/* User icon logic */}
             {isUser && <button onClick={handleLogout}>Logout</button>}
             {!(isUser || isAdmin) && <LoginModal/>}
             {isUser && <Button variant="ghost" size="icon">
-                <Image src={userIcon} alt="User icon" width={32} height={32} />
+                <Link href={"/profile"}>
+                    <a>
+                        <Image src={userIcon} alt="User icon" width={32} height={32} />
+                    </a>
+                </Link>
             </Button>}
         </div>
     )
