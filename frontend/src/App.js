@@ -5,6 +5,7 @@ import Contact from './Contact';
 import Index from './Index';
 import Search from './Search';
 import ProfileIcon from './ProfileIcon';
+import UserPage from './UserPage';
 
 function App() {
 
@@ -15,6 +16,7 @@ function App() {
                 <Route path="/about" component={About} />
                 <Route path="/contact" component={Contact} />
                 <Route path="/search" component={Search} />
+                <Route path="/userpage" component={UserPage} />
                 <Route path="/" component={Index} />
             </Switch>
         </Router>
