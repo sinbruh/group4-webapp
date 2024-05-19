@@ -73,13 +73,17 @@ public class ProviderService {
    *                                  response)
    */
   public void update(Long id, Provider provider) {
-    Optional<Provider> existingprovider = this.providerRepository.findById(id);
-    if (existingprovider.isEmpty()) {
+    Optional<Provider> existingProvider = this.providerRepository.findById(id);
+    if (!existingProvider.isPresent()) {
       throw new IllegalArgumentException("Provider not found");
     }
     if (!provider.isValid()) {
       throw new IllegalArgumentException("Provider is invalid");
     }
-    this.providerRepository.save(provider);
+    Provider existingProviderObj = existingProvider.get();
+    existingProviderObj.setName(provider.getName());
+    existingProviderObj.setPrice(provider.getPrice());
+    existingProviderObj.setLocation(provider.getLocation());
+    this.providerRepository.save(existingProviderObj);
   }
 }

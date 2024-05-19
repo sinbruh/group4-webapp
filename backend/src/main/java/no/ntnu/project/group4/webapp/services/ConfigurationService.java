@@ -67,19 +67,24 @@ public class ConfigurationService {
    * of the configuration must match the specified ID.
    * 
    * @param id The specified ID
-   * @param configuration The specified configuration
+   * @param config The specified configuration
    * @throws IllegalArgumentException If the existing configuration was not found or any of the
    *                                  specified data is wrong (error message can be used in HTTP
    *                                  response)
    */
-  public void update(Long id, Configuration configuration) {
-    Optional<Configuration> existingConfiguration = this.configurationRepository.findById(id);
-    if (existingConfiguration.isEmpty()) {
+  public void update(Long id, Configuration config) {
+    Optional<Configuration> existingConfig = this.configurationRepository.findById(id);
+    if (!existingConfig.isPresent()) {
       throw new IllegalArgumentException("Configuration not found");
     }
-    if (!configuration.isValid()) {
+    if (!config.isValid()) {
       throw new IllegalArgumentException("Configuration is invalid");
     }
-    this.configurationRepository.save(configuration);
+    Configuration existingConfigObj = existingConfig.get();
+    existingConfigObj.setName(config.getName());
+    existingConfigObj.setFuelType(config.getFuelType());
+    existingConfigObj.setTransmissionType(config.getTranmissionType());
+    existingConfigObj.setNumberOfSeats(config.getNumberOfSeats());
+    this.configurationRepository.save(existingConfigObj);
   }
 }

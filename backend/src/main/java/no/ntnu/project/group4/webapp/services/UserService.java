@@ -80,13 +80,20 @@ public class UserService {
    *                                  has an ID mismatch or is invalid
    */
   public void update(Long id, User user) {
-    Optional<User> currentUser = this.userRepository.findById(id);
-    if (!currentUser.isPresent()) {
+    Optional<User> existingUser = this.userRepository.findById(id);
+    if (!existingUser.isPresent()) {
       throw new IllegalArgumentException("User not found");
     }
     if (!user.isValid()) {
       throw new IllegalArgumentException("User is invalid");
     }
-    this.userRepository.save(user);
+    User existingUserObj = existingUser.get();
+    existingUserObj.setFirstName(user.getFirstName());
+    existingUserObj.setLastName(user.getLastName());
+    existingUserObj.setEmail(user.getEmail());
+    existingUserObj.setPhoneNumber(user.getPhoneNumber());
+    existingUserObj.setPassword(user.getPassword());
+    existingUserObj.setDateOfBirth(user.getDateOfBirth());
+    this.userRepository.save(existingUserObj);
   }
 }

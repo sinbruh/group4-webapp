@@ -73,13 +73,15 @@ public class ExtraFeatureService {
    *                                  response)
    */
   public void update(Long id, ExtraFeature extraFeature) {
-    Optional<ExtraFeature> existingextraFeature = this.extraFeatureRepository.findById(id);
-    if (existingextraFeature.isEmpty()) {
+    Optional<ExtraFeature> existingExtraFeature = this.extraFeatureRepository.findById(id);
+    if (!existingExtraFeature.isPresent()) {
       throw new IllegalArgumentException("Extra feature not found");
     }
     if (!extraFeature.isValid()) {
       throw new IllegalArgumentException("Extra feature is invalid");
     }
-    this.extraFeatureRepository.save(extraFeature);
+    ExtraFeature existingExtraFeatureObj = existingExtraFeature.get();
+    existingExtraFeatureObj.setName(extraFeature.getName());
+    this.extraFeatureRepository.save(existingExtraFeatureObj);
   }
 }

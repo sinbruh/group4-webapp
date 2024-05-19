@@ -70,13 +70,16 @@ public class RentalService {
    *                                  metadata has an ID mismatch or is invalid
    */
   public void update(Long id, Rental rental) {
-    Optional<Rental> currentRental = this.rentalRepository.findById(id);
-    if (!currentRental.isPresent()) {
+    Optional<Rental> existingRental = this.rentalRepository.findById(id);
+    if (!existingRental.isPresent()) {
       throw new IllegalArgumentException("Rental not found");
     }
     if (!rental.isValid()) {
       throw new IllegalArgumentException("Rental is invalid");
     }
-    this.rentalRepository.save(rental);
+    Rental existingRentalObj = existingRental.get();
+    existingRentalObj.setStartDate(rental.getStartDate());
+    existingRentalObj.setEndDate(rental.getEndDate());
+    this.rentalRepository.save(existingRentalObj);
   }
 }

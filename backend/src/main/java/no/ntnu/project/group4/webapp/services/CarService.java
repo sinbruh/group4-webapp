@@ -71,13 +71,17 @@ public class CarService {
    *                                  data is wrong (error message can be used in HTTP response)
    */
   public void update(Long id, Car car) {
-    Optional<Car> existingcar = this.carRepository.findById(id);
-    if (existingcar.isEmpty()) {
+    Optional<Car> existingCar = this.carRepository.findById(id);
+    if (!existingCar.isPresent()) {
       throw new IllegalArgumentException("Car not found");
     }
     if (!car.isValid()) {
       throw new IllegalArgumentException("Car is invalid");
     }
-    this.carRepository.save(car);
+    Car existingCarObj = existingCar.get();
+    existingCarObj.setMake(car.getMake());
+    existingCarObj.setModel(car.getModel());
+    existingCarObj.setYear(car.getYear());
+    this.carRepository.save(existingCarObj);
   }
 }
