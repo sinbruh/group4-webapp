@@ -4,7 +4,7 @@ import Link from "next/link";
 import logo from "/public/temp-logo-low.webp";
 import Image from "next/image";
 import LoginModal from "@/components/modal/LoginModal.jsx";
-import {deleteAuthorizationCookies, isAdmin, isUser} from "@/tools/authentication";
+import {deleteAuthorizationCookies, getAuthenticatedUser, isAdmin, isUser} from "@/tools/authentication";
 import {getCookie} from "@/tools/cookies";
 import userIcon from "@/img/icons/person.svg";
 import {Button} from "@/components/ui/button";
@@ -14,9 +14,11 @@ export function Navigation() {
     const [isAdmin, setIsAdmin] = useState(false)
 
     useEffect(() => {
-        const currentUserRoles = getCookie("current_user_roles");
-        setIsUser(currentUserRoles.includes("ROLE_USER"));
-        setIsAdmin(currentUserRoles.includes("ROLE_ADMIN"));
+        const user = getAuthenticatedUser();
+        if (user) {
+            setIsUser(user.roles.includes("ROLE_USER"));
+            setIsAdmin(user.roles.includes("ROLE_ADMIN"));
+        }
     }, []);
 
     const handleLogout = () => {
