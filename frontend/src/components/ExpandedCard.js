@@ -88,6 +88,14 @@ const expandedCard = ({ carInfo, dates }) => {
                                 <div className="text-red-500 font-bold flex gap-2 items-center"><Image src={closeIcon} width={32} height={32} /> Unavailable </div>}
                             <p>Price: {carInfo.price} NOK/day</p>
                             <p>Location: {carInfo.location}</p>
+                            <p>Provider: {carInfo.provider[0].name}</p>
+                            <p>Extra Features: </p>
+                            <p>{carInfo.configurations[0].extraFeatures && carInfo.configurations[0].extraFeatures[0] && carInfo.configurations[0].extraFeatures[0].name}</p>
+                            <p>{carInfo.configurations[0].extraFeatures && carInfo.configurations[0].extraFeatures[1] && carInfo.configurations[0].extraFeatures[1].name}</p>
+                            <p>{carInfo.configurations[0].extraFeatures && carInfo.configurations[0].extraFeatures[2] && carInfo.configurations[0].extraFeatures[2].name}</p>
+                            <p>{carInfo.configurations[0].extraFeatures && carInfo.configurations[0].extraFeatures[3] && carInfo.configurations[0].extraFeatures[3].name}</p>
+                            <p>{carInfo.configurations[0].extraFeatures && carInfo.configurations[0].extraFeatures[4] && carInfo.configurations[0].extraFeatures[4].name}</p>
+                            
                         </CardContent>
                         <CardFooter className="flex flex-row">
                             <div className="flex gap-2">
@@ -99,7 +107,7 @@ const expandedCard = ({ carInfo, dates }) => {
                         <CardFooter>
                             <div className="flex gap-5">
                                 <button onClick={handleClick} className="bg-[#326D0D] text-white font-bold py-2 px-4 rounded">Book now</button>
-                                <PriceSelector providers={carInfo.providers} onValueChange={handlePriceChange} />
+                                
                             </div>
                         </CardFooter>
                     </div>

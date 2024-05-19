@@ -55,14 +55,14 @@ export default function CarReader({ location, dates, price, setExpandedCarInfo }
         <div>
             <div id="cards">
                 {cars
-                    .filter(car => {
-                        const prices = car.configurations[0].providers.map(provider => provider.price);
-                        const lowestPrice = Math.min(...prices);
+                    .flatMap(car => car.configurations[0].providers.map(provider => ({...car, provider})))
+                    .filter(({provider}) => {
+                        const lowestPrice = provider.price;
                         const fromPriceNumber = Number(price.min);
                         const toPriceNumber = Number(price.max);
-                        const carLocationLowercase = car.configurations[0].providers[0].location.toLowerCase();
+                        const carLocationLowercase = provider.location.toLowerCase();
                         const locationLowercase = location.toLowerCase();
-                        const carAvailability = car.configurations[0].available;
+                        const carAvailability = provider.available;
 
 
 
@@ -76,10 +76,11 @@ export default function CarReader({ location, dates, price, setExpandedCarInfo }
                         }
                         return false;
                     })
-                    .map(car => {
-                        const carImageName = car.configurations[0].img || 'default.jpg';
-
-                        const rentals = car.configurations[0].providers[0].rentals;
+                    .map(({configurations, provider, make, model}) => {
+                        const carImageName = configurations[0].img || 'default.jpg';
+                        
+                        
+                        const rentals = configurations[0].providers[0].rentals;
                         const isAvailable = rentals.every(rental => {
                             const rentalStartDate = new Date(rental.startDate);
                             const rentalEndDate = new Date(rental.endDate);
@@ -87,22 +88,23 @@ export default function CarReader({ location, dates, price, setExpandedCarInfo }
                         });
 
                         const carInfo = {
-                            key : car.id,
-                            configId : car.configurations[0].id,
+                            configId : configurations[0].id,
                             carImageInput : carImageName,
-                            carName : `${car.make} ${car.model}`,
-                            price : Math.min(...car.configurations[0].providers.map(provider => provider.price)),
-                            location : car.configurations[0].location,
-                            size : car.configurations[0].numberOfSeats,
-                            fuelType : car.configurations[0].fuelType,
-                            transmission : car.configurations[0].tranmissionType,
-                            description : car.description,
+                            carName : `${make} ${model}`,
+                            price : provider.price,
+                            location : provider.location,
+                            size : configurations[0].numberOfSeats,
+                            fuelType : configurations[0].fuelType,
+                            transmission : configurations[0].tranmissionType,
                             availability : isAvailable,
-                            providers : car.configurations[0].providers,
+                            provider : [provider],
+                            configurations: configurations
                         }
 
+                        console.log("Car Info: ", carInfo);
+
                         return (
-                        <CarCard carInfo={carInfo} setExpandedCarInfo={setExpandedCarInfo}/>
+                        <CarCard key={provider.id} carInfo={carInfo} setExpandedCarInfo={setExpandedCarInfo}/>
                     );
                 })
             }
