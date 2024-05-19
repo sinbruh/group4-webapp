@@ -56,6 +56,7 @@ export default function LoginModalClient() {
         console.log(user.email + " has logged in");
 
         setOpen(false);
+        location.reload();
     }
 
     function onFailedLogin() {
