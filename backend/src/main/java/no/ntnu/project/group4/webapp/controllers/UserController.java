@@ -34,7 +34,7 @@ import org.springframework.web.bind.annotation.RestController;
  * <p>All HTTP requests affiliated with users are handled in this class.</p>
  *
  * @author Group 4
- * @version v1.2 (2024.05.15)
+ * @version v1.3 (2024.05.19)
  */
 @CrossOrigin
 @RestController
@@ -218,7 +218,7 @@ public class UserController {
     @ApiResponse(responseCode = "403", description = "Users do not have access to update user password of other users"),
     @ApiResponse(responseCode = "404", description = "User with specified email not found")
   })
-  @PutMapping("/password/{email}")
+  @PutMapping("/{email}/password")
   public ResponseEntity<String> updatePassword(@PathVariable String email,
                                                @RequestBody String password) {
     ResponseEntity<String> response;
@@ -327,7 +327,7 @@ public class UserController {
                  description = "Could not favorite configuration with specified configuration ID"
     )
   })
-  @PutMapping("/{configId}")
+  @PutMapping("/favorite/{configId}")
   public ResponseEntity<String> toggleFavorite(@PathVariable Long configId) {
     ResponseEntity<String> response;
     User sessionUser = this.accessUserService.getSessionUser();

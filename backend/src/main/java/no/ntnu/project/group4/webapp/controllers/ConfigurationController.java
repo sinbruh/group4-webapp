@@ -29,7 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
  * <p>All HTTP requests affiliated with configurations are handled in this class.</p>
  *
  * @author Group 4
- * @version v1.3 (2024.05.19)
+ * @version v1.5 (2024.05.19)
  */
 @CrossOrigin
 @RestController
@@ -153,6 +153,7 @@ public class ConfigurationController {
    *         <p>400 BAD REQUEST on error</p>
    *         <p>401 UNAUTHORIZED if user is not authorized</p>
    *         <p>403 FORBIDDEN if user is not admin</p>
+   *         <p>404 NOT FOUND if configuration is not found</p>
    */
   @Operation(
     summary = "Update configuration",
@@ -175,6 +176,10 @@ public class ConfigurationController {
     @ApiResponse(
       responseCode = "403",
       description = "Only admin users have access to add configurations"
+    ),
+    @ApiResponse(
+      responseCode = "404",
+      description = "Configuration with specified ID not found"
     )
   })
   @PutMapping("/{id}")
@@ -184,8 +189,12 @@ public class ConfigurationController {
     User sessionUser = this.userService.getSessionUser();
     if (sessionUser != null && sessionUser.isAdmin()) {
       try {
-        this.configurationService.update(id, configuration);
-        response = new ResponseEntity<>("", HttpStatus.OK);
+        if (this.configurationService.update(id, configuration)) {
+          response = new ResponseEntity<>("", HttpStatus.OK);
+        } else {
+          response = new ResponseEntity<>("Configuration with specified ID not found",
+                                          HttpStatus.NOT_FOUND);
+        }
       } catch (IllegalArgumentException e) {
         response = new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
       }
@@ -206,9 +215,9 @@ public class ConfigurationController {
    *
    * @param id The specified ID
    * @return <p>200 OK on success</p>
-   * <p>401 UNAUTHORIZED if user is not authenticated</p>
-   * <p>403 FORBIDDEN if user is not admin</p>
-   * <p>404 NOT FOUND if configuration is not found</p>
+   *         <p>401 UNAUTHORIZED if user is not authenticated</p>
+   *         <p>403 FORBIDDEN if user is not admin</p>
+   *         <p>404 NOT FOUND if configuration is not found</p>
    */
   @Operation(
       summary = "Delete configuration",
@@ -224,94 +233,18 @@ public class ConfigurationController {
     ResponseEntity<String> response;
     User sessionUser = this.userService.getSessionUser();
     if (sessionUser != null && sessionUser.isAdmin()) {
-      Optional<Configuration> configuration = this.configurationService.getOne(id);
-      if (configuration.isPresent()) {
-        this.configurationService.delete(id);
+      if (this.configurationService.delete(id)) {
         response = new ResponseEntity<>("", HttpStatus.OK);
-      } else {
-        response = new ResponseEntity<>("Configuration with specified ID not found",
-            HttpStatus.NOT_FOUND);
-      }
-    } else if (sessionUser == null) {
-      response = new ResponseEntity<>("Only authenticated users have access to delete " +
-          "configurations", HttpStatus.UNAUTHORIZED);
-    } else {
-      response = new ResponseEntity<>("Only admin users have access to delete configurations",
-          HttpStatus.FORBIDDEN);
-    }
-    return response;
-  }
-
-  /**
-   * Returns a HTTP response to the request requesting to toggle visibility for the configuration
-   * with the specified ID.
-   * 
-   * <p>The response body contains an empty string on success or a string with an error message on
-   * error.</p>
-   * 
-   * @param id The specified ID
-   * @return <p>200 OK on success</p>
-   *         <p>401 UNAUTHORIZED if user is not authorized</p>
-   *         <p>403 FORBIDDEN if user is not admin</p>
-   *         <p>404 NOT FOUND if configuration with specified ID is not found</p>
-   *         <p>500 INTERNAL SERVER ERROR if an error occurs when updating configuration</p>
-   */
-  @Operation(
-    summary = "Toggle visibility of configuration",
-    description = "Toggles visibility for the configuration with the specified ID"
-  )
-  @ApiResponses(value = {
-    @ApiResponse(
-      responseCode = "200",
-      description = "Visibility toggled for configuration"
-    ),
-    @ApiResponse(
-      responseCode = "401",
-      description = "Only authenticated users have access to add configurations"
-    ),
-    @ApiResponse(
-      responseCode = "403",
-      description = "Only admin users have access to add configurations"
-    ),
-    @ApiResponse(
-      responseCode = "404",
-      description = "Configuration with specified ID not found"
-    ),
-    @ApiResponse(
-      responseCode = "500",
-      description = "Could not toggle visibility for configuration with specified ID"
-    )
-  })
-  @PutMapping("visibility/{id}")
-  public ResponseEntity<String> toggleVisibility(@PathVariable Long id) {
-    ResponseEntity<String> response;
-    User sessionUser = this.userService.getSessionUser();
-    if (sessionUser != null && sessionUser.isAdmin()) {
-      Optional<Configuration> config = this.configurationService.getOne(id);
-      if (config.isPresent()) {
-        Configuration foundConfig = config.get();
-        if (!foundConfig.isVisible()) {
-          foundConfig.setVisible(true);
-        } else {
-          foundConfig.setVisible(false);
-        }
-        try {
-          this.configurationService.update(id, foundConfig);
-          response = new ResponseEntity<>("", HttpStatus.OK);
-        } catch (IllegalArgumentException e) {
-          response = new ResponseEntity<>("Could not toggle visibility for configuration with " +
-                                          "specified ID", HttpStatus.INTERNAL_SERVER_ERROR);
-        }
       } else {
         response = new ResponseEntity<>("Configuration with specified ID not found",
                                         HttpStatus.NOT_FOUND);
       }
     } else if (sessionUser == null) {
-      response = new ResponseEntity<>("Only authenticated users have access to toggle " +
-                                      "visibility for configurations", HttpStatus.UNAUTHORIZED);
+      response = new ResponseEntity<>("Only authenticated users have access to delete " +
+                                      "configurations", HttpStatus.UNAUTHORIZED);
     } else {
-      response = new ResponseEntity<>("Only admin users have access to toggle visibility for " +
-                                      "configurations", HttpStatus.FORBIDDEN);
+      response = new ResponseEntity<>("Only admin users have access to delete configurations",
+                                      HttpStatus.FORBIDDEN);
     }
     return response;
   }

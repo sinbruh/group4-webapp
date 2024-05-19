@@ -72,19 +72,19 @@ public class ConfigurationService {
    *                                  specified data is wrong (error message can be used in HTTP
    *                                  response)
    */
-  public void update(Long id, Configuration config) {
+  public boolean update(Long id, Configuration config) {
     Optional<Configuration> existingConfig = this.configurationRepository.findById(id);
-    if (!existingConfig.isPresent()) {
-      throw new IllegalArgumentException("Configuration not found");
-    }
     if (!config.isValid()) {
       throw new IllegalArgumentException("Configuration is invalid");
     }
-    Configuration existingConfigObj = existingConfig.get();
-    existingConfigObj.setName(config.getName());
-    existingConfigObj.setFuelType(config.getFuelType());
-    existingConfigObj.setTransmissionType(config.getTranmissionType());
-    existingConfigObj.setNumberOfSeats(config.getNumberOfSeats());
-    this.configurationRepository.save(existingConfigObj);
+    if (existingConfig.isPresent()) {
+      Configuration existingConfigObj = existingConfig.get();
+      existingConfigObj.setName(config.getName());
+      existingConfigObj.setFuelType(config.getFuelType());
+      existingConfigObj.setTransmissionType(config.getTranmissionType());
+      existingConfigObj.setNumberOfSeats(config.getNumberOfSeats());
+      this.configurationRepository.save(existingConfigObj);
+    }
+    return existingConfig.isPresent();
   }
 }
