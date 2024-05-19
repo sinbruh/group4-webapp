@@ -77,9 +77,6 @@ public class ProviderService {
     if (existingprovider.isEmpty()) {
       throw new IllegalArgumentException("Provider not found");
     }
-    if (provider.getId() != id) {
-      throw new IllegalArgumentException("ID mismatch");
-    }
     if (!provider.isValid()) {
       throw new IllegalArgumentException("Provider is invalid");
     }

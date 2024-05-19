@@ -74,9 +74,6 @@ public class RentalService {
     if (!currentRental.isPresent()) {
       throw new IllegalArgumentException("Rental not found");
     }
-    if (rental.getId() != id) {
-      throw new IllegalArgumentException("ID mismatch");
-    }
     if (!rental.isValid()) {
       throw new IllegalArgumentException("Rental is invalid");
     }

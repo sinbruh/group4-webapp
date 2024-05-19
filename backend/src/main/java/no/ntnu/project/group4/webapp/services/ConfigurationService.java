@@ -77,9 +77,6 @@ public class ConfigurationService {
     if (existingConfiguration.isEmpty()) {
       throw new IllegalArgumentException("Configuration not found");
     }
-    if (configuration.getId() != id) {
-      throw new IllegalArgumentException("ID mismatch");
-    }
     if (!configuration.isValid()) {
       throw new IllegalArgumentException("Configuration is invalid");
     }

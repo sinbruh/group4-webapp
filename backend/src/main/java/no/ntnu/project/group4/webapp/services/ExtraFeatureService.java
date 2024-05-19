@@ -77,9 +77,6 @@ public class ExtraFeatureService {
     if (existingextraFeature.isEmpty()) {
       throw new IllegalArgumentException("Extra feature not found");
     }
-    if (extraFeature.getId() != id) {
-      throw new IllegalArgumentException("ID mismatch");
-    }
     if (!extraFeature.isValid()) {
       throw new IllegalArgumentException("Extra feature is invalid");
     }

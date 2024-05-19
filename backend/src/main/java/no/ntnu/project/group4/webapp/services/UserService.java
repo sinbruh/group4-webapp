@@ -84,9 +84,6 @@ public class UserService {
     if (!currentUser.isPresent()) {
       throw new IllegalArgumentException("User not found");
     }
-    if (user.getId() != id) {
-      throw new IllegalArgumentException("ID mismatch");
-    }
     if (!user.isValid()) {
       throw new IllegalArgumentException("User is invalid");
     }
