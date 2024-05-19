@@ -81,8 +81,8 @@ public class CarController {
   /**
    * Returns a HTTP response to the request requesting to add the specified car.
    *
-   * <p>The response body contains the ID of the specified car on success or a string with an error
-   * message on error.</p>
+   * <p>The response body contains the generated ID of the specified car on success or a string
+   * with an error message on error.</p>
    *
    * @param car The specified car
    * @return <p>201 CREATED on success + ID</p>

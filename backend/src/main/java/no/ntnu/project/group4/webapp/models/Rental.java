@@ -3,7 +3,6 @@ package no.ntnu.project.group4.webapp.models;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.sql.Date;
-import java.sql.Time;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 

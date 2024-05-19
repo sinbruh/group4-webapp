@@ -29,7 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
  * <p>All HTTP requests affiliated with rentals are handled in this class.</p>
  *
  * @author Group 4
- * @version v1.2 (2024.05.18)
+ * @version v1.3 (2024.05.19)
  */
 @CrossOrigin
 @RestController
@@ -118,15 +118,16 @@ public class RentalController {
   }
 
   /**
-   * Returns a response to the request of adding the specified rental to the user with the
-   * specified email and the provider with the specified provider ID.
+   * Returns a HTTP response to the request requesting to add the specified rental to the user with
+   * the specified email and the provider with the specified provider ID.
    *
-   * <p>The response body contains a string that is empty or contains an error message.</p>
+   * <p>The response body contains the generated ID of the specified rental on success or a string
+   * with an error message on error.</p>
    *
-   * @param email The specified email
+   * @param email      The specified email
    * @param providerId The specified provider ID
    * @param rental The specified rental
-   * @return <p>201 CREATED on success</p>
+   * @return <p>201 CREATED on success + ID</p>
    *         <p>400 BAD REQUEST on error</p>
    *         <p>401 UNAUTHORIZED if user is not authenticated</p>
    *         <p>403 FORBIDDEN if user email does not match email of rental user</p>
@@ -137,16 +138,16 @@ public class RentalController {
       description = "Adds the specified rental to the user with the specified email and the " +
                     "provider with the specified provider ID")
   @ApiResponses(value = {
-      @ApiResponse(responseCode = "201", description = "Rental added"),
-      @ApiResponse(responseCode = "400", description = "Error adding rental"),
+      @ApiResponse(responseCode = "201", description = "ID of rental"),
+      @ApiResponse(responseCode = "400", description = "Error message"),
       @ApiResponse(responseCode = "401", description = "Only authenticated users have access to add rentals"),
       @ApiResponse(responseCode = "403", description = "Users do not have access to add rental data of other users"),
       @ApiResponse(responseCode = "404", description = "User with specified email not found or provider with specified provider ID not found")
   })
   @PostMapping("/{email}/{providerId}")
-  public ResponseEntity<String> add(@PathVariable String email, @PathVariable Long providerId,
+  public ResponseEntity<?> add(@PathVariable String email, @PathVariable Long providerId,
                                     @RequestBody Rental rental) {
-    ResponseEntity<String> response;
+    ResponseEntity<?> response;
     User sessionUser = this.accessUserService.getSessionUser();
     if (sessionUser != null) {
       Optional<User> user = this.userService.getOneByEmail(email);
@@ -157,9 +158,9 @@ public class RentalController {
           rental.setProvider(provider.get());
           try {
             this.rentalService.add(rental);
-            response = new ResponseEntity<>("Successfully rented car", HttpStatus.CREATED);
+            response = new ResponseEntity<>(rental.getId(), HttpStatus.CREATED);
           } catch (IllegalArgumentException e) {
-            response = new ResponseEntity<>("", HttpStatus.BAD_REQUEST);
+            response = new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
           }
         } else {
           response = new ResponseEntity<>("Users do not have access to add rental data of other " +

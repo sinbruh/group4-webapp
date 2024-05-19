@@ -29,7 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
  * <p>All HTTP requests affiliated with configurations are handled in this class.</p>
  *
  * @author Group 4
- * @version v1.2 (2024.05.18)
+ * @version v1.3 (2024.05.19)
  */
 @CrossOrigin
 @RestController
@@ -85,33 +85,34 @@ public class ConfigurationController {
   }
 
   /**
-   * Returns a response to the request of adding the specified configuration to the car with the
-   * specified car ID.
+   * Returns a HTTP response to the request requesting to add the specified configuration to the
+   * car with the specified car ID.
    *
-   * <p>The response body contains a string that is empty or contains an error message.</p>
+   * <p>The response body contains the generated ID of the specified configuration on success or a
+   * string with an error message on error.</p>
    *
    * @param carId         The specified car ID
    * @param configuration The specified configuration
-   * @return <p>201 CREATED on success</p>
-   * <p>400 BAD REQUEST on error</p>
-   * <p>401 UNAUTHORIZED if user is not authenticated</p>
-   * <p>403 FORBIDDEN if user is not admin</p>
-   * <p>404 NOT FOUND if car is not found</p>
+   * @return <p>201 CREATED on success + ID</p>
+   *         <p>400 BAD REQUEST on error</p>
+   *         <p>401 UNAUTHORIZED if user is not authenticated</p>
+   *         <p>403 FORBIDDEN if user is not admin</p>
+   *         <p>404 NOT FOUND if car is not found</p>
    */
   @Operation(
       summary = "Add configuration",
       description = "Adds the specified configuration to the car with the specified car ID")
   @ApiResponses(value = {
-      @ApiResponse(responseCode = "201", description = "Configuration added"),
-      @ApiResponse(responseCode = "400", description = "Error adding configuration"),
+      @ApiResponse(responseCode = "201", description = "ID of configuration"),
+      @ApiResponse(responseCode = "400", description = "Error message"),
       @ApiResponse(responseCode = "401", description = "Only authenticated users have access to add configurations"),
       @ApiResponse(responseCode = "403", description = "Only admin users have access to add configurations"),
       @ApiResponse(responseCode = "404", description = "Car with specified car ID not found")
   })
   @PostMapping("/{carId}")
-  public ResponseEntity<String> add(@PathVariable Long carId,
+  public ResponseEntity<?> add(@PathVariable Long carId,
                                     @RequestBody Configuration configuration) {
-    ResponseEntity<String> response;
+    ResponseEntity<?> response;
     User sessionUser = this.userService.getSessionUser();
     if (sessionUser != null && sessionUser.isAdmin()) {
       Optional<Car> car = this.carService.getOne(carId);
@@ -119,7 +120,7 @@ public class ConfigurationController {
         configuration.setCar(car.get());
         try {
           this.configurationService.add(configuration);
-          response = new ResponseEntity<>("", HttpStatus.CREATED);
+          response = new ResponseEntity<>(configuration.getId(), HttpStatus.CREATED);
         } catch (IllegalArgumentException e) {
           response = new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }

@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
  * <p>All HTTP requests affiliated with providers are handled in this class.</p>
  *
  * @author Group 4
- * @version v1.2 (2024.05.18)
+ * @version v1.3 (2024.05.19)
  */
 @CrossOrigin
 @RestController
@@ -84,33 +84,34 @@ public class ProviderController {
   }
 
   /**
-   * Returns a response to the request of adding the specified provider to the configuration with
-   * the specified configuration ID.
+   * Returns a HTTP response to the request requesting to add the specified provider to the
+   * configuration with the specified configuration ID.
    *
-   * <p>The response body contains a string that is empty or contains an error message.</p>
+   * <p>The response body contains the generated ID of the specified provider on success or a
+   * string with an error message on error.</p>
    *
    * @param configId The specified configuration ID
    * @param provider The specified provider
-   * @return <p>201 CREATED on success</p>
-   * <p>400 BAD REQUEST on error</p>
-   * <p>401 UNAUTHORIZED if user is not authenticated</p>
-   * <p>403 FORBIDDEN if user is not admin</p>
-   * <p>404 NOT FOUND if configuration is not found</p>
+   * @return <p>201 CREATED on success + ID</p>
+   *         <p>400 BAD REQUEST on error</p>
+   *         <p>401 UNAUTHORIZED if user is not authenticated</p>
+   *         <p>403 FORBIDDEN if user is not admin</p>
+   *         <p>404 NOT FOUND if configuration is not found</p>
    */
   @Operation(
       summary = "Add provider",
       description = "Adds the specified provider to the configuration with the specified configuration ID")
   @ApiResponses(value = {
-      @ApiResponse(responseCode = "201", description = "Provider was created"),
-      @ApiResponse(responseCode = "400", description = "Error adding provider"),
+      @ApiResponse(responseCode = "201", description = "ID of provider"),
+      @ApiResponse(responseCode = "400", description = "Error message"),
       @ApiResponse(responseCode = "401", description = "Only authenticated users have access to add providers"),
       @ApiResponse(responseCode = "403", description = "Only admin users have access to add providers"),
       @ApiResponse(responseCode = "404", description = "Configuration with specified configuration ID not found")
   })
   @PostMapping("/{configId}")
-  public ResponseEntity<String> add(@PathVariable Long configId,
+  public ResponseEntity<?> add(@PathVariable Long configId,
                                     @RequestBody Provider provider) {
-    ResponseEntity<String> response;
+    ResponseEntity<?> response;
     User sessionUser = this.userService.getSessionUser();
     if (sessionUser != null && sessionUser.isAdmin()) {
       Optional<Configuration> configuration = this.configurationService.getOne(configId);
@@ -118,7 +119,7 @@ public class ProviderController {
         provider.setConfiguration(configuration.get());
         try {
           this.providerService.add(provider);
-          response = new ResponseEntity<>("", HttpStatus.CREATED);
+          response = new ResponseEntity<>(provider.getId(), HttpStatus.CREATED);
         } catch (IllegalArgumentException e) {
           response = new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }

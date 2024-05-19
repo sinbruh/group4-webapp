@@ -17,7 +17,6 @@ import no.ntnu.project.group4.webapp.services.RentalService;
 import no.ntnu.project.group4.webapp.services.UserService;
 
 import java.sql.Date;
-import java.sql.Time;
 import java.util.Iterator;
 
 import org.slf4j.Logger;
