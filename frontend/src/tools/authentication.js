@@ -26,6 +26,10 @@ export function isAdmin(user) {
     return user && user.roles && user.roles.includes("ROLE_ADMIN");
 }
 
+export function isUser(user) {
+    return user && user.roles && user.roles.includes("ROLE_USER");
+}
+
 export async function sendAuthenticationRequest(
     email,
     password,

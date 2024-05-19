@@ -4,11 +4,14 @@ import Link from "next/link";
 import logo from "/public/temp-logo-low.webp";
 import Image from "next/image";
 import LoginModal from "@/components/modal/LoginModal.jsx";
+import {deleteAuthorizationCookies, isAdmin, isUser} from "@/tools/authentication";
+import {getCookie} from "@/tools/cookies";
 
 export function Navigation() {
 
-    let isLoginOpen, setIsLoginOpen;
-    [isLoginOpen, setIsLoginOpen] = useState(false);
+    const currentUserRoles = getCookie("current_user_roles");
+
+    const isUser = currentUserRoles.includes("ROLE_USER");
 
     return (
         <div id="nav-container" className=" p-2 bg-white min-h-16 flex items-center justify-between">
@@ -37,6 +40,8 @@ export function Navigation() {
                 </p>
             </nav>
             {/* User icon */}
+            {isUser && <button onClick={() => {deleteAuthorizationCookies(); location.reload();}}>Logout</button>}
+
             <LoginModal />
         </div>
     )
