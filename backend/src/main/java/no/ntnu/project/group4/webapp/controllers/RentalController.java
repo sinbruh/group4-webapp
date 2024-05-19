@@ -157,7 +157,7 @@ public class RentalController {
           rental.setProvider(provider.get());
           try {
             this.rentalService.add(rental);
-            response = new ResponseEntity<>("", HttpStatus.CREATED);
+            response = new ResponseEntity<>("Successfully rented car", HttpStatus.CREATED);
           } catch (IllegalArgumentException e) {
             response = new ResponseEntity<>("", HttpStatus.BAD_REQUEST);
           }

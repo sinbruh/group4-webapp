@@ -21,8 +21,6 @@ public class Rental {
   private Long id;
   private Date startDate;
   private Date endDate;
-  private Time startTime;
-  private Time endTime;
   @JsonIgnore
   @ManyToOne
   private Provider provider;
@@ -36,11 +34,10 @@ public class Rental {
   public Rental() {
   }
 
-  public Rental(Date startDate, Date endDate, Time startTime, Time endTime) {
+  public Rental(Date startDate, Date endDate) {
     this.startDate = startDate;
     this.endDate = endDate;
-    this.startTime = startTime;
-    this.endTime = endTime;
+
   }
 
   public Long getId() {
@@ -87,22 +84,6 @@ public class Rental {
     this.endDate = endDate;
   }
 
-  public Time getStartTime() {
-    return this.startTime;
-  }
-
-  public void setStartTime(Time startTime) {
-    this.startTime = startTime;
-  }
-
-  public Time getEndTime() {
-    return this.endTime;
-  }
-
-  public void setEndTime(Time endTime) {
-    this.endTime = endTime;
-  }
-
   /**
    * Getter for provider.
    * 
@@ -130,6 +111,6 @@ public class Rental {
   }
 
   public boolean isValid() {
-    return this.startTime != null && this.endTime != null;
+    return this.startDate != null && this.endDate != null;
   }
 }

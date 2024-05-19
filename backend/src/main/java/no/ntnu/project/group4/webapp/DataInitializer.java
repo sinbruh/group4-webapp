@@ -485,12 +485,12 @@ public class DataInitializer implements ApplicationListener<ApplicationReadyEven
     }
     this.logger.info("Loading rental data...");
     if (isEmpty) {
-      Rental rental1 = new Rental(new Date(1716163200000l), new Date(1747699200000l),
-                                  new Time(1716206400000l), new Time(1747742400000l));
-      Rental rental2 = new Rental(new Date(1716249600000l), new Date(1717459200000l),
-                                  new Time(1716300000000l), new Time(1717509600000l));
-      Rental rental3 = new Rental(new Date(1716336000000l), new Date(1716508800000l),
-                                  new Time(1716393600000l), new Time(1716566400000l));
+      Rental rental1 = new Rental(new Date(1716163200000l), new Date(1747699200000l));
+
+      Rental rental2 = new Rental(new Date(1716249600000l), new Date(1717459200000l));
+
+      Rental rental3 = new Rental(new Date(1716336000000l), new Date(1716508800000l));
+
 
       rental1.setUser(this.userService.getOneByEmail("johndoe@user.com").get());
       rental2.setUser(this.userService.getOneByEmail("janedoe@user.com").get());
