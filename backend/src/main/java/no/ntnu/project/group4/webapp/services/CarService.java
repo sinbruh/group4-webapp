@@ -70,18 +70,18 @@ public class CarService {
    * @throws IllegalArgumentException If the existing car was not found or any of the specified
    *                                  data is wrong (error message can be used in HTTP response)
    */
-  public void update(Long id, Car car) {
+  public boolean update(Long id, Car car) {
     Optional<Car> existingCar = this.carRepository.findById(id);
-    if (!existingCar.isPresent()) {
-      throw new IllegalArgumentException("Car not found");
-    }
     if (!car.isValid()) {
       throw new IllegalArgumentException("Car is invalid");
     }
-    Car existingCarObj = existingCar.get();
-    existingCarObj.setMake(car.getMake());
-    existingCarObj.setModel(car.getModel());
-    existingCarObj.setYear(car.getYear());
-    this.carRepository.save(existingCarObj);
+    if (existingCar.isPresent()) {
+      Car existingCarObj = existingCar.get();
+      existingCarObj.setMake(car.getMake());
+      existingCarObj.setModel(car.getModel());
+      existingCarObj.setYear(car.getYear());
+      this.carRepository.save(existingCarObj);
+    }
+    return existingCar.isPresent();
   }
 }

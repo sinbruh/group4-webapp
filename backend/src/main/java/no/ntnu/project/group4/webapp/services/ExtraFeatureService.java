@@ -72,16 +72,16 @@ public class ExtraFeatureService {
    *                                  specified data is wrong (error message can be used in HTTP
    *                                  response)
    */
-  public void update(Long id, ExtraFeature extraFeature) {
+  public boolean update(Long id, ExtraFeature extraFeature) {
     Optional<ExtraFeature> existingExtraFeature = this.extraFeatureRepository.findById(id);
-    if (!existingExtraFeature.isPresent()) {
-      throw new IllegalArgumentException("Extra feature not found");
-    }
     if (!extraFeature.isValid()) {
       throw new IllegalArgumentException("Extra feature is invalid");
     }
-    ExtraFeature existingExtraFeatureObj = existingExtraFeature.get();
-    existingExtraFeatureObj.setName(extraFeature.getName());
-    this.extraFeatureRepository.save(existingExtraFeatureObj);
+    if (existingExtraFeature.isPresent()) {
+      ExtraFeature existingExtraFeatureObj = existingExtraFeature.get();
+      existingExtraFeatureObj.setName(extraFeature.getName());
+      this.extraFeatureRepository.save(existingExtraFeatureObj);
+    }
+    return existingExtraFeature.isPresent();
   }
 }

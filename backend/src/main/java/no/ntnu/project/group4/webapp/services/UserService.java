@@ -79,21 +79,21 @@ public class UserService {
    * @throws IllegalArgumentException If the current user is not found or the updated user metadata
    *                                  has an ID mismatch or is invalid
    */
-  public void update(Long id, User user) {
+  public boolean update(Long id, User user) {
     Optional<User> existingUser = this.userRepository.findById(id);
-    if (!existingUser.isPresent()) {
-      throw new IllegalArgumentException("User not found");
-    }
     if (!user.isValid()) {
       throw new IllegalArgumentException("User is invalid");
     }
-    User existingUserObj = existingUser.get();
-    existingUserObj.setFirstName(user.getFirstName());
-    existingUserObj.setLastName(user.getLastName());
-    existingUserObj.setEmail(user.getEmail());
-    existingUserObj.setPhoneNumber(user.getPhoneNumber());
-    existingUserObj.setPassword(user.getPassword());
-    existingUserObj.setDateOfBirth(user.getDateOfBirth());
-    this.userRepository.save(existingUserObj);
+    if (existingUser.isPresent()) {
+      User existingUserObj = existingUser.get();
+      existingUserObj.setFirstName(user.getFirstName());
+      existingUserObj.setLastName(user.getLastName());
+      existingUserObj.setEmail(user.getEmail());
+      existingUserObj.setPhoneNumber(user.getPhoneNumber());
+      existingUserObj.setPassword(user.getPassword());
+      existingUserObj.setDateOfBirth(user.getDateOfBirth());
+      this.userRepository.save(existingUserObj);
+    }
+    return existingUser.isPresent();
   }
 }

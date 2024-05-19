@@ -72,18 +72,18 @@ public class ProviderService {
    *                                  specified data is wrong (error message can be used in HTTP
    *                                  response)
    */
-  public void update(Long id, Provider provider) {
+  public boolean update(Long id, Provider provider) {
     Optional<Provider> existingProvider = this.providerRepository.findById(id);
-    if (!existingProvider.isPresent()) {
-      throw new IllegalArgumentException("Provider not found");
-    }
     if (!provider.isValid()) {
       throw new IllegalArgumentException("Provider is invalid");
     }
-    Provider existingProviderObj = existingProvider.get();
-    existingProviderObj.setName(provider.getName());
-    existingProviderObj.setPrice(provider.getPrice());
-    existingProviderObj.setLocation(provider.getLocation());
-    this.providerRepository.save(existingProviderObj);
+    if (existingProvider.isPresent()) {
+      Provider existingProviderObj = existingProvider.get();
+      existingProviderObj.setName(provider.getName());
+      existingProviderObj.setPrice(provider.getPrice());
+      existingProviderObj.setLocation(provider.getLocation());
+      this.providerRepository.save(existingProviderObj);
+    }
+    return existingProvider.isPresent();
   }
 }

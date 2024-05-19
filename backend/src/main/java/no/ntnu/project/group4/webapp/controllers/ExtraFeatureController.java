@@ -29,7 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
  * <p>All HTTP requests affiliated with extra features are handeld in this class.</p>
  *
  * @author Group 4
- * @version v1.3 (2024.05.19)
+ * @version v1.4 (2024.05.19)
  */
 @CrossOrigin
 @RestController
@@ -158,6 +158,7 @@ public class ExtraFeatureController {
    *         <p>400 BAD REQUEST on error</p>
    *         <p>401 UNAUTHORIZED if user is not authorized</p>
    *         <p>403 FORBIDDEN if user is not admin</p>
+   *         <p>404 NOT FOUND is extra feature is not found</p>
    */
   @Operation(
     summary = "Update extra feature",
@@ -181,6 +182,10 @@ public class ExtraFeatureController {
       responseCode = "403",
       description = "Only admin users have access to add extra features"
     ),
+    @ApiResponse(
+      responseCode = "404",
+      description = "Extra feature with specified ID not found"
+    )
   })
   @PutMapping("/{id}")
   public ResponseEntity<String> update(@PathVariable Long id,
@@ -189,8 +194,12 @@ public class ExtraFeatureController {
     User sessionUser = this.userService.getSessionUser();
     if (sessionUser != null && sessionUser.isAdmin()) {
       try {
-        this.extraFeatureService.update(id, extraFeature);
-        response = new ResponseEntity<>("", HttpStatus.OK);
+        if (this.extraFeatureService.update(id, extraFeature)) {
+          response = new ResponseEntity<>("", HttpStatus.OK);
+        } else {
+          response = new ResponseEntity<>("Extra feature with specified ID not found",
+                                          HttpStatus.NOT_FOUND);
+        }
       } catch (IllegalArgumentException e) {
         response = new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
       }
@@ -211,9 +220,9 @@ public class ExtraFeatureController {
    *
    * @param id The specified ID
    * @return <p>200 OK on success</p>
-   * <p>401 UNAUTHORIZED if user is not authenticated</p>
-   * <p>403 FORBIDDEN if user is not admin</p>
-   * <p>404 NOT FOUND if extra feature is not found</p>
+   *         <p>401 UNAUTHORIZED if user is not authenticated</p>
+   *         <p>403 FORBIDDEN if user is not admin</p>
+   *         <p>404 NOT FOUND if extra feature is not found</p>
    */
   @Operation(
       summary = "Delete extra feature",
@@ -233,20 +242,18 @@ public class ExtraFeatureController {
     ResponseEntity<String> response;
     User sessionUser = this.userService.getSessionUser();
     if (sessionUser != null && sessionUser.isAdmin()) {
-      Optional<ExtraFeature> extraFeature = this.extraFeatureService.getOne(id);
-      if (extraFeature.isPresent()) {
-        this.extraFeatureService.delete(id);
+      if (this.extraFeatureService.delete(id)) {
         response = new ResponseEntity<>("", HttpStatus.OK);
       } else {
         response = new ResponseEntity<>("Extra feature with specified ID not found",
-            HttpStatus.NOT_FOUND);
+                                        HttpStatus.NOT_FOUND);
       }
     } else if (sessionUser == null) {
       response = new ResponseEntity<>("Only authenticated users have access to delete extra " +
-          "features", HttpStatus.UNAUTHORIZED);
+                                      "features", HttpStatus.UNAUTHORIZED);
     } else {
       response = new ResponseEntity<>("Only admin users have access to delete extra features",
-          HttpStatus.FORBIDDEN);
+                                      HttpStatus.FORBIDDEN);
     }
     return response;
   }

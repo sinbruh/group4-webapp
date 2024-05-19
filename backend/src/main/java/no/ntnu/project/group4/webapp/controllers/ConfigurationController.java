@@ -29,7 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
  * <p>All HTTP requests affiliated with configurations are handled in this class.</p>
  *
  * @author Group 4
- * @version v1.3 (2024.05.19)
+ * @version v1.4 (2024.05.19)
  */
 @CrossOrigin
 @RestController
@@ -153,6 +153,7 @@ public class ConfigurationController {
    *         <p>400 BAD REQUEST on error</p>
    *         <p>401 UNAUTHORIZED if user is not authorized</p>
    *         <p>403 FORBIDDEN if user is not admin</p>
+   *         <p>404 NOT FOUND if configuration is not found</p>
    */
   @Operation(
     summary = "Update configuration",
@@ -175,6 +176,10 @@ public class ConfigurationController {
     @ApiResponse(
       responseCode = "403",
       description = "Only admin users have access to add configurations"
+    ),
+    @ApiResponse(
+      responseCode = "404",
+      description = "Configuration with specified ID not found"
     )
   })
   @PutMapping("/{id}")
@@ -184,8 +189,12 @@ public class ConfigurationController {
     User sessionUser = this.userService.getSessionUser();
     if (sessionUser != null && sessionUser.isAdmin()) {
       try {
-        this.configurationService.update(id, configuration);
-        response = new ResponseEntity<>("", HttpStatus.OK);
+        if (this.configurationService.update(id, configuration)) {
+          response = new ResponseEntity<>("", HttpStatus.OK);
+        } else {
+          response = new ResponseEntity<>("Configuration with specified ID not found",
+                                          HttpStatus.NOT_FOUND);
+        }
       } catch (IllegalArgumentException e) {
         response = new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
       }
@@ -206,9 +215,9 @@ public class ConfigurationController {
    *
    * @param id The specified ID
    * @return <p>200 OK on success</p>
-   * <p>401 UNAUTHORIZED if user is not authenticated</p>
-   * <p>403 FORBIDDEN if user is not admin</p>
-   * <p>404 NOT FOUND if configuration is not found</p>
+   *         <p>401 UNAUTHORIZED if user is not authenticated</p>
+   *         <p>403 FORBIDDEN if user is not admin</p>
+   *         <p>404 NOT FOUND if configuration is not found</p>
    */
   @Operation(
       summary = "Delete configuration",
@@ -224,20 +233,18 @@ public class ConfigurationController {
     ResponseEntity<String> response;
     User sessionUser = this.userService.getSessionUser();
     if (sessionUser != null && sessionUser.isAdmin()) {
-      Optional<Configuration> configuration = this.configurationService.getOne(id);
-      if (configuration.isPresent()) {
-        this.configurationService.delete(id);
+      if (this.configurationService.delete(id)) {
         response = new ResponseEntity<>("", HttpStatus.OK);
       } else {
         response = new ResponseEntity<>("Configuration with specified ID not found",
-            HttpStatus.NOT_FOUND);
+                                        HttpStatus.NOT_FOUND);
       }
     } else if (sessionUser == null) {
       response = new ResponseEntity<>("Only authenticated users have access to delete " +
-          "configurations", HttpStatus.UNAUTHORIZED);
+                                      "configurations", HttpStatus.UNAUTHORIZED);
     } else {
       response = new ResponseEntity<>("Only admin users have access to delete configurations",
-          HttpStatus.FORBIDDEN);
+                                      HttpStatus.FORBIDDEN);
     }
     return response;
   }
