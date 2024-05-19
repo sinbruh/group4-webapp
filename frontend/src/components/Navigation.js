@@ -57,9 +57,7 @@ export function Navigation() {
             {!(isUser || isAdmin) && <LoginModal/>}
             {isUser && <Button variant="ghost" size="icon">
                 <Link href={"/profile"}>
-                    <a>
                         <Image src={userIcon} alt="User icon" width={32} height={32} />
-                    </a>
                 </Link>
             </Button>}
         </div>
