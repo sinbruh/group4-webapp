@@ -25,7 +25,6 @@ public class Configuration {
   private String fuelType;
   private String transmissionType;
   private int numberOfSeats;
-  private boolean visible = true;
   @JsonIgnore
   @ManyToOne
   private Car car;
@@ -87,24 +86,6 @@ public class Configuration {
 
   public void setNumberOfSeats(int numberOfSeats) {
     this.numberOfSeats = numberOfSeats;
-  }
-
-  /**
-   * Checks if configuration is visible.
-   * 
-   * @return True if configuration is visible or false otherwise
-   */
-  public boolean isVisible() {
-    return this.visible;
-  }
-
-  /**
-   * Setter for visibility.
-   * 
-   * @param visible The specified visibility
-   */
-  public void setVisible(boolean visible) {
-    this.visible = visible;
   }
 
   public Car getCar() {

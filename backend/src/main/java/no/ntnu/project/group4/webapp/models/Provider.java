@@ -23,6 +23,7 @@ public class Provider {
   private int price;
   private String location;
   private boolean available = true;
+  private boolean visible = true;
   @JsonIgnore
   @ManyToOne
   private Configuration configuration;
@@ -101,6 +102,24 @@ public class Provider {
     this.available = available;
   }
 
+  /**
+   * Checks if provider is visible.
+   * 
+   * @return True if provider is visible or false otherwise
+   */
+  public boolean isVisible() {
+    return this.visible;
+  }
+
+  /**
+   * Setter for visibility.
+   * 
+   * @param visible The specified visibility
+   */
+  public void setVisible(boolean visible) {
+    this.visible = visible;
+  }
+
   public Configuration getConfiguration() {
     return this.configuration;
   }
@@ -125,6 +144,28 @@ public class Provider {
    */
   public void setRentals(Set<Rental> rentals) {
     this.rentals = rentals;
+  }
+
+  /**
+   * Toggles the availability for the provider.
+   */
+  public void toggleAvailable() {
+    if (!this.available) {
+      this.available = true;
+    } else {
+      this.available = false;
+    }
+  }
+
+  /**
+   * Toggles the visibility for the provider.
+   */
+  public void toggleVisible() {
+    if (!this.visible) {
+      this.visible = true;
+    } else {
+      this.visible = false;
+    }
   }
 
   public boolean isValid() {
