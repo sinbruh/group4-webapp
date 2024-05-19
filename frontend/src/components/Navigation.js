@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import Link from "next/link";
 import logo from "/public/temp-logo-low.webp";
 import Image from "next/image";
@@ -8,10 +8,21 @@ import {deleteAuthorizationCookies, isAdmin, isUser} from "@/tools/authenticatio
 import {getCookie} from "@/tools/cookies";
 
 export function Navigation() {
+    const [isUser, setIsUser] = useState(false);
+    const [isAdmin, setIsAdmin] = useState(false)
 
-    const currentUserRoles = getCookie("current_user_roles");
+    useEffect(() => {
+        const currentUserRoles = getCookie("current_user_roles");
+        setIsUser(currentUserRoles.includes("ROLE_USER"));
+        setIsAdmin(currentUserRoles.includes("ROLE_ADMIN"));
+    }, []);
 
-    const isUser = currentUserRoles.includes("ROLE_USER");
+    const handleLogout = () => {
+        deleteAuthorizationCookies();
+        setIsUser(false);
+        setIsAdmin(false)
+        location.reload();
+    };
 
     return (
         <div id="nav-container" className=" p-2 bg-white min-h-16 flex items-center justify-between">
@@ -40,9 +51,8 @@ export function Navigation() {
                 </p>
             </nav>
             {/* User icon */}
-            {isUser && <button onClick={() => {deleteAuthorizationCookies(); location.reload();}}>Logout</button>}
-
-            <LoginModal />
+            {isUser && <button onClick={handleLogout}>Logout</button>}
+            {!(isUser || isAdmin) && <LoginModal/>}
         </div>
     )
 }
