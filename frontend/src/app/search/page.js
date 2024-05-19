@@ -55,7 +55,7 @@ export default function Search() {
                 </ScrollArea>
 
                 <section className="rounded m-2 max-h-[78%] w-[55%]">
-                    <ExpandedCard carInfo={expandedCar} />
+                    <ExpandedCard carInfo={expandedCar} dates={dates} />
                 </section>
             </section>
             <Footer />

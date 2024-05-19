@@ -1,15 +1,16 @@
 'use client'
-import { useRouter} from 'next/navigation';
-import React, { useState} from "react";
+import { useRouter } from 'next/navigation';
+import React, { useState } from "react";
 import Locationbox from "@/components/ui/locationbox";
 import { Button } from "@/components/ui/button";
 import DatePickerWithRange from "@/components/ui/daterange";
 import Navigation from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { format } from 'date-fns';
+import { useStore } from '@/tools/authentication';
 
 export default function Home() {
-    const [user, setUser] = useState(null);
+    const user = useStore((state) => state.user);
     const router = useRouter();
     const [location, setLocation] = useState('');
     const [dateRange, setDateRange] = useState({ from: '', to: '' });
@@ -19,18 +20,18 @@ export default function Home() {
         // Navigate to the search page with query parameters
         router.push(`/search?location=${location}&start=${format(dateRange.from, 'T')}&end=${format(dateRange.to, 'T')}`);
 
-        };
+    };
 
 
     return (
         <>
-        <div className="bg-[url('../img/temp-background-image-low.webp')] bg-cover bg-center">
+            <div className="bg-[url('../img/temp-background-image-low.webp')] bg-cover bg-center">
                 <Navigation />
 
                 <form onSubmit={handleSubmit} className="flex justify-center items-center h-screen gap-x-2">
                     <Locationbox value={location} onChange={setLocation} />
                     <DatePickerWithRange value={dateRange} onChange={setDateRange} />
-                    <Button  type="submit" >
+                    <Button type="submit" >
                         Search
                     </Button>
                 </form>
