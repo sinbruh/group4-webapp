@@ -151,7 +151,7 @@ public class AccessUserService implements UserDetailsService {
    */
   public String updateUser(User user, UserDto userData) {
     String errorMessage = null;
-    if (!userExists(userData.getEmail())) {
+    if (!userExists(userData.getEmail()) || userData.getEmail().equals(user.getEmail())) {
       user.setFirstName(userData.getFirstName());
       user.setLastName(userData.getLastName());
       user.setEmail(userData.getEmail());
