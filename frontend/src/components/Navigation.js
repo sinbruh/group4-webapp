@@ -6,6 +6,8 @@ import Image from "next/image";
 import LoginModal from "@/components/modal/LoginModal.jsx";
 import {deleteAuthorizationCookies, isAdmin, isUser} from "@/tools/authentication";
 import {getCookie} from "@/tools/cookies";
+import userIcon from "@/img/icons/person.svg";
+import {Button} from "@/components/ui/button";
 
 export function Navigation() {
     const [isUser, setIsUser] = useState(false);
@@ -53,6 +55,9 @@ export function Navigation() {
             {/* User icon */}
             {isUser && <button onClick={handleLogout}>Logout</button>}
             {!(isUser || isAdmin) && <LoginModal/>}
+            {isUser && <Button variant="ghost" size="icon">
+                <Image src={userIcon} alt="User icon" width={32} height={32} />
+            </Button>}
         </div>
     )
 }
