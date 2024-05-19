@@ -15,11 +15,11 @@ export function UserNotLoggedInAlert({ isOpen, setIsOpen }) {
                 <AlertDialogHeader>
                     <AlertDialogTitle>User is not logged in</AlertDialogTitle>
                     <AlertDialogDescription>
-                        Please log in to book a car.
+                        Please log in to perform this action.
                     </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
-                    <AlertDialogAction>Continue</AlertDialogAction>
+                    <AlertDialogAction  >Continue</AlertDialogAction>
                 </AlertDialogFooter>
             </AlertDialogContent>
         </AlertDialog>
