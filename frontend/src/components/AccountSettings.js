@@ -13,7 +13,9 @@ export default function AccountSettings ({ userDetails }) {
     const [editableDetails, setEditableDetails] = useState({});
 
     useEffect(() => {
-        setEditableDetails(userDetails)
+        if (userDetails) {
+            setEditableDetails(userDetails);
+        }
     }, [userDetails]);
 
     const handleEditClick = () => {
