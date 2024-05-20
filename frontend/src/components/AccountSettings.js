@@ -51,10 +51,10 @@ export default function AccountSettings ({ userDetails }) {
 
 
     return (
-        <div>
-            <h2>User Profile Settings</h2>
-            <form onSubmit={handleSubmit}>
-                <label>
+        <div className={"max-w-x1 mx-auto p-6 bg-white shadow-md rounded-md"}>
+            <h2 className={"text-2x1 font-semibold mb-4"}>User Profile Settings</h2>
+            <form className={"space-y-2"}>
+                <label className={"block text-gray-700"}>
                     First Name:
                     <input
                         type="text"
@@ -62,9 +62,10 @@ export default function AccountSettings ({ userDetails }) {
                         value={editableDetails.firstName}
                         onChange={handleChange}
                         readOnly={!isEditing}
+                        className={`w-full px-4 py-2 border ${isEditing ? 'border-blue-500': 'border-gray-300'} rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent`}
                     />
                 </label>
-                <label>
+                <label className={"block text-gray-700"}>
                     Last Name:
                     <input
                         type="text"
@@ -72,9 +73,10 @@ export default function AccountSettings ({ userDetails }) {
                         value={editableDetails.lastName}
                         onChange={handleChange}
                         readOnly={!isEditing}
+                        className={"w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"}
                     />
                 </label>
-                <label>
+                <label className={"block text-gray-700"}>
                     Date of Birth:
                     <input
                         type="date"
@@ -82,18 +84,22 @@ export default function AccountSettings ({ userDetails }) {
                         value={editableDetails.date}
                         onChange={handleChange}
                         readOnly={!isEditing}
+                        className={"w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"}
                     />
                 </label>
-                <label>
+                <label className={"block text-gray-700"}>
                     Email:
                     <input
                         type="email"
                         name="email"
                         value={editableDetails.email}
                         readOnly
+                        onChange={handleChange}
+                        readOnly={!isEditing}
+                        className={"w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"}
                     />
                 </label>
-                <label>
+                <label className={"block text-gray-700"}>
                     Phone Number:
                     <input
                         type="tel"
@@ -101,13 +107,36 @@ export default function AccountSettings ({ userDetails }) {
                         value={editableDetails.phoneNumber}
                         onChange={handleChange}
                         readOnly={!isEditing}
+                        className={"w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"}
                     />
                 </label>
-                {isEditing && <input type="submit" value="Submit" />}
+                {isEditing && (
+                    <div className="flex justify-end space-x-4">
+                        <button
+                            type="button"
+                            onClick={handleSubmit}
+                            className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        >
+                            Submit
+                        </button>
+                        <button
+                            type="button"
+                            onClick={handleEditClick}
+                            className="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500"
+                        >
+                            Cancel
+                        </button>
+                    </div>
+                )}
             </form>
-            <button onClick={handleEditClick}>
-                {isEditing ? 'Cancel' : 'Edit Profile'}
-            </button>
+            {!isEditing && (
+                <button
+                    onClick={handleEditClick}
+                    className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                >
+                    Edit Profile
+                </button>
+            )}
         </div>
     );
 }
