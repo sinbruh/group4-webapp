@@ -527,7 +527,7 @@ public class DataInitializer implements ApplicationListener<ApplicationReadyEven
     User user2 = this.userService.getOneByEmail("sarahlarsen@user.com").get();
     User user3 = this.userService.getOneByEmail("maxsmith@user.com").get();
     this.logger.info("Adding favorites...");
-    if (!user1.getFavorites().isEmpty()) {
+    if (user1.getFavorites().isEmpty()) {
       Provider provider1 = this.providerService.getOne(1l).get();
       Provider provider2 = this.providerService.getOne(2l).get();
       Provider provider3 = this.providerService.getOne(3l).get();
