@@ -34,7 +34,7 @@ export default function AccountSettings ({ userDetails }) {
                     </label>
                     <label>
                         Date of Birth:
-                        <input type="date" name="dob"/>
+                        <input type="date" name="dob" value={userDetails.date} readOnly/>
                     </label>
                     <label>
                         Email:
