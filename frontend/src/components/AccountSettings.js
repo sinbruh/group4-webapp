@@ -13,6 +13,12 @@ export default function AccountSettings ({ userDetails }) {
     const handleEditClick = () => {
         setIsEditing(!isEditing);
     }
+
+    if (!userDetails) {
+        return <p>Loading...</p>;
+    }
+
+
     return (
         <div>
             <h2>User Profile Settings</h2>
@@ -20,11 +26,11 @@ export default function AccountSettings ({ userDetails }) {
                 <form>
                     <label>
                         First Name:
-                        <input type="text" name="firstName"/>
+                        <input type="text" name="firstName" value={userDetails.firstName} readOnly/>
                     </label>
                     <label>
                         Last Name:
-                        <input type="text" name="lastName"/>
+                        <input type="text" name="lastName" value={userDetails.lastName} readOnly/>
                     </label>
                     <label>
                         Date of Birth:
@@ -32,11 +38,11 @@ export default function AccountSettings ({ userDetails }) {
                     </label>
                     <label>
                         Email:
-                        <input type="email" name="email"/>
+                        <input type="email" name="email" value={userDetails.email} readOnly/>
                     </label>
                     <label>
                         Phone Number:
-                        <input type="tel" name="phoneNumber"/>
+                        <input type="tel" name="phoneNumber" value={userDetails.phoneNumber} />
                     </label>
                     <input type="submit" value="Submit"/>
                 </form>
@@ -46,7 +52,7 @@ export default function AccountSettings ({ userDetails }) {
                     <div>
                         <p>First Name: {userDetails.firstName}</p>
                         <p>Last Name: {userDetails.lastName}</p>
-                        <p>Date of Birth: {userDetails.dob}</p>
+                        <p>Date of Birth: {userDetails.date}</p>
                         <p>Email: {userDetails.email}</p>
                         <p>Phone Number: {userDetails.phoneNumber}</p>
                     </div>
