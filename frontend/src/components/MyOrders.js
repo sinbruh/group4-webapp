@@ -61,6 +61,7 @@ export default function MyOrders() {
       <TableHead className="w-[100px]">Order ID</TableHead>
       <TableHead>Car Name</TableHead>
       <TableHead>Location</TableHead>
+      <TableHead>Provider</TableHead>
       <TableHead className="text-right">Total</TableHead>
     </TableRow>
   </TableHeader>
@@ -69,18 +70,21 @@ export default function MyOrders() {
       <TableCell className="font-medium">id needed</TableCell>
       <TableCell>name needed</TableCell>
       <TableCell>location needed</TableCell>
+      <TableCell>provider needed</TableCell>
       <TableCell className="text-right">$price needed</TableCell>
     </TableRow>
     <TableRow>
       <TableCell className="font-medium">id needed</TableCell>
       <TableCell>name needed</TableCell>
       <TableCell>location needed</TableCell>
+      <TableCell>provider needed</TableCell>
       <TableCell className="text-right">$price needed</TableCell>
     </TableRow>
     <TableRow>
       <TableCell className="font-medium">id needed</TableCell>
       <TableCell>name needed</TableCell>
       <TableCell>location needed</TableCell>
+      <TableCell>provider needed</TableCell>
       <TableCell className="text-right">$price needed</TableCell>
     </TableRow>
   </TableBody>
