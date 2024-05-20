@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import {usePathname} from 'next/navigation';
+import {isUser} from "@/tools/authentication";
 import SignupModal from './SignUpModal.jsx';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -36,7 +38,15 @@ export default function LoginModalClient() {
     const [open, setOpen] = useState(false);
     const [showLogin, setShowLogin] = useState(true);
 
+    const pathname = usePathname();
+
     const setUser = useStore((state) => state.setUser);
+
+    useEffect(() => {
+        if (pathname === '/profile' && !isUser()) {
+            setOpen(true);
+        }
+    }, [pathname]);
 
     const form = useForm({
         resolver: zodResolver(formSchema),
