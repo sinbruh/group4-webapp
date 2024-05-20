@@ -7,6 +7,7 @@ import {isAdmin, isUser, getAuthenticatedUser} from "@/tools/authentication.js"
 import MyOrders from "@/components/MyOrders"
 import AccountSettings from "@/components/AccountSettings.js"
 import {asyncApiRequest} from "@/tools/request";
+import { Button } from "@/components/ui/button"
 
 export default function Page() {
     const [user, setUser] = useState(null);
@@ -66,13 +67,13 @@ export default function Page() {
             <div className="flex items-center justify-center min-h-screen">
                 <section className="m-2 p-2 bg-white h-dvh w-4/5 rounded flex">
                     <div className="flex flex-col w-1/4 h-full bg-red-200">
-                    <button onClick={() => handleClick('account')} className="py-2 px-4 bg-blue-500 text-white rounded">Account</button>
-                    <button onClick={() => handleClick('myorders')} className="py-2 px-4 bg-blue-500 text-white rounded">My Orders</button>
+                    <Button onClick={() => handleClick('account')} className="py-2 px-4 bg-blue-500 text-white rounded">Account</Button>
+                    <Button onClick={() => handleClick('myorders')} className="py-2 px-4 bg-blue-500 text-white rounded">My Orders</Button>
                     {isAdmin() && (
                         <>
-                            <button onClick={() => handleClick('editcars')} className="py-2 px-4 bg-blue-500 text-white rounded">Edit Cars</button>
-                            <button onClick={() => handleClick('viewusers')} className="py-2 px-4 bg-blue-500 text-white rounded">View Users</button>
-                            <button onClick={() => handleClick('vieworders')} className="py-2 px-4 bg-blue-500 text-white rounded">View Orders</button>
+                            <Button onClick={() => handleClick('editcars')} className="py-2 px-4 bg-blue-500 text-white rounded">Car Editor</Button>
+                            <Button onClick={() => handleClick('viewusers')} className="py-2 px-4 bg-blue-500 text-white rounded">View Users</Button>
+                            <Button onClick={() => handleClick('vieworders')} className="py-2 px-4 bg-blue-500 text-white rounded">View Orders</Button>
                         </>
                     )}
 
