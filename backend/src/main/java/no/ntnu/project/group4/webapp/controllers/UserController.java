@@ -9,6 +9,7 @@ import java.util.Set;
 
 import no.ntnu.project.group4.webapp.dto.AuthenticationResponse;
 import no.ntnu.project.group4.webapp.dto.UserDto;
+import no.ntnu.project.group4.webapp.dto.UserUpdateDto;
 import no.ntnu.project.group4.webapp.models.Configuration;
 import no.ntnu.project.group4.webapp.models.User;
 import no.ntnu.project.group4.webapp.security.JwtUtil;
@@ -68,8 +69,10 @@ public class UserController {
       Iterable<User> users = this.userService.getAll();
       Set<UserDto> userData = new LinkedHashSet<>();
       for (User user : users) {
-        UserDto userDataObj = new UserDto(user.getFirstName(), user.getLastName(), user.getEmail(),
-            user.getPhoneNumber(), user.getDateOfBirth().getTime());
+        UserDto userDataObj = new UserDto(user.getId(), user.getFirstName(), user.getLastName(),
+                                          user.getEmail(), user.getPhoneNumber(),
+                                          user.getDateOfBirth().getTime(), user.getRentals(),
+                                          user.getFavorites());
         userData.add(userDataObj);
       }
       response = new ResponseEntity<>(userData, HttpStatus.OK);
@@ -112,9 +115,11 @@ public class UserController {
       if (user.isPresent()) {
         if (sessionUser.getEmail().equals(user.get().getEmail()) || sessionUser.isAdmin()) {
           User foundUser = user.get();
-          UserDto userData = new UserDto(foundUser.getFirstName(), foundUser.getLastName(),
-              foundUser.getEmail(), foundUser.getPhoneNumber(),
-              foundUser.getDateOfBirth().getTime());
+          UserDto userData = new UserDto(foundUser.getId(), foundUser.getFirstName(),
+                                         foundUser.getLastName(), foundUser.getEmail(),
+                                         foundUser.getPhoneNumber(),
+                                         foundUser.getDateOfBirth().getTime(),
+                                         foundUser.getRentals(), foundUser.getFavorites());
           response = new ResponseEntity<>(userData, HttpStatus.OK);
         } else {
           response = new ResponseEntity<>("Users do not have access to user data of other users",
@@ -160,7 +165,7 @@ public class UserController {
     @ApiResponse(responseCode = "500", description = "Could not update user data")
   })
   @PutMapping("/{email}")
-  public ResponseEntity<?> update(@PathVariable String email, @RequestBody UserDto userData) {
+  public ResponseEntity<?> update(@PathVariable String email, @RequestBody UserUpdateDto userData) {
     ResponseEntity<?> response;
     User sessionUser = this.accessUserService.getSessionUser();
     if (sessionUser != null) {
