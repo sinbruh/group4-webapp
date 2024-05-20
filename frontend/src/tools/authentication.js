@@ -22,12 +22,16 @@ export function getAuthenticatedUser() {
     return user;
 }
 
-export function isAdmin(user) {
-    return user && user.roles && user.roles.includes("ROLE_ADMIN");
+export function isAdmin() {
+    const currentUserRoles = getCookie('current_user_roles');
+    const isAdmin =  currentUserRoles.includes('ROLE_ADMIN');
+    return isAdmin;
 }
 
-export function isUser(user) {
-    return user && user.roles && user.roles.includes("ROLE_USER");
+export function isUser() {
+    const currentUserRoles = getCookie('current_user_roles');
+    const isUser =  currentUserRoles.includes('ROLE_USER');
+    return isUser;
 }
 
 export async function sendAuthenticationRequest(
