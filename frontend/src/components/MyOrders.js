@@ -62,6 +62,7 @@ export default function MyOrders() {
       <TableHead>Car Name</TableHead>
       <TableHead>Location</TableHead>
       <TableHead>Provider</TableHead>
+      <TableHead>Date</TableHead>
       <TableHead className="text-right">Total</TableHead>
     </TableRow>
   </TableHeader>
@@ -71,6 +72,7 @@ export default function MyOrders() {
       <TableCell>name needed</TableCell>
       <TableCell>location needed</TableCell>
       <TableCell>provider needed</TableCell>
+      <TableCell>date To --- From needed</TableCell>
       <TableCell className="text-right">$price needed</TableCell>
     </TableRow>
     <TableRow>
@@ -78,6 +80,7 @@ export default function MyOrders() {
       <TableCell>name needed</TableCell>
       <TableCell>location needed</TableCell>
       <TableCell>provider needed</TableCell>
+      <TableCell>date To --- From needed</TableCell>
       <TableCell className="text-right">$price needed</TableCell>
     </TableRow>
     <TableRow>
@@ -85,6 +88,7 @@ export default function MyOrders() {
       <TableCell>name needed</TableCell>
       <TableCell>location needed</TableCell>
       <TableCell>provider needed</TableCell>
+      <TableCell>date To --- From needed</TableCell>
       <TableCell className="text-right">$price needed</TableCell>
     </TableRow>
   </TableBody>
