@@ -23,15 +23,32 @@ export function getAuthenticatedUser() {
 }
 
 export function isAdmin() {
-    const currentUserRoles = getCookie('current_user_roles');
-    const isAdmin =  currentUserRoles.includes('ROLE_ADMIN');
+    const user = useStore((state) => state.user);
+    const isAdmin = user && user.roles.includes("ROLE_ADMIN");
+
     return isAdmin;
 }
 
-export function isUser() {
-    const currentUserRoles = getCookie('current_user_roles');
-    const isUser =  currentUserRoles.includes('ROLE_USER');
-    return isUser;
+// export function isUser() {
+//     const user = useStore((state) => state.user);
+//     const isUser = user && user.roles.includes("ROLE_USER");
+//
+//     return isUser;
+// }
+
+export function isLoggedIn() {
+    const user = useStore((state) => state.user);
+    const setUser = useStore((state) => state.setUser);
+
+    //attempt to get user from cookie if not logged in
+    if (!user) {
+        const authenticatedUser = getAuthenticatedUser();
+        if (authenticatedUser) {
+            setUser(authenticatedUser);
+        }
+    }
+
+    return user != null;
 }
 
 export async function sendAuthenticationRequest(

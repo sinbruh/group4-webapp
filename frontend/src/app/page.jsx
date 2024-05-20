@@ -7,10 +7,8 @@ import DatePickerWithRange from "@/components/ui/daterange";
 import Navigation from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { format } from 'date-fns';
-import { useStore } from '@/tools/authentication';
 
 export default function Home() {
-    const user = useStore((state) => state.user);
     const router = useRouter();
     const [location, setLocation] = useState('');
     const [dateRange, setDateRange] = useState({ from: '', to: '' });

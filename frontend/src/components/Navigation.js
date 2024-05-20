@@ -1,32 +1,20 @@
 'use client';
-import React, {useEffect, useState} from "react";
+import React from "react";
 import Link from "next/link";
 import logo from "/public/temp-logo-low.webp";
 import Image from "next/image";
 import LoginModal from "@/components/modal/LoginModal.jsx";
-import {deleteAuthorizationCookies, getAuthenticatedUser, isAdmin, isUser} from "@/tools/authentication";
-import {getCookie} from "@/tools/cookies";
+import { isLoggedIn, useStore, deleteAuthorizationCookies } from "@/tools/authentication";
 import userIcon from "@/img/icons/person.svg";
-import {Button} from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 
 export function Navigation() {
-    const [isUser, setIsUser] = useState(false);
-    const [isAdmin, setIsAdmin] = useState(false)
+    const logout = useStore((state) => state.logout);
 
-    useEffect(() => {
-        const user = getAuthenticatedUser();
-        if (user) {
-            setIsUser(user.roles.includes("ROLE_USER"));
-            setIsAdmin(user.roles.includes("ROLE_ADMIN"));
-        }
-    }, []);
-
-    const handleLogout = () => {
+    function handleLogout() {
         deleteAuthorizationCookies();
-        setIsUser(false);
-        setIsAdmin(false)
-        location.reload();
-    };
+        logout();
+    }
 
     return (
         <div id="nav-container" className=" p-2 bg-white min-h-16 flex items-center justify-between">
@@ -55,13 +43,14 @@ export function Navigation() {
                 </p>
             </nav>
             {/* User icon logic */}
-            {isUser && <button onClick={handleLogout}>Logout</button>}
-            {!(isUser || isAdmin) && <LoginModal/>}
-            {isUser && <Button variant="ghost" size="icon">
-                <Link href={"/profile"}>
+            {isLoggedIn() && <button onClick={handleLogout}>Logout</button>}
+            {!isLoggedIn() ? <LoginModal /> : (
+                <Button variant="ghost" size="icon">
+                    <Link href={"/profile"}>
                         <Image src={userIcon} alt="User icon" width={32} height={32} />
-                </Link>
-            </Button>}
+                    </Link>
+                </Button>
+            )}
         </div>
     )
 }

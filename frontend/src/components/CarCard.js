@@ -7,7 +7,7 @@ import closeIcon from "@/img/icons/close.svg";
 import cogIcon from "@/img/icons/cog.svg";
 import peopleIcon from "@/img/icons/people.svg";
 import FavoriteButton from "@/components/FavoriteButton";
-import {isAdmin, isUser } from "@/tools/authentication.js";
+import {isLoggedIn} from "@/tools/authentication.js";
 
 import {
     Card,
@@ -17,7 +17,6 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card"
-import { document } from "postcss";
 
 const CarCard = ({ carInfo, setExpandedCarInfo }) => {
     const carImage = carInfo.carImageInput ? `/carsLowResWEBP/${carInfo.carImageInput}` : carDefaultImage;
@@ -65,7 +64,7 @@ const CarCard = ({ carInfo, setExpandedCarInfo }) => {
                 </div>
             </div>
             <div className="m-4">
-            {(isAdmin() || isUser()) && <FavoriteButton configID={carInfo.configID}/>}
+            {isLoggedIn() && <FavoriteButton configID={carInfo.configID}/>}
             </div>
 
         </Card>

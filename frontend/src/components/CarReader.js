@@ -60,7 +60,7 @@ export default function CarReader({ location, dates, price, setExpandedCarInfo }
                         if (typeof price === 'undefined' || typeof location === 'undefined') {
                             return true;
                         }
-                    
+
                         const lowestPrice = provider.price;
                         const fromPriceNumber = Number(price.min);
                         const toPriceNumber = Number(price.max);
@@ -82,8 +82,8 @@ export default function CarReader({ location, dates, price, setExpandedCarInfo }
                     })
                     .map(({configurations, provider, make, model}) => {
                         const carImageName = configurations[0].img || 'default.jpg';
-                        
-                        
+
+
                         const rentals = configurations[0].providers[0].rentals;
                         const isAvailable = rentals.every(rental => {
                             const rentalStartDate = new Date(rental.startDate);
@@ -105,7 +105,7 @@ export default function CarReader({ location, dates, price, setExpandedCarInfo }
                             configurations: configurations
                         }
 
-                        
+
 
                         return (
                         <CarCard key={provider.id} carInfo={carInfo} setExpandedCarInfo={setExpandedCarInfo}/>

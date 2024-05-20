@@ -3,25 +3,26 @@ import { React, useEffect, useState } from 'react';
 import Navigation from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import Link from "next/link";
-import {isAdmin, isUser, getAuthenticatedUser} from "@/tools/authentication.js"
-import MyOrders from "@/components/MyOrders"
+import { useRouter } from 'next/navigation';
+import { useStore, isLoggedIn } from "@/tools/authentication";
 import AccountSettings from "@/components/AccountSettings.js"
 import {asyncApiRequest} from "@/tools/request";
 
 export default function Page() {
-    const [user, setUser] = useState(null);
+    const user = useStore((state) => [state.user, state.setUser]);
     const [activeComponent, setActiveComponent] = useState('default');
     const [userDetails, setUserDetails] = useState(null);
 
-    useEffect(() => {
-        const authenticatedUser = getAuthenticatedUser();
-        setUser(authenticatedUser);
-    }, []);
+    if (!isLoggedIn()) {
+        console.log("User is not logged in. Redirecting to login page.");
+        useRouter().push("/");
+    }
 
     useEffect(() => {
         const fetchUserDetails = async () => {
             if (user && user.email) {
                 try {
+                    console.log("Fetching user details for: ", user.email);
                     const userDetails = await asyncApiRequest("GET", `/api/users/${user.email}`);
                     setUserDetails(userDetails);
                 } catch (error) {
@@ -41,21 +42,14 @@ export default function Page() {
         switch(activeComponent) {
             case 'account':
                 return <AccountSettings userDetails={userDetails}/>;
-            case 'myorders':
-                return <MyOrders />;
-            case 'editcars':
-                return null; 
-            case 'viewusers':
-                return null; 
-            case 'vieworders':
-                return null; 
             default:
-                return <AccountSettings userDetails={userDetails}/>;
+                return <p></p>;
         }
     };
 
-
     return (
+        <div>
+        {isLoggedIn() && (
         <div className="bg-[url('/temp-background-image-low.webp')] bg-cover bg-center">
             <Navigation />
             <section className="text-black">
@@ -65,17 +59,9 @@ export default function Page() {
             </section>
             <div className="flex items-center justify-center min-h-screen">
                 <section className="m-2 p-2 bg-white h-dvh w-4/5 rounded flex">
-                    <div className="flex flex-col w-1/4 h-full bg-red-200">
-                    <button onClick={() => handleClick('account')} className="py-2 px-4 bg-blue-500 text-white rounded">Account</button>
-                    <button onClick={() => handleClick('myorders')} className="py-2 px-4 bg-blue-500 text-white rounded">My Orders</button>
-                    {isAdmin() && (
-                        <>
-                            <button onClick={() => handleClick('editcars')} className="py-2 px-4 bg-blue-500 text-white rounded">Edit Cars</button>
-                            <button onClick={() => handleClick('viewusers')} className="py-2 px-4 bg-blue-500 text-white rounded">View Users</button>
-                            <button onClick={() => handleClick('vieworders')} className="py-2 px-4 bg-blue-500 text-white rounded">View Orders</button>
-                        </>
-                    )}
-
+                    <div className="w-1/4 h-full bg-red-200">
+                        <button onClick={() => handleClick('account')} className="py-2 px-4 bg-blue-500 text-white rounded">Account</button>
+                        <button onClick={() => handleClick('administrator')} className="py-2 px-4 bg-blue-500 text-white rounded">Administrator</button>
                     </div>
                     <div className="w-3/4 h-full bg-blue-200">
                         {renderComponent()}
@@ -83,6 +69,8 @@ export default function Page() {
                 </section>
             </div>
             <Footer />
+            </div>
+        )};
         </div>
     );
 };

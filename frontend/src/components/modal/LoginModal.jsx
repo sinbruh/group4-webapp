@@ -42,12 +42,6 @@ export default function LoginModalClient() {
 
     const setUser = useStore((state) => state.setUser);
 
-    useEffect(() => {
-        if (pathname === '/profile' && !isUser()) {
-            setOpen(true);
-        }
-    }, [pathname]);
-
     const form = useForm({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -66,7 +60,7 @@ export default function LoginModalClient() {
         console.log(user.email + " has logged in");
 
         setOpen(false);
-        location.reload();
+        //location.reload();
     }
 
     function onFailedLogin() {
