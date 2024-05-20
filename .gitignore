@@ -87,4 +87,5 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-backend/webapp.session.sql
+# SQL
+webapp.session.sql

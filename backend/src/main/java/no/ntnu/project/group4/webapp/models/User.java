@@ -38,11 +38,11 @@ public class User {
   @OneToMany(mappedBy = "user")
   private Set<Rental> rentals = new LinkedHashSet<>();
   @ManyToMany(fetch = FetchType.EAGER)
-  @JoinTable(name = "user_configuration",
+  @JoinTable(name = "user_provider",
     joinColumns = @JoinColumn(name = "user_id"),
-    inverseJoinColumns = @JoinColumn(name = "configuration_id")
+    inverseJoinColumns = @JoinColumn(name = "provider_id")
   )
-  private Set<Configuration> favorites = new LinkedHashSet<>();
+  private Set<Provider> favorites = new LinkedHashSet<>();
 
   /**
    * Empty constructor needed for JPA.
@@ -140,11 +140,11 @@ public class User {
     this.rentals = rentals;
   }
 
-  public Set<Configuration> getFavorites() {
+  public Set<Provider> getFavorites() {
     return this.favorites;
   }
 
-  public void setFavorites(Set<Configuration> favorites) {
+  public void setFavorites(Set<Provider> favorites) {
     this.favorites = favorites;
   }
 
@@ -158,12 +158,12 @@ public class User {
   }
 
   /**
-   * Adds the specified configuration to the user favorites.
+   * Adds the specified provider to the user favorites.
    * 
-   * @param configuration The specified configuration
+   * @param provider The specified provider
    */
-  public void addFavorite(Configuration configuration) {
-    this.favorites.add(configuration);
+  public void addFavorite(Provider provider) {
+    this.favorites.add(provider);
   }
 
   /**

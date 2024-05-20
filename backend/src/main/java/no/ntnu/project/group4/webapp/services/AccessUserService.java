@@ -3,7 +3,7 @@ package no.ntnu.project.group4.webapp.services;
 import java.io.IOException;
 import java.sql.Date;
 import java.util.Optional;
-import no.ntnu.project.group4.webapp.dto.UserDto;
+import no.ntnu.project.group4.webapp.dto.UserUpdateDto;
 import no.ntnu.project.group4.webapp.models.Role;
 import no.ntnu.project.group4.webapp.models.User;
 import no.ntnu.project.group4.webapp.repositories.RoleRepository;
@@ -149,7 +149,7 @@ public class AccessUserService implements UserDetailsService {
    * @param userData User data to set for the user
    * @return A string containing an error message, null if no errors occured.
    */
-  public String updateUser(User user, UserDto userData) {
+  public String updateUser(User user, UserUpdateDto userData) {
     String errorMessage = null;
     if (!userExists(userData.getEmail()) || userData.getEmail().equals(user.getEmail())) {
       user.setFirstName(userData.getFirstName());

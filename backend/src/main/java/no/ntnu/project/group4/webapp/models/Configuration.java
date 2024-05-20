@@ -10,7 +10,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 
@@ -32,8 +31,6 @@ public class Configuration {
   private Set<ExtraFeature> extraFeatures = new LinkedHashSet<>();
   @OneToMany(mappedBy = "configuration")
   private Set<Provider> providers = new LinkedHashSet<>();
-  @ManyToMany(mappedBy = "favorites")
-  private Set<User> favoritedUsers = new LinkedHashSet<>();
 
   /**
    * Empty constructor needed for JPA.
@@ -110,14 +107,6 @@ public class Configuration {
 
   public void setProviders(Set<Provider> providers) {
     this.providers = providers;
-  }
-
-  public Set<User> getFavoritedUsers() {
-    return this.favoritedUsers;
-  }
-
-  public void setFavoritedUsers(Set<User> favoritedUsers) {
-    this.favoritedUsers = favoritedUsers;
   }
 
   public boolean isValid() {
