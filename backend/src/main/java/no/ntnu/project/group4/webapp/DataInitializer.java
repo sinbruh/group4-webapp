@@ -107,11 +107,11 @@ public class DataInitializer implements ApplicationListener<ApplicationReadyEven
                             new Date(946684800000l));
 
       // Create users with temporary password
-      User user1 = new User("John", "Doe", "johndoe@user.com", 13572468, "temp",
+      User user1 = new User("Morgan", "Lee", "morganlee@user.com", 13572468, "temp",
                             new Date(315532800000l));
-      User user2 = new User("Jane", "Doe", "janedoe@user.com", 24681357, "temp",
+      User user2 = new User("Sarah", "Larsen", "sarahlarsen@user.com", 24681357, "temp",
                             new Date(631152000000l));
-      User user3 = new User("Joe", "Doe", "joedoe@user.com", 12457836, "temp",
+      User user3 = new User("Max", "Smith", "maxsmith@user.com", 12457836, "temp",
                             new Date(1104537600000l));
 
       Role userRole = this.roleRepository.findOneByName("ROLE_USER");
@@ -130,9 +130,9 @@ public class DataInitializer implements ApplicationListener<ApplicationReadyEven
 
       // Update admin user password to a proper password that uses BCrypt hashing
       this.accessUserService.updateUserPassword(admin, "adminuser");
-      this.accessUserService.updateUserPassword(user1, "johnuser");
-      this.accessUserService.updateUserPassword(user2, "janeuser");
-      this.accessUserService.updateUserPassword(user3, "joeuser1");
+      this.accessUserService.updateUserPassword(user1, "morganuser");
+      this.accessUserService.updateUserPassword(user2, "sarahuser");
+      this.accessUserService.updateUserPassword(user3, "maxuser1");
 
       this.logger.info("Done loading user data");
     } else {
@@ -504,9 +504,9 @@ public class DataInitializer implements ApplicationListener<ApplicationReadyEven
       Rental rental3 = new Rental(new Date(1716336000000l), new Date(1716508800000l));
 
 
-      rental1.setUser(this.userService.getOneByEmail("johndoe@user.com").get());
-      rental2.setUser(this.userService.getOneByEmail("janedoe@user.com").get());
-      rental3.setUser(this.userService.getOneByEmail("joedoe@user.com").get());
+      rental1.setUser(this.userService.getOneByEmail("morganlee@user.com").get());
+      rental2.setUser(this.userService.getOneByEmail("sarahlarsen@user.com").get());
+      rental3.setUser(this.userService.getOneByEmail("maxsmith@user.com").get());
       rental1.setProvider(this.providerService.getOne(1l).get());
       rental2.setProvider(this.providerService.getOne(3l).get());
       rental3.setProvider(this.providerService.getOne(5l).get());
