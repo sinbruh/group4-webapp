@@ -188,4 +188,14 @@ public class Receipt {
   public void setTotalPrice(int totalPrice) {
     this.totalPrice = totalPrice;
   }
+
+  /**
+   * Returns true if the receipt is valid or false otherwise.
+   * 
+   * @return True if the receipt is valid or false otherwise
+   */
+  public boolean isValid() {
+    return !this.carName.isBlank() && !this.providerName.isBlank() && !this.location.isBlank() &&
+           this.startDate != null && this.endDate != null && this.totalPrice >= 0;
+  }
 }
