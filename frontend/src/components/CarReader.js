@@ -5,8 +5,8 @@ import ExpandedCard from "@/components/ExpandedCard";
 export default function CarReader({ location, dates, price, setExpandedCarInfo }) {
     const [cars, setCars] = useState([]);
     const [expandedCar, setExpandedCar] = useState(null);
-    const fromDate = dates.from;
-    const toDate = dates.to;
+    const fromDate = dates ? dates.from : null;
+    const toDate = dates ? dates.to : null;
 
     const updateJsonFile = async () => {
         try {
@@ -57,6 +57,10 @@ export default function CarReader({ location, dates, price, setExpandedCarInfo }
                 {cars
                     .flatMap(car => car.configurations[0].providers.map(provider => ({...car, provider})))
                     .filter(({provider}) => {
+                        if (typeof price === 'undefined' || typeof location === 'undefined') {
+                            return true;
+                        }
+                    
                         const lowestPrice = provider.price;
                         const fromPriceNumber = Number(price.min);
                         const toPriceNumber = Number(price.max);
@@ -101,7 +105,7 @@ export default function CarReader({ location, dates, price, setExpandedCarInfo }
                             configurations: configurations
                         }
 
-                        console.log("Car Info: ", carInfo);
+                        
 
                         return (
                         <CarCard key={provider.id} carInfo={carInfo} setExpandedCarInfo={setExpandedCarInfo}/>

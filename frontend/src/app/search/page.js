@@ -8,7 +8,7 @@ import Link from "next/link";
 import FilterBar from "@/components/FilterBar";
 import ExpandedCard from "@/components/ExpandedCard";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import CarReader from './CarReader.js';
+import CarReader from '../../components/CarReader.js';
 
 export default function Search() {
     const searchParams = useSearchParams ();
@@ -20,10 +20,6 @@ export default function Search() {
     const [dates, setDates] = useState({start: start, end: end});
     const [price, setPrice] = useState({min: null, max: null});
     const [expandedCar, setExpandedCar] = useState(null);
-
-    console.log('Location in page:', location);
-    console.log('Dates in page:', dates);
-    console.log('Price in page:', price);
 
     return (
         <div className="bg-[url('/temp-background-image-low.webp')] bg-cover bg-center">
