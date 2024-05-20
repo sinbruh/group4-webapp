@@ -17,6 +17,9 @@ export default function AccountSettings ({ userDetails }) {
     }, [userDetails]);
 
     const handleEditClick = () => {
+        if (isEditing) {
+            setEditableDetails(userDetails);
+        }
         setIsEditing(!isEditing);
     }
 
