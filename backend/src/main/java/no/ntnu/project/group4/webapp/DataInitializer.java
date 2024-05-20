@@ -158,6 +158,7 @@ public class DataInitializer implements ApplicationListener<ApplicationReadyEven
       // Initialization
       Car car1 = new Car("Volkswagen", "Golf", 2007);
       Configuration configuration1_1 = new Configuration("Diesel config", "Diesel", "Manual", 5);
+      Configuration configuration1_2 = new Configuration("Petrol config", "Petrol", "Manual", 5);
       ExtraFeature extraFeature1_1_1 = new ExtraFeature("Bluetooth");
       ExtraFeature extraFeature1_1_2 = new ExtraFeature("DAB radio");
       ExtraFeature extraFeature1_1_3 = new ExtraFeature("Warming in the chairs");
@@ -165,15 +166,22 @@ public class DataInitializer implements ApplicationListener<ApplicationReadyEven
       Provider provider1_1_2 = new Provider("Biller Bil", 550, "Stryn");
 
       configuration1_1.setCar(car1);
+      configuration1_2.setCar(car1);
       extraFeature1_1_1.setConfiguration(configuration1_1);
       extraFeature1_1_2.setConfiguration(configuration1_1);
       extraFeature1_1_3.setConfiguration(configuration1_1);
+      extraFeature1_1_1.setConfiguration(configuration1_2);
+      extraFeature1_1_2.setConfiguration(configuration1_2);
+      extraFeature1_1_3.setConfiguration(configuration1_2);
       provider1_1_1.setConfiguration(configuration1_1);
       provider1_1_2.setConfiguration(configuration1_1);
+      provider1_1_1.setConfiguration(configuration1_2);
+      provider1_1_2.setConfiguration(configuration1_2);
 
       // Loading into database
       carService.add(car1);
       configurationService.add(configuration1_1);
+      configurationService.add(configuration1_2);
       extraFeatureService.add(extraFeature1_1_1);
       extraFeatureService.add(extraFeature1_1_2);
       extraFeatureService.add(extraFeature1_1_3);
@@ -242,16 +250,21 @@ public class DataInitializer implements ApplicationListener<ApplicationReadyEven
       Car car4 = new Car("Nissan", "Leaf", 2016);
       Configuration configuration4_1 = new Configuration("Electric config", "Electric",
                                                          "Automatic", 5);
+      Configuration configuration4_2 = new Configuration("Hybrid config", "Hybrid", "Automatic", 5);
       Provider provider4_1_1 = new Provider("Auto 9-9", 500, "Stavanger");
       Provider provider4_1_2 = new Provider("Auto 10-10", 500, "Ålesund");
 
       configuration4_1.setCar(car4);
+      configuration4_2.setCar(car4);
       provider4_1_1.setConfiguration(configuration4_1);
       provider4_1_2.setConfiguration(configuration4_1);
+      provider4_1_1.setConfiguration(configuration4_2);
+      provider4_1_2.setConfiguration(configuration4_2);
 
       // Loading into database
       carService.add(car4);
       configurationService.add(configuration4_1);
+      configurationService.add(configuration4_2);
       providerService.add(provider4_1_1);
       providerService.add(provider4_1_2);
 
