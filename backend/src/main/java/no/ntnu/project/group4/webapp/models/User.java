@@ -37,8 +37,10 @@ public class User {
   private Set<Role> roles = new LinkedHashSet<>();
   @OneToMany(mappedBy = "user")
   private Set<Rental> rentals = new LinkedHashSet<>();
+  @OneToMany(mappedBy = "user")
+  private Set<Receipt> receipts = new LinkedHashSet<>();
   @ManyToMany(fetch = FetchType.EAGER)
-  @JoinTable(name = "user_provider",
+  @JoinTable(name = "favorite",
     joinColumns = @JoinColumn(name = "user_id"),
     inverseJoinColumns = @JoinColumn(name = "provider_id")
   )
@@ -138,6 +140,24 @@ public class User {
 
   public void setRentals(Set<Rental> rentals) {
     this.rentals = rentals;
+  }
+
+  /**
+   * Getter for receipts.
+   * 
+   * @return Receipts
+   */
+  public Set<Receipt> getReceipts() {
+    return this.receipts;
+  }
+
+  /**
+   * Setter for receipts.
+   * 
+   * @param receipts The specified receipts
+   */
+  public void setReceipts(Set<Receipt> receipts) {
+    this.receipts = receipts;
   }
 
   public Set<Provider> getFavorites() {
