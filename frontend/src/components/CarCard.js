@@ -6,7 +6,8 @@ import checkIcon from "@/img/icons/checkmark.svg";
 import closeIcon from "@/img/icons/close.svg";
 import cogIcon from "@/img/icons/cog.svg";
 import peopleIcon from "@/img/icons/people.svg";
-import FavoriteButton from "@/components/FavoriteButton"
+import FavoriteButton from "@/components/FavoriteButton";
+import {isAdmin, isUser } from "@/tools/authentication.js";
 
 import {
     Card,
@@ -64,7 +65,7 @@ const CarCard = ({ carInfo, setExpandedCarInfo }) => {
                 </div>
             </div>
             <div className="m-4">
-                <FavoriteButton configID={carInfo.configID}/>
+            {(isAdmin() || isUser()) && <FavoriteButton configID={carInfo.configID}/>}
             </div>
 
         </Card>
