@@ -17,7 +17,7 @@ import jakarta.persistence.ManyToOne;
  * <p>The class uses JPA with annotations for ORM operations.</p>
  * 
  * @author Group 4
- * @version v1.0 (2024.05.20)
+ * @version v1.0 (2024.05.21)
  */
 @Entity(name = "receipt")
 @Schema(name = "Receipt", description = "A receipt entity")
@@ -187,6 +187,24 @@ public class Receipt {
    */
   public void setTotalPrice(int totalPrice) {
     this.totalPrice = totalPrice;
+  }
+
+  /**
+   * Getter for user.
+   * 
+   * @return User
+   */
+  public User getUser() {
+    return this.user;
+  }
+
+  /**
+   * Setter for user.
+   * 
+   * @param user The specified user
+   */
+  public void setUser(User user) {
+    this.user = user;
   }
 
   /**

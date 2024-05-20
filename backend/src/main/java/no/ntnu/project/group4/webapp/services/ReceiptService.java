@@ -12,12 +12,22 @@ import no.ntnu.project.group4.webapp.repositories.ReceiptRepository;
  * The ReceiptService class represents the service class for the receipt entity.
  * 
  * @author Group 4
- * @version 1.0 (2024.05.20)
+ * @version 1.0 (2024.05.21)
  */
 @Service
 public class ReceiptService {
   @Autowired
   private ReceiptRepository receiptRepository;
+
+  /**
+   * Returns the receipt with the specified ID regardless of if it exists or not.
+   * 
+   * @param id The specified ID
+   * @return The receipt with the specified ID regardless of if it exists or not
+   */
+  public Optional<Receipt> getOne(Long id) {
+    return this.receiptRepository.findById(id);
+  }
 
   /**
    * Returns the generated ID of the specified receipt if it is added to the database.
