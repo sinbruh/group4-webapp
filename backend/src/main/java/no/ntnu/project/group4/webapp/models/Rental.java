@@ -20,7 +20,6 @@ public class Rental {
   private Long id;
   private Date startDate;
   private Date endDate;
-  @JsonIgnore
   @ManyToOne
   private Provider provider;
   @JsonIgnore
