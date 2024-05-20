@@ -540,6 +540,10 @@ public class DataInitializer implements ApplicationListener<ApplicationReadyEven
       user2.addFavorite(provider4);
       user3.addFavorite(provider5);
 
+      this.userService.update(user1.getId(), user1);
+      this.userService.update(user2.getId(), user2);
+      this.userService.update(user3.getId(), user3);
+
       this.logger.info("Done adding favorites");
     } else {
       this.logger.info("Favorites already in the database, not adding favorites");
