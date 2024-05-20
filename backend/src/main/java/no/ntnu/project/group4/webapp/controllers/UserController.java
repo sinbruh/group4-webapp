@@ -10,11 +10,11 @@ import java.util.Set;
 import no.ntnu.project.group4.webapp.dto.AuthenticationResponse;
 import no.ntnu.project.group4.webapp.dto.UserDto;
 import no.ntnu.project.group4.webapp.dto.UserUpdateDto;
-import no.ntnu.project.group4.webapp.models.Configuration;
+import no.ntnu.project.group4.webapp.models.Provider;
 import no.ntnu.project.group4.webapp.models.User;
 import no.ntnu.project.group4.webapp.security.JwtUtil;
 import no.ntnu.project.group4.webapp.services.AccessUserService;
-import no.ntnu.project.group4.webapp.services.ConfigurationService;
+import no.ntnu.project.group4.webapp.services.ProviderService;
 import no.ntnu.project.group4.webapp.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -46,7 +46,7 @@ public class UserController {
   @Autowired
   private UserService userService;
   @Autowired
-  private ConfigurationService configService;
+  private ProviderService providerService;
   @Autowired
   private JwtUtil jwtUtil;
 
@@ -302,34 +302,34 @@ public class UserController {
   }
 
   /**
-   * Returns a HTTP response to the request requesting to favorite the configuration with the
-   * specified configuration ID.
+   * Returns a HTTP response to the request requesting to favorite the provider with the specified
+   * provider ID.
    * 
    * <p>The response body contains an empty string on success or a string with an error message on
    * error.</p>
    * 
-   * @param configId The specified configuration ID
+   * @param providerId The specified provider ID
    * @return <p>200 OK on success</p>
    *         <p>401 UNAUTHORIZED if user is not authenticated</p>
-   *         <p>404 NOT FOUND if configuration with specified configuration ID is not found</p>
+   *         <p>404 NOT FOUND if provider with specified provider ID is not found</p>
    *         <p>500 INTERNAL SERVER ERROR if an error occurs when updating user</p>
    */
-  @Operation(summary = "Favorite configuration",
-             description = "Favorites or unfavorites the configuration with the specified " +
-                           "configuration ID"
+  @Operation(summary = "Favorite provider",
+             description = "Favorites or unfavorites the provider with the specified " +
+                           "provider ID"
   )
   @ApiResponses(value = {
     @ApiResponse(responseCode = "200",
-                 description = "Configuration favortied or unfavorited"
+                 description = "Provider favortied or unfavorited"
     ),
     @ApiResponse(responseCode = "401",
-                 description = "Only authenticated users have access to favorite configurations"
+                 description = "Only authenticated users have access to favorite providers"
     ),
     @ApiResponse(responseCode = "404",
-                 description = "Configuration with specified configuration ID not found"
+                 description = "Provider with specified provider ID not found"
     ),
     @ApiResponse(responseCode = "500",
-                 description = "Could not favorite configuration with specified configuration ID"
+                 description = "Could not favorite provider with specified provider ID"
     )
   })
   @PutMapping("/favorite/{configId}")
@@ -337,29 +337,29 @@ public class UserController {
     ResponseEntity<String> response;
     User sessionUser = this.accessUserService.getSessionUser();
     if (sessionUser != null) {
-      Optional<Configuration> config = this.configService.getOne(configId);
-      if (config.isPresent()) {
-        Configuration foundConfig = config.get();
-        Set<Configuration> favorites = sessionUser.getFavorites();
-        if (!favorites.contains(foundConfig)) {
-          favorites.add(foundConfig);
+      Optional<Provider> provider = this.providerService.getOne(configId);
+      if (provider.isPresent()) {
+        Provider foundProvider = provider.get();
+        Set<Provider> favorites = sessionUser.getFavorites();
+        if (!favorites.contains(foundProvider)) {
+          favorites.add(foundProvider);
         } else {
-          favorites.remove(foundConfig);
+          favorites.remove(foundProvider);
         }
         try {
           this.userService.update(sessionUser.getId(), sessionUser);
           response = new ResponseEntity<>("", HttpStatus.OK);
         } catch (IllegalArgumentException e) {
-          response = new ResponseEntity<>("Could not favorite configuration with specified " +
-                                          "configuration ID", HttpStatus.INTERNAL_SERVER_ERROR);
+          response = new ResponseEntity<>("Could not favorite provider with specified provider " +
+                                          "ID", HttpStatus.INTERNAL_SERVER_ERROR);
         }
       } else {
-        response = new ResponseEntity<>("Configuration with specified configuration ID not found",
+        response = new ResponseEntity<>("Provider with specified provider ID not found",
                                         HttpStatus.NOT_FOUND);
       }
     } else {
       response = new ResponseEntity<>("Only authenticated users have access to favorite " +
-                                      "configurations", HttpStatus.UNAUTHORIZED);
+                                      "providers", HttpStatus.UNAUTHORIZED);
     }
     return response;
   }
