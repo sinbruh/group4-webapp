@@ -4,7 +4,7 @@ import Navigation from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import Link from "next/link";
 import {isAdmin, isUser, getAuthenticatedUser} from "@/tools/authentication.js"
-import AdministratorSettings from "@/components/AdministratorSettings.js"
+import MyOrders from "@/components/MyOrders"
 import AccountSettings from "@/components/AccountSettings.js"
 import {asyncApiRequest} from "@/tools/request";
 
@@ -41,19 +41,18 @@ export default function Page() {
         switch(activeComponent) {
             case 'account':
                 return <AccountSettings userDetails={userDetails}/>;
-            case 'administrator':
-                return <AdministratorSettings />;
+            case 'myorders':
+                return <MyOrders />;
+            case 'editcars':
+                return null; 
+            case 'viewusers':
+                return null; 
+            case 'vieworders':
+                return null; 
             default:
-                return <p></p>;
+                return <AccountSettings userDetails={userDetails}/>;
         }
     };
-
-    useEffect(() => {
-        if (!isAdmin(user) && !isUser(user)) {
-            console.log("log in");
-        }
-    }, [user]);
-
 
 
     return (
@@ -66,9 +65,17 @@ export default function Page() {
             </section>
             <div className="flex items-center justify-center min-h-screen">
                 <section className="m-2 p-2 bg-white h-dvh w-4/5 rounded flex">
-                    <div className="w-1/4 h-full bg-red-200">
-                        <button onClick={() => handleClick('account')} className="py-2 px-4 bg-blue-500 text-white rounded">Account</button>
-                        <button onClick={() => handleClick('administrator')} className="py-2 px-4 bg-blue-500 text-white rounded">Administrator</button>
+                    <div className="flex flex-col w-1/4 h-full bg-red-200">
+                    <button onClick={() => handleClick('account')} className="py-2 px-4 bg-blue-500 text-white rounded">Account</button>
+                    <button onClick={() => handleClick('myorders')} className="py-2 px-4 bg-blue-500 text-white rounded">My Orders</button>
+                    {isAdmin() && (
+                        <>
+                            <button onClick={() => handleClick('editcars')} className="py-2 px-4 bg-blue-500 text-white rounded">Edit Cars</button>
+                            <button onClick={() => handleClick('viewusers')} className="py-2 px-4 bg-blue-500 text-white rounded">View Users</button>
+                            <button onClick={() => handleClick('vieworders')} className="py-2 px-4 bg-blue-500 text-white rounded">View Orders</button>
+                        </>
+                    )}
+
                     </div>
                     <div className="w-3/4 h-full bg-blue-200">
                         {renderComponent()}
