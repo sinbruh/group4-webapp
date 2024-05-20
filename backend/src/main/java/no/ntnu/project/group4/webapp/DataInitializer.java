@@ -526,7 +526,7 @@ public class DataInitializer implements ApplicationListener<ApplicationReadyEven
     User user1 = this.userService.getOneByEmail("morganlee@user.com").get();
     User user2 = this.userService.getOneByEmail("sarahlarsen@user.com").get();
     User user3 = this.userService.getOneByEmail("maxsmith@user.com").get();
-
+    this.logger.info("Adding favorites...");
     if (!user1.getFavorites().isEmpty()) {
       Provider provider1 = this.providerService.getOne(1l).get();
       Provider provider2 = this.providerService.getOne(2l).get();
@@ -539,6 +539,10 @@ public class DataInitializer implements ApplicationListener<ApplicationReadyEven
       user2.addFavorite(provider3);
       user2.addFavorite(provider4);
       user3.addFavorite(provider5);
+
+      this.logger.info("Done adding favorites");
+    } else {
+      this.logger.info("Favorites already in the database, not adding favorites");
     }
   }
 }
