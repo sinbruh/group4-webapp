@@ -1,12 +1,24 @@
 import { getCookie } from '@/tools/cookies';
+import { set } from 'date-fns';
 import React, { useEffect, useState } from 'react';
+import {
+    Table,
+    TableBody,
+    TableCaption,
+    TableCell,
+    TableHead,
+    TableHeader,
+    TableRow,
+  } from "@/components/ui/table"
 
 export default function MyOrders() {
-    const [users, setUsers] = useState([]);
+    const [user, setUser] = useState(null);
+    
+    const Email = getCookie('current_email');
 
     const updateJsonFile = async () => {
         try {
-            const response = await fetch('http://localhost:8080/api/users', {
+            const response = await fetch('http://localhost:8080/api/users/' + Email, {
                 headers: {
                     'Authorization': 'Bearer ' + getCookie('jwt'),
                 }
@@ -18,7 +30,8 @@ export default function MyOrders() {
             let data = await response.json();
     
             if (data) {
-                setUsers(data);
+                
+                setUser(data);
             }
         } catch (error) {
             console.error('Error updating JSON file:', error);
@@ -29,8 +42,8 @@ export default function MyOrders() {
         updateJsonFile();
     }, []);
 
-    console.log("MyOrders.js: ", users);
-
+    console.log("MyOrders.js: ", user);
+    
 
 
 
@@ -41,9 +54,45 @@ export default function MyOrders() {
 
             <form className={"space-y-2"}>
             
-                <label>
-                   
-                </label>
+            <Table>
+  <TableCaption>A list of your Orders</TableCaption>
+  <TableHeader>
+    <TableRow>
+      <TableHead className="w-[100px]">Order ID</TableHead>
+      <TableHead>Car Name</TableHead>
+      <TableHead>Location</TableHead>
+      <TableHead>Provider</TableHead>
+      <TableHead>Date</TableHead>
+      <TableHead className="text-right">Total</TableHead>
+    </TableRow>
+  </TableHeader>
+  <TableBody>
+    <TableRow>
+      <TableCell className="font-medium">id needed</TableCell>
+      <TableCell>name needed</TableCell>
+      <TableCell>location needed</TableCell>
+      <TableCell>provider needed</TableCell>
+      <TableCell>date To --- From needed</TableCell>
+      <TableCell className="text-right">$price needed</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell className="font-medium">id needed</TableCell>
+      <TableCell>name needed</TableCell>
+      <TableCell>location needed</TableCell>
+      <TableCell>provider needed</TableCell>
+      <TableCell>date To --- From needed</TableCell>
+      <TableCell className="text-right">$price needed</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell className="font-medium">id needed</TableCell>
+      <TableCell>name needed</TableCell>
+      <TableCell>location needed</TableCell>
+      <TableCell>provider needed</TableCell>
+      <TableCell>date To --- From needed</TableCell>
+      <TableCell className="text-right">$price needed</TableCell>
+    </TableRow>
+  </TableBody>
+</Table>
                 
             </form>
         </div>

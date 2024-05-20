@@ -519,5 +519,34 @@ public class DataInitializer implements ApplicationListener<ApplicationReadyEven
     } else {
       this.logger.info("Rentals already in the database, not loading data");
     }
+    this.addFavorites();
+  }
+
+  private void addFavorites() {
+    User user1 = this.userService.getOneByEmail("morganlee@user.com").get();
+    User user2 = this.userService.getOneByEmail("sarahlarsen@user.com").get();
+    User user3 = this.userService.getOneByEmail("maxsmith@user.com").get();
+    this.logger.info("Adding favorites...");
+    if (user1.getFavorites().isEmpty()) {
+      Provider provider1 = this.providerService.getOne(1l).get();
+      Provider provider2 = this.providerService.getOne(2l).get();
+      Provider provider3 = this.providerService.getOne(3l).get();
+      Provider provider4 = this.providerService.getOne(5l).get();
+      Provider provider5 = this.providerService.getOne(6l).get();
+
+      user1.addFavorite(provider1);
+      user1.addFavorite(provider2);
+      user2.addFavorite(provider3);
+      user2.addFavorite(provider4);
+      user3.addFavorite(provider5);
+
+      this.userService.update(user1.getId(), user1);
+      this.userService.update(user2.getId(), user2);
+      this.userService.update(user3.getId(), user3);
+
+      this.logger.info("Done adding favorites");
+    } else {
+      this.logger.info("Favorites already in the database, not adding favorites");
+    }
   }
 }
