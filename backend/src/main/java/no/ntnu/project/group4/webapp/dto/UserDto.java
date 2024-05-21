@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.util.Set;
 
 import no.ntnu.project.group4.webapp.models.Provider;
+import no.ntnu.project.group4.webapp.models.Receipt;
 import no.ntnu.project.group4.webapp.models.Rental;
 
 /**
@@ -17,10 +18,12 @@ public class UserDto {
   private int phoneNumber;
   private Date dateOfBirth;
   private Set<Rental> rentals;
+  private Set<Receipt> receipts;
   private Set<Provider> favorites;
 
   public UserDto(Long id, String firstName, String lastName, String email, int phoneNumber,
-                 long dateLong, Set<Rental> rentals, Set<Provider> favorites) {
+                 long dateLong, Set<Rental> rentals, Set<Receipt> receipts,
+                 Set<Provider> favorites) {
     this.id = id;
     this.firstName = firstName;
     this.lastName = lastName;
@@ -28,6 +31,7 @@ public class UserDto {
     this.phoneNumber = phoneNumber;
     this.dateOfBirth = new Date(dateLong);
     this.rentals = rentals;
+    this.receipts = receipts;
     this.favorites = favorites;
   }
 
@@ -85,6 +89,14 @@ public class UserDto {
 
   public void setRentals(Set<Rental> rentals) {
     this.rentals = rentals;
+  }
+
+  public Set<Receipt> getReceipts() {
+    return this.receipts;
+  }
+
+  public void setReceipts(Set<Receipt> receipts) {
+    this.receipts = receipts;
   }
 
   public Set<Provider> getFavorites() {

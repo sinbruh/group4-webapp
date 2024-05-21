@@ -72,7 +72,7 @@ public class UserController {
         UserDto userDataObj = new UserDto(user.getId(), user.getFirstName(), user.getLastName(),
                                           user.getEmail(), user.getPhoneNumber(),
                                           user.getDateOfBirth().getTime(), user.getRentals(),
-                                          user.getFavorites());
+                                          user.getReceipts(), user.getFavorites());
         userData.add(userDataObj);
       }
       response = new ResponseEntity<>(userData, HttpStatus.OK);
@@ -119,7 +119,8 @@ public class UserController {
                                          foundUser.getLastName(), foundUser.getEmail(),
                                          foundUser.getPhoneNumber(),
                                          foundUser.getDateOfBirth().getTime(),
-                                         foundUser.getRentals(), foundUser.getFavorites());
+                                         foundUser.getRentals(), foundUser.getReceipts(),
+                                         foundUser.getFavorites());
           response = new ResponseEntity<>(userData, HttpStatus.OK);
         } else {
           response = new ResponseEntity<>("Users do not have access to user data of other users",
