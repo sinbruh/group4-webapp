@@ -1,9 +1,10 @@
 import {getCookie} from "@/tools/cookies";
 import {HttpResponseError} from "@/tools/HttpResponseError";
 
-const API_BASE_URL = 'http://localhost:8080';
 
 export function asyncApiRequest(method, url, requestBody = null, returnPlainText = false) {
+    const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL;
+    console.log("API_BASE_URL: " + API_BASE_URL);
     const fullUrl = API_BASE_URL + url;
     let body = null;
     let headers = {};
