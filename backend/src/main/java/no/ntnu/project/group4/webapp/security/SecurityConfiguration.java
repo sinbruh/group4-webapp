@@ -76,6 +76,9 @@ public class SecurityConfiguration {
           (auth) -> auth.requestMatchers("/api/rentals/**").permitAll()
         )
         .authorizeHttpRequests(
+          (auth) -> auth.requestMatchers("/api/receipts/**").permitAll()
+        )
+        .authorizeHttpRequests(
           (auth) -> auth.requestMatchers("/api/users/**").permitAll()
         )
         // Authentication and registering is accessible for everyone
