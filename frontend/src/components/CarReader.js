@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import CarCard from "@/components/CarCard";
 import ExpandedCard from "@/components/ExpandedCard";
+import { asyncApiRequest } from "@/tools/request";
 
 export default function CarReader({
   location,
@@ -16,14 +17,7 @@ export default function CarReader({
   const updateJsonFile = async () => {
     try {
       //check data
-      const response = await fetch("http://localhost:8080/api/cars");
-       
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      let data = await response.json();
+      let data = await asyncApiRequest("GET", "/api/cars");
 
       if (data) {
         // Add img property to each car configuration
@@ -50,7 +44,7 @@ export default function CarReader({
     updateJsonFile().catch(console.error);
   }, [location, dates, price]);
 
-  
+
 
   const handleCardClick = (car) => {
     setExpandedCar(car);
