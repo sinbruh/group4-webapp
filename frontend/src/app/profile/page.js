@@ -19,11 +19,6 @@ export default function Page() {
         useRouter().push("/");
     }
 
-    //TODO Refactor this to be in auth tools
-    // function isAdmin() {
-    //     return user && user.role === "ROLE_ADMIN";
-    // }
-
     useEffect(() => {
         const fetchUserDetails = async () => {
             if (user && user.email) {
