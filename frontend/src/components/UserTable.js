@@ -38,13 +38,17 @@ export function UserTable() {
                 </TableRow>
             </TableHeader>
             <TableBody>
-                {users.map((user) => (
-                    <TableRow key={user.id}>
-                        <TableCell className="font-medium">{user.id}</TableCell>
-                        <TableCell>{user.email}</TableCell>
-                        <TableCell>{user.roles.map(role => role.name).join(', ')}</TableCell>
-                    </TableRow>
-                ))}
+                {users.map((user) => {
+                    const roles = user.roles.filter(role => !(role.name === 'ROLE_USER' && user.roles.some(r => r.name === 'ROLE_ADMIN')));
+                    console.log('roles', roles);
+                    return (
+                        <TableRow key={user.id}>
+                            <TableCell className="font-medium">{user.id}</TableCell>
+                            <TableCell>{user.email}</TableCell>
+                            <TableCell>{roles.map(role => role.name).join(', ')}</TableCell>
+                        </TableRow>
+                    );
+                })}
             </TableBody>
         </Table>
     );
