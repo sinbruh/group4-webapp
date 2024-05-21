@@ -1,7 +1,7 @@
 'use client'
 import { useSearchParams } from 'next/navigation';
 import styles from "./search.module.css";
-import React, { useEffect, useState } from 'react';
+import React, { Suspense, useState } from 'react';
 import Navigation from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import Link from "next/link";
@@ -9,20 +9,23 @@ import FilterBar from "@/components/FilterBar";
 import ExpandedCard from "@/components/ExpandedCard";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import CarReader from '../../components/CarReader.js';
+import { useMediaQuery } from 'react-responsive';
 
 export default function Search() {
-    const searchParams = useSearchParams ();
+    const searchParams = useSearchParams();
     const defaultLocation = searchParams.get('location');
     const start = searchParams.get('start');
     const end = searchParams.get('end');
+    const isDesktop = useMediaQuery({ query: '(min-width: 1450px)' });
 
     const [location, setLocation] = useState(defaultLocation);
-    const [dates, setDates] = useState({start: start, end: end});
-    const [price, setPrice] = useState({min: null, max: null});
+    const [dates, setDates] = useState({ start: start, end: end });
+    const [price, setPrice] = useState({ min: null, max: null });
     const [expandedCar, setExpandedCar] = useState(null);
 
     return (
         <div className="bg-[url('/temp-background-image-low.webp')] bg-cover bg-center">
+        <Suspense fallback={<div>Loading...</div>}>
             <Navigation />
 
             <section className={styles.breadcrumb}>
@@ -41,20 +44,22 @@ export default function Search() {
             />
             <section className="flex flex-row justify-between h-screen px-2">
 
-                <ScrollArea className="rounded-lg m-2 w-[45%] max-h-[78%]">
+                <ScrollArea className="rounded-lg m-2 grow max-h-[78%]">
                     <CarReader
-                    location={location}
-                    dates={dates}
-                    price={price}
-                    setExpandedCarInfo={setExpandedCar}
+                        location={location}
+                        dates={dates}
+                        price={price}
+                        setExpandedCarInfo={setExpandedCar}
                     />
                 </ScrollArea>
-
-                <section className="rounded m-2 max-h-[78%] w-[55%]">
-                    <ExpandedCard carInfo={expandedCar} dates={dates} />
-                </section>
+                {isDesktop &&
+                    <section className="rounded m-2 max-h-[78%] w-[55%]">
+                        <ExpandedCard carInfo={expandedCar} dates={dates} />
+                    </section>
+                }
             </section>
             <Footer />
+        </Suspense>
         </div>
     );
 };

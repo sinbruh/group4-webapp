@@ -21,7 +21,7 @@ export default function PricePicker({defaultValue, setPrice}) {
     };
 
     return (
-        <div className="flex space-x-4">
+        <div className="flex flex-col md:flex-row space-x-4">
             <div className="flex items-center space-x-2">
                 <label htmlFor="fromPrice" className="block text-sm font-medium text-gray-700">Min Price:</label>
                 <div className="flex space-x-4">
@@ -61,7 +61,7 @@ export default function PricePicker({defaultValue, setPrice}) {
                 </div>
                 </div>
             </div>
-        
+
     );
 }
 
