@@ -85,11 +85,11 @@ export default function CarReader({ location, dates, price, setExpandedCarInfo }
 
 
                         const rentals = configurations[0].providers[0].rentals;
-                        const isAvailable = rentals.every(rental => {
+                        const isAvailable = rentals ? rentals.every(rental => {
                             const rentalStartDate = new Date(rental.startDate);
                             const rentalEndDate = new Date(rental.endDate);
                             return rentalStartDate > toDate || rentalEndDate < fromDate;
-                        });
+                        }): false;
 
                         const carInfo = {
                             configId : configurations[0].id,
