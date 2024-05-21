@@ -4,6 +4,7 @@ import no.ntnu.project.group4.webapp.models.Car;
 import no.ntnu.project.group4.webapp.models.Configuration;
 import no.ntnu.project.group4.webapp.models.ExtraFeature;
 import no.ntnu.project.group4.webapp.models.Provider;
+import no.ntnu.project.group4.webapp.models.Receipt;
 import no.ntnu.project.group4.webapp.models.Rental;
 import no.ntnu.project.group4.webapp.models.Role;
 import no.ntnu.project.group4.webapp.models.User;
@@ -13,6 +14,7 @@ import no.ntnu.project.group4.webapp.services.CarService;
 import no.ntnu.project.group4.webapp.services.ConfigurationService;
 import no.ntnu.project.group4.webapp.services.ExtraFeatureService;
 import no.ntnu.project.group4.webapp.services.ProviderService;
+import no.ntnu.project.group4.webapp.services.ReceiptService;
 import no.ntnu.project.group4.webapp.services.RentalService;
 import no.ntnu.project.group4.webapp.services.UserService;
 
@@ -47,6 +49,8 @@ public class DataInitializer implements ApplicationListener<ApplicationReadyEven
   private ProviderService providerService;
   @Autowired
   private RentalService rentalService;
+  @Autowired
+  private ReceiptService receiptService;
 
   private final Logger logger = LoggerFactory.getLogger(DataInitializer.class);
 
@@ -495,29 +499,98 @@ public class DataInitializer implements ApplicationListener<ApplicationReadyEven
     if (rentalsIt.hasNext()) {
       isEmpty = false;
     }
-    this.logger.info("Loading rental data...");
+    this.logger.info("Loading rental data with receipts...");
     if (isEmpty) {
       Rental rental1 = new Rental(new Date(1716163200000l), new Date(1747699200000l));
+      Rental rental2 = new Rental(new Date(1718841600000l), new Date(1721433600000l));
+      Rental rental3 = new Rental(new Date(1724112000000l), new Date(1724716800000l));
 
-      Rental rental2 = new Rental(new Date(1716249600000l), new Date(1717459200000l));
+      Rental rental4 = new Rental(new Date(1716249600000l), new Date(1717459200000l));
+      Rental rental5 = new Rental(new Date(1726876800000l), new Date(1728086400000l));
 
-      Rental rental3 = new Rental(new Date(1716336000000l), new Date(1716508800000l));
-
+      Rental rental6 = new Rental(new Date(1716336000000l), new Date(1716508800000l));
 
       rental1.setUser(this.userService.getOneByEmail("morganlee@user.com").get());
-      rental2.setUser(this.userService.getOneByEmail("sarahlarsen@user.com").get());
-      rental3.setUser(this.userService.getOneByEmail("maxsmith@user.com").get());
+      rental2.setUser(this.userService.getOneByEmail("morganlee@user.com").get());
+      rental3.setUser(this.userService.getOneByEmail("morganlee@user.com").get());
+
+      rental4.setUser(this.userService.getOneByEmail("sarahlarsen@user.com").get());
+      rental5.setUser(this.userService.getOneByEmail("sarahlarsen@user.com").get());
+
+      rental6.setUser(this.userService.getOneByEmail("maxsmith@user.com").get());
+
       rental1.setProvider(this.providerService.getOne(1l).get());
-      rental2.setProvider(this.providerService.getOne(3l).get());
-      rental3.setProvider(this.providerService.getOne(5l).get());
+      rental2.setProvider(this.providerService.getOne(2l).get());
+      rental3.setProvider(this.providerService.getOne(3l).get());
+
+      rental4.setProvider(this.providerService.getOne(4l).get());
+      rental5.setProvider(this.providerService.getOne(5l).get());
+
+      rental6.setProvider(this.providerService.getOne(6l).get());
 
       this.rentalService.add(rental1);
       this.rentalService.add(rental2);
       this.rentalService.add(rental3);
 
-      this.logger.info("Done loading rental data");
+      this.rentalService.add(rental4);
+      this.rentalService.add(rental5);
+
+      this.rentalService.add(rental6);
+
+      Receipt receipt1 =
+        new Receipt(rental1.getProvider().getConfiguration().getCar().getMake() + " " +
+                    rental1.getProvider().getConfiguration().getCar().getModel(),
+                    rental1.getProvider().getName(), rental1.getProvider().getLocation(),
+                    rental1.getStartDate().getTime(), rental1.getEndDate().getTime(), 200000);
+      Receipt receipt2 =
+      new Receipt(rental2.getProvider().getConfiguration().getCar().getMake() + " " +
+                  rental2.getProvider().getConfiguration().getCar().getModel(),
+                  rental2.getProvider().getName(), rental2.getProvider().getLocation(),
+                  rental2.getStartDate().getTime(), rental2.getEndDate().getTime(), 30000);
+      Receipt receipt3 =
+      new Receipt(rental3.getProvider().getConfiguration().getCar().getMake() + " " +
+                  rental3.getProvider().getConfiguration().getCar().getModel(),
+                  rental3.getProvider().getName(), rental3.getProvider().getLocation(),
+                  rental3.getStartDate().getTime(), rental3.getEndDate().getTime(), 2500);
+
+      Receipt receipt4 =
+      new Receipt(rental4.getProvider().getConfiguration().getCar().getMake() + " " +
+                  rental4.getProvider().getConfiguration().getCar().getModel(),
+                  rental4.getProvider().getName(), rental4.getProvider().getLocation(),
+                  rental4.getStartDate().getTime(), rental4.getEndDate().getTime(), 5000);
+      Receipt receipt5 =
+      new Receipt(rental5.getProvider().getConfiguration().getCar().getMake() + " " +
+                  rental5.getProvider().getConfiguration().getCar().getModel(),
+                  rental5.getProvider().getName(), rental5.getProvider().getLocation(),
+                  rental5.getStartDate().getTime(), rental5.getEndDate().getTime(), 10000);
+      
+      Receipt receipt6 =
+      new Receipt(rental6.getProvider().getConfiguration().getCar().getMake() + " " +
+                  rental6.getProvider().getConfiguration().getCar().getModel(),
+                  rental6.getProvider().getName(), rental6.getProvider().getLocation(),
+                  rental6.getStartDate().getTime(), rental6.getEndDate().getTime(), 12500);
+      
+      receipt1.setUser(this.userService.getOneByEmail("morganlee@user.com").get());
+      receipt2.setUser(this.userService.getOneByEmail("morganlee@user.com").get());
+      receipt3.setUser(this.userService.getOneByEmail("morganlee@user.com").get());
+
+      receipt4.setUser(this.userService.getOneByEmail("sarahlarsen@user.com").get());
+      receipt5.setUser(this.userService.getOneByEmail("sarahlarsen@user.com").get());
+
+      receipt6.setUser(this.userService.getOneByEmail("maxsmith@user.com").get());
+
+      this.receiptService.add(receipt1);
+      this.receiptService.add(receipt2);
+      this.receiptService.add(receipt3);
+
+      this.receiptService.add(receipt4);
+      this.receiptService.add(receipt5);
+
+      this.receiptService.add(receipt6);
+
+      this.logger.info("Done loading rental data with receipts");
     } else {
-      this.logger.info("Rentals already in the database, not loading data");
+      this.logger.info("Rentals with receipts already in the database, not loading data");
     }
     this.addFavorites();
   }
