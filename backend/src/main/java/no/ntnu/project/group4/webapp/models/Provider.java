@@ -28,7 +28,6 @@ public class Provider {
   @JsonIgnore
   @ManyToOne
   private Configuration configuration;
-  @JsonIgnore
   @OneToMany(mappedBy = "provider")
   private Set<Rental> rentals = new LinkedHashSet<>();
   @JsonIgnore
