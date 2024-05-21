@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,7 +30,7 @@ import no.ntnu.project.group4.webapp.services.UserService;
  * <p>All HTTP requests affiliated with receipts are handled in the class.</p>
  * 
  * @author Group 4
- * @version v1.0 (2024.05.21)
+ * @version v1.1 (2024.05.21)
  */
 @CrossOrigin
 @RestController
@@ -43,6 +44,110 @@ public class ReceiptController {
   private UserService userService;
   @Autowired
   private AccessUserService accessUserService;
+
+  /**
+   * Returns a HTTP response to the request requesting to get all receipts.
+   * 
+   * <p>The response body contains all receipt data on success or a string with an error message on
+   * error.</p>
+   * 
+   * @return <p>200 OK on success + all receipt data</p>
+   *         <p>401 UNAUTHORIZED if user is not authenticated</p>
+   *         <p>403 FORBIDDEN if user is not admin</p>
+   */
+  @Operation(
+    summary = "Get all receipts",
+    description = "Gets all receipts"
+  )
+  @ApiResponses(value = {
+    @ApiResponse(
+      responseCode = "200",
+      description = "All receipt data"
+    ),
+    @ApiResponse(
+      responseCode = "401",
+      description = "Only authenticated users have access to all receipt data"
+    ),
+    @ApiResponse(
+      responseCode = "403",
+      description = "Only admin users have access to all receipt data"
+    )
+  })
+  @GetMapping
+  public ResponseEntity<?> getAll() {
+    ResponseEntity<?> response;
+    User sessionUser = this.accessUserService.getSessionUser();
+    if (sessionUser != null && sessionUser.isAdmin()) {
+      response = new ResponseEntity<>(this.rentalService.getAll(), HttpStatus.OK);
+    } else if (sessionUser == null) {
+      response = new ResponseEntity<>("Only authenticated users have access to all receipt data",
+                                      HttpStatus.UNAUTHORIZED);
+    } else {
+      response = new ResponseEntity<>("Only admin users have access to all receipt data",
+                                      HttpStatus.FORBIDDEN);
+    }
+    return response;
+  }
+
+  /**
+   * Returns a HTTP response to the request requesting to get the receipt with the specified ID.
+   * 
+   * <p>The response body contains receipt data on success or a string with an error message on
+   * error.</p>
+   * 
+   * @param id The specified ID
+   * @return <p>200 OK on success</p>
+   *         <p>401 UNAUTHORIZED if user is not authenticated</p>
+   *         <p>403 FORBIDDEN if user email does not match email of receipt user</p>
+   *         <p>404 NOT FOUND if receipt is not found</p>
+   */
+  @Operation(
+    summary = "Get receipt by ID",
+    description = "Gets the receipt with the specified ID"
+  )
+  @ApiResponses(value = {
+    @ApiResponse(
+      responseCode = "200",
+      description = "Receipt data"
+    ),
+    @ApiResponse(
+      responseCode = "401",
+      description = "Only authenticated users have access to receipt data"
+    ),
+    @ApiResponse(
+      responseCode = "403",
+      description = "Users do not have access to receipt data for other users"
+    ),
+    @ApiResponse(
+      responseCode = "404",
+      description = "Receipt with specified ID not found"
+    )
+  })
+  @GetMapping("/{id}")
+  public ResponseEntity<?> get(@PathVariable Long id) {
+    ResponseEntity<?> response;
+    User sessionUser = this.accessUserService.getSessionUser();
+    if (sessionUser != null) {
+      Optional<Receipt> receipt = this.receiptService.getOne(id);
+      if (receipt.isPresent()) {
+        Receipt existingReceipt = receipt.get();
+        if (sessionUser.getEmail().equals(existingReceipt.getUser().getEmail()) ||
+            sessionUser.isAdmin()) {
+          response = new ResponseEntity<>(existingReceipt, HttpStatus.OK);
+        } else {
+          response = new ResponseEntity<>("Users do not have access to receipt data for other " +
+                                          "users", HttpStatus.FORBIDDEN);
+        }
+      } else {
+        response = new ResponseEntity<>("Receipt with specified ID not found",
+                                        HttpStatus.NOT_FOUND);
+      }
+    } else {
+      response = new ResponseEntity<>("Only authenticated users have access to receipt data",
+                                      HttpStatus.UNAUTHORIZED);
+    }
+    return response;
+  }
 
   /**
    * Returns a HTTP response to the request requesting to add the receipt with the specified total
