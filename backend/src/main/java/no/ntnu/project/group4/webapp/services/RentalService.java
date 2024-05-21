@@ -76,8 +76,8 @@ public class RentalService {
     }
     if (existingRental.isPresent()) {
       Rental existingRentalObj = existingRental.get();
-      existingRentalObj.setStartDate(rental.getStartDate());
-      existingRentalObj.setEndDate(rental.getEndDate());
+      existingRentalObj.setStartDate(rental.getStartDate().getTime());
+      existingRentalObj.setEndDate(rental.getEndDate().getTime());
       this.rentalRepository.save(existingRentalObj);
     }
     return existingRental.isPresent();
