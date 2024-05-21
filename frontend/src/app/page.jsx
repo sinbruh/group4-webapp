@@ -26,10 +26,10 @@ export default function Home() {
             <div className="bg-[url('../img/temp-background-image-low.webp')] bg-cover bg-center">
                 <Navigation />
 
-                <form onSubmit={handleSubmit} className="flex justify-center items-center h-screen gap-x-2">
+                <form onSubmit={handleSubmit} className="flex flex-wrap justify-center content-center items-center h-screen gap-2">
                     <Locationbox value={location} onChange={setLocation} />
                     <DatePickerWithRange value={dateRange} onChange={setDateRange} />
-                    <Button type="submit" >
+                    <Button type="submit" className="grow m-4 md:grow-0 md:m-0 " >
                         Search
                     </Button>
                 </form>
