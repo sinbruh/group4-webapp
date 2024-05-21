@@ -107,6 +107,7 @@ public class ReceiptController {
                         existingRental.getProvider().getLocation(),
                         existingRental.getStartDate().getTime(),
                         existingRental.getEndDate().getTime(), totalPrice);
+            receipt.setUser(user.get());
           try {
             this.receiptService.add(receipt);
             response = new ResponseEntity<>(receipt.getId(), HttpStatus.CREATED);
