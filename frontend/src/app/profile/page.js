@@ -16,7 +16,7 @@ export default function Page() {
 
     if (!isLoggedIn()) {
         console.log("User is not logged in. Redirecting to login page.");
-        useRouter().push("/");
+        // useRouter().push("/");
     }
 
     useEffect(() => {

@@ -12,7 +12,7 @@ import { Button } from "@/components/ui/button";
 
 
 export default function FilterBar({ defaultLocation, defaultStart, defaultEnd, setLocation, setDates, setPrice }) {
-    const [location, setLocationState] = useState(defaultLocation);
+    const [location, setLocationState] = useState(defaultLocation) || "ålesund";
     const [dates, setDatesState] = useState({ start: defaultStart, end: defaultEnd });
     const [price, setPriceState] = useState({ min: null, max: null });
     const isDesktop = useMediaQuery({ query: '(min-width: 1450px)' });

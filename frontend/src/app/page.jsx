@@ -16,7 +16,7 @@ export default function Home() {
     const handleSubmit = (e) => {
         e.preventDefault();
         // Navigate to the search page with query parameters
-        router.push(`/search?location=${location}&start=${format(dateRange.from, 'T')}&end=${format(dateRange.to, 'T')}`);
+        router.push(`/search?location=${location || 'ålesund'}&start=${format(dateRange.from, 'T')}&end=${format(dateRange.to, 'T')}`);
 
     };
 
