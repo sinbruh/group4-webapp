@@ -187,6 +187,15 @@ public class User {
   }
 
   /**
+   * Removes the specified provider from the user favorites.
+   * 
+   * @param provider The specified provider
+   */
+  public void removeFavorite(Provider provider) {
+    this.favorites.remove(provider);
+  }
+
+  /**
    * Checks if the user has the admin role.
    * 
    * @return True if the user has the admin role or false otherwise

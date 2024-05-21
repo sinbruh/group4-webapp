@@ -20,8 +20,7 @@ public class RegisterDto {
     this.email = email;
     this.phoneNumber = phoneNumber;
     this.password = password;
-    Date dateOfBirth = new Date(dateLong);
-    this.dateOfBirth = dateOfBirth;
+    this.dateOfBirth = new Date(dateLong);
   }
 
   public String getFirstName() {

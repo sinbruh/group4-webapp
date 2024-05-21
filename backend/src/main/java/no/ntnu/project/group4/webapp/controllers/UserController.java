@@ -333,19 +333,19 @@ public class UserController {
                  description = "Could not favorite provider with specified provider ID"
     )
   })
-  @PutMapping("/favorite/{configId}")
-  public ResponseEntity<String> toggleFavorite(@PathVariable Long configId) {
+  @PutMapping("/favorite/{providerId}")
+  public ResponseEntity<String> toggleFavorite(@PathVariable Long providerId) {
     ResponseEntity<String> response;
     User sessionUser = this.accessUserService.getSessionUser();
     if (sessionUser != null) {
-      Optional<Provider> provider = this.providerService.getOne(configId);
+      Optional<Provider> provider = this.providerService.getOne(providerId);
       if (provider.isPresent()) {
         Provider foundProvider = provider.get();
         Set<Provider> favorites = sessionUser.getFavorites();
         if (!favorites.contains(foundProvider)) {
-          favorites.add(foundProvider);
+          sessionUser.addFavorite(foundProvider);
         } else {
-          favorites.remove(foundProvider);
+          sessionUser.removeFavorite(foundProvider);
         }
         try {
           this.userService.update(sessionUser.getId(), sessionUser);

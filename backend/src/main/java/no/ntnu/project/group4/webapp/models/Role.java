@@ -51,4 +51,8 @@ public class Role {
   public void setUsers(Set<User> users) {
     this.users = users;
   }
+
+  public boolean isValid() {
+    return !this.name.isBlank();
+  }
 }
