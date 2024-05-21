@@ -8,6 +8,8 @@ import jakarta.persistence.ManyToMany;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity(name = "role")
 @Schema(name = "Role", description = "A role entity, representing a role of a user.")
 public class Role {
@@ -15,6 +17,7 @@ public class Role {
   @GeneratedValue
   private Long id;
   private String name;
+  @JsonIgnore
   @ManyToMany(mappedBy = "roles")
   private Set<User> users = new LinkedHashSet<>();
 
