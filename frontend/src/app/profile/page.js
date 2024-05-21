@@ -3,7 +3,7 @@ import { React, useEffect, useState } from 'react';
 import Navigation from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import Link from "next/link";
-import { useRouter } from 'next/navigation';
+import {redirect, useRouter} from 'next/navigation';
 import { useStore, isLoggedIn, isAdmin} from "@/tools/authentication";
 import AccountSettings from "@/components/AccountSettings.js"
 import {asyncApiRequest} from "@/tools/request";
@@ -18,7 +18,7 @@ export default function Page() {
 
     if (!isLoggedIn()) {
         console.log("User is not logged in. Redirecting to login page.");
-        // useRouter().push("/");
+        redirect("/");
     }
 
     useEffect(() => {
