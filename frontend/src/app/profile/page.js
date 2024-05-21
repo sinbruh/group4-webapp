@@ -8,6 +8,7 @@ import { useStore, isLoggedIn, isAdmin} from "@/tools/authentication";
 import AccountSettings from "@/components/AccountSettings.js"
 import {asyncApiRequest} from "@/tools/request";
 import { Button } from "@/components/ui/button"
+import {UserTable} from "@/components/UserTable";
 
 export default function Page() {
     const user = useStore((state) => state.user);
@@ -45,6 +46,8 @@ export default function Page() {
         switch(activeComponent) {
             case 'account':
                 return <AccountSettings userDetails={userDetails}/>;
+                case 'viewusers':
+                    return <UserTable />;
             default:
                 return <p></p>;
         }
