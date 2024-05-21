@@ -10,7 +10,7 @@ import {asyncApiRequest} from "@/tools/request";
 import { Button } from "@/components/ui/button"
 
 export default function Page() {
-    const user = useStore((state) => [state.user, state.setUser]);
+    const user = useStore((state) => state.user);
     const [activeComponent, setActiveComponent] = useState('default');
     const [userDetails, setUserDetails] = useState(null);
 
@@ -21,10 +21,12 @@ export default function Page() {
 
     useEffect(() => {
         const fetchUserDetails = async () => {
-            if (user && user.email) {
+            console.log("Fetching user details for: ", user);
+            if (user) {
                 try {
                     console.log("Fetching user details for: ", user.email);
                     const userDetails = await asyncApiRequest("GET", `/api/users/${user.email}`);
+                    console.log(userDetails);
                     setUserDetails(userDetails);
                 } catch (error) {
                     console.error("Error fetching user details: ", error);
@@ -60,7 +62,7 @@ export default function Page() {
             </section>
             <div className="flex items-center justify-center min-h-screen">
                 <section className="m-2 p-2 bg-white h-dvh w-4/5 rounded flex">
-                    <div className="flex flex-col w-1/4 h-full bg-red-200">
+                    <div className="flex gap-y-2 flex-col w-1/4 h-full bg-red-200">
                     <Button onClick={() => handleClick('account')} className="py-2 px-4 bg-blue-500 text-white rounded">Account</Button>
                     <Button onClick={() => handleClick('myorders')} className="py-2 px-4 bg-blue-500 text-white rounded">My Orders</Button>
                     {isAdmin() && (
