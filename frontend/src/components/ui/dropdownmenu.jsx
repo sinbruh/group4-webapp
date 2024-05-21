@@ -1,7 +1,6 @@
 import {
     LogOut,
     User,
-    Users,
 } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
@@ -19,8 +18,7 @@ import Link from "next/link";
 import Image from "next/image";
 import userIcon from "@/img/icons/person.svg";
 import React from "react";
-import {deleteAuthorizationCookies, isLoggedIn, useStore} from "@/tools/authentication";
-import LoginModal from "@/components/modal/LoginModal";
+import {deleteAuthorizationCookies, useStore} from "@/tools/authentication";
 
 export function DropDownMenu() {
     const logout = useStore((state) => state.logout);
@@ -29,6 +27,7 @@ export function DropDownMenu() {
     function handleLogout() {
         deleteAuthorizationCookies();
         logout();
+        console.log(User + "User has logged out");
     }
 
     return (
