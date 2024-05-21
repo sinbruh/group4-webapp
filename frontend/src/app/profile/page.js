@@ -4,7 +4,7 @@ import Navigation from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import Link from "next/link";
 import { useRouter } from 'next/navigation';
-import { useStore, isLoggedIn} from "@/tools/authentication";
+import { useStore, isLoggedIn, isAdmin} from "@/tools/authentication";
 import AccountSettings from "@/components/AccountSettings.js"
 import {asyncApiRequest} from "@/tools/request";
 import { Button } from "@/components/ui/button"
@@ -20,9 +20,9 @@ export default function Page() {
     }
 
     //TODO Refactor this to be in auth tools
-    function isAdmin() {
-        return user && user.role === "ROLE_ADMIN";
-    }
+    // function isAdmin() {
+    //     return user && user.role === "ROLE_ADMIN";
+    // }
 
     useEffect(() => {
         const fetchUserDetails = async () => {

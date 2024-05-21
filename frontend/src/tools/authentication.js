@@ -2,6 +2,7 @@ import { deleteCookie, getCookie, setCookie } from "./cookies";
 import { asyncApiRequest } from "./request";
 import { create } from "zustand";
 
+
 export const useStore = create((set) => ({
     user: null,
     setUser: (user) => set({ user }),
@@ -23,18 +24,19 @@ export function getAuthenticatedUser() {
 }
 
 export function isAdmin() {
-    const user = useStore((state) => state.user);
+    const user = useStore.getState().user;
     const isAdmin = user && user.roles.includes("ROLE_ADMIN");
 
     return isAdmin;
 }
 
-// export function isUser() {
-//     const user = useStore((state) => state.user);
-//     const isUser = user && user.roles.includes("ROLE_USER");
-//
-//     return isUser;
-// }
+
+export function isUser() {
+    const user = useStore.getState().user;
+    const isUser = user && user.roles.includes("ROLE_USER");
+
+    return isUser;
+}
 
 export function isLoggedIn() {
     const user = useStore((state) => state.user);
