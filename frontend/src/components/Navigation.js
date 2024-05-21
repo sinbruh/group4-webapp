@@ -7,14 +7,10 @@ import LoginModal from "@/components/modal/LoginModal.jsx";
 import { isLoggedIn, useStore, deleteAuthorizationCookies } from "@/tools/authentication";
 import userIcon from "@/img/icons/person.svg";
 import { Button } from "@/components/ui/button";
+import {DropDownMenu} from "@/components/ui/dropdownmenu";
 
 export function Navigation() {
-    const logout = useStore((state) => state.logout);
 
-    function handleLogout() {
-        deleteAuthorizationCookies();
-        logout();
-    }
 
     return (
         <div id="nav-container" className=" p-2 bg-white min-h-16 flex items-center justify-between">
@@ -43,14 +39,7 @@ export function Navigation() {
                 </p>
             </nav>
             {/* User icon logic */}
-            {isLoggedIn() && <button onClick={handleLogout}>Logout</button>}
-            {!isLoggedIn() ? <LoginModal /> : (
-                <Button variant="ghost" size="icon">
-                    <Link href={"/profile"}>
-                        <Image src={userIcon} alt="User icon" width={32} height={32} />
-                    </Link>
-                </Button>
-            )}
+            {isLoggedIn() ? <DropDownMenu /> : <LoginModal />}
         </div>
     )
 }
