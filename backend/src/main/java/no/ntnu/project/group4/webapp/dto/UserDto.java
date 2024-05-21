@@ -6,6 +6,7 @@ import java.util.Set;
 import no.ntnu.project.group4.webapp.models.Provider;
 import no.ntnu.project.group4.webapp.models.Receipt;
 import no.ntnu.project.group4.webapp.models.Rental;
+import no.ntnu.project.group4.webapp.models.Role;
 
 /**
  * Data transfer object (DTO) for getting user data.
@@ -17,19 +18,23 @@ public class UserDto {
   private String email;
   private int phoneNumber;
   private Date dateOfBirth;
+  private boolean active;
+  private Set<Role> roles;
   private Set<Rental> rentals;
   private Set<Receipt> receipts;
   private Set<Provider> favorites;
 
   public UserDto(Long id, String firstName, String lastName, String email, int phoneNumber,
-                 long dateLong, Set<Rental> rentals, Set<Receipt> receipts,
-                 Set<Provider> favorites) {
+                 long dateLong, boolean active, Set<Role> roles, Set<Rental> rentals,
+                 Set<Receipt> receipts, Set<Provider> favorites) {
     this.id = id;
     this.firstName = firstName;
     this.lastName = lastName;
     this.email = email;
     this.phoneNumber = phoneNumber;
     this.dateOfBirth = new Date(dateLong);
+    this.active = active;
+    this.roles = roles;
     this.rentals = rentals;
     this.receipts = receipts;
     this.favorites = favorites;
@@ -81,6 +86,22 @@ public class UserDto {
 
   public void setDateOfBirth(long dateLong) {
     this.dateOfBirth = new Date(dateLong);
+  }
+
+  public boolean isActive() {
+    return this.active;
+  }
+
+  public void setActive(boolean active) {
+    this.active = active;
+  }
+
+  public Set<Role> getRoles() {
+    return this.roles;
+  }
+
+  public void setRoles(Set<Role> roles) {
+    this.roles = roles;
   }
 
   public Set<Rental> getRentals() {
