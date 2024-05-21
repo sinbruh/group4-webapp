@@ -156,7 +156,6 @@ public class UserController {
    *         <p>401 UNAUTHORIZED if user is not authenticated</p>
    *         <p>403 FORBIDDEN if user email does not match email</p>
    *         <p>404 NOT FOUND if user is not found</p>
-   *         <p>500 INTERNAL SERVER ERROR if an error occured when updating user data</p>
    */
   @Operation(summary = "Update user by email", description = "Updates the user with the specified email")
   @ApiResponses(value = {
@@ -165,7 +164,6 @@ public class UserController {
     @ApiResponse(responseCode = "401", description = "Only authenticated users have access to update user data"),
     @ApiResponse(responseCode = "403", description = "Users do not have access to update user data of other users"),
     @ApiResponse(responseCode = "404", description = "User with specified email not found"),
-    @ApiResponse(responseCode = "500", description = "Could not update user data")
   })
   @PutMapping("/{email}")
   public ResponseEntity<?> update(@PathVariable String email, @RequestBody UserUpdateDto userData) {
