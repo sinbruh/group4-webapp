@@ -1,5 +1,8 @@
 package no.ntnu.project.group4.webapp.models;
 
+import java.util.LinkedHashSet;
+import java.util.Set;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -7,7 +10,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 
 @Entity(name = "provider")
 @Schema(name = "Provider", description = "A provider entity, representing a provider of a car configuration.")
@@ -23,6 +28,12 @@ public class Provider {
   @JsonIgnore
   @ManyToOne
   private Configuration configuration;
+  @JsonIgnore
+  @OneToMany(mappedBy = "provider")
+  private Set<Rental> rentals = new LinkedHashSet<>();
+  @JsonIgnore
+  @ManyToMany(mappedBy = "favorites")
+  private Set<User> favoritedUsers = new LinkedHashSet<>();
 
   /**
    * Empty constructor needed for JPA.
@@ -120,6 +131,42 @@ public class Provider {
 
   public void setConfiguration(Configuration configuration) {
     this.configuration = configuration;
+  }
+
+  /**
+   * Getter for rentals.
+   * 
+   * @return Rentals
+   */
+  public Set<Rental> getRentals() {
+    return this.rentals;
+  }
+
+  /**
+   * Setter for rentals.
+   * 
+   * @param rentals The specified rentals
+   */
+  public void setRentals(Set<Rental> rentals) {
+    this.rentals = rentals;
+  }
+
+  /**
+   * Getter for favorited users.
+   * 
+   * @return Favorited users
+   */
+  public Set<User> getFavoritedUsers() {
+    return this.favoritedUsers;
+  }
+
+  /**
+   * Setter for favorites users.
+   * 
+   * @param favoritedUsers The specified favorited users
+   */
+  public void setFavoritedUsers(Set<User> favoritedUsers) {
+    this.favoritedUsers = favoritedUsers;
   }
 
   /**
