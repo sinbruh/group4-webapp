@@ -9,20 +9,26 @@ import {
 } from "@/components/ui/popover"
 import { useMediaQuery } from 'react-responsive';
 import { Button } from "@/components/ui/button";
+import FavoriteFilterButton from './FavoriteFilterButton';
+import { isLoggedIn } from '@/tools/authentication';
 
 
-export default function FilterBar({ defaultLocation, defaultStart, defaultEnd, setLocation, setDates, setPrice }) {
+export default function FilterBar({ defaultLocation, defaultStart, defaultEnd, setLocation, setDates, setPrice, onFavoriteFilterChange }) {
     const [location, setLocationState] = useState(defaultLocation) || "ålesund";
     const [dates, setDatesState] = useState({ start: defaultStart, end: defaultEnd });
     const [price, setPriceState] = useState({ min: null, max: null });
+    const [favoriteFilter, setFavoriteFilter] = useState(false); // Add this line
     const isDesktop = useMediaQuery({ query: '(min-width: 1450px)' });
+
+    console.log("FilterBar favoriteFilter", favoriteFilter);
 
 
     useEffect(() => {
         setLocation(location);
         setDates(dates);
         setPrice(price);
-    }, [location, dates, price]);
+        onFavoriteFilterChange(favoriteFilter);
+    }, [location, dates, price, favoriteFilter]);
 
     return (
         <div className="flex">
@@ -31,7 +37,14 @@ export default function FilterBar({ defaultLocation, defaultStart, defaultEnd, s
                     <Locationbox defaultValue={defaultLocation} setLocation={setLocation} />
                     <DatePickerWithRange defaultStart={defaultStart} defaultEnd={defaultEnd} setDates={setDates} />
                     <PricePicker defaultValue={price} setPrice={setPrice} />
+                    {isLoggedIn() && (
+                        <>
+                            <p> Filter by favorite: </p>
+                            <FavoriteFilterButton onFavoriteChange={setFavoriteFilter} />
+                        </>
+                     )}
                 </section>
+                    
             }
             {!isDesktop &&
                 <Popover>
@@ -43,6 +56,12 @@ export default function FilterBar({ defaultLocation, defaultStart, defaultEnd, s
                             <Locationbox defaultValue={defaultLocation} setLocation={setLocation} />
                             <DatePickerWithRange defaultStart={defaultStart} defaultEnd={defaultEnd} setDates={setDates} />
                             <PricePicker defaultValue={price} setPrice={setPrice} />
+                            {isLoggedIn() && (
+                                <>
+                                    <p> Filter by favorite: </p>
+                                    <FavoriteFilterButton onFavoriteChange={setFavoriteFilter} />
+                                </>
+                            )}
                         </section>
                     </PopoverContent>
                 </Popover>

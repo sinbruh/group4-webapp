@@ -2,17 +2,26 @@ import React, { useEffect, useState } from "react";
 import CarCard from "@/components/CarCard";
 import ExpandedCard from "@/components/ExpandedCard";
 import { asyncApiRequest } from "@/tools/request";
+import { useStore } from "@/tools/authentication";
+import { getCookie } from "@/tools/cookies";
+
+
+
 
 export default function CarReader({
   location,
   dates,
   price,
   setExpandedCarInfo,
+  favoriteFilter
 }) {
   const [cars, setCars] = useState([]);
   const [expandedCar, setExpandedCar] = useState(null);
   const fromDate = dates ? dates.from : null;
   const toDate = dates ? dates.to : null;
+  const [user, setUser] = useState(null);
+  const Email = getCookie("current_email");
+  console.log("CarReader Favorite YAYYYY" , favoriteFilter)
 
   const updateJsonFile = async () => {
     try {
@@ -39,6 +48,32 @@ export default function CarReader({
       console.error("Error updating JSON file:", error);
     }
   };
+
+  
+    const UserInfo = async () => {
+      try {
+          let data = await asyncApiRequest("GET", "/api/users/" + Email, {
+              headers: {
+                  Authorization: "Bearer " + getCookie("jwt"),
+              },
+          });
+  
+          if (data) {
+              setUser(data);
+              console.log("MyOrders.js: ", data);
+          }
+      } catch (error) {
+          console.error("Error fetching user information", error);
+      }
+  };
+  
+  useEffect(() => {
+      UserInfo();
+  }, []);
+
+  useEffect(() => {
+    UserInfo();
+  }, []);
 
   useEffect(() => {
     updateJsonFile().catch(console.error);
@@ -76,6 +111,7 @@ export default function CarReader({
             const carLocationLowercase = provider.location.toLowerCase();
             const locationLowercase = location.toLowerCase();
             const carAvailability = provider.available;
+            
 
             if (!isNaN(fromPriceNumber) && !isNaN(toPriceNumber)) {
               const isFromPriceLower = fromPriceNumber <= lowestPrice;
@@ -83,7 +119,8 @@ export default function CarReader({
                 toPriceNumber >= lowestPrice || toPriceNumber === 0;
               const isLocationMatch =
                 carLocationLowercase === locationLowercase || location === "";
-              if (isFromPriceLower && isToPriceHigher && isLocationMatch) {
+              const isFavorite = favoriteFilter ? user.favorites.some(favorite => favorite.id === provider.id) : true; // Add this line
+              if (isFromPriceLower && isToPriceHigher && isLocationMatch && isFavorite) { // Update this line
                 return lowestPrice;
               }
             }

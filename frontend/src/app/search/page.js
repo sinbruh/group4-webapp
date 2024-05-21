@@ -10,6 +10,7 @@ import ExpandedCard from "@/components/ExpandedCard";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import CarReader from '../../components/CarReader.js';
 import { useMediaQuery } from 'react-responsive';
+ 
 
 export default function Search() {
     const searchParams = useSearchParams();
@@ -22,6 +23,10 @@ export default function Search() {
     const [dates, setDates] = useState({ start: start, end: end });
     const [price, setPrice] = useState({ min: null, max: null });
     const [expandedCar, setExpandedCar] = useState(null);
+    const [favoriteFilter, setFavoriteFilter] = useState(false);
+    
+
+   
 
     return (
         <div className="bg-[url('/temp-background-image-low.webp')] bg-cover bg-center">
@@ -41,6 +46,7 @@ export default function Search() {
                     setLocation={setLocation}
                     setDates={setDates}
                     setPrice={setPrice}
+                    onFavoriteFilterChange={setFavoriteFilter}
                 />
                 <section className="flex flex-row justify-between h-screen px-2">
 
@@ -50,6 +56,7 @@ export default function Search() {
                             dates={dates}
                             price={price}
                             setExpandedCarInfo={setExpandedCar}
+                            favoriteFilter={favoriteFilter}
                         />
                     </ScrollArea>
                     {isDesktop &&
