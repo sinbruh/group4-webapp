@@ -37,10 +37,9 @@ const ConfirmationAlert = forwardRef((props, ref) => {
     <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+          <AlertDialogTitle>Confirm your order?</AlertDialogTitle>
           <AlertDialogDescription>
-            This action cannot be undone. This will permanently delete your account
-            and remove your data from our servers.
+            This action cannot be undone. This will book the car for you.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
