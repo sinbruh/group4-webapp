@@ -10,8 +10,6 @@ import {
     TableRow,
 } from "@/components/ui/table.jsx";
 import {asyncApiRequest} from "@/tools/request";
-import {getCookie} from "@/tools/cookies";
-import {isAdmin} from "@/tools/authentication";
 
 export function UserTable() {
     const [users, setUsers] = useState([]);
@@ -29,7 +27,6 @@ export function UserTable() {
         fetchUsers();
     }, []);
 
-
     return (
         <Table>
             <TableCaption>A list of all users.</TableCaption>
@@ -37,6 +34,7 @@ export function UserTable() {
                 <TableRow>
                     <TableHead className="w-[100px]">User ID</TableHead>
                     <TableHead>Email</TableHead>
+                    <TableHead>Roles</TableHead>
                 </TableRow>
             </TableHeader>
             <TableBody>
@@ -44,9 +42,9 @@ export function UserTable() {
                     <TableRow key={user.id}>
                         <TableCell className="font-medium">{user.id}</TableCell>
                         <TableCell>{user.email}</TableCell>
-                        {console.log(user)}
+                        <TableCell>{user.roles.map(role => role.name).join(', ')}</TableCell>
                     </TableRow>
-                    ))}
+                ))}
             </TableBody>
         </Table>
     );
