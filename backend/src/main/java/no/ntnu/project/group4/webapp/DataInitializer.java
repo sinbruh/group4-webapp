@@ -501,14 +501,14 @@ public class DataInitializer implements ApplicationListener<ApplicationReadyEven
     }
     this.logger.info("Loading rental data with receipts...");
     if (isEmpty) {
-      Rental rental1 = new Rental(new Date(1716163200000l), new Date(1747699200000l));
-      Rental rental2 = new Rental(new Date(1718841600000l), new Date(1721433600000l));
-      Rental rental3 = new Rental(new Date(1724112000000l), new Date(1724716800000l));
+      Rental rental1 = new Rental(1716163200000l, 1747699200000l);
+      Rental rental2 = new Rental(1718841600000l, 1721433600000l);
+      Rental rental3 = new Rental(1724112000000l, 1724716800000l);
 
-      Rental rental4 = new Rental(new Date(1716249600000l), new Date(1717459200000l));
-      Rental rental5 = new Rental(new Date(1726876800000l), new Date(1728086400000l));
+      Rental rental4 = new Rental(1716249600000l, 1717459200000l);
+      Rental rental5 = new Rental(1726876800000l, 1728086400000l);
 
-      Rental rental6 = new Rental(new Date(1716336000000l), new Date(1716508800000l));
+      Rental rental6 = new Rental(1716336000000l, 1716508800000l);
 
       rental1.setUser(this.userService.getOneByEmail("morganlee@user.com").get());
       rental2.setUser(this.userService.getOneByEmail("morganlee@user.com").get());

@@ -27,9 +27,9 @@ export default function Home() {
                 <Navigation />
 
                 <form onSubmit={handleSubmit} className="flex flex-wrap justify-center content-center items-center h-screen gap-2">
-                    <Locationbox value={location} onChange={setLocation} />
-                    <DatePickerWithRange value={dateRange} onChange={setDateRange} />
-                    <Button type="submit" className="grow m-4 md:grow-0 md:m-0 " >
+                    <Locationbox value={location} className="grow m-4 md:grow-0 md:m-0" onChange={setLocation} />
+                    <DatePickerWithRange className="grow m-4 md:grow-0 md:m-0" value={dateRange} onChange={setDateRange} />
+                    <Button type="submit" className="grow m-4 md:grow-0 md:m-0" >
                         Search
                     </Button>
                 </form>

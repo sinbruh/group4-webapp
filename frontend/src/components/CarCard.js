@@ -7,7 +7,8 @@ import closeIcon from "@/img/icons/close.svg";
 import cogIcon from "@/img/icons/cog.svg";
 import peopleIcon from "@/img/icons/people.svg";
 import FavoriteButton from "@/components/FavoriteButton";
-import {isLoggedIn} from "@/tools/authentication.js";
+import { isLoggedIn } from "@/tools/authentication.js";
+import { useMediaQuery } from 'react-responsive';
 
 import {
     Card,
@@ -18,56 +19,86 @@ import {
     CardTitle,
 } from "@/components/ui/card"
 
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from "@/components/ui/dialog"
+
+import ExpandedCard from "@/components/ExpandedCard";
+
+
 const CarCard = ({ carInfo, setExpandedCarInfo }) => {
+    const [expandedIsOpen, setExpandedIsOpen] = React.useState(false);
     const carImage = carInfo.carImageInput ? `/carsLowResWEBP/${carInfo.carImageInput}` : carDefaultImage;
     console.log(carImage);
     console.log(carInfo.carImageInput);
+    const isDesktop = useMediaQuery({ query: '(min-width: 1450px)' });
 
-    function handleOnClick(){
+    function handleOnClick() {
         console.log("Car card clicked");
 
-        setExpandedCarInfo(carInfo);
+        if (isDesktop) {
+            setExpandedCarInfo(carInfo);
+        } else {
+            setExpandedIsOpen(true);
+        }
     }
 
     return (
-        <div onClick={handleOnClick} className="hover:cursor-pointer">
-        <Card className="flex flex-row items-start justify-between mb-4">
+        <div>
+            <Dialog open={expandedIsOpen} onOpenChange={setExpandedIsOpen}>
+                <DialogContent>
+                    <ExpandedCard carInfo={carInfo} />
+                </DialogContent>
+            </Dialog>
 
-            <div className="flex flex-row">
-                <Image className="rounded" src={carImage} alt={carInfo.carName} width={400} height={200} />
+            <div onClick={handleOnClick} className="hover:cursor-pointer">
+                <Card className="flex flex-row items-start justify-between mb-4">
 
-                <div className="flex flex-col">
-                    <CardHeader>
-                        <CardTitle>
-                            <div className="flex justify-between">
-                                <p>
-                                    {carInfo.carName}
-                                </p>
-                            </div>
-                        </CardTitle>
-                        <CardDescription>{carInfo.description}</CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                        {carInfo.availability ?
-                            <div className="text-[#326D0D] font-bold flex gap-2 items-center"><Image src={checkIcon} width={32} height={32} /> Available </div> :
-                            <div className="text-red-500 font-bold flex gap-2 items-center"><Image src={closeIcon} width={32} height={32} /> Unavailable </div>}
-                        <p>Price: {carInfo.price} NOK/day</p>
-                        <p>Location: {carInfo.location}</p>
-                    </CardContent>
-                    <CardFooter className="flex flex-row">
-                        <div className="flex gap-2">
-                            <div className="flex items-center"><Image src={peopleIcon} alt="people" width={32} height={32} /> {carInfo.size}</div>
-                            <div className="flex items-center"><Image src={carIcon} alt="fuel type" widht={32} height={32} /> {carInfo.fuelType}</div>
-                            <div className="flex items-center"><Image src={cogIcon} alt="transmission" width={32} height={32} /> {carInfo.transmission}</div>
+                    <div className="flex flex-row">
+                        {isDesktop &&
+                            <Image className="rounded" src={carImage} alt={carInfo.carName} width={400} height={200} />
+                        }
+                        <div className="flex flex-col">
+                            <CardHeader>
+                                <CardTitle>
+                                    <div className="flex justify-between">
+                                        <p>
+                                            {carInfo.carName}
+                                        </p>
+                                    </div>
+                                </CardTitle>
+                                <CardDescription>{carInfo.description}</CardDescription>
+                            </CardHeader>
+                            {!isDesktop &&
+                                <Image className="rounded" src={carImage} alt={carInfo.carName} width={400} height={200} />
+                            }
+                            <CardContent>
+                                {carInfo.availability ?
+                                    <div className="text-[#326D0D] font-bold flex gap-2 items-center"><Image src={checkIcon} width={32} height={32} /> Available </div> :
+                                    <div className="text-red-500 font-bold flex gap-2 items-center"><Image src={closeIcon} width={32} height={32} /> Unavailable </div>}
+                                <p>Price: {carInfo.price} NOK/day</p>
+                                <p>Location: {carInfo.location}</p>
+                            </CardContent>
+                            <CardFooter className="flex flex-row">
+                                <div className="flex flex-wrap gap-2">
+                                    <div className="flex items-center"><Image src={peopleIcon} alt="people" width={32} height={32} /> {carInfo.size}</div>
+                                    <div className="flex items-center"><Image src={carIcon} alt="fuel type" widht={32} height={32} /> {carInfo.fuelType}</div>
+                                    <div className="flex items-center"><Image src={cogIcon} alt="transmission" width={32} height={32} /> {carInfo.transmission}</div>
+                                </div>
+                            </CardFooter>
                         </div>
-                    </CardFooter>
-                </div>
-            </div>
-            <div className="m-4">
-            {isLoggedIn() && <FavoriteButton configID={carInfo.configID}/>}
-            </div>
+                    </div>
+                    <div className="m-4">
+                        {isLoggedIn() && <FavoriteButton configID={carInfo.configID} />}
+                    </div>
 
-        </Card>
+                </Card>
+            </div>
         </div>
     )
 }

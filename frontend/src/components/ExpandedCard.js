@@ -56,8 +56,6 @@ const expandedCard = ({ carInfo, dates }) => {
 
         } else {
             setIsOpen(true);
-
-            //show not logged in message
         }
     }
 

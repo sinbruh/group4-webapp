@@ -33,9 +33,9 @@ public class Rental {
   public Rental() {
   }
 
-  public Rental(Date startDate, Date endDate) {
-    this.startDate = startDate;
-    this.endDate = endDate;
+  public Rental(long startDateLong, long endDateLong) {
+    this.startDate = new Date(startDateLong);
+    this.endDate = new Date(endDateLong);
 
   }
 
@@ -59,10 +59,10 @@ public class Rental {
   /**
    * Setter for start date.
    * 
-   * @param startDate The specified start date
+   * @param startDate The specified long value for the start date
    */
-  public void setStartDate(Date startDate) {
-    this.startDate = startDate;
+  public void setStartDate(long startDateLong) {
+    this.startDate = new Date(startDateLong);
   }
 
   /**
@@ -77,10 +77,10 @@ public class Rental {
   /**
    * Setter for end date.
    * 
-   * @param endDate The specified end date
+   * @param endDate The specified long value for the end date
    */
-  public void setEndDate(Date endDate) {
-    this.endDate = endDate;
+  public void setEndDate(long endDateLong) {
+    this.endDate = new Date(endDateLong);
   }
 
   /**
