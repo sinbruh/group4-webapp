@@ -13,53 +13,53 @@ import { useMediaQuery } from 'react-responsive';
 
 export default function Search() {
     const searchParams = useSearchParams();
-    const defaultLocation = searchParams.get('location');
-    const start = searchParams.get('start');
-    const end = searchParams.get('end');
-    const isDesktop = useMediaQuery({ query: '(min-width: 1450px)' });
+    const defaultLocation = searchParams.get('location') || 'ålesund';
+    const start = searchParams.get('start') || new Date().toISOString().split('T')[0];
+    const end = searchParams.get('end') || new Date(new Date().setDate(new Date().getDate() + 1)).toISOString().split('T')[0];
+    const isDesktop = useMediaQuery({ query: '(min-width: 1450px)' }) || true;
 
-    const [location, setLocation] = useState(defaultLocation);
+    const [location, setLocation] = useState(defaultLocation) || 'ålesund';
     const [dates, setDates] = useState({ start: start, end: end });
     const [price, setPrice] = useState({ min: null, max: null });
     const [expandedCar, setExpandedCar] = useState(null);
 
     return (
         <div className="bg-[url('/temp-background-image-low.webp')] bg-cover bg-center">
-        <Suspense fallback={<div>Loading...</div>}>
-            <Navigation />
+            <Suspense fallback={<div>Loading...</div>}>
+                <Navigation />
 
-            <section className={styles.breadcrumb}>
-                <p>
-                    <Link href="/">Home</Link> &gt; <Link href="/search">Search</Link>
-                </p>
-            </section>
-            {console.log(start + " " + end)}
-            <FilterBar
-                defaultLocation={location}
-                defaultStart={dates.start}
-                defaultEnd={dates.end}
-                setLocation={setLocation}
-                setDates={setDates}
-                setPrice={setPrice}
-            />
-            <section className="flex flex-row justify-between h-screen px-2">
+                <section className={styles.breadcrumb}>
+                    <p>
+                        <Link href="/">Home</Link> &gt; <Link href="/search">Search</Link>
+                    </p>
+                </section>
+                {console.log(start + " " + end)}
+                <FilterBar
+                    defaultLocation={location}
+                    defaultStart={dates.start}
+                    defaultEnd={dates.end}
+                    setLocation={setLocation}
+                    setDates={setDates}
+                    setPrice={setPrice}
+                />
+                <section className="flex flex-row justify-between h-screen px-2">
 
-                <ScrollArea className="rounded-lg m-2 grow max-h-[78%]">
-                    <CarReader
-                        location={location}
-                        dates={dates}
-                        price={price}
-                        setExpandedCarInfo={setExpandedCar}
-                    />
-                </ScrollArea>
-                {isDesktop &&
-                    <section className="rounded m-2 max-h-[78%] w-[55%]">
-                        <ExpandedCard carInfo={expandedCar} dates={dates} />
-                    </section>
-                }
-            </section>
-            <Footer />
-        </Suspense>
+                    <ScrollArea className="rounded-lg m-2 grow max-h-[78%]">
+                        <CarReader
+                            location={location}
+                            dates={dates}
+                            price={price}
+                            setExpandedCarInfo={setExpandedCar}
+                        />
+                    </ScrollArea>
+                    {isDesktop &&
+                        <section className="rounded m-2 max-h-[78%] w-[55%]">
+                            <ExpandedCard carInfo={expandedCar} dates={dates} />
+                        </section>
+                    }
+                </section>
+                <Footer />
+            </Suspense>
         </div>
     );
 };

@@ -96,7 +96,7 @@ export default function CarReader({ location, dates, price, setExpandedCarInfo }
                             carImageInput : carImageName,
                             carName : `${make} ${model}`,
                             price : provider.price,
-                            location : provider.location,
+                            location : provider.location || 'undefined',
                             size : configurations[0].numberOfSeats,
                             fuelType : configurations[0].fuelType,
                             transmission : configurations[0].tranmissionType,
