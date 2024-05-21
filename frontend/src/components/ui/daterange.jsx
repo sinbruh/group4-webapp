@@ -117,7 +117,7 @@ export default function DatePickerWithRange({
 
                 timer.current = setTimeout(() => {
                   clicks.current = 0;
-                }, 150);
+                }, 250);
               } else if (clicks.current === 1) {
                 clearTimeout(timer.current);
                 clicks.current = 0;
