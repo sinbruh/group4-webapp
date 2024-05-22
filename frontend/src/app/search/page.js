@@ -18,7 +18,7 @@ export default function Search() {
     const defaultLocation = searchParams.get('location') || '';
     const start = searchParams.get('start') || new Date().toISOString().split('T')[0];
     const end = searchParams.get('end') || new Date(new Date().setDate(new Date().getDate() + 1)).toISOString().split('T')[0];
-    const isDesktop = useMediaQuery({ query: '(min-width: 1450px)' }) || true;
+    const isDesktop = useMediaQuery({ query: '(min-width: 1450px)' });
 
     const [location, setLocation] = useState(defaultLocation);
     const [dates, setDates] = useState({ start: start, end: end });

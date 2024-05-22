@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react';
+import { Slider } from '@/components/ui/slider';
+import { cn } from "@/lib/utils"
 
-export default function PricePicker({defaultValue, setPrice}) {
-    const [minPrice, setMinPrice] = useState(defaultValue.min || 0);
-    const [maxPrice, setMaxPrice] = useState(defaultValue.max || 1000);
+export default function PricePicker({ defaultValue, setPrice }) {
+    const [value, setValue] = useState([defaultValue.min || 0, defaultValue.max || 1000]);
 
     useEffect(() => {
         if (typeof setPrice === 'function') {
-            setPrice({ min: minPrice, max: maxPrice });
+            setPrice({ min: value[0], max: value[1] });
         }
-    }, [minPrice, maxPrice, setPrice]);
+    }, [value, setPrice]);
 
 
     const handlePriceChange = (event) => {
@@ -23,44 +24,12 @@ export default function PricePicker({defaultValue, setPrice}) {
     return (
         <div className="flex flex-col md:flex-row space-x-4">
             <div className="flex items-center space-x-2">
-                <label htmlFor="fromPrice" className="block text-sm font-medium text-gray-700">Min Price:</label>
-                <div className="flex space-x-4">
-                <input
-                    type="range"
-                    id="fromPrice"
-                    name="fromPrice"
-                    value={minPrice}
-                    min={0}
-                    max={1000}
-                    onChange={handlePriceChange}
-                    className="mt-1 block w-full"
-                />
-                <span id="fromPriceValue">{minPrice}</span>
-                <p className="text-sm text-gray-500">
-                    <b>NOK/day </b>
-                </p>
-                </div>
+                <p className="block text-sm font-medium text-gray-700">Min Price: {value[0]}</p>
+                <Slider  max={1000} step={1} className={"w-72"} value={value} onValueChange={setValue} />
+
+                <p htmlFor="toPrice" className="block text-sm font-medium text-gray-700">Max Price: {value[1]}</p>
             </div>
-            <div className="flex items-center space-x-2">
-                <label htmlFor="toPrice" className="block text-sm font-medium text-gray-700">Max Price:</label>
-                <div className="flex items-center space-x-2">
-                <input
-                    type="range"
-                    id="toPrice"
-                    name="toPrice"
-                    value={maxPrice}
-                    min={0}
-                    max={1000}
-                    onChange={handlePriceChange}
-                    className="mt-1 block w-full"
-                />
-                <span id="toPriceValue">{maxPrice}</span>
-                <p className="text-sm text-gray-500">
-                    <b>NOK/day</b>
-                </p>
-                </div>
-                </div>
-            </div>
+        </div>
 
     );
 }
