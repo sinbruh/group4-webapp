@@ -2,6 +2,8 @@ import { getCookie } from "@/tools/cookies";
 import React, { useEffect, useState } from "react";
 import { asyncApiRequest } from "@/tools/request";
 import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { useForm, Controller } from 'react-hook-form';
 import {
   Table,
   TableBody,
@@ -20,6 +22,25 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
+const formSchema = z.object({
+  make: z.string(),
+  model: z.string(),
+  year: z.number(),
+  
+});
+
+
+
 
 export default function CarEditor() {
   const [user, setUser] = useState(null);
@@ -28,6 +49,39 @@ export default function CarEditor() {
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const entriesPerPage = 10;
+  const [carId, setCarId] = useState('');
+
+  const form = useForm({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+        make: '',
+        model: '',
+        year: ''
+    }
+  });
+
+  const onSubmit = async (values)  => {
+    console.log("onSubmit", values);
+    
+    
+    try {
+        const response = await asyncApiRequest("PUT", `/api/cars/${carId}`, values, true);
+        
+    
+
+        if (response.ok) {
+            console.log("Car details updated successfully");
+            
+           
+        } else {
+            console.error("Error updating car details: ", response);
+           
+        }
+    } catch (error) {
+        console.error("Error updating car details: ", error);
+    }
+};
+
 
   //From CarReader   
   const updateJsonFile = async () => {
@@ -135,6 +189,60 @@ export default function CarEditor() {
           </PaginationContent>
         </Pagination>
       </form>
+      <Input type="text" placeholder="Car Id" value={carId} onChange={e => setCarId(e.target.value)} />
+      <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+                <FormField
+                    control={form.control}
+                    name="make"
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Make</FormLabel>
+                            <FormControl>
+                                <Input {...field} />
+                            </FormControl>
+                            <FormMessage>{form.formState.errors.make?.message}</FormMessage>
+                        </FormItem>
+                    )}
+                />
+                <FormField
+                    control={form.control}
+                    name="model"
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel htmlFor={field.name}>Model</FormLabel>
+                            <FormControl>
+                                <Input {...field} />
+                            </FormControl>
+                            <FormMessage>{form.formState.errors.model?.message}</FormMessage>
+                        </FormItem>
+                    )}
+                />
+                <FormField
+                    control={form.control}
+                    name="year"
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Year</FormLabel>
+                            <FormControl>
+                            <Input 
+                              {...field} 
+                              onChange={e => {
+                                field.onChange(e); 
+                                form.setValue('year', parseInt(e.target.value));
+                              }}
+                            />
+                            </FormControl>
+                            <FormMessage>{form.formState.errors.Year?.message}</FormMessage>
+                        </FormItem>
+                    )}
+                />
+                
+                <Button type="submit">Submit</Button>
+            </form>
+        </Form>
     </div>
+    
+  
   );
 }
