@@ -11,6 +11,9 @@ import { Button } from "@/components/ui/button"
 import {UserTable} from "@/components/UserTable";
 import MyOrders from "@/components/MyOrders";
 import ViewOrders from "@/components/ViewOrders";
+import CarEditor from '@/components/CarEditor';
+import ConfigurationEditor from '@/components/ConfigurationEditor';
+import ProviderEditor from '@/components/ProviderEditor';
 
 export default function Page() {
     const user = useStore((state) => state.user);
@@ -54,6 +57,12 @@ export default function Page() {
                 return <MyOrders />;
             case 'vieworders':
                 return <ViewOrders />;
+            case 'editcars':
+                return <CarEditor />;
+            case 'editconfig':
+                return <ConfigurationEditor />;
+            case 'editprovider':
+                return <ProviderEditor />;
                 
             default:
                 return <p></p>;
@@ -77,9 +86,12 @@ export default function Page() {
                     <Button onClick={() => handleClick('myorders')} className="py-2 px-4 bg-blue-500 text-white rounded">My Orders</Button>
                     {isAdmin() && (
                         <>
-                            <Button onClick={() => handleClick('editcars')} className="py-2 px-4 bg-blue-500 text-white rounded">Car Editor</Button>
+                            
                             <Button onClick={() => handleClick('viewusers')} className="py-2 px-4 bg-blue-500 text-white rounded">View Users</Button>
                             <Button onClick={() => handleClick('vieworders')} className="py-2 px-4 bg-blue-500 text-white rounded">View Orders</Button>
+                            <Button onClick={() => handleClick('editcars')} className="py-2 px-4 bg-blue-500 text-white rounded">Car Editor</Button>
+                            <Button onClick={() => handleClick('editconfig')} className="py-2 px-4 bg-blue-500 text-white rounded">Configuration Editor</Button>
+                            <Button onClick={() => handleClick('editprovider')} className="py-2 px-4 bg-blue-500 text-white rounded">Provider Editor</Button>
                         </>
                     )}
 

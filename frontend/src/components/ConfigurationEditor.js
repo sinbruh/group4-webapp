@@ -1,4 +1,3 @@
-
 import { getCookie } from "@/tools/cookies";
 import React, { useEffect, useState } from "react";
 import { asyncApiRequest } from "@/tools/request";
@@ -13,7 +12,7 @@ import {
   TableRow
 } from "@/components/ui/table";
 
-export default function CarEditor() {
+export default function ConfigurationEditor() {
   const [user, setUser] = useState(null);
   const [cars, setCars] = useState([]);
   const Email = getCookie("current_email");
@@ -38,7 +37,7 @@ export default function CarEditor() {
         });
       }
 
-      console.log("EditCars.js: ", data);
+      console.log("EditConfigs.js: ", data);
 
       //update CarCards
       setCars(data);
@@ -69,29 +68,39 @@ export default function CarEditor() {
               <TableHead className="w-[100px]">ID</TableHead>
               <TableHead>Make</TableHead>
               <TableHead>Model</TableHead>
-              <TableHead>Year</TableHead>
+              <TableHead>Config Name</TableHead>
+              <TableHead>Seats</TableHead>
+              <TableHead>FuelType</TableHead>
+              <TableHead>Transmission</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
-            {cars
-              .filter(
-                (car) =>
-                  car.id.toString().includes(searchTerm) ||
-                  car.make.includes(searchTerm) ||
-                  car.model.includes(searchTerm) ||
-                  car.valid.toString().includes(searchTerm) ||
-                  car.year.toString().includes(searchTerm)
-              )
-              .map((car, index) => {
-                return (
-                  <TableRow key={index}>
-                    <TableCell className="font-medium">{car.id}</TableCell>
+            {cars.flatMap((car, index) =>
+              car.configurations
+                .filter(
+                  (config) =>
+                    config.id.toString().includes(searchTerm) ||
+                    car.make.includes(searchTerm) ||
+                    car.model.includes(searchTerm) ||
+                    car.valid.toString().includes(searchTerm) ||
+                    car.year.toString().includes(searchTerm) ||
+                    config.name.includes(searchTerm) ||
+                    config.numberOfSeats.toString().includes(searchTerm) ||
+                    config.fuelType.includes(searchTerm) ||
+                    config.tranmissionType.includes(searchTerm)
+                )
+                .map((config, configIndex) => (
+                  <TableRow key={`${index}-${configIndex}`}>
+                    <TableCell className="font-medium">{config.id}</TableCell>
                     <TableCell>{car.make}</TableCell>
                     <TableCell>{car.model}</TableCell>
-                    <TableCell>{car.year}</TableCell>
+                    <TableCell>{config.name}</TableCell>
+                    <TableCell>{config.numberOfSeats}</TableCell>
+                    <TableCell>{config.fuelType}</TableCell>
+                    <TableCell>{config.tranmissionType}</TableCell>
                   </TableRow>
-                );
-              })}
+                ))
+            )}
           </TableBody>
         </Table>
       </form>
