@@ -1,0 +1,25 @@
+name: Deploy to Ubuntu Server
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Create SSH key
+        run: |
+          mkdir -p ~/.ssh/
+          echo "$SSH_PRIVATE_KEY" > ~/.ssh/github_action
+          chmod 600 ~/.ssh/github_action
+          echo "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
+
+      - name: Deploy to server
+        run: |
+          ssh -i ~/.ssh/github_action sindfo@129.241.153.151 'cd /home/local/sindfo/repo/group4-webapp/frontend && git pull && npm install && npm run build'
