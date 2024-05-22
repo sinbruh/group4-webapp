@@ -50,16 +50,31 @@ const expandedCard = ({ carInfo, dates, showConfirmation }) => {
                 if (response) {
                     console.log("Booking successful")
                     console.log("Booking response: ", response)
+
+                    const rentalID = response;
+
+                    sendReceiptRequest(rentalID)
+
                     showConfirmation();
                 } else {
                     console.log("Booking failed", response)
                 }
             }
-
-
         } else {
             setIsOpen(true);
         }
+    }
+
+    function getTotalPrice() {
+        const days = Math.floor((dates.end - dates.start) / (1000 * 60 * 60 * 24));
+        return days * carInfo.price;
+    }
+
+    async function sendReceiptRequest(rentalID) {
+        const total = getTotalPrice();
+        console.log("Sending receipt request with", user.email, rentalID, total)
+        const response = await asyncApiRequest("POST", "/api/receipts/" + user.email + "/" +  rentalID, total)
+        console.log("Receipt response: ", response)
     }
 
     return (
