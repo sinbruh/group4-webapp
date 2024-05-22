@@ -11,23 +11,13 @@ export default function PricePicker({ defaultValue, setPrice }) {
         }
     }, [value, setPrice]);
 
-
-    const handlePriceChange = (event) => {
-        const { name, value } = event.target;
-        if (name === 'fromPrice') {
-            setMinPrice(value);
-        } else if (name === 'toPrice') {
-            setMaxPrice(value);
-        }
-    };
-
     return (
         <div className="flex flex-col md:flex-row space-x-4">
             <div className="flex items-center space-x-2">
-                <p className="block text-sm font-medium text-gray-700">Min Price: {value[0]}</p>
+                <p className="block text-sm font-medium text-gray-700">Min: {value[0]}kr</p>
                 <Slider  max={1000} step={1} className={"w-72"} value={value} onValueChange={setValue} />
 
-                <p htmlFor="toPrice" className="block text-sm font-medium text-gray-700">Max Price: {value[1]}</p>
+                <p htmlFor="toPrice" className="block text-sm font-medium text-gray-700">Max: {value[1]}kr</p>
             </div>
         </div>
 
