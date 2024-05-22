@@ -23,7 +23,14 @@ export function asyncApiRequest(method, url, requestBody = null, returnPlainText
         body: body,
     })
         .then(handleErrors)
-        .then((response) => returnPlainText ? response : response.json());
+        .then((response) => {
+            if (returnPlainText) {
+                return response.text();
+            } else {
+                return response.text().then(text => text ? JSON.parse(text) : {});
+            }
+        });
+
 }
 
 async function handleErrors(response) {
