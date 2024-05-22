@@ -10,6 +10,9 @@ import no.ntnu.project.group4.webapp.models.User;
 import no.ntnu.project.group4.webapp.services.AccessUserService;
 import no.ntnu.project.group4.webapp.services.ConfigurationService;
 import no.ntnu.project.group4.webapp.services.ProviderService;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,7 +35,7 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
  * <p>All HTTP requests affiliated with providers are handled in this class.</p>
  *
  * @author Group 4
- * @version v1.6 (2024.05.22)
+ * @version v1.7 (2024.05.22)
  */
 @CrossOrigin
 @RestController
@@ -45,6 +48,8 @@ public class ProviderController {
   @Autowired
   private AccessUserService userService;
 
+  private final Logger logger = LoggerFactory.getLogger(ProviderController.class);
+
   /**
    * Returns an iterable containing all providers. When this endpoint is requested, a HTTP 200 OK
    * response will automatically be sent back.
@@ -54,6 +59,7 @@ public class ProviderController {
   @Operation(summary = "Get all providers")
   @GetMapping
   public Iterable<Provider> getAll() {
+    logger.info("Sending all provider data...");
     return this.providerService.getAll();
   }
 
@@ -79,8 +85,10 @@ public class ProviderController {
     ResponseEntity<?> response;
     Optional<Provider> provider = this.providerService.getOne(id);
     if (provider.isPresent()) {
+      logger.info("Provider found, sending provider data...");
       response = new ResponseEntity<>(provider.get(), HttpStatus.OK);
     } else {
+      logger.error("Provider not found, sending error message...");
       response = new ResponseEntity<>("Provider with specified ID not found",
           HttpStatus.NOT_FOUND);
     }
@@ -123,18 +131,24 @@ public class ProviderController {
         provider.setConfiguration(configuration.get());
         try {
           this.providerService.add(provider);
+          logger.info("Configuration found and valid provider data, sending generated ID of new " +
+                      "provider...");
           response = new ResponseEntity<>(provider.getId(), HttpStatus.CREATED);
         } catch (IllegalArgumentException e) {
+          logger.error("Invalid provider data, sending error message...");
           response = new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
       } else {
+        logger.error("Configuration not found, sending error message...");
         response = new ResponseEntity<>("Configuration with specified ID not found",
             HttpStatus.NOT_FOUND);
       }
     } else if (sessionUser == null) {
+      logger.error("User not authenticated, sending error message...");
       response = new ResponseEntity<>("Only authenticated users have access to add providers",
           HttpStatus.UNAUTHORIZED);
     } else {
+      logger.error("User not admin, sending error message...");
       response = new ResponseEntity<>("Only admin users have access to add providers",
           HttpStatus.FORBIDDEN);
     }
@@ -192,18 +206,23 @@ public class ProviderController {
     if (sessionUser != null && sessionUser.isAdmin()) {
       try {
         if (this.providerService.update(id, provider)) {
+          logger.info("Provider found and valid provider data, updating provider...");
           response = new ResponseEntity<>("", HttpStatus.OK);
         } else {
+          logger.error("Provider not found, sending error message...");
           response = new ResponseEntity<>("Provider with specified ID not found",
                                           HttpStatus.NOT_FOUND);
         }
       } catch (IllegalArgumentException e) {
+        logger.error("Invalid provider data, sending error message...");
         response = new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
       }
     } else if (sessionUser == null) {
+      logger.error("User not authenticated, sending error message...");
       response = new ResponseEntity<>("Only authenticated users have access to update providers",
                                       HttpStatus.UNAUTHORIZED);
     } else {
+      logger.error("User not admin, sending error message...");
       response = new ResponseEntity<>("Only admin users have access to update users",
                                       HttpStatus.FORBIDDEN);
     }
@@ -236,15 +255,19 @@ public class ProviderController {
     User sessionUser = this.userService.getSessionUser();
     if (sessionUser != null && sessionUser.isAdmin()) {
       if (this.providerService.delete(id)) {
+        logger.info("Provider found, deleting provider...");
         response = new ResponseEntity<>("", HttpStatus.OK);
       } else {
+        logger.error("Provider not found, sending error message...");
         response = new ResponseEntity<>("Provider with specified ID not found",
                                         HttpStatus.NOT_FOUND);
       }
     } else if (sessionUser == null) {
+      logger.error("User not authenticated, sending error message...");
       response = new ResponseEntity<>("Only authenticated users have access to delete providers",
                                       HttpStatus.UNAUTHORIZED);
     } else {
+      logger.error("User not admin, sending error message...");
       response = new ResponseEntity<>("Only admin users have access to delete providers",
                                       HttpStatus.FORBIDDEN);
     }
@@ -302,19 +325,25 @@ public class ProviderController {
         existingProvider.toggleAvailable();
         try {
           this.providerService.update(id, existingProvider);
+          logger.info("Provider found, toggling availability for provider...");
           response = new ResponseEntity<>("", HttpStatus.OK);
         } catch (IllegalArgumentException e) {
+          logger.error("Could not toggle availability for provider (error updating provider), " +
+                       "sending error message...");
           response = new ResponseEntity<>("Could not toggle availability for provider with " +
                                           "specified ID", HttpStatus.INTERNAL_SERVER_ERROR);
         }
       } else {
+        logger.error("Provider not found, sending error message...");
         response = new ResponseEntity<>("Provider with specified ID not found",
                                         HttpStatus.NOT_FOUND);
       }
     } else if (sessionUser == null) {
+      logger.error("User not authenticated, sending error message...");
       response = new ResponseEntity<>("Only authenticated users have access to toggle " +
                                       "availability for providers", HttpStatus.UNAUTHORIZED);
     } else {
+      logger.error("User not admin, sending error message...");
       response = new ResponseEntity<>("Only admin users have access to toggle availability for " +
                                       "providers", HttpStatus.FORBIDDEN);
     }
@@ -372,19 +401,25 @@ public class ProviderController {
         existingProvider.toggleVisible();
         try {
           this.providerService.update(id, existingProvider);
+          logger.info("Provider found, updating visibility for provider...");
           response = new ResponseEntity<>("", HttpStatus.OK);
         } catch (IllegalArgumentException e) {
+          logger.error("Could not toggle visibility for provider (error updating provider), " +
+                       "sending error message...");
           response = new ResponseEntity<>("Could not toggle visibility for provider with " +
                                           "specified ID", HttpStatus.INTERNAL_SERVER_ERROR);
         }
       } else {
+        logger.error("Provider not found, sending error message...");
         response = new ResponseEntity<>("Provider with specified ID not found",
                                         HttpStatus.NOT_FOUND);
       }
     } else if (sessionUser == null) {
+      logger.error("User not authenticated, sending error message...");
       response = new ResponseEntity<>("Only authenticated users have access to toggle " +
                                       "visibility for providers", HttpStatus.UNAUTHORIZED);
     } else {
+      logger.error("User not admin, sending error message...");
       response = new ResponseEntity<>("Only admin users have access to toggle visibility for " +
                                       "providers", HttpStatus.FORBIDDEN);
     }
@@ -400,6 +435,7 @@ public class ProviderController {
    */
   @ExceptionHandler(MethodArgumentTypeMismatchException.class)
   public ResponseEntity<String> handlePathVarException(MethodArgumentTypeMismatchException e) {
+    logger.error("Received HTTP request could not be read, sending error message...");
     return new ResponseEntity<>("HTTP request contains a value on an invalid format",
                                 HttpStatus.BAD_REQUEST);
   }
@@ -412,7 +448,8 @@ public class ProviderController {
    */
   @ExceptionHandler(HttpMessageNotReadableException.class)
   public ResponseEntity<String> handleRequestBodyException(HttpMessageNotReadableException e) {
-    return new ResponseEntity<>("User data not supplied or contains a parameter on an invalid " +
-                                "format", HttpStatus.BAD_REQUEST);
+    logger.error("Received provider data could not be read, sending error message...");
+    return new ResponseEntity<>("Provider data not supplied or contains a parameter on an " +
+                                "invalid format", HttpStatus.BAD_REQUEST);
   }
 }

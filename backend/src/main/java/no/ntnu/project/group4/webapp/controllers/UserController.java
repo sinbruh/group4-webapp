@@ -17,6 +17,9 @@ import no.ntnu.project.group4.webapp.security.JwtUtil;
 import no.ntnu.project.group4.webapp.services.AccessUserService;
 import no.ntnu.project.group4.webapp.services.ProviderService;
 import no.ntnu.project.group4.webapp.services.UserService;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -39,7 +42,7 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
  * <p>All HTTP requests affiliated with users are handled in this class.</p>
  *
  * @author Group 4
- * @version v1.4 (2024.05.22)
+ * @version v1.5 (2024.05.22)
  */
 @CrossOrigin
 @RestController
@@ -53,6 +56,8 @@ public class UserController {
   private ProviderService providerService;
   @Autowired
   private JwtUtil jwtUtil;
+
+  private final Logger logger = LoggerFactory.getLogger(UserController.class);
 
   /**
    * Returns a response to the request of getting all user data.
@@ -80,11 +85,14 @@ public class UserController {
                                           user.getFavorites());
         userData.add(userDataObj);
       }
+      logger.info("Sending all user data...");
       response = new ResponseEntity<>(userData, HttpStatus.OK);
     } else if (sessionUser == null) {
+      logger.error("User not authenticated, sending error message...");
       response = new ResponseEntity<>("Only authenticated users have access to all user data",
           HttpStatus.UNAUTHORIZED);
     } else {
+      logger.error("User not admin, sending error message...");
       response = new ResponseEntity<>("Only admin users have access to all user data",
           HttpStatus.FORBIDDEN);
     }
@@ -127,16 +135,21 @@ public class UserController {
                                          foundUser.isActive(), foundUser.getRoles(),
                                          foundUser.getRentals(), foundUser.getReceipts(),
                                          foundUser.getFavorites());
+          logger.info("User found, sending user data...");
           response = new ResponseEntity<>(userData, HttpStatus.OK);
         } else {
+          logger.error("Email of user does not match email of session user, sending error " +
+                       "message...");
           response = new ResponseEntity<>("Users do not have access to user data of other users",
               HttpStatus.FORBIDDEN);
         }
       } else {
+        logger.error("User not found, sending error message...");
         response = new ResponseEntity<>("User with specified email not found",
             HttpStatus.NOT_FOUND);
       }
     } else {
+      logger.error("User not authenticated, sending error message...");
       response = new ResponseEntity<>("Only authenticated users have access to user data",
           HttpStatus.UNAUTHORIZED);
     }
@@ -183,19 +196,26 @@ public class UserController {
               userData.getEmail()
             );
             final String jwt = this.jwtUtil.generateToken(userDetails);
+            logger.info("User found and valid user data, updating user and sending new JWT " +
+                        "token...");
             response = new ResponseEntity<>(new AuthenticationResponse(jwt), HttpStatus.OK);
           } else {
+            logger.error("Invalid user data, sending error message...");
             response = new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
           }
         } else {
+          logger.error("Email of user does not match email of session user, sending error " +
+                       "message...");
           response = new ResponseEntity<>("Users do not have access to update user data of " +
                                           "other users", HttpStatus.FORBIDDEN);
         }
       } else {
+        logger.error("User not found, sending error message...");
         response = new ResponseEntity<>("User with specified email not found",
                                         HttpStatus.NOT_FOUND);
       }
     } else {
+      logger.error("User not authenticated, sending error message...");
       response = new ResponseEntity<>("Only authenticated users have access to update user data",
                                       HttpStatus.UNAUTHORIZED);
     }
@@ -236,19 +256,25 @@ public class UserController {
           String errorMessage =
             this.accessUserService.updateUserPassword(user.get(), userPassword);
           if (errorMessage == null) {
+            logger.info("User found and valid user password data, updating user password...");
             response = new ResponseEntity<>("", HttpStatus.OK);
           } else {
+            logger.error("Invalid user password data, sending error message...");
             response = new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
           }
         } else {
+          logger.error("Email of user does not match email of session user, sending error " +
+                       "message...");
           response = new ResponseEntity<>("Users do not have access to update user password of " +
                                           "other users", HttpStatus.FORBIDDEN);
         }
       } else {
+        logger.error("User not found, sending error message...");
         response = new ResponseEntity<>("User with specified email not found",
                                         HttpStatus.NOT_FOUND);
       }
     } else {
+      logger.error("User not authenticated, sending error message...");
       response = new ResponseEntity<>("Only authenticated users have access to update user " +
                                       "password", HttpStatus.UNAUTHORIZED);
     }
@@ -282,17 +308,22 @@ public class UserController {
       if (user.isPresent()) {
         User foundUser = user.get();
         if (sessionUser.getEmail().equals(foundUser.getEmail()) || sessionUser.isAdmin()) {
+          logger.info("User found, deleting user...");
           this.userService.delete(foundUser.getId());
           response = new ResponseEntity<>("", HttpStatus.OK);
         } else {
+          logger.error("Email of user does not match email of session user, sending error " +
+                       "message...");
           response = new ResponseEntity<>("Users do not have access to delete other users",
                                           HttpStatus.FORBIDDEN);
         }
       } else {
+        logger.error("User not found, sending error message...");
         response = new ResponseEntity<>("User with specified email not found",
                                         HttpStatus.NOT_FOUND);
       }
     } else {
+      logger.error("User not authenticated, sending error message...");
       response = new ResponseEntity<>("Only authenticated users have access to delete users",
                                       HttpStatus.UNAUTHORIZED);
     }
@@ -346,16 +377,21 @@ public class UserController {
         }
         try {
           this.userService.update(sessionUser.getId(), sessionUser);
+          logger.info("Provider found, adding it to user favorites...");
           response = new ResponseEntity<>("", HttpStatus.OK);
         } catch (IllegalArgumentException e) {
+          logger.error("Could not favorite provider (error updating user), sending error " +
+                       "message...");
           response = new ResponseEntity<>("Could not favorite provider with specified provider " +
                                           "ID", HttpStatus.INTERNAL_SERVER_ERROR);
         }
       } else {
+        logger.error("Provider not found, sending error message...");
         response = new ResponseEntity<>("Provider with specified provider ID not found",
                                         HttpStatus.NOT_FOUND);
       }
     } else {
+      logger.error("User not authenticated, sending error message...");
       response = new ResponseEntity<>("Only authenticated users have access to favorite " +
                                       "providers", HttpStatus.UNAUTHORIZED);
     }
@@ -371,6 +407,7 @@ public class UserController {
    */
   @ExceptionHandler(MethodArgumentTypeMismatchException.class)
   public ResponseEntity<String> handlePathVarException(MethodArgumentTypeMismatchException e) {
+    logger.error("Received HTTP request could not be read, sending error message...");
     return new ResponseEntity<>("HTTP request contains a value on an invalid format",
                                 HttpStatus.BAD_REQUEST);
   }
@@ -383,7 +420,9 @@ public class UserController {
    */
   @ExceptionHandler(HttpMessageNotReadableException.class)
   public ResponseEntity<String> handleRequestBodyException(HttpMessageNotReadableException e) {
-    return new ResponseEntity<>("User data not supplied or contains a parameter on an invalid " +
-                                "format", HttpStatus.BAD_REQUEST);
+    logger.error("Received user data or user password data could not be read, sending error " +
+                 "message...");
+    return new ResponseEntity<>("User data or user password data not supplied or contains a " +
+                                "parameter on an invalid format", HttpStatus.BAD_REQUEST);
   }
 }

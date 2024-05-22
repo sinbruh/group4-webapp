@@ -8,6 +8,9 @@ import no.ntnu.project.group4.webapp.models.Car;
 import no.ntnu.project.group4.webapp.models.User;
 import no.ntnu.project.group4.webapp.services.AccessUserService;
 import no.ntnu.project.group4.webapp.services.CarService;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,7 +33,7 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
  * <p>All HTTP requests affiliated with cars are handled in this class.</p>
  *
  * @author Group 4
- * @version v1.4 (2024.05.22)
+ * @version v1.5 (2024.05.22)
  */
 @CrossOrigin
 @RestController
@@ -41,6 +44,8 @@ public class CarController {
   @Autowired
   private AccessUserService userService;
 
+  private final Logger logger = LoggerFactory.getLogger(CarController.class);
+
   /**
    * Returns an iterable containing all cars. When this endpoint is requested, a HTTP 200 OK
    * response will automatically be sent back.
@@ -50,6 +55,7 @@ public class CarController {
   @Operation(summary = "Get all cars")
   @GetMapping
   public Iterable<Car> getAll() {
+    logger.info("Sending all car data...");
     return this.carService.getAll();
   }
 
@@ -74,8 +80,10 @@ public class CarController {
     ResponseEntity<?> response;
     Optional<Car> car = this.carService.getOne(id);
     if (car.isPresent()) {
+      logger.info("Car found, sending car data...");
       response = new ResponseEntity<>(car.get(), HttpStatus.OK);
     } else {
+      logger.error("Car not found, sending error message...");
       response = new ResponseEntity<>("Car with specified ID not found", HttpStatus.NOT_FOUND);
     }
     return response;
@@ -109,14 +117,18 @@ public class CarController {
     if (sessionUser != null && sessionUser.isAdmin()) {
       try {
         this.carService.add(car);
+        logger.info("Valid car data, sending generated ID of new car...");
         response = new ResponseEntity<>(car.getId(), HttpStatus.CREATED);
       } catch (IllegalArgumentException e) {
+        logger.error("Invalid car data, sending error message...");
         response = new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
       }
     } else if (sessionUser == null) {
+      logger.error("User not authenticated, sending error message...");
       response = new ResponseEntity<>("Only authenticated users have access to add cars",
           HttpStatus.UNAUTHORIZED);
     } else {
+      logger.error("User not admin, sending error message...");
       response = new ResponseEntity<>("Only admin users have access to add cars",
           HttpStatus.FORBIDDEN);
     }
@@ -171,17 +183,22 @@ public class CarController {
     if (sessionUser != null && sessionUser.isAdmin()) {
       try {
         if (this.carService.update(id, car)) {
+          logger.info("Car found and valid car data, updating car...");
           response = new ResponseEntity<>("", HttpStatus.OK);
         } else {
+          logger.error("Car not found, sending error message...");
           response = new ResponseEntity<>("Car with specified ID not found", HttpStatus.NOT_FOUND);
         }
       } catch (IllegalArgumentException e) {
+        logger.error("Invalid car data, sending error message...");
         response = new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
       }
     } else if (sessionUser == null) {
+      logger.error("User not authenticated, sending error message...");
       response = new ResponseEntity<>("Only authenticated users have access to update cars",
                                       HttpStatus.UNAUTHORIZED);
     } else {
+      logger.error("User not admin, sending error message...");
       response = new ResponseEntity<>("Only admin users have access to update cars",
                                       HttpStatus.FORBIDDEN);
     }
@@ -214,14 +231,18 @@ public class CarController {
     User sessionUser = this.userService.getSessionUser();
     if (sessionUser != null && sessionUser.isAdmin()) {
       if (this.carService.delete(id)) {
+        logger.info("Car found, deleting car...");
         response = new ResponseEntity<>("", HttpStatus.OK);
       } else {
+        logger.error("Car not found, sending error message...");
         response = new ResponseEntity<>("Car with specified ID not found", HttpStatus.NOT_FOUND);
       }
     } else if (sessionUser == null) {
+      logger.error("User not authenticated, sending error message...");
       response = new ResponseEntity<>("Only authenticated users have access to delete cars",
                                       HttpStatus.UNAUTHORIZED);
     } else {
+      logger.error("User not admin, sending error message...");
       response = new ResponseEntity<>("Only admin users have access to delete cars",
                                       HttpStatus.FORBIDDEN);
     }
@@ -237,6 +258,7 @@ public class CarController {
    */
   @ExceptionHandler(MethodArgumentTypeMismatchException.class)
   public ResponseEntity<String> handlePathVarException(MethodArgumentTypeMismatchException e) {
+    logger.error("Received HTTP request could not be read, sending error message...");
     return new ResponseEntity<>("HTTP request contains a value on an invalid format",
                                 HttpStatus.BAD_REQUEST);
   }
@@ -249,7 +271,8 @@ public class CarController {
    */
   @ExceptionHandler(HttpMessageNotReadableException.class)
   public ResponseEntity<String> handleRequestBodyException(HttpMessageNotReadableException e) {
-    return new ResponseEntity<>("User data not supplied or contains a parameter on an invalid " +
+    logger.error("Received car data could not be read, sending error message...");
+    return new ResponseEntity<>("Car data not supplied or contains a parameter on an invalid " +
                                 "format", HttpStatus.BAD_REQUEST);
   }
 }

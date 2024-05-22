@@ -11,6 +11,9 @@ import no.ntnu.project.group4.webapp.services.AccessUserService;
 import no.ntnu.project.group4.webapp.services.ProviderService;
 import no.ntnu.project.group4.webapp.services.RentalService;
 import no.ntnu.project.group4.webapp.services.UserService;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,7 +35,7 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
  * <p>All HTTP requests affiliated with rentals are handled in this class.</p>
  *
  * @author Group 4
- * @version v1.4 (2024.05.22)
+ * @version v1.5 (2024.05.22)
  */
 @CrossOrigin
 @RestController
@@ -46,6 +49,8 @@ public class RentalController {
   private AccessUserService accessUserService;
   @Autowired
   private UserService userService;
+
+  private final Logger logger = LoggerFactory.getLogger(RentalController.class);
 
   /**
    * Returns a response to the request of getting all rentals.
@@ -63,11 +68,14 @@ public class RentalController {
     ResponseEntity<?> response;
     User sessionUser = this.accessUserService.getSessionUser();
     if (sessionUser != null && sessionUser.isAdmin()) {
+      logger.info("Sending all rental data...");
       response = new ResponseEntity<>(this.rentalService.getAll(), HttpStatus.OK);
     } else if (sessionUser == null) {
+      logger.error("User not authenticated, sending error message...");
       response = new ResponseEntity<>("Only authenticated users have access to rental data",
           HttpStatus.UNAUTHORIZED);
     } else {
+      logger.error("User not admin, sending error message...");
       response = new ResponseEntity<>("Only admin users have access to rental data",
           HttpStatus.FORBIDDEN);
     }
@@ -105,15 +113,20 @@ public class RentalController {
         Rental foundRental = rental.get();
         if (sessionUser.getEmail().equals(foundRental.getUser().getEmail()) ||
             sessionUser.isAdmin()) {
+          logger.info("Rental found, sending rental data...");
           response = new ResponseEntity<>(foundRental, HttpStatus.OK);
         } else {
+          logger.error("Email of rental user does not match email of session user, sending " +
+                       "error message...");
           response = new ResponseEntity<>("Users do not have access to rental data of other users",
               HttpStatus.FORBIDDEN);
         }
       } else {
+        logger.error("Rental not found, sending error message...");
         response = new ResponseEntity<>("Rental with specified ID not found", HttpStatus.NOT_FOUND);
       }
     } else {
+      logger.error("User not authenticated, sending error message...");
       response = new ResponseEntity<>("Only authenticated users have access to rental data",
           HttpStatus.UNAUTHORIZED);
     }
@@ -161,22 +174,30 @@ public class RentalController {
           rental.setProvider(provider.get());
           try {
             this.rentalService.add(rental);
+            logger.info("User and provider found and valid rental data, sending generated ID of " +
+                        "new rental...");
             response = new ResponseEntity<>(rental.getId(), HttpStatus.CREATED);
           } catch (IllegalArgumentException e) {
+            logger.error("Invalid rental data, sending error message...");
             response = new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
           }
         } else {
+          logger.error("Email of user does not match email of session user, sending error " +
+                       "message...");
           response = new ResponseEntity<>("Users do not have access to add rental data of other " +
               "users", HttpStatus.FORBIDDEN);
         }
       } else if (!user.isPresent()) {
+        logger.error("User not found, sending error message...");
         response = new ResponseEntity<>("User with specified email not found",
             HttpStatus.NOT_FOUND);
       } else {
+        logger.error("Provider not found, sending error message...");
         response = new ResponseEntity<>("Provider with specified provider ID not found",
             HttpStatus.NOT_FOUND);
       }
     } else {
+      logger.error("User not authenticated, sending error message...");
       response = new ResponseEntity<>("Only authenticated users have access to add rentals",
           HttpStatus.UNAUTHORIZED);
     }
@@ -212,17 +233,22 @@ public class RentalController {
       if (rental.isPresent()) {
         if (sessionUser.getEmail().equals(rental.get().getUser().getEmail()) ||
             sessionUser.isAdmin()) {
+          logger.info("Rental found, deleting rental...");
           this.rentalService.delete(id);
           response = new ResponseEntity<>("", HttpStatus.OK);
         } else {
+          logger.error("Email of rental users does not match email of session user, sending " +
+                       "error message...");
           response = new ResponseEntity<>("Users do not have access to delete rentals of other " +
               "users", HttpStatus.FORBIDDEN);
         }
       } else {
+        logger.error("Rental not found, sending error message...");
         response = new ResponseEntity<>("Rental with specified ID is not found",
             HttpStatus.NOT_FOUND);
       }
     } else {
+      logger.error("User not authenticated, sending error message...");
       response = new ResponseEntity<>("Only authenticated users have access to delete rentals",
           HttpStatus.UNAUTHORIZED);
     }
@@ -238,6 +264,7 @@ public class RentalController {
    */
   @ExceptionHandler(MethodArgumentTypeMismatchException.class)
   public ResponseEntity<String> handlePathVarException(MethodArgumentTypeMismatchException e) {
+    logger.error("Received HTTP request could not be read, sending error message...");
     return new ResponseEntity<>("HTTP request contains a value on an invalid format",
                                 HttpStatus.BAD_REQUEST);
   }
@@ -250,7 +277,8 @@ public class RentalController {
    */
   @ExceptionHandler(HttpMessageNotReadableException.class)
   public ResponseEntity<String> handleRequestBodyException(HttpMessageNotReadableException e) {
-    return new ResponseEntity<>("User data not supplied or contains a parameter on an invalid " +
+    logger.error("Received rental data could not be read, sending error message...");
+    return new ResponseEntity<>("Rental data not supplied or contains a parameter on an invalid " +
                                 "format", HttpStatus.BAD_REQUEST);
   }
 }
