@@ -167,8 +167,8 @@ public class DataInitializer implements ApplicationListener<ApplicationReadyEven
       ExtraFeature extraFeature1_1_1 = new ExtraFeature("Bluetooth");
       ExtraFeature extraFeature1_1_2 = new ExtraFeature("DAB radio");
       ExtraFeature extraFeature1_1_3 = new ExtraFeature("Warming in the chairs");
-      Provider provider1_1_1 = new Provider("Miller Bil", 600, "Ålesund", true, true);
-      Provider provider1_1_2 = new Provider("Biller Bil", 550, "Stryn", true, true);
+      Provider provider1_1_1 = new Provider("Miller Bil", 600, "Ålesund", true, false);
+      Provider provider1_1_2 = new Provider("Biller Bil", 550, "Stryn", true, false);
 
       configuration1_1.setCar(car1);
       configuration1_2.setCar(car1);

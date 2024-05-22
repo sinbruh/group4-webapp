@@ -3,9 +3,12 @@ package no.ntnu.project.group4.webapp.controllers;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+
+import java.util.Iterator;
 import java.util.Optional;
 import no.ntnu.project.group4.webapp.models.Car;
 import no.ntnu.project.group4.webapp.models.Configuration;
+import no.ntnu.project.group4.webapp.models.Provider;
 import no.ntnu.project.group4.webapp.models.User;
 import no.ntnu.project.group4.webapp.services.AccessUserService;
 import no.ntnu.project.group4.webapp.services.CarService;
@@ -53,14 +56,29 @@ public class ConfigurationController {
   /**
    * Returns an iterable containing all configurations. When this endpoint is requested, a HTTP 200
    * OK response will automatically be sent back.
+   * 
+   * <p>If user is not authenticated or user is authenticated but not admin, only providers who are
+   * visible are included.</p>
    *
    * @return 200 OK + configuration data
    */
   @Operation(summary = "Get all configurations")
   @GetMapping
   public Iterable<Configuration> getAll() {
+    User sessionUser = this.userService.getSessionUser();
+    Iterable<Configuration> configurations = this.configurationService.getAll();
+    if (sessionUser == null || (sessionUser != null && !sessionUser.isAdmin())) {
+      for (Configuration config : configurations) {
+        Iterator<Provider> it = config.getProviders().iterator();
+        if (it.hasNext()) {
+          if (!it.next().isVisible()) {
+            it.remove();
+          }
+        }
+      }
+    }
     logger.info("Sending all configuration data...");
-    return this.configurationService.getAll();
+    return configurations;
   }
 
   /**
@@ -68,6 +86,9 @@ public class ConfigurationController {
    *
    * <p>The response body contains (1) configuration data or (2) a string that contains an error
    * message.</p>
+   * 
+   * <p>If user is not authenticated or user is authenticated but not admin, only providers who are
+   * visible are included.</p>
    *
    * @param id The specified ID
    * @return <p>200 OK on success + configuration data</p>
@@ -83,10 +104,20 @@ public class ConfigurationController {
   @GetMapping("/{id}")
   public ResponseEntity<?> get(@PathVariable Long id) {
     ResponseEntity<?> response;
+    User sessionUser = this.userService.getSessionUser();
     Optional<Configuration> configuration = this.configurationService.getOne(id);
     if (configuration.isPresent()) {
+      Configuration existingConfiguration = configuration.get();
+      if (sessionUser == null || (sessionUser != null & !sessionUser.isAdmin())) {
+        Iterator<Provider> it = existingConfiguration.getProviders().iterator();
+        if (it.hasNext()) {
+          if (!it.next().isVisible()) {
+            it.remove();
+          }
+        }
+      }
       logger.info("Configuration found, sending configuration data...");
-      response = new ResponseEntity<>(configuration.get(), HttpStatus.OK);
+      response = new ResponseEntity<>(existingConfiguration, HttpStatus.OK);
     } else {
       logger.error("Configuration not found, sending error message...");
       response = new ResponseEntity<>("Configuration with specified ID not found",

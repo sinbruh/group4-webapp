@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
+import java.util.Iterator;
 import java.util.Optional;
 
 import no.ntnu.project.group4.webapp.models.Car;
@@ -54,7 +55,7 @@ public class CarController {
    * Returns an iterable containing all cars. When this endpoint is requested, a HTTP 200 OK
    * response will automatically be sent back.
    * 
-   * <p>If user is not authenticated or user is authenticated but not admin only providers who are
+   * <p>If user is not authenticated or user is authenticated but not admin, only providers who are
    * visible are included.</p>
    *
    * @return 200 OK + car data
@@ -67,9 +68,10 @@ public class CarController {
     if (sessionUser == null || (sessionUser != null && !sessionUser.isAdmin())) {
       for (Car car : cars) {
         for (Configuration config : car.getConfigurations()) {
-          for (Provider provider : config.getProviders()) {
-            if (!provider.isVisible()) {
-              config.removeProvider(provider);
+          Iterator<Provider> it = config.getProviders().iterator();
+          while (it.hasNext()) {
+            if (!it.next().isVisible()) {
+              it.remove();
             }
           }
         }
@@ -83,6 +85,9 @@ public class CarController {
    * Returns a response to the request of getting the car with the specified ID.
    *
    * <p>The response body contains (1) car data or (2) a string that contains an error message.</p>
+   * 
+   * <p>If user is not authenticated or user is authenticated but not admin, only providers who are
+   * visible are included.</p>
    *
    * @param id The specified ID
    * @return <p>200 OK on success + car data</p>
@@ -104,9 +109,10 @@ public class CarController {
       Car existingCar = car.get();
       if (sessionUser == null || (sessionUser != null && !sessionUser.isAdmin())) {
         for (Configuration config : existingCar.getConfigurations()) {
-          for (Provider provider : config.getProviders()) {
-            if (!provider.isVisible()) {
-              config.removeProvider(provider);
+          Iterator<Provider> it = config.getProviders().iterator();
+          if (it.hasNext()) {
+            if (!it.next().isVisible()) {
+              it.remove();
             }
           }
         }

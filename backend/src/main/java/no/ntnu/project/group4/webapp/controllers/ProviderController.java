@@ -3,7 +3,11 @@ package no.ntnu.project.group4.webapp.controllers;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+
+import java.util.LinkedHashSet;
 import java.util.Optional;
+import java.util.Set;
+
 import no.ntnu.project.group4.webapp.models.Configuration;
 import no.ntnu.project.group4.webapp.models.Provider;
 import no.ntnu.project.group4.webapp.models.User;
@@ -35,7 +39,7 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
  * <p>All HTTP requests affiliated with providers are handled in this class.</p>
  *
  * @author Group 4
- * @version v1.7 (2024.05.22)
+ * @version v1.8 (2024.05.22)
  */
 @CrossOrigin
 @RestController
@@ -51,16 +55,30 @@ public class ProviderController {
   private final Logger logger = LoggerFactory.getLogger(ProviderController.class);
 
   /**
-   * Returns an iterable containing all providers. When this endpoint is requested, a HTTP 200 OK
-   * response will automatically be sent back.
+   * Returns a HTTP response to the request requesting to get all providers.
+   * 
+   * <p>The response body contains provider data.</p>
+   * 
+   * <p>If user is not authenticated or user is authenticated but not admin, only providers who are
+   * visible are included.</p>
    *
    * @return 200 OK + provider data
    */
   @Operation(summary = "Get all providers")
   @GetMapping
-  public Iterable<Provider> getAll() {
+  public ResponseEntity<Set<Provider>> getAll() {
+    User sessionUser = this.userService.getSessionUser();
+    Iterable<Provider> providers = this.providerService.getAll();
+    Set<Provider> providerData = new LinkedHashSet<>();
+    if (sessionUser == null || (sessionUser != null & !sessionUser.isAdmin())) {
+      for (Provider provider : providers) {
+        if (provider.isVisible()) {
+          providerData.add(provider);
+        }
+      }
+    }
     logger.info("Sending all provider data...");
-    return this.providerService.getAll();
+    return new ResponseEntity<>(providerData, HttpStatus.OK);
   }
 
   /**
@@ -68,25 +86,43 @@ public class ProviderController {
    *
    * <p>The response body contains (1) provider data or (2) a string that contains an error
    * message.</p>
+   * 
+   * <p>If user is not authenticated or user is authenticated but not admin, only providers who are
+   * visible are included.</p>
    *
    * @param id The specified ID
    * @return <p>200 OK on success</p>
-   * <p>404 NOT FOUND if provider is not found</p>
+   *         <p>403 FORBIDDEN if provider is not visible</p>
+   *         <p>404 NOT FOUND if provider is not found</p>
    */
   @Operation(
       summary = "Get provider by ID",
       description = "Returns the provider with the specified ID")
   @ApiResponses(value = {
       @ApiResponse(responseCode = "200", description = "Provider data"),
+      @ApiResponse(responseCode = "403", description = "Provider with specified ID not visible"),
       @ApiResponse(responseCode = "404", description = "Provider with specified ID not found")
   })
   @GetMapping("/{id}")
   public ResponseEntity<?> get(@PathVariable Long id) {
     ResponseEntity<?> response;
+    User sessionUser = this.userService.getSessionUser();
     Optional<Provider> provider = this.providerService.getOne(id);
     if (provider.isPresent()) {
-      logger.info("Provider found, sending provider data...");
-      response = new ResponseEntity<>(provider.get(), HttpStatus.OK);
+      Provider existingProvider = provider.get();
+      if (sessionUser == null || (sessionUser != null && !sessionUser.isAdmin())) {
+        if (existingProvider.isVisible()) {
+          logger.info("Provider found, sending provider data...");
+          response = new ResponseEntity<>(existingProvider, HttpStatus.OK);
+        } else {
+          logger.error("Provider not visible, sending error message...");
+          response = new ResponseEntity<>("Provider with specified ID is not visible",
+                                          HttpStatus.FORBIDDEN);
+        }
+      } else {
+        logger.info("Provider found, sending provider data...");
+        response = new ResponseEntity<>(existingProvider, HttpStatus.OK);
+      }
     } else {
       logger.error("Provider not found, sending error message...");
       response = new ResponseEntity<>("Provider with specified ID not found",
