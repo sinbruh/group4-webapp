@@ -10,6 +10,7 @@ import ExpandedCard from "@/components/ExpandedCard";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import CarReader from '../../components/CarReader.js';
 import { useMediaQuery } from 'react-responsive';
+import {  useRouter } from 'next/navigation';
 
 
 export default function Search() {
@@ -24,9 +25,11 @@ export default function Search() {
     const [price, setPrice] = useState({ min: null, max: null });
     const [expandedCar, setExpandedCar] = useState(null);
     const [favoriteFilter, setFavoriteFilter] = useState(false);
+    const router = useRouter();
 
-
-
+    function showConfirmation () {
+        router.push('/order');
+    }
 
     return (
         <div className="bg-[url('/temp-background-image-low.webp')] bg-cover bg-center">
@@ -61,7 +64,7 @@ export default function Search() {
                     </ScrollArea>
                     {isDesktop &&
                         <section className="rounded m-2 max-h-[78%] w-[55%]">
-                            <ExpandedCard carInfo={expandedCar} dates={dates} />
+                            <ExpandedCard carInfo={expandedCar} dates={dates} showConfirmation={showConfirmation} />
                         </section>
                     }
                 </section>
