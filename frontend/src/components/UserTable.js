@@ -51,7 +51,7 @@ export function UserTable() {
     const usersForCurrentPage = users.slice((currentPage - 1) * entriesPerPage, currentPage * entriesPerPage);
 
     return (
-        <div>
+        <div className={"max-w-x1 mx-auto p-6 bg-white shadow-md rounded-md"}>
             <Table>
                 <TableCaption>A list of all users.</TableCaption>
                 <TableHeader>

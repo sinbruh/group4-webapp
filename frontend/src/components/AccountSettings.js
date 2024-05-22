@@ -97,6 +97,7 @@ export default function AccountSettings ({ userDetails, setOpen }) {
     };
 
     return (
+        <div className={"max-w-x1 mx-auto p-6 bg-white shadow-md rounded-md"}>
         <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
                 <FormField
@@ -238,5 +239,6 @@ export default function AccountSettings ({ userDetails, setOpen }) {
                 <Button type="submit">Submit</Button>
             </form>
         </Form>
+    </div>
     );
 }
