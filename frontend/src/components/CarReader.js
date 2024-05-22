@@ -108,7 +108,7 @@ export default function CarReader({
                 toPriceNumber >= lowestPrice || toPriceNumber === 0;
               const isLocationMatch =
                 carLocationLowercase === locationLowercase || location === "";
-              const isFavorite = favoriteFilter ? user.favorites.some(favorite => favorite.id === provider.id) : true; // Add this line
+              const isFavorite = favoriteFilter ? user.favorites && user.favorites.some(favorite => favorite.id === provider.id) : true; // Add this line
               if (isFromPriceLower && isToPriceHigher && isLocationMatch && isFavorite) { // Update this line
                 return lowestPrice;
               }
