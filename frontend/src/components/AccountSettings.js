@@ -1,7 +1,5 @@
-import React, {useEffect} from 'react';
-import { useState } from 'react';
-import {asyncApiRequest} from "@/tools/request";
-
+import React, { useEffect, useState } from 'react';
+import { asyncApiRequest } from "@/tools/request";
 import { format } from 'date-fns';
 import { useForm, Controller } from 'react-hook-form';
 import { Button } from "@/components/ui/button";
@@ -36,7 +34,7 @@ const getDaysInMonth = (year, month) => {
     return new Date(year, month + 1, 0).getDate();
 };
 
-export default function AccountSettings ({ userDetails, setOpen }) {
+export default function AccountSettings({ userDetails, setOpen }) {
     const form = useForm({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -50,7 +48,7 @@ export default function AccountSettings ({ userDetails, setOpen }) {
     });
 
     const [newPassword, setNewPassword] = useState('');
-    const requestBody = {password: newPassword}
+    const requestBody = { password: newPassword }
     const [isEditing, setIsEditing] = useState(false);
     const [editableDetails, setEditableDetails] = useState({});
 
@@ -75,6 +73,11 @@ export default function AccountSettings ({ userDetails, setOpen }) {
         setIsEditing(!isEditing);
     }
 
+    const handleCancelEdit = () => {
+        setIsEditing(false);
+        form.reset(userDetails);
+    }
+
     const handleChange = (e) => {
         const { name, value } = e.target;
         setEditableDetails((prevDetails) => ({
@@ -86,7 +89,8 @@ export default function AccountSettings ({ userDetails, setOpen }) {
     if (!userDetails) {
         return <p>Loading...</p>;
     }
-    const onSubmit = async (values)  => {
+
+    const onSubmit = async (values) => {
         console.log("onSubmit", values);
         values.dateOfBirth = format(values.dateOfBirth, 'T');
 
@@ -105,7 +109,17 @@ export default function AccountSettings ({ userDetails, setOpen }) {
 
     return (
         <div className="max-w-7xl mx-auto p-6 bg-white shadow-md rounded-md">
-            <Form {...form} className="space-y-6">
+            <div className="flex justify-end space-x-2 mb-4">
+                {!isEditing ? (
+                    <Button onClick={handleEditClick} className="py-1 px-3 bg-gray-800 text-white rounded hover:bg-gray-700">Edit Profile</Button>
+                ) : (
+                    <>
+                        <Button onClick={handleCancelEdit} className="py-1 px-3 bg-gray-500 text-white rounded hover:bg-gray-400">Cancel</Button>
+                        <Button type="submit" form="account-settings-form" className="py-1 px-3 bg-green-600 text-white rounded hover:bg-green-500">Save</Button>
+                    </>
+                )}
+            </div>
+            <Form {...form} className="space-y-6" id="account-settings-form">
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
                     <FormField
                         control={form.control}
@@ -114,7 +128,7 @@ export default function AccountSettings ({ userDetails, setOpen }) {
                             <FormItem>
                                 <FormLabel className="font-semibold text-lg text-gray-700">First Name</FormLabel>
                                 <FormControl>
-                                    <Input {...field} className="p-2 border rounded border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                                    <Input {...field} readOnly={!isEditing} className="p-2 border rounded border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-600" />
                                 </FormControl>
                                 <FormMessage className="text-red-500">{form.formState.errors.firstName?.message}</FormMessage>
                             </FormItem>
@@ -127,7 +141,7 @@ export default function AccountSettings ({ userDetails, setOpen }) {
                             <FormItem>
                                 <FormLabel className="font-semibold text-lg text-gray-700">Last Name</FormLabel>
                                 <FormControl>
-                                    <Input {...field} className="p-2 border rounded border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                                    <Input {...field} readOnly={!isEditing} className="p-2 border rounded border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-600" />
                                 </FormControl>
                                 <FormMessage className="text-red-500">{form.formState.errors.lastName?.message}</FormMessage>
                             </FormItem>
@@ -165,7 +179,7 @@ export default function AccountSettings ({ userDetails, setOpen }) {
                                                     <Select
                                                         value={year.toString()}
                                                         onValueChange={(value) => setYear(parseInt(value, 10))}
-                                                        className="p-2 border rounded border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                                        className="p-2 border rounded border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-600"
                                                     >
                                                         <SelectTrigger className="w-[100px]">
                                                             <SelectValue>{year}</SelectValue>
@@ -181,7 +195,7 @@ export default function AccountSettings ({ userDetails, setOpen }) {
                                                     <Select
                                                         value={months[month]}
                                                         onValueChange={(value) => setMonth(months.indexOf(value))}
-                                                        className="p-2 border rounded border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                                        className="p-2 border rounded border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-600"
                                                     >
                                                         <SelectTrigger className="w-[100px]">
                                                             <SelectValue>{months[month]}</SelectValue>
@@ -197,7 +211,7 @@ export default function AccountSettings ({ userDetails, setOpen }) {
                                                     <Select
                                                         value={day.toString()}
                                                         onValueChange={(value) => setDay(parseInt(value, 10))}
-                                                        className="p-2 border rounded border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                                        className="p-2 border rounded border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-600"
                                                     >
                                                         <SelectTrigger className="w-[100px]">
                                                             <SelectValue>{day}</SelectValue>
@@ -226,7 +240,7 @@ export default function AccountSettings ({ userDetails, setOpen }) {
                             <FormItem>
                                 <FormLabel className="font-semibold text-lg text-gray-700">Email</FormLabel>
                                 <FormControl>
-                                    <Input {...field} className="p-2 border rounded border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                                    <Input {...field} readOnly={!isEditing} className="p-2 border rounded border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-600" />
                                 </FormControl>
                                 <FormMessage className="text-red-500">{form.formState.errors.email?.message}</FormMessage>
                             </FormItem>
@@ -239,21 +253,21 @@ export default function AccountSettings ({ userDetails, setOpen }) {
                             <FormItem>
                                 <FormLabel className="font-semibold text-lg text-gray-700">Phone Number</FormLabel>
                                 <FormControl>
-                                    <Input {...field} className="p-2 border rounded border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                                    <Input {...field} readOnly={!isEditing} className="p-2 border rounded border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-600" />
                                 </FormControl>
                                 <FormMessage className="text-red-500">{form.formState.errors.phoneNumber?.message}</FormMessage>
                             </FormItem>
                         )}
                     />
-                    <FormItem className="flex flex-col space-y-2">
-                        <FormLabel className="font-semibold text-lg text-gray-700">New Password</FormLabel>
-                        <FormControl>
-                            <Input type="password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} className="p-2 border rounded border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500" />
-                        </FormControl>
-                    </FormItem>
-                    <Button type="button" onClick={handlePasswordChange} className="py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600">Change Password</Button>
-
-                    <Button type="submit" className="py-2 px-4 bg-blue-500 text-white rounded mt-4 hover:bg-blue-600">Submit</Button>
+                    {isEditing && (
+                        <FormItem className="flex flex-col space-y-2">
+                            <FormLabel className="font-semibold text-lg text-gray-700">New Password</FormLabel>
+                            <FormControl>
+                                <Input type="password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} readOnly={!isEditing} className="p-2 border rounded border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-600" />
+                            </FormControl>
+                            <Button type="button" onClick={handlePasswordChange} className="py-1 px-3 bg-gray-800 text-white rounded hover:bg-gray-700">Change Password</Button>
+                        </FormItem>
+                    )}
                 </form>
             </Form>
         </div>
