@@ -1,22 +1,60 @@
-
-
-// user details   
-//first name last name, date of birth, email, phone number
-
-
 import React, {useEffect} from 'react';
 import { useState } from 'react';
 import {asyncApiRequest} from "@/tools/request";
 
-export default function AccountSettings ({ userDetails }) {
+import { format } from 'date-fns';
+import { useForm, Controller } from 'react-hook-form';
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+    Form,
+    FormControl,
+    FormField,
+    FormItem,
+    FormLabel,
+    FormMessage,
+} from "@/components/ui/form";
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
+import { getCookie } from '@/tools/cookies';
+
+const formSchema = z.object({
+    firstName: z.string(),
+    lastName: z.string(),
+    email: z.string().email(),
+    dateOfBirth: z.date().nullable(),
+    phoneNumber: z.string(),
+    
+});
+
+const Email = getCookie('current_email');
+
+const years = Array.from({ length: 100 }, (_, i) => new Date().getFullYear() - i);
+    const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+    const getDaysInMonth = (year, month) => {
+        return new Date(year, month + 1, 0).getDate();
+    };
+
+export default function AccountSettings ({ userDetails, setOpen }) {
+    const form = useForm({
+        resolver: zodResolver(formSchema),
+        defaultValues: {
+            firstName: userDetails.firstName,
+            lastName: userDetails.lastName,
+            email: userDetails.email,
+            dateOfBirth: userDetails.dateOfBirth,
+            phoneNumber: userDetails.phoneNumber.toString(),
+            password: ''
+        }
+    });
+
+
     const [isEditing, setIsEditing] = useState(false);
     const [editableDetails, setEditableDetails] = useState({});
 
-    useEffect(() => {
-        if (userDetails) {
-            setEditableDetails(userDetails);
-        }
-    }, [userDetails]);
+    
 
     const handleEditClick = () => {
         if (isEditing) {
@@ -33,10 +71,21 @@ export default function AccountSettings ({ userDetails }) {
         }));
     }
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+    
+    
+
+    if (!userDetails) {
+        return <p>Loading...</p>;
+    }
+    const onSubmit = async (values)  => {
+        console.log("onSubmit", values);
+        values.dateOfBirth = format(values.dateOfBirth, 'T');
+        
         try {
-            const response = await asyncApiRequest("PUT", `/api/users/${email}`, editableDetails);
+            const response = await asyncApiRequest("PUT", `/api/users/${Email}`, values);
+            
+        
+
             if (response.ok) {
                 setIsEditing(false);
             } else {
@@ -47,97 +96,147 @@ export default function AccountSettings ({ userDetails }) {
         }
     };
 
-    if (!userDetails) {
-        return <p>Loading...</p>;
-    }
-
-
     return (
-        <div className={"max-w-x1 mx-auto p-6 bg-white shadow-md rounded-md"}>
-            <h2 className={"text-2x1 font-semibold mb-4"}>User Profile Settings</h2>
-            <form className={"space-y-2"}>
-                <label className={"block text-gray-700"}>
-                    First Name:
-                    <input
-                        type="text"
-                        name="firstName"
-                        value={editableDetails.firstName}
-                        onChange={handleChange}
-                        readOnly={!isEditing}
-                        className={`w-full px-4 py-2 border ${isEditing ? 'border-blue-500': 'border-gray-300'} rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent`}
-                    />
-                </label>
-                <label className={"block text-gray-700"}>
-                    Last Name:
-                    <input
-                        type="text"
-                        name="lastName"
-                        value={editableDetails.lastName}
-                        onChange={handleChange}
-                        readOnly={!isEditing}
-                        className={"w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"}
-                    />
-                </label>
-                <label className={"block text-gray-700"}>
-                    Date of Birth:
-                    <input
-                        type="date"
-                        name="dateOfBirth"
-                        value={editableDetails.date}
-                        onChange={handleChange}
-                        readOnly={!isEditing}
-                        className={"w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"}
-                    />
-                </label>
-                <label className={"block text-gray-700"}>
-                    Email:
-                    <input
-                        type="email"
-                        name="email"
-                        value={editableDetails.email}
-                        onChange={handleChange}
-                        readOnly={!isEditing}
-                        className={"w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"}
-                    />
-                </label>
-                <label className={"block text-gray-700"}>
-                    Phone Number:
-                    <input
-                        type="tel"
-                        name="phoneNumber"
-                        value={editableDetails.phoneNumber}
-                        onChange={handleChange}
-                        readOnly={!isEditing}
-                        className={"w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"}
-                    />
-                </label>
-                {isEditing && (
-                    <div className="flex justify-end space-x-4">
-                        <button
-                            type="button"
-                            onClick={handleSubmit}
-                            className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        >
-                            Submit
-                        </button>
-                        <button
-                            type="button"
-                            onClick={handleEditClick}
-                            className="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500"
-                        >
-                            Cancel
-                        </button>
-                    </div>
-                )}
+        <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+                <FormField
+                    control={form.control}
+                    name="firstName"
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>First Name</FormLabel>
+                            <FormControl>
+                                <Input {...field} />
+                            </FormControl>
+                            <FormMessage>{form.formState.errors.firstName?.message}</FormMessage>
+                        </FormItem>
+                    )}
+                />
+                <FormField
+                    control={form.control}
+                    name="lastName"
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel htmlFor={field.name}>Last Name</FormLabel>
+                            <FormControl>
+                                <Input {...field} />
+                            </FormControl>
+                            <FormMessage>{form.formState.errors.lastName?.message}</FormMessage>
+                        </FormItem>
+                    )}
+                />
+                <FormField
+                    control={form.control}
+                    name="dateOfBirth"
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Date of Birth</FormLabel>
+                            <FormControl>
+                                <Controller
+                                    control={form.control}
+                                    name="dateOfBirth"
+                                    render={({ field }) => {
+                                        const date = field.value ? new Date(field.value) : new Date();
+                                        const [year, setYear] = useState(date.getFullYear());
+                                        const [month, setMonth] = useState(date.getMonth());
+                                        const [day, setDay] = useState(date.getDate());
+                                        const days = Array.from({ length: getDaysInMonth(year, month) }, (_, i) => i + 1);
+
+                                        useEffect(() => {
+                                            const newDate = new Date(year, month, day);
+                                            if (newDate.getMonth() === month && newDate.getDate() === day) {
+                                                field.onChange(newDate);
+                                            } else {
+                                                setDay(1);
+                                                field.onChange(new Date(year, month, 1));
+                                            }
+                                        }, [year, month, day]);
+
+                                        return (
+                                            <div className="flex space-x-4">
+                                                <Select
+                                                    value={year.toString()}
+                                                    onValueChange={(value) => setYear(parseInt(value, 10))}
+                                                >
+                                                    <SelectTrigger className="w-[100px]">
+                                                        <SelectValue>{year}</SelectValue>
+                                                    </SelectTrigger>
+                                                    <SelectContent>
+                                                        <SelectGroup>
+                                                            {years.map(year => (
+                                                                <SelectItem key={year} value={year.toString()}>{year}</SelectItem>
+                                                            ))}
+                                                        </SelectGroup>
+                                                    </SelectContent>
+                                                </Select>
+                                                <Select
+                                                    value={months[month]}
+                                                    onValueChange={(value) => setMonth(months.indexOf(value))}
+                                                >
+                                                    <SelectTrigger className="w-[100px]">
+                                                        <SelectValue>{months[month]}</SelectValue>
+                                                    </SelectTrigger>
+                                                    <SelectContent>
+                                                        <SelectGroup>
+                                                            {months.map((month, index) => (
+                                                                <SelectItem key={index} value={month}>{month}</SelectItem>
+                                                            ))}
+                                                        </SelectGroup>
+                                                    </SelectContent>
+                                                </Select>
+                                                <Select
+                                                    value={day.toString()}
+                                                    onValueChange={(value) => setDay(parseInt(value, 10))}
+                                                >
+                                                    <SelectTrigger className="w-[100px]">
+                                                        <SelectValue>{day}</SelectValue>
+                                                    </SelectTrigger>
+                                                    <SelectContent>
+                                                        <SelectGroup>
+                                                            {days.map(day => (
+                                                                <SelectItem key={day} value={day.toString()}>{day}</SelectItem>
+                                                            ))}
+                                                        </SelectGroup>
+                                                    </SelectContent>
+                                                </Select>
+                                            </div>
+                                        );
+                                    }}
+                                />
+                            </FormControl>
+                            <FormMessage>{form.formState.errors.dateOfBirth?.message}</FormMessage>
+                        </FormItem>
+                    )}
+                />
+                <FormField
+                    control={form.control}
+                    name="email"
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Email</FormLabel>
+                            <FormControl>
+                                <Input {...field} />
+                            </FormControl>
+                            <FormMessage>{form.formState.errors.email?.message}</FormMessage>
+                        </FormItem>
+                    )}
+                />
+                <FormField
+                    control={form.control}
+                    name="phoneNumber"
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Phone Number</FormLabel>
+                            <FormControl>
+                                <Input {...field} />
+                            </FormControl>
+                            <FormMessage>{form.formState.errors.phoneNumber?.message}</FormMessage>
+                        </FormItem>
+                    )}
+                />
+                
+                <Button type="submit">Submit</Button>
             </form>
-            {!isEditing && (
-                <button
-                    onClick={handleEditClick}
-                    className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                >
-                    Edit Profile
-                </button>
-            )}
-        </div>
+        </Form>
     );
 }
