@@ -1,8 +1,7 @@
-
 import { getCookie } from "@/tools/cookies";
 import React, { useEffect, useState } from "react";
 import { asyncApiRequest } from "@/tools/request";
-import {Input} from "@/components/ui/input";
+import { Input } from "@/components/ui/input";
 import {
   Table,
   TableBody,
@@ -10,15 +9,27 @@ import {
   TableCell,
   TableHead,
   TableHeader,
-  TableRow
+  TableRow,
 } from "@/components/ui/table";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
 
 export default function CarEditor() {
   const [user, setUser] = useState(null);
   const [cars, setCars] = useState([]);
   const Email = getCookie("current_email");
   const [searchTerm, setSearchTerm] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const entriesPerPage = 10;
 
+  //From CarReader   
   const updateJsonFile = async () => {
     try {
       //check data
@@ -40,10 +51,19 @@ export default function CarEditor() {
 
       console.log("EditCars.js: ", data);
 
-      //update CarCards
       setCars(data);
     } catch (error) {
       console.error("Error updating JSON file:", error);
+    }
+  };
+
+  const handlePreviousPage = () => {
+    setCurrentPage((prevPage) => Math.max(prevPage - 1, 1));
+  };
+
+  const handleNextPage = () => {
+    if (currentPage < Math.ceil(cars.length / entriesPerPage)) {
+      setCurrentPage((prevPage) => prevPage + 1);
     }
   };
 
@@ -51,9 +71,14 @@ export default function CarEditor() {
     updateJsonFile();
   }, []);
 
+  const carsForCurrentPage = cars.slice(
+    (currentPage - 1) * entriesPerPage,
+    currentPage * entriesPerPage
+  );
+
   return (
     <div className={"max-w-x1 mx-auto p-6 bg-white shadow-md rounded-md"}>
-      <h2 className={"text-2x1 font-semibold mb-4"}>Car Details</h2>
+      <h2 className={"text-2x1 font-semibold mb-4"}>Car Editor</h2>
       <Input
         type="String"
         placeholder="Search"
@@ -63,17 +88,17 @@ export default function CarEditor() {
 
       <form className={"space-y-2"}>
         <Table>
-          <TableCaption>A list of Car Details</TableCaption>
+          <TableCaption></TableCaption>
           <TableHeader>
             <TableRow>
               <TableHead className="w-[100px]">ID</TableHead>
-              <TableHead>Make</TableHead>
-              <TableHead>Model</TableHead>
-              <TableHead>Year</TableHead>
+              <TableHead>Make*</TableHead>
+              <TableHead>Model*</TableHead>
+              <TableHead>Year*</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
-            {cars
+            {carsForCurrentPage
               .filter(
                 (car) =>
                   car.id.toString().includes(searchTerm) ||
@@ -94,6 +119,21 @@ export default function CarEditor() {
               })}
           </TableBody>
         </Table>
+        <Pagination>
+          <PaginationContent>
+            <PaginationItem>
+              <PaginationPrevious onClick={handlePreviousPage} />
+            </PaginationItem>
+            <PaginationItem>
+              <PaginationLink href="#" isActive>
+                {currentPage}
+              </PaginationLink>
+            </PaginationItem>
+            <PaginationItem>
+              <PaginationNext onClick={handleNextPage} />
+            </PaginationItem>
+          </PaginationContent>
+        </Pagination>
       </form>
     </div>
   );

@@ -11,13 +11,26 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
 
 export default function ProviderEditor() {
   const [user, setUser] = useState(null);
   const [cars, setCars] = useState([]);
   const Email = getCookie("current_email");
   const [searchTerm, setSearchTerm] = useState("");
+  const [providers, setProviders] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const entriesPerPage = 10;
 
+  //From CarReader   Changed to FlatMap Providers
   const updateJsonFile = async () => {
     try {
       //check data
@@ -39,10 +52,25 @@ export default function ProviderEditor() {
 
       console.log("EditConfigs.js: ", data);
 
-      //update CarCards
+      const allProviders = data.flatMap((car) =>
+        car.configurations.flatMap((config) =>
+          config.providers.map((provider) => ({ ...provider, car, config }))
+        )
+      );
+      setProviders(allProviders);
       setCars(data);
     } catch (error) {
       console.error("Error updating JSON file:", error);
+    }
+  };
+
+  const handlePreviousPage = () => {
+    setCurrentPage((prevPage) => Math.max(prevPage - 1, 1));
+  };
+
+  const handleNextPage = () => {
+    if (currentPage < Math.ceil(providers.length / entriesPerPage)) {
+      setCurrentPage((prevPage) => prevPage + 1);
     }
   };
 
@@ -50,9 +78,14 @@ export default function ProviderEditor() {
     updateJsonFile();
   }, []);
 
+  const carsForCurrentPage = providers.slice(
+    (currentPage - 1) * entriesPerPage,
+    currentPage * entriesPerPage
+  );
+
   return (
     <div className={"max-w-x1 mx-auto p-6 bg-white shadow-md rounded-md"}>
-      <h2 className={"text-2x1 font-semibold mb-4"}>Car Details</h2>
+      <h2 className={"text-2x1 font-semibold mb-4"}>Provider Editor</h2>
       <Input
         type="String"
         placeholder="Search"
@@ -62,61 +95,61 @@ export default function ProviderEditor() {
 
       <form className={"space-y-2"}>
         <Table>
-          <TableCaption>A list of Car Details</TableCaption>
+          <TableCaption></TableCaption>
           <TableHeader>
             <TableRow>
               <TableHead className="w-[100px]">Provider ID</TableHead>
               <TableHead>Make</TableHead>
               <TableHead>Model</TableHead>
               <TableHead>Config Name</TableHead>
-              <TableHead>Seats</TableHead>
-              <TableHead>FuelType</TableHead>
-              <TableHead>Transmission</TableHead>
-              <TableHead>Provider Name</TableHead>
-              <TableHead>Provider Location</TableHead>
-              <TableHead>Provider Price</TableHead>
-              <TableHead>Provider Visible</TableHead>
+              <TableHead>Provider Name*</TableHead>
+              <TableHead>Location*</TableHead>
+              <TableHead>Price*</TableHead>
+              <TableHead>Visible*</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
-            {cars.flatMap((car, index) =>
-              car.configurations.flatMap((config, configIndex) =>
-                config.providers
-                  .filter(
-                    (provider) =>
-                      provider.id.toString() === searchTerm ||
-                      car.make.includes(searchTerm) ||
-                      car.model.includes(searchTerm) ||
-                      car.valid.toString().includes(searchTerm) ||
-                      car.year.toString().includes(searchTerm) ||
-                      config.name.includes(searchTerm) ||
-                      config.numberOfSeats.toString().includes(searchTerm) ||
-                      config.fuelType.includes(searchTerm) ||
-                      config.tranmissionType.includes(searchTerm) ||
-                      provider.name.includes(searchTerm) ||
-                      provider.location.includes(searchTerm)
-                  )
-                  .map((provider, providerIndex) => (
-                    <TableRow key={`${index}-${configIndex}-${providerIndex}`}>
-                      <TableCell className="font-medium">
-                        {provider.id}
-                      </TableCell>
-                      <TableCell>{car.make}</TableCell>
-                      <TableCell>{car.model}</TableCell>
-                      <TableCell>{config.name}</TableCell>
-                      <TableCell>{config.numberOfSeats}</TableCell>
-                      <TableCell>{config.fuelType}</TableCell>
-                      <TableCell>{config.tranmissionType}</TableCell>
-                      <TableCell>{provider.name}</TableCell>
-                      <TableCell>{provider.location}</TableCell>
-                      <TableCell>{provider.price}</TableCell>
-                      <TableCell>{provider.visible.toString()}</TableCell>
-                    </TableRow>
-                  ))
+            {carsForCurrentPage
+              .filter(
+                (provider) =>
+                  provider.id.toString() === searchTerm ||
+                  provider.car.make.includes(searchTerm) ||
+                  provider.car.model.includes(searchTerm) ||
+                  provider.config.name.includes(searchTerm) ||
+                  provider.name.includes(searchTerm) ||
+                  provider.price.toString().includes(searchTerm) ||
+                  provider.location.includes(searchTerm)
               )
-            )}
+              .sort((a, b) => a.id - b.id)
+              .map((provider, index) => (
+                <TableRow key={index}>
+                  <TableCell className="font-medium">{provider.id}</TableCell>
+                  <TableCell>{provider.car.make}</TableCell>
+                  <TableCell>{provider.car.model}</TableCell>
+                  <TableCell>{provider.config.name}</TableCell>
+                  <TableCell>{provider.name}</TableCell>
+                  <TableCell>{provider.location}</TableCell>
+                  <TableCell>{provider.price + " kr"}</TableCell>
+                  <TableCell>{provider.visible.toString()}</TableCell>
+                </TableRow>
+              ))}
           </TableBody>
         </Table>
+        <Pagination>
+          <PaginationContent>
+            <PaginationItem>
+              <PaginationPrevious onClick={handlePreviousPage} />
+            </PaginationItem>
+            <PaginationItem>
+              <PaginationLink href="#" isActive>
+                {currentPage}
+              </PaginationLink>
+            </PaginationItem>
+            <PaginationItem>
+              <PaginationNext onClick={handleNextPage} />
+            </PaginationItem>
+          </PaginationContent>
+        </Pagination>
       </form>
     </div>
   );
