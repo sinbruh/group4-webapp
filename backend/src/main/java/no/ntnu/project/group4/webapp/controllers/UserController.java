@@ -10,6 +10,7 @@ import java.util.Set;
 import no.ntnu.project.group4.webapp.dto.AuthenticationResponse;
 import no.ntnu.project.group4.webapp.dto.UserDto;
 import no.ntnu.project.group4.webapp.dto.UserUpdateDto;
+import no.ntnu.project.group4.webapp.dto.UserUpdatePasswordDto;
 import no.ntnu.project.group4.webapp.models.Provider;
 import no.ntnu.project.group4.webapp.models.User;
 import no.ntnu.project.group4.webapp.security.JwtUtil;
@@ -225,14 +226,15 @@ public class UserController {
   })
   @PutMapping("/{email}/password")
   public ResponseEntity<String> updatePassword(@PathVariable String email,
-                                               @RequestBody String password) {
+                                               @RequestBody UserUpdatePasswordDto userPassword) {
     ResponseEntity<String> response;
     User sessionUser = this.accessUserService.getSessionUser();
     if (sessionUser != null) {
       Optional<User> user = this.userService.getOneByEmail(email);
       if (user.isPresent()) {
         if (sessionUser.getEmail().equals(user.get().getEmail()) || sessionUser.isAdmin()) {
-          String errorMessage = this.accessUserService.updateUserPassword(user.get(), password);
+          String errorMessage =
+            this.accessUserService.updateUserPassword(user.get(), userPassword);
           if (errorMessage == null) {
             response = new ResponseEntity<>("", HttpStatus.OK);
           } else {

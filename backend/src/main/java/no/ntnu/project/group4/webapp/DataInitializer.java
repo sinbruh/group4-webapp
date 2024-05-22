@@ -1,5 +1,6 @@
 package no.ntnu.project.group4.webapp;
 
+import no.ntnu.project.group4.webapp.dto.UserUpdatePasswordDto;
 import no.ntnu.project.group4.webapp.models.Car;
 import no.ntnu.project.group4.webapp.models.Configuration;
 import no.ntnu.project.group4.webapp.models.ExtraFeature;
@@ -133,10 +134,10 @@ public class DataInitializer implements ApplicationListener<ApplicationReadyEven
       this.userService.add(user3);
 
       // Update admin user password to a proper password that uses BCrypt hashing
-      this.accessUserService.updateUserPassword(admin, "adminuser");
-      this.accessUserService.updateUserPassword(user1, "morganuser");
-      this.accessUserService.updateUserPassword(user2, "sarahuser");
-      this.accessUserService.updateUserPassword(user3, "maxuser1");
+      this.accessUserService.updateUserPassword(admin, new UserUpdatePasswordDto("adminuser"));
+      this.accessUserService.updateUserPassword(user1, new UserUpdatePasswordDto("morganuser"));
+      this.accessUserService.updateUserPassword(user2, new UserUpdatePasswordDto("sarahuser"));
+      this.accessUserService.updateUserPassword(user3, new UserUpdatePasswordDto("maxuser1"));
 
       this.logger.info("Done loading user data");
     } else {
