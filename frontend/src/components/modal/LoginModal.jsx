@@ -60,8 +60,11 @@ export default function LoginModalClient() {
     }
 
     function onFailedLogin() {
-        console.error('Error:', error);
-        console.error('Login failed');
+        form.setError("password" , {
+            type: "manual",
+            message: "Incorrect password"
+        });
+        console.log("Login failed");
     }
 
     function handleShowSignup() {
