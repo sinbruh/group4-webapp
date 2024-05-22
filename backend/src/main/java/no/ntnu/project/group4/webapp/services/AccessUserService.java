@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.Date;
 import java.util.Optional;
 import no.ntnu.project.group4.webapp.dto.UserUpdateDto;
+import no.ntnu.project.group4.webapp.dto.UserUpdatePasswordDto;
 import no.ntnu.project.group4.webapp.models.Role;
 import no.ntnu.project.group4.webapp.models.User;
 import no.ntnu.project.group4.webapp.repositories.RoleRepository;
@@ -172,13 +173,13 @@ public class AccessUserService implements UserDetailsService {
    * Updates user password.
    * 
    * @param user User to update
-   * @param password Password to set for the user
+   * @param userPassword User password to set for the user
    * @return A string containing an error message, null if no errors occured
    */
-  public String updateUserPassword(User user, String password) {
-    String errorMessage = checkPasswordRequirements(password);
+  public String updateUserPassword(User user, UserUpdatePasswordDto userPassword) {
+    String errorMessage = checkPasswordRequirements(userPassword.getPassword());
     if (errorMessage == null) {
-      user.setPassword(createHash(password));
+      user.setPassword(createHash(userPassword.getPassword()));
       userRepository.save(user);
     }
     return errorMessage;

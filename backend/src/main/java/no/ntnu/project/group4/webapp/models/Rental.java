@@ -110,6 +110,6 @@ public class Rental {
   }
 
   public boolean isValid() {
-    return this.startDate != null && this.endDate != null;
+    return this.startDate.getTime() > 0 && this.endDate.getTime() > 0;
   }
 }
