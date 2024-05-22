@@ -9,6 +9,9 @@ import no.ntnu.project.group4.webapp.dto.AuthenticationResponse;
 import no.ntnu.project.group4.webapp.dto.RegisterDto;
 import no.ntnu.project.group4.webapp.security.JwtUtil;
 import no.ntnu.project.group4.webapp.services.AccessUserService;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,7 +33,7 @@ import org.springframework.web.bind.annotation.RestController;
  * <p>All HTTP requests affiliated with authentication is handled in this class.</p>
  *
  * @author Group 4
- * @version v1.1 (2024.05.22)
+ * @version v1.2 (2024.05.22)
  */
 @CrossOrigin
 @RestController
@@ -42,6 +45,8 @@ public class AuthenticationController {
   private AccessUserService userService;
   @Autowired
   private JwtUtil jwtUtil;
+
+  private final Logger logger = LoggerFactory.getLogger(AuthenticationController.class);
 
   /**
    * Returns a response to the request of authenticating the user in the specified authentication
@@ -67,11 +72,13 @@ public class AuthenticationController {
           authenticationRequest.getEmail(),
           authenticationRequest.getPassword()));
     } catch (BadCredentialsException e) {
+      logger.error("Incorrect login credentials, sending error message...");
       return new ResponseEntity<>("Invalid email or password", HttpStatus.UNAUTHORIZED);
     }
     final UserDetails userDetails = this.userService.loadUserByUsername(
         authenticationRequest.getEmail());
     final String jwt = this.jwtUtil.generateToken(userDetails);
+    logger.info("Correct login credentials, sending JWT token...");
     return new ResponseEntity<>(new AuthenticationResponse(jwt), HttpStatus.OK);
   }
 
@@ -95,8 +102,10 @@ public class AuthenticationController {
       this.userService.tryCreateNewUser(registerData.getFirstName(), registerData.getLastName(),
           registerData.getEmail(), registerData.getPhoneNumber(),
           registerData.getPassword(), registerData.getDateOfBirth());
+      logger.info("Valid register data, registering new user...");
       response = new ResponseEntity<>("", HttpStatus.OK);
     } catch (IOException e) {
+      logger.error("Invalid register data, sending error message...");
       response = new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
     }
     return response;
@@ -110,6 +119,7 @@ public class AuthenticationController {
    */
   @ExceptionHandler(HttpMessageNotReadableException.class)
   public ResponseEntity<String> handleRequestBodyException(HttpMessageNotReadableException e) {
+    logger.error("Received user data could not be read, sending error message...");
     return new ResponseEntity<>("User data not supplied or contains a parameter on an invalid " +
                                 "format", HttpStatus.BAD_REQUEST);
   }

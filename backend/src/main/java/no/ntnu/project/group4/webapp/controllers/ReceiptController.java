@@ -2,6 +2,8 @@ package no.ntnu.project.group4.webapp.controllers;
 
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,7 +36,7 @@ import no.ntnu.project.group4.webapp.services.UserService;
  * <p>All HTTP requests affiliated with receipts are handled in the class.</p>
  * 
  * @author Group 4
- * @version v1.2 (2024.05.22)
+ * @version v1.3 (2024.05.22)
  */
 @CrossOrigin
 @RestController
@@ -48,6 +50,8 @@ public class ReceiptController {
   private UserService userService;
   @Autowired
   private AccessUserService accessUserService;
+
+  private final Logger logger = LoggerFactory.getLogger(ReceiptController.class);
 
   /**
    * Returns a HTTP response to the request requesting to get all receipts.
@@ -82,11 +86,14 @@ public class ReceiptController {
     ResponseEntity<?> response;
     User sessionUser = this.accessUserService.getSessionUser();
     if (sessionUser != null && sessionUser.isAdmin()) {
+      logger.info("Sending all receipt data...");
       response = new ResponseEntity<>(this.receiptService.getAll(), HttpStatus.OK);
     } else if (sessionUser == null) {
+      logger.error("User not authenticated, sending error message...");
       response = new ResponseEntity<>("Only authenticated users have access to all receipt data",
                                       HttpStatus.UNAUTHORIZED);
     } else {
+      logger.error("User not admin, sending error message...");
       response = new ResponseEntity<>("Only admin users have access to all receipt data",
                                       HttpStatus.FORBIDDEN);
     }
@@ -137,16 +144,21 @@ public class ReceiptController {
         Receipt existingReceipt = receipt.get();
         if (sessionUser.getEmail().equals(existingReceipt.getUser().getEmail()) ||
             sessionUser.isAdmin()) {
+          logger.info("Receipt found, sending receipt data...");
           response = new ResponseEntity<>(existingReceipt, HttpStatus.OK);
         } else {
+          logger.error("Email of receipt user does not match email of session user, sending " +
+                       "error message...");
           response = new ResponseEntity<>("Users do not have access to receipt data for other " +
                                           "users", HttpStatus.FORBIDDEN);
         }
       } else {
+        logger.error("Receipt not found, sending error message...");
         response = new ResponseEntity<>("Receipt with specified ID not found",
                                         HttpStatus.NOT_FOUND);
       }
     } else {
+      logger.error("User not authenticated, sending error message...");
       response = new ResponseEntity<>("Only authenticated users have access to receipt data",
                                       HttpStatus.UNAUTHORIZED);
     }
@@ -194,7 +206,7 @@ public class ReceiptController {
     ),
     @ApiResponse(
       responseCode = "404",
-      description = "User with specified email of rental with specified rental ID not found"
+      description = "User with specified email or rental with specified rental ID not found"
     )
   })
   @PostMapping("/{email}/{rentalId}")
@@ -207,8 +219,7 @@ public class ReceiptController {
       Optional<Rental> rental = this.rentalService.getOne(rentalId);
       if (user.isPresent() && rental.isPresent()) {
         Rental existingRental = rental.get();
-        if (sessionUser.getEmail().equals(existingRental.getUser().getEmail()) ||
-            sessionUser.isAdmin()) {
+        if (sessionUser.getEmail().equals(user.get().getEmail()) || sessionUser.isAdmin()) {
           Receipt receipt =
             new Receipt(existingRental.getProvider().getConfiguration().getCar().getMake() + " " +
                         existingRental.getProvider().getConfiguration().getCar().getModel(),
@@ -219,22 +230,30 @@ public class ReceiptController {
             receipt.setUser(user.get());
           try {
             this.receiptService.add(receipt);
+            logger.info("User and rental found and valid receipt data, sending generated ID of " +
+                        "new receipt...");
             response = new ResponseEntity<>(receipt.getId(), HttpStatus.CREATED);
           } catch (IllegalArgumentException e) {
+            logger.error("Invalid receipt data, sending error message...");
             response = new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
           }
         } else {
+          logger.error("Email of user does not match email of session user, sending error " +
+                       "message...");
           response = new ResponseEntity<>("Users do not have access to add receipts for other " +
                                           "users", HttpStatus.FORBIDDEN);
         }
       } else if (!user.isPresent()) {
+        logger.error("User not found, sending error message...");
         response = new ResponseEntity<>("User with specified email not found",
                                         HttpStatus.NOT_FOUND);
       } else {
+        logger.error("Rental not found, sending error message...");
         response = new ResponseEntity<>("Rental with specified rental ID not found",
                                         HttpStatus.NOT_FOUND);
       }
     } else {
+      logger.error("User not authenticated, sending error messsage...");
       response = new ResponseEntity<>("Only authenticated users have access to add receipts",
                                       HttpStatus.UNAUTHORIZED);
     }
@@ -285,17 +304,22 @@ public class ReceiptController {
         Receipt existingReceipt = receipt.get();
         if (sessionUser.getEmail().equals(existingReceipt.getUser().getEmail()) ||
             sessionUser.isAdmin()) {
+          logger.info("Receipt found, deleting receipt...");
           this.receiptService.delete(id);
           response = new ResponseEntity<>("", HttpStatus.OK);
         } else {
+          logger.error("Email of receipt user does not match email of session user, sending " +
+                       "error message...");
           response = new ResponseEntity<>("Users do not have access to delete receipts of other " +
                                           "users", HttpStatus.FORBIDDEN);
         }
       } else {
+        logger.error("Receipt not found, sending error message...");
         response = new ResponseEntity<>("Receipt with specified ID not found",
                                         HttpStatus.NOT_FOUND);
       }
     } else {
+      logger.error("User not authenticated, sending error message...");
       response = new ResponseEntity<>("Only authenticated users have access to delete receipts",
                                       HttpStatus.UNAUTHORIZED);
     }
@@ -311,6 +335,7 @@ public class ReceiptController {
    */
   @ExceptionHandler(MethodArgumentTypeMismatchException.class)
   public ResponseEntity<String> handlePathVarException(MethodArgumentTypeMismatchException e) {
+    logger.error("Received HTTP request could not be read, sending error message...");
     return new ResponseEntity<>("HTTP request contains a value on an invalid format",
                                 HttpStatus.BAD_REQUEST);
   }
@@ -323,7 +348,8 @@ public class ReceiptController {
    */
   @ExceptionHandler(HttpMessageNotReadableException.class)
   public ResponseEntity<String> handleRequestBodyException(HttpMessageNotReadableException e) {
-    return new ResponseEntity<>("User data not supplied or contains a parameter on an invalid " +
-                                "format", HttpStatus.BAD_REQUEST);
+    logger.error("Received total price could not be read, sending error message...");
+    return new ResponseEntity<>("Total price not supplied or is on an invalid format",
+                                HttpStatus.BAD_REQUEST);
   }
 }
