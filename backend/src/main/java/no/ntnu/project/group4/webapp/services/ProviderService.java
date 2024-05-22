@@ -82,6 +82,8 @@ public class ProviderService {
       existingProviderObj.setName(provider.getName());
       existingProviderObj.setPrice(provider.getPrice());
       existingProviderObj.setLocation(provider.getLocation());
+      existingProviderObj.setAvailable(provider.isAvailable());
+      existingProviderObj.setVisible(provider.isVisible());
       this.providerRepository.save(existingProviderObj);
     }
     return existingProvider.isPresent();
