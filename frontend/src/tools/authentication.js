@@ -46,11 +46,44 @@ export function isLoggedIn() {
     if (!user) {
         const authenticatedUser = getAuthenticatedUser();
         if (authenticatedUser) {
+
+            if (isJwtExpired()) {
+                const reauthenticatedUser = reauthenticateUser();
+                deleteAuthorizationCookies();
+                if (reauthenticatedUser) {
+                    setUser(reauthenticatedUser);
+                }
+            }
             setUser(authenticatedUser);
         }
     }
 
     return user != null;
+}
+
+export function isJwtExpired() {
+    const jwt = getCookie("jwt");
+    if (jwt) {
+        const jwtData = parseJwt(jwt);
+        if (jwtData) {
+            const expirationDate = new Date(jwtData.exp * 1000);
+            const currentDate = new Date();
+            return expirationDate < currentDate;
+        }
+    }
+    return true;
+}
+
+export function reauthenticateUser() {
+    const email = getCookie("current_email");
+    const jwt = getCookie("jwt");
+    if (email && jwt) {
+        sendAuthenticationRequest(email, jwt, (userData) => {
+            console.log("Reauthenticated user: ", userData);
+        }, (error) => {
+            console.error("Error reauthenticating user: ", error);
+        });
+    }
 }
 
 export async function sendAuthenticationRequest(
