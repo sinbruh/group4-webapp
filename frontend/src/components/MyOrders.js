@@ -1,5 +1,6 @@
 import { getCookie } from "@/tools/cookies";
 import React, { useEffect, useState } from "react";
+import { asyncApiRequest } from "@/tools/request";
 import {
   Table,
   TableBody,
@@ -15,30 +16,26 @@ export default function MyOrders() {
 
   const Email = getCookie("current_email");
 
-  const updateJsonFile = async () => {
+  const UserInfo = async () => {
     try {
-      const response = await fetch("http://localhost:8080/api/users/" + Email, {
-        headers: {
-          Authorization: "Bearer " + getCookie("jwt"),
-        },
-      });
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
+        let data = await asyncApiRequest("GET", "/api/users/" + Email, {
+            headers: {
+                Authorization: "Bearer " + getCookie("jwt"),
+            },
+        });
 
-      let data = await response.json();
-
-      if (data) {
-        setUser(data);
-      }
+        if (data) {
+            setUser(data);
+            console.log("MyOrders.js: ", data);
+        }
     } catch (error) {
-      console.error("Error updating JSON file:", error);
+        console.error("Error fetching user information", error);
     }
-  };
+};
 
-  useEffect(() => {
-    updateJsonFile();
-  }, []);
+useEffect(() => {
+    UserInfo();
+}, []);
 
   //console.log("MyOrders.js: ", user);
 
@@ -61,19 +58,24 @@ export default function MyOrders() {
           </TableHeader>
           <TableBody>
             {user &&
-              user.receipts &&
-              user.receipts.map((receipt, index) => (
-                <TableRow key={index}>
-                  <TableCell className="font-medium">{receipt.id}</TableCell>
-                  <TableCell>{receipt.carName}</TableCell>
-                  <TableCell>{receipt.location}</TableCell>
-                  <TableCell>{receipt.providerName}</TableCell>
-                  <TableCell>{"From: " + receipt.startDate + " To: " + receipt.endDate}</TableCell>
-                  <TableCell className="text-right">
-                    {receipt.totalPrice}
-                  </TableCell>
-                </TableRow>
-              ))}
+              Array.isArray(user.receipts) &&
+              user.receipts.map((receipt, index) => {
+                console.log("MyOrders.js: ", receipt); // Add this line
+                return (
+                  <TableRow key={index}>
+                    <TableCell className="font-medium">{receipt.id}</TableCell>
+                    <TableCell>{receipt.carName}</TableCell>
+                    <TableCell>{receipt.location}</TableCell>
+                    <TableCell>{receipt.providerName}</TableCell>
+                    <TableCell>
+                      {"From: " + receipt.startDate + " To: " + receipt.endDate}
+                    </TableCell>
+                    <TableCell className="text-right">
+                      {receipt.totalPrice}
+                    </TableCell>
+                  </TableRow>
+                );
+              })}
           </TableBody>
         </Table>
       </form>
