@@ -9,6 +9,7 @@ import peopleIcon from "@/img/icons/people.svg";
 import { asyncApiRequest } from "@/tools/request"
 import { UserNotLoggedInAlert } from "@/components/alerts/UserNotLoggedInAlert"
 import ConfirmationAlert from "@/components/alerts/ConfirmationAlert"
+import { redirect, useRouter } from "next/navigation"
 
 import {
     Card,
@@ -21,7 +22,7 @@ import {
 
 import { useStore } from "@/tools/authentication"
 
-const expandedCard = ({ carInfo, dates }) => {
+const expandedCard = ({ carInfo, dates, showConfirmation }) => {
     const user = useStore((state) => state.user);
     const [isOpen, setIsOpen] = React.useState(false);
     const confirmationDialogRef = React.useRef();
@@ -47,9 +48,11 @@ const expandedCard = ({ carInfo, dates }) => {
 
                 const response = await asyncApiRequest("POST", "/api/rentals/" + user.email + "/" + carInfo.provider[0].id, body)
                 if (response) {
-                    console.log("Booking response: ", response)
-                } else {
                     console.log("Booking successful")
+                    console.log("Booking response: ", response)
+                    showConfirmation();
+                } else {
+                    console.log("Booking failed", response)
                 }
             }
 

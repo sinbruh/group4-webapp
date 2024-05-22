@@ -46,9 +46,9 @@ export default function FilterBar({ defaultLocation, defaultStart, defaultEnd, s
                 </section>
 
             }
-            {!isDesktop &&
+        {!isDesktop &&
                 <Popover>
-                    <PopoverTrigger className="grow flex m-4">
+                    <PopoverTrigger asChild className="grow flex m-4">
                         <Button className="grow">Filter</Button>
                     </PopoverTrigger>
                     <PopoverContent>

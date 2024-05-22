@@ -204,12 +204,12 @@ public class UserController {
 
   /**
    * Returns a response to the request of updating the user password of the user with the specified
-   * email with the specified password.
+   * email with the specified user password.
    *
    * <p>The response body contains a string that is empty or contains an error message.</p>
    *
    * @param email    The specified email
-   * @param password The specified password
+   * @param userPassword The specified user password
    * @return <p>200 OK on success</p>
    *         <p>400 BAD REQUEST on error</p>
    *         <p>401 UNAUTHORIZED if user is not authenticated</p>
