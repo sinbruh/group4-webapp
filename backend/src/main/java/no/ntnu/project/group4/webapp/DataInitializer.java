@@ -167,8 +167,8 @@ public class DataInitializer implements ApplicationListener<ApplicationReadyEven
       ExtraFeature extraFeature1_1_1 = new ExtraFeature("Bluetooth");
       ExtraFeature extraFeature1_1_2 = new ExtraFeature("DAB radio");
       ExtraFeature extraFeature1_1_3 = new ExtraFeature("Warming in the chairs");
-      Provider provider1_1_1 = new Provider("Miller Bil", 600, "Ålesund");
-      Provider provider1_1_2 = new Provider("Biller Bil", 550, "Stryn");
+      Provider provider1_1_1 = new Provider("Miller Bil", 600, "Ålesund", true, true);
+      Provider provider1_1_2 = new Provider("Biller Bil", 550, "Stryn", true, true);
 
       configuration1_1.setCar(car1);
       configuration1_2.setCar(car1);
@@ -202,8 +202,8 @@ public class DataInitializer implements ApplicationListener<ApplicationReadyEven
       ExtraFeature extraFeature2_1_1 = new ExtraFeature("Autonomous driving");
       ExtraFeature extraFeature2_1_2 = new ExtraFeature("Long range");
       ExtraFeature extraFeature2_1_3 = new ExtraFeature("Warming in the seats");
-      Provider provider2_1_1 = new Provider("Biggernes Tesla", 700, "Alta");
-      Provider provider2_1_2 = new Provider("Tesla Tom (private)", 500, "Oslo");
+      Provider provider2_1_1 = new Provider("Biggernes Tesla", 700, "Alta", true, true);
+      Provider provider2_1_2 = new Provider("Tesla Tom (private)", 500, "Oslo", true, true);
 
       configuration2_1.setCar(car2);
       extraFeature2_1_1.setConfiguration(configuration2_1);
@@ -230,8 +230,8 @@ public class DataInitializer implements ApplicationListener<ApplicationReadyEven
       ExtraFeature extraFeature3_1_1 = new ExtraFeature("Four wheel drive");
       ExtraFeature extraFeature3_1_2 = new ExtraFeature("Glass roof");
       ExtraFeature extraFeature3_1_3 = new ExtraFeature("Autonomous driving");
-      Provider provider3_1_1 = new Provider("Biggernes Tesla", 900, "Alta");
-      Provider provider3_1_2 = new Provider("Tesla Tom (private)", 700, "Oslo");
+      Provider provider3_1_1 = new Provider("Biggernes Tesla", 900, "Alta", true, true);
+      Provider provider3_1_2 = new Provider("Tesla Tom (private)", 700, "Oslo", true, true);
 
       configuration3_1.setCar(car3);
       extraFeature3_1_1.setConfiguration(configuration3_1);
@@ -256,8 +256,8 @@ public class DataInitializer implements ApplicationListener<ApplicationReadyEven
       Configuration configuration4_1 = new Configuration("Electric config", "Electric",
                                                          "Automatic", 5);
       Configuration configuration4_2 = new Configuration("Hybrid config", "Hybrid", "Automatic", 5);
-      Provider provider4_1_1 = new Provider("Auto 9-9", 500, "Stavanger");
-      Provider provider4_1_2 = new Provider("Auto 10-10", 500, "Ålesund");
+      Provider provider4_1_1 = new Provider("Auto 9-9", 500, "Stavanger", true, true);
+      Provider provider4_1_2 = new Provider("Auto 10-10", 500, "Ålesund", true, true);
 
       configuration4_1.setCar(car4);
       configuration4_2.setCar(car4);
@@ -280,7 +280,7 @@ public class DataInitializer implements ApplicationListener<ApplicationReadyEven
       Configuration configuration5_1 = new Configuration("Petrol config", "Petrol", "Automatic",
                                                          5);
       ExtraFeature extraFeature5_1_1 = new ExtraFeature("DAB radio");
-      Provider provider5_1_1 = new Provider("Bilikist", 400, "Stryn");
+      Provider provider5_1_1 = new Provider("Bilikist", 400, "Stryn", true, true);
 
       configuration5_1.setCar(car5);
       extraFeature5_1_1.setConfiguration(configuration5_1);
@@ -299,9 +299,9 @@ public class DataInitializer implements ApplicationListener<ApplicationReadyEven
       Configuration configuration6_1 = new Configuration("Petrol config", "Petrol", "Manual", 8);
       ExtraFeature extraFeature6_1_1 = new ExtraFeature("Yellow");
       ExtraFeature extraFeature6_1_2 = new ExtraFeature("Retro");
-      Provider provider6_1_1 = new Provider("Ørsta kommune", 200, "Alta");
-      Provider provider6_1_2 = new Provider("Sirkelsliper", 70, "Oslo");
-      Provider provider6_1_3 = new Provider("Peace Per", 180, "Stavanger");
+      Provider provider6_1_1 = new Provider("Ørsta kommune", 200, "Alta", true, true);
+      Provider provider6_1_2 = new Provider("Sirkelsliper", 70, "Oslo", true, true);
+      Provider provider6_1_3 = new Provider("Peace Per", 180, "Stavanger", true, true);
 
       configuration6_1.setCar(car6);
       extraFeature6_1_1.setConfiguration(configuration6_1);
@@ -326,9 +326,9 @@ public class DataInitializer implements ApplicationListener<ApplicationReadyEven
       Configuration configuration7_1 = new Configuration("Petrol config", "Petrol", "Manual", 4);
       ExtraFeature extraFeature7_1_1 = new ExtraFeature("Three stripes");
       ExtraFeature extraFeature7_1_2 = new ExtraFeature("Original tire discs");
-      Provider provider7_1_1 = new Provider("Bilverksted", 400, "Ålesund");
-      Provider provider7_1_2 = new Provider("Grabes", 450, "Stryn");
-      Provider provider7_1_3 = new Provider("Djarney", 449, "Alta");
+      Provider provider7_1_1 = new Provider("Bilverksted", 400, "Ålesund", true, true);
+      Provider provider7_1_2 = new Provider("Grabes", 450, "Stryn", true, true);
+      Provider provider7_1_3 = new Provider("Djarney", 449, "Alta", true, true);
 
       configuration7_1.setCar(car7);
       extraFeature7_1_1.setConfiguration(configuration7_1);
@@ -353,9 +353,9 @@ public class DataInitializer implements ApplicationListener<ApplicationReadyEven
       Configuration configuration8_1 = new Configuration("Diesel config", "Diesel", "Automatic",
                                                          5);
       ExtraFeature extraFeature8_1_1 = new ExtraFeature("Tow hook");
-      Provider provider8_1_1 = new Provider("Sprekksaver", 300, "Oslo");
-      Provider provider8_1_2 = new Provider("Smidig bilforhandler", 229, "Stavanger");
-      Provider provider8_1_3 = new Provider("Fossefall bilforhandler", 700, "Ålesund");
+      Provider provider8_1_1 = new Provider("Sprekksaver", 300, "Oslo", true, true);
+      Provider provider8_1_2 = new Provider("Smidig bilforhandler", 229, "Stavanger", true, true);
+      Provider provider8_1_3 = new Provider("Fossefall bilforhandler", 700, "Ålesund", true, true);
 
       configuration8_1.setCar(car8);
       extraFeature8_1_1.setConfiguration(configuration8_1);
@@ -377,8 +377,8 @@ public class DataInitializer implements ApplicationListener<ApplicationReadyEven
       Car car9 = new Car("Peugeot", "307 SW", 2008);
       Configuration configuration9_1 = new Configuration("Diesel config", "Diesel", "Manual", 7);
       ExtraFeature extraFeature9_1_1 = new ExtraFeature("Travel box on the roof");
-      Provider provider9_1_1 = new Provider("Bertel Ostein", 600, "Stryn");
-      Provider provider9_1_2 = new Provider("Auto 10-10", 550, "Ålesund");
+      Provider provider9_1_1 = new Provider("Bertel Ostein", 600, "Stryn", true, true);
+      Provider provider9_1_2 = new Provider("Auto 10-10", 550, "Ålesund", true, true);
 
       configuration9_1.setCar(car9);
       extraFeature9_1_1.setConfiguration(configuration9_1);
@@ -404,8 +404,8 @@ public class DataInitializer implements ApplicationListener<ApplicationReadyEven
       ExtraFeature extraFeature10_1_5 = new ExtraFeature("Warming in the tires");
       ExtraFeature extraFeature10_1_6 = new ExtraFeature("Warming under the rubber rugs");
       ExtraFeature extraFeature10_1_7 = new ExtraFeature("Warming 360");
-      Provider provider10_1_1 = new Provider("Bertel Ostein", 500, "Stryn");
-      Provider provider10_1_2 = new Provider("Auto 10-10", 550, "Ålesund");
+      Provider provider10_1_1 = new Provider("Bertel Ostein", 500, "Stryn", true, true);
+      Provider provider10_1_2 = new Provider("Auto 10-10", 550, "Ålesund", true, true);
 
       configuration10_1.setCar(car10);
       extraFeature10_1_1.setConfiguration(configuration10_1);
@@ -439,8 +439,8 @@ public class DataInitializer implements ApplicationListener<ApplicationReadyEven
       ExtraFeature extraFeature11_1_1 = new ExtraFeature("FM radio");
       ExtraFeature extraFeature11_1_2 = new ExtraFeature("CD player");
       ExtraFeature extraFeature11_1_3 = new ExtraFeature("Metallic paint");
-      Provider provider11_1_1 = new Provider("Bertel Ostein", 600, "Stryn");
-      Provider provider11_1_2 = new Provider("Auto 10-10", 600, "Ålesund");
+      Provider provider11_1_1 = new Provider("Bertel Ostein", 600, "Stryn", true, true);
+      Provider provider11_1_2 = new Provider("Auto 10-10", 600, "Ålesund", true, true);
 
       configuration11_1.setCar(car11);
       extraFeature11_1_1.setConfiguration(configuration11_1);
@@ -466,8 +466,8 @@ public class DataInitializer implements ApplicationListener<ApplicationReadyEven
                                                           "Automatic", 4);
       ExtraFeature extraFeature12_1_1 = new ExtraFeature("Five doors");
       ExtraFeature extraFeature12_1_2 = new ExtraFeature("Very economic");
-      Provider provider12_1_1 = new Provider("Bertel Ostein", 200, "Stryn");
-      Provider provider12_1_2 = new Provider("Auto 10-10", 201, "Ålesund");
+      Provider provider12_1_1 = new Provider("Bertel Ostein", 200, "Stryn", true, true);
+      Provider provider12_1_2 = new Provider("Auto 10-10", 201, "Ålesund", true, true);
 
       configuration12_1.setCar(car12);
       extraFeature12_1_1.setConfiguration(configuration12_1);

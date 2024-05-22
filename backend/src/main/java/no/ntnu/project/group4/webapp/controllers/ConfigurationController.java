@@ -35,7 +35,7 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
  * <p>All HTTP requests affiliated with configurations are handled in this class.</p>
  *
  * @author Group 4
- * @version v1.7 (2024.05.22)
+ * @version v1.8 (2024.05.22)
  */
 @CrossOrigin
 @RestController

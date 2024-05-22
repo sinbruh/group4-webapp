@@ -40,10 +40,12 @@ public class Provider {
   public Provider() {
   }
 
-  public Provider(String name, int price, String location) {
+  public Provider(String name, int price, String location, boolean available, boolean visible) {
     this.name = name;
     this.price = price;
     this.location = location;
+    this.available = available;
+    this.visible = visible;
   }
 
   public Long getId() {

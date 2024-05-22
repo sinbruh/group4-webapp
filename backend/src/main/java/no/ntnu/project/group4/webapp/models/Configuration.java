@@ -109,6 +109,10 @@ public class Configuration {
     this.providers = providers;
   }
 
+  public void removeProvider(Provider provider) {
+    this.providers.remove(provider);
+  }
+
   public boolean isValid() {
     return !this.name.isBlank() && !this.fuelType.isBlank() && !this.transmissionType.isBlank() &&
            this.numberOfSeats > 0;

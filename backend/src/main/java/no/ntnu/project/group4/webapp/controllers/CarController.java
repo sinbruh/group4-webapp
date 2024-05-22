@@ -3,8 +3,12 @@ package no.ntnu.project.group4.webapp.controllers;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+
 import java.util.Optional;
+
 import no.ntnu.project.group4.webapp.models.Car;
+import no.ntnu.project.group4.webapp.models.Configuration;
+import no.ntnu.project.group4.webapp.models.Provider;
 import no.ntnu.project.group4.webapp.models.User;
 import no.ntnu.project.group4.webapp.services.AccessUserService;
 import no.ntnu.project.group4.webapp.services.CarService;
@@ -33,7 +37,7 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
  * <p>All HTTP requests affiliated with cars are handled in this class.</p>
  *
  * @author Group 4
- * @version v1.5 (2024.05.22)
+ * @version v1.6 (2024.05.22)
  */
 @CrossOrigin
 @RestController
@@ -49,14 +53,30 @@ public class CarController {
   /**
    * Returns an iterable containing all cars. When this endpoint is requested, a HTTP 200 OK
    * response will automatically be sent back.
+   * 
+   * <p>If user is not authenticated or user is authenticated but not admin only providers who are
+   * visible are included.</p>
    *
    * @return 200 OK + car data
    */
   @Operation(summary = "Get all cars")
   @GetMapping
   public Iterable<Car> getAll() {
+    User sessionUser = this.userService.getSessionUser();
+    Iterable<Car> cars = this.carService.getAll();
+    if (sessionUser == null || (sessionUser != null && !sessionUser.isAdmin())) {
+      for (Car car : cars) {
+        for (Configuration config : car.getConfigurations()) {
+          for (Provider provider : config.getProviders()) {
+            if (!provider.isVisible()) {
+              config.removeProvider(provider);
+            }
+          }
+        }
+      }
+    }
     logger.info("Sending all car data...");
-    return this.carService.getAll();
+    return cars;
   }
 
   /**
@@ -78,10 +98,21 @@ public class CarController {
   @GetMapping("/{id}")
   public ResponseEntity<?> get(@PathVariable Long id) {
     ResponseEntity<?> response;
+    User sessionUser = this.userService.getSessionUser();
     Optional<Car> car = this.carService.getOne(id);
     if (car.isPresent()) {
+      Car existingCar = car.get();
+      if (sessionUser == null || (sessionUser != null && !sessionUser.isAdmin())) {
+        for (Configuration config : existingCar.getConfigurations()) {
+          for (Provider provider : config.getProviders()) {
+            if (!provider.isVisible()) {
+              config.removeProvider(provider);
+            }
+          }
+        }
+      }
       logger.info("Car found, sending car data...");
-      response = new ResponseEntity<>(car.get(), HttpStatus.OK);
+      response = new ResponseEntity<>(existingCar, HttpStatus.OK);
     } else {
       logger.error("Car not found, sending error message...");
       response = new ResponseEntity<>("Car with specified ID not found", HttpStatus.NOT_FOUND);
