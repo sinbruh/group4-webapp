@@ -18,7 +18,6 @@ export default function FilterBar({ defaultLocation, defaultStart, defaultEnd, s
     const [dates, setDatesState] = useState({ start: defaultStart, end: defaultEnd });
     const [price, setPriceState] = useState({ min: null, max: null });
     const [favoriteFilter, setFavoriteFilter] = useState(false); // Add this line
-    const isDesktop = useMediaQuery({ query: '(min-width: 1450px)' });
 
     console.log("FilterBar favoriteFilter", favoriteFilter);
 
@@ -32,21 +31,21 @@ export default function FilterBar({ defaultLocation, defaultStart, defaultEnd, s
 
     return (
         <div className="flex">
-            {isDesktop &&
-                <section className="flex grow gap-2 items-center bg-[#ffffff] rounded m-4 p-2">
+                <section className="flex grow flex-wrap justify-center gap-x-3 items-center bg-[#ffffff] rounded m-4 p-2">
                     <Locationbox defaultValue={defaultLocation} setLocation={setLocation} />
                     <DatePickerWithRange defaultStart={defaultStart} defaultEnd={defaultEnd} setDates={setDates} />
                     <PricePicker defaultValue={price} setPrice={setPrice} />
                     {isLoggedIn() && (
                         <>
-                            <p> Filter by favorite: </p>
+                            <p> Favorites:</p>
                             <FavoriteFilterButton onFavoriteChange={setFavoriteFilter} />
                         </>
-                     )}
+                    )}
                 </section>
 
+        {/*isDesktop &&
             }
-        {!isDesktop &&
+            {!isDesktop &&
                 <Popover>
                     <PopoverTrigger asChild className="grow flex m-4">
                         <Button className="grow">Filter</Button>
@@ -65,7 +64,7 @@ export default function FilterBar({ defaultLocation, defaultStart, defaultEnd, s
                         </section>
                     </PopoverContent>
                 </Popover>
-            }
+            */}
         </div>
     );
 }
