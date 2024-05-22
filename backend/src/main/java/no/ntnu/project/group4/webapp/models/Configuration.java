@@ -69,12 +69,12 @@ public class Configuration {
     this.fuelType = fuelType;
   }
 
-  public String getTranmissionType() {
+  public String getTransmissionType() {
     return this.transmissionType;
   }
 
-  public void setTransmissionType(String tranmissionType) {
-    this.transmissionType = tranmissionType;
+  public void setTransmissionType(String transmissionType) {
+    this.transmissionType = transmissionType;
   }
 
   public int getNumberOfSeats() {

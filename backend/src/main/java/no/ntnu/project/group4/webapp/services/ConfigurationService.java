@@ -81,7 +81,7 @@ public class ConfigurationService {
       Configuration existingConfigObj = existingConfig.get();
       existingConfigObj.setName(config.getName());
       existingConfigObj.setFuelType(config.getFuelType());
-      existingConfigObj.setTransmissionType(config.getTranmissionType());
+      existingConfigObj.setTransmissionType(config.getTransmissionType());
       existingConfigObj.setNumberOfSeats(config.getNumberOfSeats());
       this.configurationRepository.save(existingConfigObj);
     }
