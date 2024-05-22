@@ -12,11 +12,13 @@ import no.ntnu.project.group4.webapp.services.AccessUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,7 +30,7 @@ import org.springframework.web.bind.annotation.RestController;
  * <p>All HTTP requests affiliated with authentication is handled in this class.</p>
  *
  * @author Group 4
- * @version v1.0 (2024.05.09)
+ * @version v1.1 (2024.05.22)
  */
 @CrossOrigin
 @RestController
@@ -98,5 +100,17 @@ public class AuthenticationController {
       response = new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
     }
     return response;
+  }
+
+  /**
+   * Returns a HTTP response to the request causing the specified HttpMessageNotReadableException.
+   * 
+   * @param e The specified HttpMessageNotReadableException
+   * @return 400 BAD REQUEST with an error message
+   */
+  @ExceptionHandler(HttpMessageNotReadableException.class)
+  public ResponseEntity<String> handleRequestBodyException(HttpMessageNotReadableException e) {
+    return new ResponseEntity<>("User data not supplied or contains a parameter on an invalid " +
+                                "format", HttpStatus.BAD_REQUEST);
   }
 }

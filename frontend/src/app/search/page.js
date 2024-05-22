@@ -10,23 +10,23 @@ import ExpandedCard from "@/components/ExpandedCard";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import CarReader from '../../components/CarReader.js';
 import { useMediaQuery } from 'react-responsive';
- 
+
 
 export default function Search() {
     const searchParams = useSearchParams();
-    const defaultLocation = searchParams.get('location') || 'ålesund';
+    const defaultLocation = searchParams.get('location') || '';
     const start = searchParams.get('start') || new Date().toISOString().split('T')[0];
     const end = searchParams.get('end') || new Date(new Date().setDate(new Date().getDate() + 1)).toISOString().split('T')[0];
     const isDesktop = useMediaQuery({ query: '(min-width: 1450px)' }) || true;
 
-    const [location, setLocation] = useState(defaultLocation) || 'ålesund';
+    const [location, setLocation] = useState(defaultLocation);
     const [dates, setDates] = useState({ start: start, end: end });
     const [price, setPrice] = useState({ min: null, max: null });
     const [expandedCar, setExpandedCar] = useState(null);
     const [favoriteFilter, setFavoriteFilter] = useState(false);
-    
 
-   
+
+
 
     return (
         <div className="bg-[url('/temp-background-image-low.webp')] bg-cover bg-center">

@@ -1,5 +1,5 @@
 "use client"
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import favoriteIcon from "@/img/icons/star.svg";
 import favoriteIconOutline from "@/img/icons/star-outline.svg";
 import { Button } from "@/components/ui/button";
@@ -10,21 +10,40 @@ import {
     TooltipProvider,
     TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { sendFavoriteRequest } from "@/tools/favorite";
 
 import { useStore } from "@/tools/authentication";
 import { UserNotLoggedInAlert } from "@/components/alerts/UserNotLoggedInAlert";
 
-export default function FavoriteButton({ configID }) {
+import { useFavoriteStore } from "@/tools/favorite";
+
+
+export default function FavoriteButton(carInfo) {
+    const [favorites, addFavorite, removeFavorite] = useFavoriteStore((state) => [state.favorites, state.addFavorite, state.removeFavorite]);
     const [isFavorite, setIsFavorite] = useState(false);
     const user = useStore((state) => state.user);
     const [isAlertOpen, setIsAlertOpen] = useState(false);
 
+    useEffect(() => {
+        if (favorites && Array.isArray(favorites)) {
+            setIsFavorite(favorites.includes(carInfo.carInfo.provider[0].id));
+        }
+    }, [favorites, carInfo]);
+
     const handleOnClick = (e) => {
-        console.log("Favorite button clicked");
         e.stopPropagation();
 
         if (user) {
+            if (isFavorite) {
+                removeFavorite(carInfo.carInfo.provider[0].id);
+            } else {
+                addFavorite(carInfo.carInfo.provider[0].id);
+            }
+
             setIsFavorite(!isFavorite);
+
+            sendFavoriteRequest(carInfo.carInfo.provider[0].id);
+
             //send request to backend to add to favorite with configID
         } else {
             console.log("User not logged in");

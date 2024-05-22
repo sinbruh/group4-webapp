@@ -361,17 +361,6 @@ public class UserController {
   }
 
   /**
-   * Returns a HTTP response to the request causing the specified HttpMessageNotReadableException.
-   * 
-   * @param e The specified HttpMessageNotReadableException
-   * @return 400 BAD REQUEST with an error message
-   */
-  @ExceptionHandler(HttpMessageNotReadableException.class)
-  public ResponseEntity<String> handleRequestBodyException(HttpMessageNotReadableException e) {
-    return new ResponseEntity<>("User data not supplied", HttpStatus.BAD_REQUEST);
-  }
-
-  /**
    * Returns a HTTP response to the request causing the specified
    * MethodArgumentTypeMismatchException.
    * 
@@ -380,6 +369,19 @@ public class UserController {
    */
   @ExceptionHandler(MethodArgumentTypeMismatchException.class)
   public ResponseEntity<String> handlePathVarException(MethodArgumentTypeMismatchException e) {
-    return new ResponseEntity<>("Invalid value in HTTP request", HttpStatus.BAD_REQUEST);
+    return new ResponseEntity<>("HTTP request contains a value on an invalid format",
+                                HttpStatus.BAD_REQUEST);
+  }
+
+  /**
+   * Returns a HTTP response to the request causing the specified HttpMessageNotReadableException.
+   * 
+   * @param e The specified HttpMessageNotReadableException
+   * @return 400 BAD REQUEST with an error message
+   */
+  @ExceptionHandler(HttpMessageNotReadableException.class)
+  public ResponseEntity<String> handleRequestBodyException(HttpMessageNotReadableException e) {
+    return new ResponseEntity<>("User data not supplied or contains a parameter on an invalid " +
+                                "format", HttpStatus.BAD_REQUEST);
   }
 }
