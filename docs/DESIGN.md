@@ -89,3 +89,68 @@ enough to have an impact on the overall design.
 ### Shadows
 
 The group will in general use slight shadowing to accommodate for the playful theme.
+
+## Specific Technical  Desicions phase
+
+### Color Scheme
+
+the original colorscheme was based on the previous theme playful and adventurous: green for the base color and yellow-green shade for buttons and such, showed in initial website concept designs. However, due to poor visability and contrast towards white backgrounds for colorblind individuals, the group decided to stray away from this desicion to a more dark blue/black design that is more user friendly. 
+
+### Typography
+
+The use of semi bold for titles and text that was more important to display was implemented. 
+
+### Hierarchy and layout
+
+Hierarchy and layout stated in the original concept design has not changed or varied much, as the group has stayed true to the original statement. Refer to the Hierarchy and Layout section in the original concept design. 
+
+#### Landing page
+
+Landing page priorities is:
+
+1. The search bar 
+2. The search button
+3. The navigation bar which includes home,
+   about, contact and more importantly the profile page linking
+
+#### Main page
+
+Again, the idea here has not changed from the original concept and has stayed true.
+
+The order of importance is:
+
+1. The 'cars for rental' section
+2. The card in the 'cars for rental' section
+3. The 'rental information' section, 
+4. The rent button in the 'rental information' section
+5. The navigation bar
+
+The sections on the page will be the 'cars for rental' section, the 'rental information' section and
+the navigation bar.
+
+#### Profile page
+
+There is one additional page that is included during the design phase, which is the profile page.
+Here the order of importance is:
+
+1. Profile/account information
+2. List of bookings or a reciept of orders made by the user
+3. Other tabs that only the admin has access to, such as car editor, list of all users and list of orders placed by everyone in total.
+
+
+### Icons
+
+The group has used a relativly wide variety of icons, mainly used by the provided icons library but also
+includes UI component libraries such as shadcn. The group mainly used the https://ionic.io/ionicons website to use icons. 
+
+
+### Spacing
+
+TBH
+
+### Border Rounding
+
+The group has stayed true to this original concept design aswell, 
+where everything such as buttons and cards has rounded edges
+to fit the theme. Even though the colors had to be swapped, the group has tried 
+to stay true to the theme, granted some changes in design during development phase. 
