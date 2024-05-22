@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import CarCard from "@/components/CarCard";
 import ExpandedCard from "@/components/ExpandedCard";
 import { asyncApiRequest } from "@/tools/request";
-import { useStore } from "@/tools/authentication";
 import { getCookie } from "@/tools/cookies";
+import { useFavoriteStore } from "@/tools/favorite";
 
 
 
@@ -21,7 +21,7 @@ export default function CarReader({
   const toDate = dates ? dates.to : null;
   const [user, setUser] = useState(null);
   const Email = getCookie("current_email");
-  console.log("CarReader Favorite YAYYYY" , favoriteFilter)
+  const [addFavorite] = useFavoriteStore((state) => [state.addFavorite]);
 
   const updateJsonFile = async () => {
     try {
@@ -49,7 +49,7 @@ export default function CarReader({
     }
   };
 
-  
+
     const UserInfo = async () => {
       try {
           let data = await asyncApiRequest("GET", "/api/users/" + Email, {
@@ -57,35 +57,26 @@ export default function CarReader({
                   Authorization: "Bearer " + getCookie("jwt"),
               },
           });
-  
+
           if (data) {
               setUser(data);
-              console.log("MyOrders.js: ", data);
+              data.favorites.forEach((favorite) => {
+                  addFavorite(favorite.id);
+              });
+
           }
       } catch (error) {
           console.error("Error fetching user information", error);
       }
   };
-  
-  useEffect(() => {
-      UserInfo();
-  }, []);
 
   useEffect(() => {
     UserInfo();
   }, []);
 
   useEffect(() => {
-    updateJsonFile().catch(console.error);
+    updateJsonFile();
   }, [location, dates, price]);
-
-
-
-  const handleCardClick = (car) => {
-    setExpandedCar(car);
-  };
-
-  console.log("CarReaderStage1", cars);
 
   return (
     <div>
@@ -110,8 +101,6 @@ export default function CarReader({
             const toPriceNumber = Number(price.max);
             const carLocationLowercase = provider.location.toLowerCase();
             const locationLowercase = location.toLowerCase();
-            const carAvailability = provider.available;
-            
 
             if (!isNaN(fromPriceNumber) && !isNaN(toPriceNumber)) {
               const isFromPriceLower = fromPriceNumber <= lowestPrice;
@@ -128,8 +117,6 @@ export default function CarReader({
           })
           .map(({ configurations, provider, make, model }) => {
             const carImageName = configurations[0].img || "default.jpg";
-
-            console.log("CarReaderStage2", configurations[0]);
 
             const allRentals = configurations.flatMap((configuration) =>
               configuration.providers.flatMap((provider) => provider.rentals)

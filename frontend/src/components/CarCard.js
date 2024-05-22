@@ -22,25 +22,16 @@ import {
 import {
     Dialog,
     DialogContent,
-    DialogDescription,
-    DialogHeader,
-    DialogTitle,
-    DialogTrigger,
 } from "@/components/ui/dialog"
 
 import ExpandedCard from "@/components/ExpandedCard";
 
-
 const CarCard = ({ carInfo, setExpandedCarInfo }) => {
     const [expandedIsOpen, setExpandedIsOpen] = React.useState(false);
     const carImage = carInfo.carImageInput ? `/carsLowResWEBP/${carInfo.carImageInput}` : carDefaultImage;
-    console.log(carImage);
-    console.log(carInfo.carImageInput);
     const isDesktop = useMediaQuery({ query: '(min-width: 1450px)' });
 
     function handleOnClick() {
-        console.log("Car card clicked");
-
         if (isDesktop) {
             setExpandedCarInfo(carInfo);
         } else {
@@ -94,7 +85,7 @@ const CarCard = ({ carInfo, setExpandedCarInfo }) => {
                         </div>
                     </div>
                     <div className="m-4">
-                        {isLoggedIn() && <FavoriteButton configID={carInfo.configID} />}
+                        {isLoggedIn() && <FavoriteButton carInfo={carInfo} />}
                     </div>
 
                 </Card>

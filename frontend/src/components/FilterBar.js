@@ -14,7 +14,7 @@ import { isLoggedIn } from '@/tools/authentication';
 
 
 export default function FilterBar({ defaultLocation, defaultStart, defaultEnd, setLocation, setDates, setPrice, onFavoriteFilterChange }) {
-    const [location, setLocationState] = useState(defaultLocation) || "ålesund";
+    const [location, setLocationState] = useState(defaultLocation);
     const [dates, setDatesState] = useState({ start: defaultStart, end: defaultEnd });
     const [price, setPriceState] = useState({ min: null, max: null });
     const [favoriteFilter, setFavoriteFilter] = useState(false); // Add this line
@@ -44,7 +44,7 @@ export default function FilterBar({ defaultLocation, defaultStart, defaultEnd, s
                         </>
                      )}
                 </section>
-                    
+
             }
             {!isDesktop &&
                 <Popover>
