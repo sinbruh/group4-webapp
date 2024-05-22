@@ -10,6 +10,7 @@ import {asyncApiRequest} from "@/tools/request";
 import { Button } from "@/components/ui/button"
 import {UserTable} from "@/components/UserTable";
 import MyOrders from "@/components/MyOrders";
+import ViewOrders from "@/components/ViewOrders";
 
 export default function Page() {
     const user = useStore((state) => state.user);
@@ -51,6 +52,8 @@ export default function Page() {
                 return <UserTable />;
             case 'myorders':
                 return <MyOrders />;
+            case 'vieworders':
+                return <ViewOrders />;
                 
             default:
                 return <p></p>;
