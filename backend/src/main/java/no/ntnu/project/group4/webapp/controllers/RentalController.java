@@ -14,14 +14,17 @@ import no.ntnu.project.group4.webapp.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 /**
  * The RentalController class represents the REST API controller class for rentals.
@@ -29,7 +32,7 @@ import org.springframework.web.bind.annotation.RestController;
  * <p>All HTTP requests affiliated with rentals are handled in this class.</p>
  *
  * @author Group 4
- * @version v1.3 (2024.05.19)
+ * @version v1.4 (2024.05.22)
  */
 @CrossOrigin
 @RestController
@@ -224,5 +227,30 @@ public class RentalController {
           HttpStatus.UNAUTHORIZED);
     }
     return response;
+  }
+
+  /**
+   * Returns a HTTP response to the request causing the specified
+   * MethodArgumentTypeMismatchException.
+   * 
+   * @param e The specified MethodArgumentTypeMismatchException
+   * @return 400 BAD REQUEST with an error message
+   */
+  @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+  public ResponseEntity<String> handlePathVarException(MethodArgumentTypeMismatchException e) {
+    return new ResponseEntity<>("HTTP request contains a value on an invalid format",
+                                HttpStatus.BAD_REQUEST);
+  }
+
+  /**
+   * Returns a HTTP response to the request causing the specified HttpMessageNotReadableException.
+   * 
+   * @param e The specified HttpMessageNotReadableException
+   * @return 400 BAD REQUEST with an error message
+   */
+  @ExceptionHandler(HttpMessageNotReadableException.class)
+  public ResponseEntity<String> handleRequestBodyException(HttpMessageNotReadableException e) {
+    return new ResponseEntity<>("User data not supplied or contains a parameter on an invalid " +
+                                "format", HttpStatus.BAD_REQUEST);
   }
 }
