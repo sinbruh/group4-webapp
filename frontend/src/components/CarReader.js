@@ -2,11 +2,7 @@ import React, { useEffect, useState } from "react";
 import CarCard from "@/components/CarCard";
 import ExpandedCard from "@/components/ExpandedCard";
 import { asyncApiRequest } from "@/tools/request";
-import { getCookie } from "@/tools/cookies";
 import { useFavoriteStore } from "@/tools/favorite";
-
-
-
 
 export default function CarReader({
   location,
@@ -19,15 +15,15 @@ export default function CarReader({
   const [expandedCar, setExpandedCar] = useState(null);
   const fromDate = dates ? dates.from : null;
   const toDate = dates ? dates.to : null;
-  const [user, setUser] = useState(null);
-  const Email = getCookie("current_email");
-  const [addFavorite] = useFavoriteStore((state) => [state.addFavorite]);
+  const [favorites, addFavorite] = useFavoriteStore((state) => [state.favorites, state.addFavorite]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [showCarCard, setShowCarCard] = useState(false);
 
   const updateJsonFile = async () => {
+    setIsLoading(true);
     try {
-      //check data
       let data = await asyncApiRequest("GET", "/api/cars");
-
+  
       if (data) {
         // Add img property to each car configuration
         data = data.map((item) => {
@@ -41,45 +37,32 @@ export default function CarReader({
           return item;
         });
       }
-
-      //update CarCards
+  
+      
       setCars(data);
+      setIsLoading(false);
     } catch (error) {
       console.error("Error updating JSON file:", error);
     }
   };
-
-
-    const UserInfo = async () => {
-      try {
-          let data = await asyncApiRequest("GET", "/api/users/" + Email, {
-              headers: {
-                  Authorization: "Bearer " + getCookie("jwt"),
-              },
-          });
-
-          if (data) {
-              setUser(data);
-              data.favorites.forEach((favorite) => {
-                  addFavorite(favorite.id);
-              });
-
-          }
-      } catch (error) {
-          console.error("Error fetching user information", error);
-      }
-  };
-
-  useEffect(() => {
-    UserInfo();
-  }, []);
-
+  
   useEffect(() => {
     updateJsonFile();
   }, [location, dates, price]);
 
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowCarCard(true);
+    }, 3000); // 3000ms delay
+  
+    return () => clearTimeout(timer); // Clean up on component unmount
+  }, []);
+
   return (
     <div>
+      {isLoading ? (
+        <div>Loading...</div>
+      ) : (
       <div id="cards">
         {cars
           .flatMap((car) =>
@@ -89,48 +72,29 @@ export default function CarReader({
             }))
           )
           .filter(({ provider }) => {
-            if (
-              typeof price === "undefined" ||
-              typeof location === "undefined"
-            ) {
-              return true;
-            }
-
-            const lowestPrice = provider.price;
-            const fromPriceNumber = Number(price.min);
-            const toPriceNumber = Number(price.max);
-            const carLocationLowercase = provider.location.toLowerCase();
-            const locationLowercase = location.toLowerCase();
-
-            if (!isNaN(fromPriceNumber) && !isNaN(toPriceNumber)) {
-              const isFromPriceLower = fromPriceNumber <= lowestPrice;
-              const isToPriceHigher =
-                toPriceNumber >= lowestPrice || toPriceNumber === 0;
-              const isLocationMatch =
-                carLocationLowercase === locationLowercase || location === "";
-              const isFavorite = favoriteFilter ? user.favorites && user.favorites.some(favorite => favorite.id === provider.id) : true; // Add this line
-              if (isFromPriceLower && isToPriceHigher && isLocationMatch && isFavorite) { // Update this line
-                return lowestPrice;
-              }
-            }
-            return false;
+            const { price: lowestPrice = 0, location: carLocation = '' } = provider;
+            const fromPriceNumber = Number(price?.min) || 0;
+            const toPriceNumber = Number(price?.max) || Infinity;
+            const isPriceInRange = price ? fromPriceNumber <= lowestPrice && (toPriceNumber >= lowestPrice || toPriceNumber === 0) : true;
+            const isLocationMatch = location ? carLocation.toLowerCase() === location.toLowerCase() : true;
+            const isFavorite = favoriteFilter ? favorites.includes(provider.id) : true;
+          
+            return isPriceInRange && isLocationMatch && isFavorite;
           })
           .map(({ configurations, provider, make, model }) => {
-            const carImageName = configurations[0].img || "default.jpg";
-
-            const allRentals = configurations.flatMap((configuration) =>
-              configuration.providers.flatMap((provider) => provider.rentals)
-            );
-
+            if (!configurations || configurations.length === 0) {
+              throw new Error('No configurations found for this car');
+            }
+          
+            const firstConfig = configurations[0];
+            const carImageName = firstConfig.img || "default.jpg";
             const providerRentals = provider.rentals || [];
-
-            const isAvailable = providerRentals
-              ? providerRentals.every((rental) => {
-                  const rentalStartDate = new Date(rental.startDate);
-                  const rentalEndDate = new Date(rental.endDate);
-                  return rentalStartDate > toDate || rentalEndDate < fromDate;
-                })
-              : false;
+          
+            const isAvailable = providerRentals.every((rental) => {
+            const rentalStartDate = new Date(rental.startDate);
+            const rentalEndDate = new Date(rental.endDate);
+            return rentalStartDate > fromDate || rentalEndDate < toDate;
+            });
 
             const carInfo = {
               configId: configurations[0].id,
@@ -148,15 +112,17 @@ export default function CarReader({
             };
 
             return (
+              showCarCard && (
               <CarCard
                 key={provider.id}
                 carInfo={carInfo}
                 setExpandedCarInfo={setExpandedCarInfo}
               />
+              )
             );
           })}
       </div>
-
+      )}
       {expandedCar && <ExpandedCard carInfo={carInfo} />}
     </div>
   );
