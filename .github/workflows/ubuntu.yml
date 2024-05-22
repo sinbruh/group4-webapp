@@ -16,9 +16,13 @@ jobs:
       - name: Create SSH key
         run: |
           mkdir -p ~/.ssh/
-          echo "$SSH_PRIVATE_KEY" > ~/.ssh/github_action
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/github_action
           chmod 600 ~/.ssh/github_action
-          echo "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
+          echo "${{ secrets.SSH_KNOWN_HOSTS }}" > ~/.ssh/known_hosts
+          chmod 644 ~/.ssh/known_hosts
+          # Disable host key checking to prevent interactive prompt
+          echo "Host *" >> ~/.ssh/config
+          echo "  StrictHostKeyChecking no" >> ~/.ssh/config
 
       - name: Deploy to server
         run: |
