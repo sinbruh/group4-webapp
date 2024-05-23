@@ -90,6 +90,7 @@ export function flattenCars(cars) {
                         numberOfSeats: configuration.numberOfSeats,
                         fuelType: configuration.fuelType,
                         transmissionType: configuration.transmissionType,
+                        extraFeatures: configuration.extraFeautres,
                     },
                     provider: {
                         id: provider.id,

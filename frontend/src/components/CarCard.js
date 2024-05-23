@@ -79,7 +79,7 @@ const CarCard = ({ carInfo, setExpandedCarInfo }) => {
                                 <div className="flex flex-wrap gap-2">
                                     <div className="flex items-center"><Image src={peopleIcon} alt="people" width={32} height={32} /> {carInfo.size}</div>
                                     <div className="flex items-center"><Image src={carIcon} alt="fuel type" widht={32} height={32} /> {carInfo.fuelType}</div>
-                                    <div className="flex items-center"><Image src={cogIcon} alt="transmission" width={32} height={32} /> {carInfo.transmission}</div>
+                                    <div className="flex items-center"><Image src={cogIcon} alt="transmission" width={32} height={32} /> {carInfo.configuration.transmission}</div>
                                 </div>
                             </CardFooter>
                         </div>
