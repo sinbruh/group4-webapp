@@ -63,9 +63,8 @@ export default function Page() {
                 return <ConfigurationEditor />;
             case 'editprovider':
                 return <ProviderEditor />;
-                
             default:
-                return <p></p>;
+                return userDetails ? <AccountSettings userDetails={userDetails}/> : null;
         }
     };
 
@@ -79,28 +78,27 @@ export default function Page() {
                     <Link href="/">Home</Link> &gt; <Link href="/profile">Profile</Link>
                 </p>
             </section>
-            <div className="flex items-center justify-center min-h-screen">
-                <section className="m-2 p-2 bg-white h-dvh w-4/5 rounded flex">
-                    <div className="flex gap-y-2 flex-col w-1/4 h-full bg-red-200">
-                    <Button onClick={() => handleClick('account')} className="py-2 px-4 bg-blue-500 text-white rounded">Account</Button>
-                    <Button onClick={() => handleClick('myorders')} className="py-2 px-4 bg-blue-500 text-white rounded">My Orders</Button>
+            <div className="flex flex-wrap items-center justify-center">
+                <section className="mx-auto p-6 m-2 p-2 h-dvh bg-white max-w-full shadow-md rounded-md min-w-[60%] rounded flex-col overflow-auto">
+                    <div className="flex flex-wrap gap-x-2  justify-center">
+                    <Button onClick={() => handleClick('account')} className="m-4 w-full md:w-auto md:grow-0 md:m-0">Account</Button>
+                    <Button onClick={() => handleClick('myorders')} className="m-4 w-full md:w-auto md:grow-0 md:m-0">My Orders</Button>
                     {isAdmin() && (
                         <>
-                            
-                            <Button onClick={() => handleClick('viewusers')} className="py-2 px-4 bg-blue-500 text-white rounded">View Users</Button>
-                            <Button onClick={() => handleClick('vieworders')} className="py-2 px-4 bg-blue-500 text-white rounded">View Orders</Button>
-                            <Button onClick={() => handleClick('editcars')} className="py-2 px-4 bg-blue-500 text-white rounded">Car Editor</Button>
-                            <Button onClick={() => handleClick('editconfig')} className="py-2 px-4 bg-blue-500 text-white rounded">Configuration Editor</Button>
-                            <Button onClick={() => handleClick('editprovider')} className="py-2 px-4 bg-blue-500 text-white rounded">Provider Editor</Button>
+                            <Button onClick={() => handleClick('viewusers')} className="m-4 w-full md:w-auto md:grow-0 md:m-0">View Users</Button>
+                            <Button onClick={() => handleClick('vieworders')} className="m-4 w-full md:w-auto md:grow-0 md:m-0">View Orders</Button>
+                            <Button onClick={() => handleClick('editcars')} className="m-4 w-full md:w-auto md:grow-0 md:m-0">Car Editor</Button>
+                            <Button onClick={() => handleClick('editconfig')} className="m-4 w-full md:w-auto md:grow-0 md:m-0">Configuration Editor</Button>
+                            <Button onClick={() => handleClick('editprovider')} className="m-4 w-full md:w-auto md:grow-0 md:m-0">Provider Editor</Button>
                         </>
                     )}
 
                     </div>
-                    <div className="w-3/4 h-full bg-blue-200">
+                    <div className=" flex items-center justify-center">
                         {renderComponent()}
                     </div>
                 </section>
-            </div>
+                    </div>
             <Footer />
             </div>
         )};
