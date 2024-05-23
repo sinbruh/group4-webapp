@@ -77,7 +77,8 @@ export default function Locationbox({ defaultValue, onChange,  setLocation}) {
                 <Button
                     variant="outline"
                     role="combobox"
-                    aria-expanded={open}
+                    aria-label="Select a location" // replace with an appropriate description
+                    aria-expanded={open ? 'true' : 'false'}
                     className="justify-between"
                 >
                     {value
