@@ -19,10 +19,24 @@ export const useCarData = create((set) => ({
         set((state) => ({
             cars: state.cars.filter((item) => item.id !== car.id),
         })),
+    bookCar: (carId) =>
+        set((state) => ({
+            cars: state.cars.map((car) => {
+                if (car.provider.id === carId) {
+                    return { ...car, isBooked: true };
+                }
+                return car;
+            }),
+        })),
 }));
 
 
 export const fetchData = async () => {
+
+    //remove all cars first
+    useCarData.getState().cars = [];
+
+
     try {
         let data = await asyncApiRequest("GET", "/api/cars");
 
@@ -61,30 +75,36 @@ export const fetchData = async () => {
 // }
 
 export function flattenCars(cars) {
-    return cars.flatMap((car) =>
-        car.configurations.flatMap((configuration) =>
-            configuration.providers.map((provider) => ({
-                id: car.id,
-                make: car.make,
-                model: car.model,
-                year: car.year,
-                configuration: {
-                    id: configuration.id,
-                    img: configuration.img,
-                    numberOfSeats: configuration.numberOfSeats,
-                    fuelType: configuration.fuelType,
-                    transmissionType: configuration.transmissionType,
-                },
-                provider: {
-                    id: provider.id,
-                    name: provider.name,
-                    price: provider.price,
-                    location: provider.location,
-                    rentals: provider.rentals,
-                }
-            }))
-        )
-    );
+    return cars.flatMap((car) => {
+        // Check if the car object has a 'configurations' property
+        if (car.configurations) {
+            return car.configurations.flatMap((configuration) =>
+                configuration.providers.map((provider) => ({
+                    id: car.id,
+                    make: car.make,
+                    model: car.model,
+                    year: car.year,
+                    configuration: {
+                        id: configuration.id,
+                        img: configuration.img,
+                        numberOfSeats: configuration.numberOfSeats,
+                        fuelType: configuration.fuelType,
+                        transmissionType: configuration.transmissionType,
+                    },
+                    provider: {
+                        id: provider.id,
+                        name: provider.name,
+                        price: provider.price,
+                        location: provider.location,
+                        rentals: provider.rentals,
+                    },
+                }))
+            );
+        } else {
+            // Return an empty array if 'configurations' property is not found
+            return [];
+        }
+    });
 }
 
 

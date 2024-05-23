@@ -22,7 +22,7 @@ import {
 
 import { useStore } from "@/tools/authentication"
 
-const expandedCard = ({ carInfo, dates, showConfirmation }) => {
+const expandedCard = ({ carInfo, dates, showConfirmation}) => {
     const user = useStore((state) => state.user);
     const [isOpen, setIsOpen] = React.useState(false);
     const [alreadyBooked, setAlreadyBooked] = React.useState(false);
@@ -37,32 +37,38 @@ const expandedCard = ({ carInfo, dates, showConfirmation }) => {
         console.log("Book now button clicked")
         console.log("User: ", user)
 
-        if (user) {
-            const bookingConfirmed = await confirmationDialogRef.current.openDialog();
-            if (bookingConfirmed) {
-                console.log("Dates: ", dates.start, dates.end)
+        if (carInfo.availability) {
+            if (user) {
+                const bookingConfirmed = await confirmationDialogRef.current.openDialog();
+                if (bookingConfirmed) {
 
-                const body = {
-                    startDate: dates.start,
-                    endDate: dates.end,
+
+                    console.log("Dates: ", dates.start, dates.end)
+
+                    const body = {
+                        startDate: dates.start,
+                        endDate: dates.end,
+                    }
+
+                    const response = await asyncApiRequest("POST", "/api/rentals/" + user.email + "/" + carInfo.provider.id, body)
+                    if (response) {
+                        console.log("Booking successful")
+                        console.log("Booking response: ", response)
+
+                        const rentalID = response;
+
+                        sendReceiptRequest(rentalID)
+
+                        showConfirmation();
+                    } else {
+                        setAlreadyBooked(true);
+                    }
                 }
-
-                const response = await asyncApiRequest("POST", "/api/rentals/" + user.email + "/" + carInfo.provider.id, body)
-                if (response) {
-                    console.log("Booking successful")
-                    console.log("Booking response: ", response)
-
-                    const rentalID = response;
-
-                    sendReceiptRequest(rentalID)
-
-                    showConfirmation();
-                } else {
-                    setAlreadyBooked(true);
-                }
+            } else {
+                setIsOpen(true);
             }
         } else {
-            setIsOpen(true);
+            setAlreadyBooked(true);
         }
     }
 
@@ -74,7 +80,7 @@ const expandedCard = ({ carInfo, dates, showConfirmation }) => {
     async function sendReceiptRequest(rentalID) {
         const total = getTotalPrice();
         console.log("Sending receipt request with", user.email, rentalID, total)
-        const response = await asyncApiRequest("POST", "/api/receipts/" + user.email + "/" +  rentalID, total)
+        const response = await asyncApiRequest("POST", "/api/receipts/" + user.email + "/" + rentalID, total)
         console.log("Receipt response: ", response)
     }
 
