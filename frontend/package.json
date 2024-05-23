@@ -36,6 +36,7 @@
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.51.4",
     "react-responsive": "^10.0.0",
+    "sharp": "^0.33.4",
     "tailwind": "^4.0.0",
     "tailwind-merge": "^2.2.2",
     "tailwindcss-animate": "^1.0.7",
