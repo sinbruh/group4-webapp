@@ -63,8 +63,8 @@ public class CarController {
   @Operation(summary = "Get all cars")
   @GetMapping
   public Iterable<Car> getAll() {
-    User sessionUser = this.userService.getSessionUser();
     Iterable<Car> cars = this.carService.getAll();
+    User sessionUser = this.userService.getSessionUser();
     if (sessionUser == null || (sessionUser != null && !sessionUser.isAdmin())) {
       for (Car car : cars) {
         for (Configuration config : car.getConfigurations()) {

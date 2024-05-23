@@ -67,14 +67,18 @@ public class ProviderController {
   @Operation(summary = "Get all providers")
   @GetMapping
   public ResponseEntity<Set<Provider>> getAll() {
-    User sessionUser = this.userService.getSessionUser();
     Iterable<Provider> providers = this.providerService.getAll();
+    User sessionUser = this.userService.getSessionUser();
     Set<Provider> providerData = new LinkedHashSet<>();
     if (sessionUser == null || (sessionUser != null & !sessionUser.isAdmin())) {
       for (Provider provider : providers) {
         if (provider.isVisible()) {
           providerData.add(provider);
         }
+      }
+    } else {
+      for (Provider provider : providers) {
+        providerData.add(provider);
       }
     }
     logger.info("Sending all provider data...");

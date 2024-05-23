@@ -65,8 +65,8 @@ public class ConfigurationController {
   @Operation(summary = "Get all configurations")
   @GetMapping
   public Iterable<Configuration> getAll() {
-    User sessionUser = this.userService.getSessionUser();
     Iterable<Configuration> configurations = this.configurationService.getAll();
+    User sessionUser = this.userService.getSessionUser();
     if (sessionUser == null || (sessionUser != null && !sessionUser.isAdmin())) {
       for (Configuration config : configurations) {
         Iterator<Provider> it = config.getProviders().iterator();
