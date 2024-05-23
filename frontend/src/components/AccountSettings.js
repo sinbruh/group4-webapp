@@ -23,14 +23,14 @@ import {
 import {
     Dialog,
     DialogContent,
-    DialogDescription,
     DialogHeader,
     DialogTitle,
     DialogTrigger,
   } from "@/components/ui/dialog"
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { getCookie } from "@/tools/cookies";
+import { useRouter } from "next/navigation";
+import { useStore } from "@/tools/authentication";
 
 const formSchema = z.object({
   firstName: z.string(),
@@ -39,8 +39,6 @@ const formSchema = z.object({
   dateOfBirth: z.date().nullable(),
   phoneNumber: z.string(),
 });
-
-const Email = getCookie("current_email");
 
 const years = Array.from(
   { length: 100 },
@@ -66,6 +64,7 @@ const getDaysInMonth = (year, month) => {
 };
 
 export default function AccountSettings({ userDetails, setOpen }) {
+  const router = useRouter()
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -87,6 +86,8 @@ export default function AccountSettings({ userDetails, setOpen }) {
   const [deletePassword, setDeletePassword] = useState('');
   const [deletePasswordCheck, setDeletePasswordCheck] = useState('');
   const [deleteAccountStatus, setDeleteAccountStatus] = useState('');
+  const user = useStore((state) => state.user);
+  const logout = useStore((state) => state.logout);
 
   const handlePasswordChange = async (e) => {
     if (newPassword !== newPasswordCheck) {
@@ -107,19 +108,50 @@ export default function AccountSettings({ userDetails, setOpen }) {
       console.error("Response body: ", error.response.body);
     }
   };
+  
+  const deleteRentals = async () => {
+    if (userDetails.rentals) {
+    for (const rental of userDetails.rentals) {
+      try {
+        const response = await asyncApiRequest(
+          "DELETE",
+          `/api/rentals/${rental.id}`
+        );
+      } catch (error) {
+        console.error(`Error deleting rental with id ${rental.id}: `, error);
+      }
+    }
+    }
+  };
+
+  const deleteReceipts = async () => {
+    if (userDetails.receipts) {
+    for (const receipt of userDetails.receipts) {
+      try {
+        const response = await asyncApiRequest(
+          "DELETE",
+          `/api/receipts/${receipt.id}`
+        );
+      } catch (error) {
+        console.error(`Error deleting receipt with id ${receipt.id}: `, error);
+      }
+    }
+    }
+  };
 
   const handleDeleteAccount = async () => {
     if (deletePassword !== deletePasswordCheck) {
       setDeleteAccountStatus('The passwords do not match.');
       return;
     }
-
-    setDeleteAccountStatus('Account Deleted.');
   
     try {
+      await deleteRentals();
+      await deleteReceipts();  
+  
       const response = await asyncApiRequest(
         "DELETE",
-        `/api/users/${Email}`,
+        `/api/users/${user.email}`,
         requestBody,true
       );
   
@@ -128,6 +160,7 @@ export default function AccountSettings({ userDetails, setOpen }) {
       setDeleteAccountStatus('Failed to delete account.');
     }
   };
+
 
   const handleEditClick = () => {
     if (isEditing) {
@@ -154,7 +187,6 @@ export default function AccountSettings({ userDetails, setOpen }) {
   }
 
   const onSubmit = async (values) => {
-    console.log("onSubmit", values);
     values.dateOfBirth = format(values.dateOfBirth, "T");
 
     try {
@@ -165,16 +197,21 @@ export default function AccountSettings({ userDetails, setOpen }) {
       );
 
       setIsEditing(false);
+      router.push('/');
 
     } catch (error) {
       console.error("Error updating user details: ", error);
-      console.error("Error updating user details: ", response);
+      if (response) {
+        console.error("Error updating user details: ", response);
+      }
     }
   };
 
   return (
     <div className="mx-auto p-6  flex flex-col  overflow-auto">
       <div className={"flex-grow overflow-auto"}>
+        
+        <Form {...form} onSubmit={form.handleSubmit(onSubmit)} className="space-y-6" id="account-settings-form">
         <div className="flex justify-end space-x-2 mb-4">
           {!isEditing ? (
             <Button
@@ -195,14 +232,17 @@ export default function AccountSettings({ userDetails, setOpen }) {
                 type="submit"
                 form="account-settings-form"
                 className="py-1 px-3 bg-green-600 text-white rounded hover:bg-green-500"
-              >
+                onClick={(event) => {
+                    event.preventDefault();
+                    form.handleSubmit(onSubmit)();
+                }}
+            >
                 Save
-              </Button>
+            </Button>
             </>
           )}
         </div>
-        <Form {...form} className="space-y-6" id="account-settings-form">
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+         
             <FormField
               control={form.control}
               name="firstName"
@@ -500,7 +540,7 @@ export default function AccountSettings({ userDetails, setOpen }) {
             </DialogContent>
             </Dialog>
             </div>
-          </form>
+          
         </Form>
       </div>
     </div>
