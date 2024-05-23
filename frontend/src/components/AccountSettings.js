@@ -331,7 +331,7 @@ export default function AccountSettings({ userDetails, setOpen }) {
                               }
                               className="p-2 border rounded border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-600"
                             >
-                              <SelectTrigger className="w-[100px]">
+                              <SelectTrigger className="w-[100px]" aria-label="Select Year">
                                 <SelectValue>{year}</SelectValue>
                               </SelectTrigger>
                               <SelectContent>
@@ -355,7 +355,7 @@ export default function AccountSettings({ userDetails, setOpen }) {
                               }
                               className="p-2 border rounded border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-600"
                             >
-                              <SelectTrigger className="w-[100px]">
+                              <SelectTrigger className="w-[100px]" aria-label="Select Month">
                                 <SelectValue>{months[month]}</SelectValue>
                               </SelectTrigger>
                               <SelectContent>
@@ -375,7 +375,7 @@ export default function AccountSettings({ userDetails, setOpen }) {
                               }
                               className="p-2 border rounded border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-600"
                             >
-                              <SelectTrigger className="w-[100px]">
+                              <SelectTrigger className="w-[100px]" aria-label="Select Day">
                                 <SelectValue>{day}</SelectValue>
                               </SelectTrigger>
                               <SelectContent>
