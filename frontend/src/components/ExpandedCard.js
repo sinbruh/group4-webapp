@@ -92,8 +92,8 @@ const expandedCard = ({ carInfo, dates, showConfirmation }) => {
                             <Image className="rounded" src={carImage} alt={carInfo.carName} width={400} height={200} />
 
                             {carInfo.availability ?
-                                <div className="text-[#326D0D] font-bold flex gap-2 items-center"><Image src={checkIcon} width={32} height={32} /> Available </div> :
-                                <div className="text-red-500 font-bold flex gap-2 items-center"><Image src={closeIcon} width={32} height={32} /> Unavailable </div>}
+                                <div className="text-[#326D0D] font-bold flex gap-2 items-center"><Image src={checkIcon} alt={"Available"} width={32} height={32} /> Available </div> :
+                                <div className="text-red-500 font-bold flex gap-2 items-center"><Image src={closeIcon} alt={"unAvailable"} width={32} height={32} /> Unavailable </div>}
                             <div className="flex flex-row gap-10">
                                 <div className="flex flex-col gap-2">
                                     <p>Info: </p>

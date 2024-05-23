@@ -70,8 +70,8 @@ const CarCard = ({ carInfo, setExpandedCarInfo }) => {
                             }
                             <CardContent>
                                 {carInfo.availability ?
-                                    <div className="text-[#326D0D] font-bold flex gap-2 items-center"><Image src={checkIcon} width={32} height={32} /> Available </div> :
-                                    <div className="text-red-500 font-bold flex gap-2 items-center"><Image src={closeIcon} width={32} height={32} /> Unavailable </div>}
+                                    <div className="text-[#326D0D] font-bold flex gap-2 items-center"><Image src={checkIcon} alt={"Available"} width={32} height={32} /> Available </div> :
+                                    <div className="text-red-500 font-bold flex gap-2 items-center"><Image src={closeIcon} alt={"UnAvailable"}width={32} height={32} /> Unavailable </div>}
                                 <p>Price: {carInfo.price} NOK/day</p>
                                 <p>Location: {carInfo.location}</p>
                             </CardContent>
