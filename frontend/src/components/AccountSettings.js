@@ -340,7 +340,7 @@ export default function AccountSettings({ userDetails, setOpen }) {
                                     <SelectItem
                                       key={year}
                                       value={year.toString()}
-                                      Alt={"Year:" + year}
+                                      alt={"Year:" + year}
                                     >
                                       {year}
                                     </SelectItem>
@@ -361,7 +361,7 @@ export default function AccountSettings({ userDetails, setOpen }) {
                               <SelectContent>
                                 <SelectGroup>
                                   {months.map((month, index) => (
-                                    <SelectItem key={index} value={month} Alt={"Month" + month} >
+                                    <SelectItem key={index} value={month} alt={"Month" + month} >
                                       {month}
                                     </SelectItem>
                                   ))}
@@ -384,7 +384,7 @@ export default function AccountSettings({ userDetails, setOpen }) {
                                     <SelectItem
                                       key={day}
                                       value={day.toString()}
-                                      Alt={"Day" + day}
+                                      alt={"Day" + day}
                                     >
                                       {day}
                                     </SelectItem>

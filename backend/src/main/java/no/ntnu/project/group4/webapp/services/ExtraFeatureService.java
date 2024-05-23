@@ -1,16 +1,14 @@
 package no.ntnu.project.group4.webapp.services;
 
 import java.util.Optional;
-
+import no.ntnu.project.group4.webapp.models.ExtraFeature;
+import no.ntnu.project.group4.webapp.repositories.ExtraFeatureRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import no.ntnu.project.group4.webapp.models.ExtraFeature;
-import no.ntnu.project.group4.webapp.repositories.ExtraFeatureRepository;
-
 /**
  * The ExtraFeatureService class represents the service class for the extra feature entity.
- * 
+ *
  * @author Group 4
  * @version v1.0 (2024.05.22)
  */
@@ -21,7 +19,7 @@ public class ExtraFeatureService {
 
   /**
    * Returns all extra features in the database.
-   * 
+   *
    * @return All extra features in the database
    */
   public Iterable<ExtraFeature> getAll() {
@@ -30,7 +28,7 @@ public class ExtraFeatureService {
   
   /**
    * Returns the extra feature with the specified ID regardless of if it exists or not.
-   * 
+   *
    * @param id The specified ID
    * @return The extra feature with the specified ID regardless of if it exists or not
    */
@@ -40,7 +38,7 @@ public class ExtraFeatureService {
 
   /**
    * Returns the generated ID of the specified extra feature if it is added to the database.
-   * 
+   *
    * @param extraFeature The specified extra feature
    * @return The generated ID of the specified extra feature if it is added to the database
    * @throws IllegalArgumentException If the specified extra feature is invalid
@@ -56,7 +54,7 @@ public class ExtraFeatureService {
   /**
    * Returns true if the extra feature with the specified ID is found and updated with the
    * specified extra feature or false otherwise.
-   * 
+   *
    * @param id           The specified ID
    * @param extraFeature The specified extra feature
    * @return True if the extra feature with the specified ID is found and updated with the
@@ -79,7 +77,7 @@ public class ExtraFeatureService {
   /**
    * Returns true if the extra feature with the specified ID is found and deleted or false
    * otherwise.
-   * 
+   *
    * @param id The specified ID
    * @return True if the extra feature with the specified ID is found and deleted or false
    *         otherwise

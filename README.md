@@ -23,3 +23,14 @@ to run the website locally:
 5. frontend: npm run dev command
 6. backend: mvn spring-boot:run
 
+
+## Extra features implemented
+
+- Admin Orders Overview
+- User Order History
+- Car Search by Location 
+- Admin Car Management
+- User Profile Management
+- CICD continuous integration and continuous delivery/deployment
+- Select location
+

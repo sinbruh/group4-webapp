@@ -1,10 +1,6 @@
 package no.ntnu.project.group4.webapp.models;
 
-import java.util.LinkedHashSet;
-import java.util.Set;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -13,19 +9,21 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 /**
  * The Provider class represents the entity class for the provider entity.
- * 
+ *
  * <p>The class uses JPA with annotations for ORM operations.</p>
- * 
+ *
  * @author Group 4
  * @version v1.0 (2024.05.22)
  */
 @Entity(name = "provider")
 @Schema(
-  description = "A provider entity, representing a specific configuration provider that can be " +
-                "added to a car configuration"
+    description = "A provider entity, representing a specific configuration provider that can be "
+                + "added to a car configuration"
 )
 public class Provider {
   @Schema(description = "Unique ID")
@@ -56,7 +54,7 @@ public class Provider {
 
   /**
    * Constructs an instance of the Provider class.
-   * 
+   *
    * <p>Empty constructor needed for JPA.</p>
    */
   public Provider() {
@@ -65,7 +63,7 @@ public class Provider {
 
   /**
    * Constructs an instance of the Provider class.
-   * 
+   *
    * @param name      The specified name
    * @param price     The specified price
    * @param location  The specified location
@@ -82,7 +80,7 @@ public class Provider {
 
   /**
    * Getter for ID.
-   * 
+   *
    * @return ID
    */
   public Long getId() {
@@ -91,7 +89,7 @@ public class Provider {
 
   /**
    * Setter for ID.
-   * 
+   *
    * @param id The specified ID
    */
   public void setId(Long id) {
@@ -100,7 +98,7 @@ public class Provider {
 
   /**
    * Getter for name.
-   * 
+   *
    * @return Name
    */
   public String getName() {
@@ -109,7 +107,7 @@ public class Provider {
 
   /**
    * Setter for name.
-   * 
+   *
    * @param name The specified name
    */
   public void setName(String name) {
@@ -118,7 +116,7 @@ public class Provider {
 
   /**
    * Getter for price.
-   * 
+   *
    * @return Price
    */
   public int getPrice() {
@@ -127,7 +125,7 @@ public class Provider {
 
   /**
    * Setter for price.
-   * 
+   *
    * @param price The specified price
    */
   public void setPrice(int price) {
@@ -136,7 +134,7 @@ public class Provider {
 
   /**
    * Getter for location.
-   * 
+   *
    * @return Location
    */
   public String getLocation() {
@@ -145,7 +143,7 @@ public class Provider {
 
   /**
    * Setter for location.
-   * 
+   *
    * @param location The specified location
    */
   public void setLocation(String location) {
@@ -154,7 +152,7 @@ public class Provider {
 
   /**
    * Checks if provider is available.
-   * 
+   *
    * @return True if provider is available or false otherwise
    */
   public boolean isAvailable() {
@@ -163,7 +161,7 @@ public class Provider {
 
   /**
    * Setter for availability.
-   * 
+   *
    * @param available The specified availability
    */
   public void setAvailable(boolean available) {
@@ -172,7 +170,7 @@ public class Provider {
 
   /**
    * Checks if provider is visible.
-   * 
+   *
    * @return True if provider is visible or false otherwise
    */
   public boolean isVisible() {
@@ -181,7 +179,7 @@ public class Provider {
 
   /**
    * Setter for visibility.
-   * 
+   *
    * @param visible The specified visibility
    */
   public void setVisible(boolean visible) {
@@ -190,7 +188,7 @@ public class Provider {
 
   /**
    * Getter for configuration.
-   * 
+   *
    * @return Configuration
    */
   public Configuration getConfiguration() {
@@ -199,7 +197,7 @@ public class Provider {
 
   /**
    * Setter for configuration.
-   * 
+   *
    * @param configuration The specified configuraiton
    */
   public void setConfiguration(Configuration configuration) {
@@ -208,7 +206,7 @@ public class Provider {
 
   /**
    * Getter for rentals.
-   * 
+   *
    * @return Rentals
    */
   public Set<Rental> getRentals() {
@@ -217,7 +215,7 @@ public class Provider {
 
   /**
    * Setter for rentals.
-   * 
+   *
    * @param rentals The specified rentals
    */
   public void setRentals(Set<Rental> rentals) {
@@ -226,7 +224,7 @@ public class Provider {
 
   /**
    * Getter for favorited users.
-   * 
+   *
    * @return Favorited users
    */
   public Set<User> getFavoritedUsers() {
@@ -235,7 +233,7 @@ public class Provider {
 
   /**
    * Setter for favorites users.
-   * 
+   *
    * @param favoritedUsers The specified favorited users
    */
   public void setFavoritedUsers(Set<User> favoritedUsers) {
@@ -244,7 +242,7 @@ public class Provider {
 
   /**
    * Returns true if the provider is valid or false otherwise.
-   * 
+   *
    * @return True if the provider is valid or false otherwise
    */
   public boolean isValid() {

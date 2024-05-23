@@ -1,16 +1,14 @@
 package no.ntnu.project.group4.webapp.services;
 
 import java.util.Optional;
-
+import no.ntnu.project.group4.webapp.models.Provider;
+import no.ntnu.project.group4.webapp.repositories.ProviderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import no.ntnu.project.group4.webapp.models.Provider;
-import no.ntnu.project.group4.webapp.repositories.ProviderRepository;
-
 /**
  * The ProviderService class represents the service class for the provider entity.
- * 
+ *
  * @author Group 4
  * @version v1.0 (2024.05.22)
  */
@@ -21,7 +19,7 @@ public class ProviderService {
 
   /**
    * Returns all providers in the database.
-   * 
+   *
    * @return All providers in the database
    */
   public Iterable<Provider> getAll() {
@@ -30,7 +28,7 @@ public class ProviderService {
   
   /**
    * Returns the provider with the specified ID regardless of if it exists or not.
-   * 
+   *
    * @param id The specified ID
    * @return The provider with the specified ID regardless of if it exists or not
    */
@@ -40,7 +38,7 @@ public class ProviderService {
 
   /**
    * Returns the generated ID of the specified provider if it is added to the database.
-   * 
+   *
    * @param provider The specified provider
    * @return The generated ID of the specified provider if it is added to the database
    * @throws IllegalArgumentException If the specified provider is invalid
@@ -56,7 +54,7 @@ public class ProviderService {
   /**
    * Returns true if the provider with the specified ID is found and updated with the specified
    * provider or false otherwise.
-   * 
+   *
    * @param id       The specified ID
    * @param provider The specified provider
    * @return True if the provider with the specified ID is found and updated with the specified
@@ -82,7 +80,7 @@ public class ProviderService {
   
   /**
    * Returns true if the provider with the specified ID is found and deleted or false otherwise.
-   * 
+   *
    * @param id The specified ID
    * @return True if the provider with the specified ID is found and deleted or false otherwise
    */

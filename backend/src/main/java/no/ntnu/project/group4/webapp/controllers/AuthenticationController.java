@@ -10,7 +10,6 @@ import no.ntnu.project.group4.webapp.dto.AuthenticationResponse;
 import no.ntnu.project.group4.webapp.dto.RegisterDto;
 import no.ntnu.project.group4.webapp.security.JwtUtil;
 import no.ntnu.project.group4.webapp.services.AccessUserService;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,23 +61,23 @@ public class AuthenticationController {
    */
 
   @Operation(
-    summary = "Authenticate user",
-    description = "Authenticates user with the specified authentication request"
+      summary = "Authenticate user",
+      description = "Authenticates user with the specified authentication request"
   )
   @ApiResponses(value = {
-    @ApiResponse(
-      responseCode = "200",
-      description = "User authenticated"
-    ),
-    @ApiResponse(
-      responseCode = "401",
-      description = "Invalid email or password"
-    )
+      @ApiResponse(
+        responseCode = "200",
+        description = "User authenticated"
+      ),
+      @ApiResponse(
+        responseCode = "401",
+        description = "Invalid email or password"
+      )
   })
   @PostMapping("/authenticate")
   public ResponseEntity<?> authenticate(
-    @Parameter(description = "The authentication request")
-    @RequestBody AuthenticationRequest authenticationRequest
+      @Parameter(description = "The authentication request")
+      @RequestBody AuthenticationRequest authenticationRequest
   ) {
     try {
       this.authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
@@ -106,23 +105,23 @@ public class AuthenticationController {
    *         <p>400 BAD REQUEST on error</p>
    */
   @Operation(
-    summary = "Register a new user",
-    description = "Registers a new user with the specified register DTO"
+      summary = "Register a new user",
+      description = "Registers a new user with the specified register DTO"
   )
   @ApiResponses(value = {
-    @ApiResponse(
-      responseCode = "200",
-      description = "New user registered"
-    ),
-    @ApiResponse(
-      responseCode = "400",
-      description = "Error registering new user"
-    )
+      @ApiResponse(
+        responseCode = "200",
+        description = "New user registered"
+      ),
+      @ApiResponse(
+        responseCode = "400",
+        description = "Error registering new user"
+      )
   })
   @PostMapping("/register")
   public ResponseEntity<String> registerProcess(
-    @Parameter(description = "The register DTO")
-    @RequestBody RegisterDto registerData
+      @Parameter(description = "The register DTO")
+      @RequestBody RegisterDto registerData
   ) {
     ResponseEntity<String> response;
     try {
@@ -140,14 +139,14 @@ public class AuthenticationController {
 
   /**
    * Returns a HTTP response to the request causing the specified HttpMessageNotReadableException.
-   * 
+   *
    * @param e The specified HttpMessageNotReadableException
    * @return 400 BAD REQUEST with an error message
    */
   @ExceptionHandler(HttpMessageNotReadableException.class)
   public ResponseEntity<String> handleRequestBodyException(HttpMessageNotReadableException e) {
     logger.error("Received user data could not be read, sending error message...");
-    return new ResponseEntity<>("User data not supplied or contains a parameter on an invalid " +
-                                "format", HttpStatus.BAD_REQUEST);
+    return new ResponseEntity<>("User data not supplied or contains a parameter on an invalid "
+                              + "format", HttpStatus.BAD_REQUEST);
   }
 }

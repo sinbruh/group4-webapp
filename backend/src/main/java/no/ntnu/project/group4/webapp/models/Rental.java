@@ -1,29 +1,26 @@
 package no.ntnu.project.group4.webapp.models;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-
-import java.sql.Date;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import java.sql.Date;
 
 /**
  * The Rental class represents the entity class for the rental entity.
- * 
+ *
  * <p>The class uses JPA with annotations for ORM operations.</p>
- * 
+ *
  * @author Group 4
  * @version v1.0 (2024.05.22)
  */
 @Entity(name = "rental")
 @Schema(
-  description = "A rental entity, representing a specific rental that can be added to a user " +
-                "and a configuration provider"
+    description = "A rental entity, representing a specific rental that can be added to a user "
+                + "and a configuration provider"
 )
 public class Rental {
   @Schema(description = "Unique ID")
@@ -45,7 +42,7 @@ public class Rental {
 
   /**
    * Constructs an instance of the Rental class.
-   * 
+   *
    * <p>Empty constructor needed for JPA.</p>
    */
   public Rental() {
@@ -54,7 +51,7 @@ public class Rental {
 
   /**
    * Constructs an instance of the Rental class.
-   * 
+   *
    * @param startDateLong The specified long value for the start date
    * @param endDateLong   The specified long value for the end date
    */
@@ -65,7 +62,7 @@ public class Rental {
 
   /**
    * Getter for ID.
-   * 
+   *
    * @return ID
    */
   public Long getId() {
@@ -74,7 +71,7 @@ public class Rental {
 
   /**
    * Setter for ID.
-   * 
+   *
    * @param id The specified ID
    */
   public void setId(Long id) {
@@ -83,7 +80,7 @@ public class Rental {
 
   /**
    * Getter for start date.
-   * 
+   *
    * @return Start date
    */
   public Date getStartDate() {
@@ -92,8 +89,8 @@ public class Rental {
 
   /**
    * Setter for start date.
-   * 
-   * @param startDate The specified long value for the start date
+   *
+   * @param startDateLong The specified long value for the start date
    */
   public void setStartDate(long startDateLong) {
     this.startDate = new Date(startDateLong);
@@ -101,7 +98,7 @@ public class Rental {
 
   /**
    * Getter for end date.
-   * 
+   *
    * @return End date
    */
   public Date getEndDate() {
@@ -110,8 +107,8 @@ public class Rental {
 
   /**
    * Setter for end date.
-   * 
-   * @param endDate The specified long value for the end date
+   *
+   * @param endDateLong The specified long value for the end date
    */
   public void setEndDate(long endDateLong) {
     this.endDate = new Date(endDateLong);
@@ -119,7 +116,7 @@ public class Rental {
 
   /**
    * Getter for provider.
-   * 
+   *
    * @return Provider
    */
   public Provider getProvider() {
@@ -128,7 +125,7 @@ public class Rental {
 
   /**
    * Setter for provider.
-   * 
+   *
    * @param provider The specified provider
    */
   public void setProvider(Provider provider) {
@@ -137,7 +134,7 @@ public class Rental {
 
   /**
    * Getter for user.
-   * 
+   *
    * @return User
    */
   public User getUser() {
@@ -146,7 +143,7 @@ public class Rental {
 
   /**
    * Setter for user.
-   * 
+   *
    * @param user The specified user
    */
   public void setUser(User user) {
@@ -155,7 +152,7 @@ public class Rental {
 
   /**
    * Returns true if the rental is valid or false otherwise.
-   * 
+   *
    * @return True if the rental is valid or false otherwise
    */
   public boolean isValid() {

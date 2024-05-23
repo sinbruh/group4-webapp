@@ -1,20 +1,19 @@
 package no.ntnu.project.group4.webapp.models;
 
 import io.swagger.v3.oas.annotations.media.Schema;
-import java.util.LinkedHashSet;
-import java.util.Set;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 /**
  * The Car class represents the entity class for the car entity.
- * 
+ *
  * <p>The class uses JPA with annotations for ORM operations.</p>
- * 
+ *
  * @author Group 4
  * @version v1.0 (2024.05.22)
  */
@@ -37,7 +36,7 @@ public class Car {
 
   /**
    * Constructs an instance of the Car class.
-   * 
+   *
    * <p>Empty constructor needed for JPA.</p>
    */
   public Car() {
@@ -46,7 +45,7 @@ public class Car {
 
   /**
    * Constructs an instance of the Car class.
-   * 
+   *
    * @param make  The specified make
    * @param model The specified model
    * @param year  The specified year
@@ -59,7 +58,7 @@ public class Car {
 
   /**
    * Getter for ID.
-   * 
+   *
    * @return ID
    */
   public Long getId() {
@@ -68,7 +67,7 @@ public class Car {
 
   /**
    * Setter for ID.
-   * 
+   *
    * @param id The specified ID
    */
   public void setId(Long id) {
@@ -77,7 +76,7 @@ public class Car {
 
   /**
    * Getter for make.
-   * 
+   *
    * @return Make
    */
   public String getMake() {
@@ -86,7 +85,7 @@ public class Car {
 
   /**
    * Setter for make.
-   * 
+   *
    * @param make The specified make
    */
   public void setMake(String make) {
@@ -95,7 +94,7 @@ public class Car {
 
   /**
    * Getter for model.
-   * 
+   *
    * @return Model
    */
   public String getModel() {
@@ -104,7 +103,7 @@ public class Car {
 
   /**
    * Setter for model.
-   * 
+   *
    * @param model The specified model
    */
   public void setModel(String model) {
@@ -113,7 +112,7 @@ public class Car {
 
   /**
    * Getter for year.
-   * 
+   *
    * @return Year
    */
   public int getYear() {
@@ -122,7 +121,7 @@ public class Car {
 
   /**
    * Setter for year.
-   * 
+   *
    * @param year The specified year
    */
   public void setYear(int year) {
@@ -131,7 +130,7 @@ public class Car {
 
   /**
    * Getter for configurations.
-   * 
+   *
    * @return Configurations
    */
   public Set<Configuration> getConfigurations() {
@@ -140,7 +139,7 @@ public class Car {
 
   /**
    * Setter for configurations.
-   * 
+   *
    * @param configurations The specified configurations
    */
   public void setConfigurations(Set<Configuration> configurations) {
@@ -149,7 +148,7 @@ public class Car {
 
   /**
    * Returns true if the car is valid or false otherwise.
-   * 
+   *
    * @return True if the car is valid or false otherwise
    */
   public boolean isValid() {

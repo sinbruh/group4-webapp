@@ -3,7 +3,7 @@ package no.ntnu.project.group4.webapp.dto;
 /**
  * The AuthenticationRequest class represents an authentication request data transfer object (DTO).
  * The class contains data the user will send when requesting to authenticate (log in).
- * 
+ *
  * @author Group 4
  * @version v1.0 (2024.05.22)
  */
@@ -13,7 +13,7 @@ public class AuthenticationRequest {
 
   /**
    * Constructs an instance of the AuthenticationRequest class.
-   * 
+   *
    * @param email    The specified email
    * @param password The specified password
    */
@@ -24,7 +24,7 @@ public class AuthenticationRequest {
 
   /**
    * Getter for email.
-   * 
+   *
    * @return Email
    */
   public String getEmail() {
@@ -33,7 +33,7 @@ public class AuthenticationRequest {
 
   /**
    * Setter for email.
-   * 
+   *
    * @param email The specified email
    */
   public void setEmail(String email) {
@@ -42,7 +42,7 @@ public class AuthenticationRequest {
 
   /**
    * Getter for password.
-   * 
+   *
    * @return Password
    */
   public String getPassword() {
@@ -51,7 +51,7 @@ public class AuthenticationRequest {
 
   /**
    * Setter for password.
-   * 
+   *
    * @param password The specified password
    */
   public void setPassword(String password) {

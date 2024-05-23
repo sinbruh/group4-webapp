@@ -1,16 +1,14 @@
 package no.ntnu.project.group4.webapp.services;
 
 import java.util.Optional;
-
+import no.ntnu.project.group4.webapp.models.Rental;
+import no.ntnu.project.group4.webapp.repositories.RentalRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import no.ntnu.project.group4.webapp.models.Rental;
-import no.ntnu.project.group4.webapp.repositories.RentalRepository;
-
 /**
  * The RentalService class represents the service class for the rental entity.
- * 
+ *
  * @author Group 4
  * @version v1.0 (2024.05.22)
  */
@@ -21,7 +19,7 @@ public class RentalService {
 
   /**
    * Returns all rentals in the database.
-   * 
+   *
    * @return All rentals in the database
    */
   public Iterable<Rental> getAll() {
@@ -30,7 +28,7 @@ public class RentalService {
 
   /**
    * Returns the rental with the specified ID regardless of if it exists or not.
-   * 
+   *
    * @param id The specified ID
    * @return The rental with the specified ID regardless of if it exists or not
    */
@@ -40,7 +38,7 @@ public class RentalService {
 
   /**
    * Returns the generated ID of the specified rental if it is added to the database.
-   * 
+   *
    * @param rental The specified rental
    * @return The generated ID of the specified rental if it is added to the database
    * @throws IllegalArgumentException If the specified rental is invalid
@@ -56,7 +54,7 @@ public class RentalService {
   /**
    * Returns true if the rental with the specified ID is found and updated with the specified
    * rental or false otherwise.
-   * 
+   *
    * @param id       The specified ID
    * @param rental The specified rental
    * @return True if the rental with the specified ID is found and updated with the specified
@@ -79,7 +77,7 @@ public class RentalService {
 
   /**
    * Returns true if the rental with the specified ID is found and deleted or false otherwise.
-   * 
+   *
    * @param id The specified ID
    * @return True if the rental with the specified ID is found and deleted or false otherwise
    */
