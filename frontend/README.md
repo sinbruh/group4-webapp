@@ -7,11 +7,11 @@ Exam Project in courses
 
 ## Table of Contents
 
-- [Libraries and frameworks used] (#Libraries and Frameworks used)
+- [Libraries and frameworks used] (#Libraries and Frameworks)
 - [Website](#Website)
 
 
-## Libaries and Frameworks
+## Libraries and Frameworks
 
 Libraries and frameworks that have been used for the project, which includes:
 - React
