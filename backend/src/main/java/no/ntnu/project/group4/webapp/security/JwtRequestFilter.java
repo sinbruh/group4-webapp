@@ -21,28 +21,39 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 
 /**
- * A filter that is applied to all HTTP requests and checks for a valid JWT token in
- * the `Authorization: Bearer ...` header.
+ * The JwtRequestFilter class represents the request filter for JWT tokens. The class is a filter
+ * that is applied to all HTTP requests and checks for a valid JWT token in the `Authorization:
+ * Bearer ...` header.
+ * 
+ * @author Group 4
+ * @version v1.0 (2024.05.22)
  */
 @Component
 public class JwtRequestFilter extends OncePerRequestFilter {
-  private static final Logger logger = LoggerFactory.getLogger(
-    JwtRequestFilter.class.getSimpleName()
-  );
-
   @Autowired
   private UserDetailsService userDetailsService;
   @Autowired
   private JwtUtil jwtUtil;
 
+  private static final Logger logger = LoggerFactory.getLogger(
+    JwtRequestFilter.class.getSimpleName()
+  );
+
+  /**
+   * Enables internal filter.
+   * 
+   * @param request     The specified request
+   * @param response    The specified response
+   * @param filterChain The specified filter chain
+   */
   @Override
   protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
                                   FilterChain filterChain)
   throws ServletException, IOException {
-    String jwtToken = getJwtToken(request);
-    String username = jwtToken != null ? getUsernameFrom(jwtToken) : null;
+    String jwtToken = this.getJwtToken(request);
+    String username = jwtToken != null ? this.getUsernameFrom(jwtToken) : null;
     if (username != null && notAuthenticatedYet()) {
-      UserDetails userDetails = getUserDetailsFromDatabase(username);
+      UserDetails userDetails = this.getUserDetailsFromDatabase(username);
       if (jwtUtil.validateToken(jwtToken, userDetails)) {
         registerUserAsAuthenticated(request, userDetails);
       }
@@ -50,6 +61,12 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     filterChain.doFilter(request, response);
   }
 
+  /**
+   * Returns the user details of the user with the specified username from the database.
+   * 
+   * @param username The specified username
+   * @return The user details of the user with the specified username from the database
+   */
   private UserDetails getUserDetailsFromDatabase(String username) {
     UserDetails userDetails = null;
     try {
@@ -60,6 +77,12 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     return userDetails;
   }
 
+  /**
+   * Returns the JWT token gathered from the Header of the specified request.
+   * 
+   * @param request The specified request
+   * @return The JWT token gathered from the Header of the specified request
+   */
   private String getJwtToken(HttpServletRequest request) {
     final String authorizationHeader = request.getHeader("Authorization");
     String jwt = null;
@@ -70,16 +93,22 @@ public class JwtRequestFilter extends OncePerRequestFilter {
   }
 
   /**
-   * Strips the "Bearer " prefix from the Header "Authorization: Bearer ...
+   * Returns the JWT token following the "Bearer " prefix in the specified Header value.
    *
-   * @param authorizationHeaderValue The value of the Authorization HTTP header
-   * @return The JWT token following the "Bearer " prefix
+   * @param authorizationHeaderValue The specified Header value
+   * @return The JWT token following the "Bearer " prefix in the specified Header value
    */
   private static String stripBearerPrefixFrom(String authorizationHeaderValue) {
     final int numberOfCharsToStrip = "Bearer ".length();
     return authorizationHeaderValue.substring(numberOfCharsToStrip);
   }
 
+  /**
+   * Returns the username of the user extracted from the specified JWT token.
+   * 
+   * @param jwtToken The specified JWT token
+   * @return The username of the user extracted from the specified JWT token
+   */
   private String getUsernameFrom(String jwtToken) {
     String username = null;
     try {
@@ -92,10 +121,22 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     return username;
   }
 
+  /**
+   * Checks if the user is not authenticated yet.
+   * 
+   * @return True if the user is not authenticated yet or false otherwise
+   */
   private static boolean notAuthenticatedYet() {
     return SecurityContextHolder.getContext().getAuthentication() == null;
   }
 
+  /**
+   * Registers the user with the specified user details as authenticated with the specified
+   * request.
+   * 
+   * @param request     The specified request
+   * @param userDetails The specified user details
+   */
   private static void registerUserAsAuthenticated(HttpServletRequest request,
                                                   UserDetails userDetails) {
     final UsernamePasswordAuthenticationToken upat = new UsernamePasswordAuthenticationToken(

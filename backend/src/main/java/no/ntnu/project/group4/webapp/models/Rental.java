@@ -12,37 +12,71 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 
+/**
+ * The Rental class represents the entity class for the rental entity.
+ * 
+ * <p>The class uses JPA with annotations for ORM operations.</p>
+ * 
+ * @author Group 4
+ * @version v1.0 (2024.05.22)
+ */
 @Entity(name = "rental")
-@Schema(name = "Rental", description = "A rental entity, representing a rental of a car configuration.")
+@Schema(
+  description = "A rental entity, representing a specific rental that can be added to a user " +
+                "and a configuration provider"
+)
 public class Rental {
+  @Schema(description = "Unique ID")
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
+  @Schema(description = "Start date of rental")
   private Date startDate;
+  @Schema(description = "End date of rental")
   private Date endDate;
+  @Schema(description = "Provider the rental belongs to")
   @JsonIgnore
   @ManyToOne
   private Provider provider;
+  @Schema(description = "User the rental belongs to")
   @JsonIgnore
   @ManyToOne
   private User user;
 
   /**
-   * Empty constructor needed for JPA.
+   * Constructs an instance of the Rental class.
+   * 
+   * <p>Empty constructor needed for JPA.</p>
    */
   public Rental() {
+    // Intentionally left blank
   }
 
+  /**
+   * Constructs an instance of the Rental class.
+   * 
+   * @param startDateLong The specified long value for the start date
+   * @param endDateLong   The specified long value for the end date
+   */
   public Rental(long startDateLong, long endDateLong) {
     this.startDate = new Date(startDateLong);
     this.endDate = new Date(endDateLong);
-
   }
 
+  /**
+   * Getter for ID.
+   * 
+   * @return ID
+   */
   public Long getId() {
     return this.id;
   }
 
+  /**
+   * Setter for ID.
+   * 
+   * @param id The specified ID
+   */
   public void setId(Long id) {
     this.id = id;
   }
@@ -101,14 +135,29 @@ public class Rental {
     this.provider = provider;
   }
 
+  /**
+   * Getter for user.
+   * 
+   * @return User
+   */
   public User getUser() {
     return this.user;
   }
 
+  /**
+   * Setter for user.
+   * 
+   * @param user The specified user
+   */
   public void setUser(User user) {
     this.user = user;
   }
 
+  /**
+   * Returns true if the rental is valid or false otherwise.
+   * 
+   * @return True if the rental is valid or false otherwise
+   */
   public boolean isValid() {
     return this.startDate.getTime() > 0 && this.endDate.getTime() > 0;
   }

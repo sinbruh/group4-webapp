@@ -8,13 +8,19 @@ import org.springframework.stereotype.Service;
 import no.ntnu.project.group4.webapp.models.User;
 import no.ntnu.project.group4.webapp.repositories.UserRepository;
 
+/**
+ * The UserService class represents the service class for the user entity.
+ * 
+ * @author Group 4
+ * @version v1.0 (2024.05.22)
+ */
 @Service
 public class UserService {
   @Autowired
   private UserRepository userRepository;
 
   /**
-   * Get all users in the database.
+   * Returns all users in the database.
    * 
    * @return All users in the database
    */
@@ -23,31 +29,31 @@ public class UserService {
   }
 
   /**
-   * Try to find a user with the given ID regardless of if it exists or not
+   * Returns the user with the specified ID regardless of if it exists or not.
    * 
-   * @param id The given ID
-   * @return A user with the given ID regardless of if it exists or not
+   * @param id The specified ID
+   * @return The user with the specified ID regardless of if it exists or not
    */
   public Optional<User> getOne(Long id) {
     return this.userRepository.findById(id);
   }
 
   /**
-   * Try to find a user with the given email regardless of if it exists or not.
+   * Returns the user with the specified email regardless of if it exists or not.
    * 
-   * @param email The given email
-   * @return A user with the given email regardless of if it exists or not
+   * @param email The specified email
+   * @return The user with the specified email regardless of if it exists or not
    */
   public Optional<User> getOneByEmail(String email) {
     return this.userRepository.findByEmail(email);
   }
 
   /**
-   * Add the given user to the database.
+   * Returns the generated ID of the specified user if it is added to the database.
    * 
-   * @param user The given user
-   * @return The ID of the given user
-   * @throws IllegalArgumentException If the given user is invalid
+   * @param user The specified user
+   * @return The generated ID of the specified user if it is added to the database
+   * @throws IllegalArgumentException If the specified user is invalid
    */
   public Long add(User user) {
     if (!user.isValid()) {
@@ -58,26 +64,14 @@ public class UserService {
   }
 
   /**
-   * Try to delete a user with the given ID.
+   * Returns true if the user with the specified ID is found and updated with the specified user or
+   * false otherwise.
    * 
-   * @param id The given ID
-   * @return True if the user was found and thus deleted or false otherwise
-   */
-  public boolean delete(Long id) {
-    Optional<User> user = this.userRepository.findById(id);
-    if (user.isPresent()) {
-      this.userRepository.deleteById(id);
-    }
-    return user.isPresent();
-  }
-
-  /**
-   * Try to update a user with the given ID.
-   * 
-   * @param id The given ID
-   * @param user The updated user metadata
-   * @throws IllegalArgumentException If the current user is not found or the updated user metadata
-   *                                  has an ID mismatch or is invalid
+   * @param id   The specified ID
+   * @param user The specified user
+   * @return True if the user with the specified ID is found and updated with the specified
+   *         user or false otherwise
+   * @throws IllegalArgumentException If the specified user is invalid
    */
   public boolean update(Long id, User user) {
     Optional<User> existingUser = this.userRepository.findById(id);
@@ -99,5 +93,19 @@ public class UserService {
       this.userRepository.save(existingUserObj);
     }
     return existingUser.isPresent();
+  }
+
+  /**
+   * Returns true if the user with the specified ID is found and deleted or false otherwise.
+   * 
+   * @param id The specified ID
+   * @return True if the user with the specified ID is found and deleted or false otherwise
+   */
+  public boolean delete(Long id) {
+    Optional<User> user = this.userRepository.findById(id);
+    if (user.isPresent()) {
+      this.userRepository.deleteById(id);
+    }
+    return user.isPresent();
   }
 }

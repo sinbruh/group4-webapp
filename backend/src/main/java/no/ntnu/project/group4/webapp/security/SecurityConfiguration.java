@@ -18,8 +18,13 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 /**
+ * The SecurityConfiguration class represents the security configuration for the API.
+ * 
  * Creates AuthenticationManager - set up authentication type.
  * The @EnableMethodSecurity is needed so that each endpoint can specify which role it requires
+ * 
+ * @author Group 4
+ * @version v1.0 (2024.05.22)
  */
 @Configuration
 @EnableMethodSecurity

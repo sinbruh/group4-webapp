@@ -17,20 +17,30 @@ import jakarta.persistence.ManyToOne;
  * <p>The class uses JPA with annotations for ORM operations.</p>
  * 
  * @author Group 4
- * @version v1.0 (2024.05.21)
+ * @version v1.0 (2024.05.22)
  */
 @Entity(name = "receipt")
-@Schema(name = "Receipt", description = "A receipt entity")
+@Schema(
+  description = "A receipt entity, representing a specific receipt that can be added to a user"
+)
 public class Receipt {
+  @Schema(description = "Unique ID")
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
+  @Schema(description = "Name of rented car")
   private String carName;
+  @Schema(description = "Name of provider rented from")
   private String providerName;
+  @Schema(description = "Location of rented car")
   private String location;
+  @Schema(description = "Start date of rental")
   private Date startDate;
+  @Schema(description = "End date of rental")
   private Date endDate;
+  @Schema(description = "Total price of rental")
   private int totalPrice;
+  @Schema(description = "User the receipt belongs to")
   @JsonIgnore
   @ManyToOne
   private User user;
@@ -41,17 +51,18 @@ public class Receipt {
    * <p>Empty constructor needed for JPA.</p>
    */
   public Receipt() {
+    // Intentionally left blank
   }
 
   /**
    * Constructs an instance of the Receipt class.
    * 
-   * @param carName The specified car name
-   * @param providerName The specified provider name
-   * @param location The specified location
+   * @param carName       The specified car name
+   * @param providerName  The specified provider name
+   * @param location      The specified location
    * @param startDateLong The specified long value for the start date
-   * @param endDateLong The specified long value for the end date
-   * @param totalPrice The specified total price
+   * @param endDateLong   The specified long value for the end date
+   * @param totalPrice    The specified total price
    */
   public Receipt(String carName, String providerName, String location, long startDateLong,
                  long endDateLong, int totalPrice) {

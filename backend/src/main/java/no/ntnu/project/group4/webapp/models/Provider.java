@@ -14,32 +14,64 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 
+/**
+ * The Provider class represents the entity class for the provider entity.
+ * 
+ * <p>The class uses JPA with annotations for ORM operations.</p>
+ * 
+ * @author Group 4
+ * @version v1.0 (2024.05.22)
+ */
 @Entity(name = "provider")
-@Schema(name = "Provider", description = "A provider entity, representing a provider of a car configuration.")
+@Schema(
+  description = "A provider entity, representing a specific configuration provider that can be " +
+                "added to a car configuration"
+)
 public class Provider {
+  @Schema(description = "Unique ID")
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
+  @Schema(description = "Provider name")
   private String name;
+  @Schema(description = "Price for the configuration")
   private int price;
+  @Schema(description = "Location of the configuration")
   private String location;
+  @Schema(description = "Availability for the configuration")
   private boolean available = true;
+  @Schema(description = "Visibility for the configuration")
   private boolean visible = true;
+  @Schema(description = "Configuration the provider belongs to")
   @JsonIgnore
   @ManyToOne
   private Configuration configuration;
+  @Schema(description = "Rentals of configuration through this provider")
   @OneToMany(mappedBy = "provider")
   private Set<Rental> rentals = new LinkedHashSet<>();
+  @Schema(description = "Users who have favorited this provider")
   @JsonIgnore
   @ManyToMany(mappedBy = "favorites")
   private Set<User> favoritedUsers = new LinkedHashSet<>();
 
   /**
-   * Empty constructor needed for JPA.
+   * Constructs an instance of the Provider class.
+   * 
+   * <p>Empty constructor needed for JPA.</p>
    */
   public Provider() {
+    // Intentionally left blank
   }
 
+  /**
+   * Constructs an instance of the Provider class.
+   * 
+   * @param name      The specified name
+   * @param price     The specified price
+   * @param location  The specified location
+   * @param available The specified availability
+   * @param visible   The specified visibility
+   */
   public Provider(String name, int price, String location, boolean available, boolean visible) {
     this.name = name;
     this.price = price;
@@ -48,26 +80,56 @@ public class Provider {
     this.visible = visible;
   }
 
+  /**
+   * Getter for ID.
+   * 
+   * @return ID
+   */
   public Long getId() {
     return this.id;
   }
 
+  /**
+   * Setter for ID.
+   * 
+   * @param id The specified ID
+   */
   public void setId(Long id) {
     this.id = id;
   }
 
+  /**
+   * Getter for name.
+   * 
+   * @return Name
+   */
   public String getName() {
     return this.name;
   }
 
+  /**
+   * Setter for name.
+   * 
+   * @param name The specified name
+   */
   public void setName(String name) {
     this.name = name;
   }
 
+  /**
+   * Getter for price.
+   * 
+   * @return Price
+   */
   public int getPrice() {
     return this.price;
   }
 
+  /**
+   * Setter for price.
+   * 
+   * @param price The specified price
+   */
   public void setPrice(int price) {
     this.price = price;
   }
@@ -126,10 +188,20 @@ public class Provider {
     this.visible = visible;
   }
 
+  /**
+   * Getter for configuration.
+   * 
+   * @return Configuration
+   */
   public Configuration getConfiguration() {
     return this.configuration;
   }
 
+  /**
+   * Setter for configuration.
+   * 
+   * @param configuration The specified configuraiton
+   */
   public void setConfiguration(Configuration configuration) {
     this.configuration = configuration;
   }
@@ -171,27 +243,10 @@ public class Provider {
   }
 
   /**
-   * Toggles the availability for the provider.
+   * Returns true if the provider is valid or false otherwise.
+   * 
+   * @return True if the provider is valid or false otherwise
    */
-  public void toggleAvailable() {
-    if (!this.available) {
-      this.available = true;
-    } else {
-      this.available = false;
-    }
-  }
-
-  /**
-   * Toggles the visibility for the provider.
-   */
-  public void toggleVisible() {
-    if (!this.visible) {
-      this.visible = true;
-    } else {
-      this.visible = false;
-    }
-  }
-
   public boolean isValid() {
     return !this.name.isBlank() && this.price > 0 && !this.location.isBlank();
   }

@@ -8,13 +8,19 @@ import org.springframework.stereotype.Service;
 import no.ntnu.project.group4.webapp.models.Configuration;
 import no.ntnu.project.group4.webapp.repositories.ConfigurationRepository;
 
+/**
+ * The ConfigurationService class represents the service class for the configuration entity.
+ * 
+ * @author Group 4
+ * @version v1.0 (2024.05.22)
+ */
 @Service
 public class ConfigurationService {
   @Autowired
   private ConfigurationRepository configurationRepository;
 
   /**
-   * Gets all configurations in the database.
+   * Returns all configurations in the database.
    * 
    * @return All configurations in the database
    */
@@ -23,7 +29,7 @@ public class ConfigurationService {
   }
   
   /**
-   * Gets the configuration with the specified ID regardless of if it exists or not.
+   * Returns the configuration with the specified ID regardless of if it exists or not.
    * 
    * @param id The specified ID
    * @return The configuration with the specified ID regardless of if it exists or not
@@ -33,10 +39,10 @@ public class ConfigurationService {
   }
 
   /**
-   * Tries to add the specified configuration to the database.
+   * Returns the generated ID of the specified configuration if it is added to the database.
    * 
    * @param configuration The specified configuration
-   * @return The ID of the specified configuration added to the database
+   * @return The generated ID of the specified configuration if it is added to the database
    * @throws IllegalArgumentException If the specified configuration is invalid
    */
   public Long add(Configuration configuration) {
@@ -46,31 +52,16 @@ public class ConfigurationService {
     this.configurationRepository.save(configuration);
     return configuration.getId();
   }
-  
+
   /**
-   * Tries to delete the configuration with the specified ID.
+   * Returns true if the configuration with the specified ID is found and updated with the
+   * specified configuration or false otherwise.
    * 
-   * @param id The specified ID
-   * @return True if the configuration with the specified ID was found and thus deleted or false
-   *         otherwise
-   */
-  public boolean delete(Long id) {
-    Optional<Configuration> configuration = this.configurationRepository.findById(id);
-    if (configuration.isPresent()) {
-      this.configurationRepository.deleteById(id);
-    }
-    return configuration.isPresent();
-  }
-  
-  /**
-   * Tries to update the configuration with the specified ID to the specified configuration. The ID
-   * of the configuration must match the specified ID.
-   * 
-   * @param id The specified ID
+   * @param id     The specified ID
    * @param config The specified configuration
-   * @throws IllegalArgumentException If the existing configuration was not found or any of the
-   *                                  specified data is wrong (error message can be used in HTTP
-   *                                  response)
+   * @return True if the configuration with the specified ID is found and updated with the
+   *         specified configuration or false otherwise
+   * @throws IllegalArgumentException If the specified configuration is invalid
    */
   public boolean update(Long id, Configuration config) {
     Optional<Configuration> existingConfig = this.configurationRepository.findById(id);
@@ -86,5 +77,21 @@ public class ConfigurationService {
       this.configurationRepository.save(existingConfigObj);
     }
     return existingConfig.isPresent();
+  }
+  
+  /**
+   * Returns true if the configuration with the specified ID is found and deleted or false
+   * otherwise.
+   * 
+   * @param id The specified ID
+   * @return True if the configuration with the specified ID is found and deleted or false
+   *         otherwise
+   */
+  public boolean delete(Long id) {
+    Optional<Configuration> configuration = this.configurationRepository.findById(id);
+    if (configuration.isPresent()) {
+      this.configurationRepository.deleteById(id);
+    }
+    return configuration.isPresent();
   }
 }
