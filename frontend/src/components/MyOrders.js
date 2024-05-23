@@ -1,3 +1,4 @@
+import React, {useState } from "react";
 import {
   Table,
   TableBody,
@@ -7,16 +8,38 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
+
 
 export default function MyOrders({userDetails}) {
+  const [currentPage, setCurrentPage] = useState(1);
+  const entriesPerPage = 2;
 
+  const handlePreviousPage = () => {
+    setCurrentPage((prevPage) => Math.max(prevPage - 1, 1));
+  };
 
-  console.log("MyOrders.js: ", userDetails);
+  const handleNextPage = () => {
+    if (currentPage < Math.ceil(userDetails.receipts.length / entriesPerPage)) {
+      setCurrentPage((prevPage) => prevPage + 1);
+    }
+  };
+
+  const receiptsForCurrentPage = userDetails.receipts.slice(
+    (currentPage - 1) * entriesPerPage,
+    currentPage * entriesPerPage
+  );
 
   return (
     <div className={"max-w-x1 mx-auto p-6 bg-white shadow-md rounded-md"}>
       <h2 className={"text-2x1 font-semibold mb-4"}>My Orders</h2>
-
       <form className={"space-y-2"}>
         <Table>
           <TableCaption>A list of your Orders</TableCaption>
@@ -33,7 +56,7 @@ export default function MyOrders({userDetails}) {
           <TableBody>
             {userDetails &&
               Array.isArray(userDetails.receipts) &&
-              userDetails.receipts.map((receipt, index) => {
+              receiptsForCurrentPage.map((receipt, index) => {
                 console.log("MyOrders.js: ", receipt); // Add this line
                 return (
                   <TableRow key={index}>
@@ -52,6 +75,21 @@ export default function MyOrders({userDetails}) {
               })}
           </TableBody>
         </Table>
+        <Pagination>
+          <PaginationContent>
+            <PaginationItem>
+              <PaginationPrevious onClick={handlePreviousPage} />
+            </PaginationItem>
+            <PaginationItem>
+              <PaginationLink href="#" isActive>
+                {currentPage}
+              </PaginationLink>
+            </PaginationItem>
+            <PaginationItem>
+              <PaginationNext onClick={handleNextPage} />
+            </PaginationItem>
+          </PaginationContent>
+        </Pagination>
       </form>
     </div>
   );
