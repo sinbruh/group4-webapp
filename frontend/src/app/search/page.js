@@ -1,6 +1,5 @@
 'use client'
 import { useSearchParams } from 'next/navigation';
-import styles from "./search.module.css";
 import React, { Suspense, useState, useEffect } from 'react';
 import Navigation from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
@@ -69,7 +68,7 @@ export default function Search() {
             <Suspense fallback={<div>Loading...</div>}>
                 <Navigation />
 
-                <section className={styles.breadcrumb}>
+                <section className="p-x-2">
                     <p>
                         <Link href="/">Home</Link> &gt; <Link href="/search">Search</Link>
                     </p>
