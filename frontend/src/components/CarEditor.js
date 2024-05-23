@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { asyncApiRequest } from "@/tools/request";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import {
   Table,
   TableBody,
@@ -39,7 +39,6 @@ const formSchema = z.object({
 
 export default function CarEditor() {
   const [cars, setCars] = useState([]);
-  const Email = getCookie("current_email");
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const entriesPerPage = 5;
@@ -62,12 +61,8 @@ export default function CarEditor() {
         values,
         true
       );
+      updateJsonFile();
 
-      if (response.ok) {
-        console.log("Car details updated successfully");
-      } else {
-        console.error("Error updating car details: ", response);
-      }
     } catch (error) {
       console.error("Error updating car details: ", error);
     }
@@ -113,7 +108,25 @@ export default function CarEditor() {
     updateJsonFile();
   }, []);
 
-  const carsForCurrentPage = cars.slice(
+
+  let sortedCars = [...cars].sort((a, b) => a.id - b.id);
+
+  const getFilteredAndSortedCars = (cars, searchTerm) => {
+    return cars
+      .filter(
+        (car) =>
+          car.id.toString().includes(searchTerm) ||
+          car.make.includes(searchTerm) ||
+          car.model.includes(searchTerm) ||
+          car.valid.toString().includes(searchTerm) ||
+          car.year.toString().includes(searchTerm)
+      )
+      .sort((a, b) => a.id - b.id);
+  };
+
+  const filteredAndSortedCars = getFilteredAndSortedCars(cars, searchTerm);
+
+  const carsForCurrentPage = filteredAndSortedCars.slice(
     (currentPage - 1) * entriesPerPage,
     currentPage * entriesPerPage
   );
@@ -146,14 +159,6 @@ export default function CarEditor() {
             </TableHeader>
             <TableBody>
               {carsForCurrentPage
-                .filter(
-                  (car) =>
-                    car.id.toString().includes(searchTerm) ||
-                    car.make.includes(searchTerm) ||
-                    car.model.includes(searchTerm) ||
-                    car.valid.toString().includes(searchTerm) ||
-                    car.year.toString().includes(searchTerm)
-                )
                 .map((car, index) => {
                   return (
                     <TableRow key={index}>

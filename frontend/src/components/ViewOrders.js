@@ -11,7 +11,6 @@ import {
 import {
   Pagination,
   PaginationContent,
-  PaginationEllipsis,
   PaginationItem,
   PaginationLink,
   PaginationNext,
@@ -19,12 +18,14 @@ import {
 } from "@/components/ui/pagination";
 import { asyncApiRequest } from "@/tools/request";
 import Head from "next/head";
+import { Input } from "@/components/ui/input";
 
 export default function ViewOrders({ rental }) {
   const [orders, setOrders] = useState([]);
   const [fetchError, setFetchError] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const entriesPerPage = 4;
+  const entriesPerPage = 5;
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     const fetchOrders = async () => {
@@ -51,7 +52,20 @@ export default function ViewOrders({ rental }) {
     }
   };
 
-  const ordersForCurrentPage = orders.slice(
+  const getFilteredAndSortedOrder = (orders, searchTerm) => {
+    return orders
+        .filter(
+            (order) =>
+                order.id.toString().includes(searchTerm) ||
+                order.startDate.includes(searchTerm) ||
+                order.endDate.includes(searchTerm) 
+               )
+               .sort((a, b) => a.id - b.id);
+  };
+
+  const filteredAndSortedOrders = getFilteredAndSortedOrder(orders, searchTerm);
+
+  const ordersForCurrentPage = filteredAndSortedOrders.slice(
     (currentPage - 1) * entriesPerPage,
     currentPage * entriesPerPage
   );
@@ -64,9 +78,16 @@ export default function ViewOrders({ rental }) {
         <div className="mx-auto p-6  flex flex-col  overflow-auto">
           <div className={"flex-grow overflow-auto"}>
             <h2 className="text-2xl font-semibold mb-4">View Orders</h2>
+            <Input
+            type="String"
+            placeholder="Search"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            />
             {fetchError ? (
                 <p className="error-message">Error: {fetchError}</p>
             ) : (
+                
                 <Table>
                   <TableCaption>A list of all orders.</TableCaption>
                   <TableHeader>

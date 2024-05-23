@@ -32,7 +32,20 @@ export default function MyOrders({ userDetails }) {
     }
   };
 
-  const receiptsForCurrentPage = userDetails.receipts.slice(
+  let rentals = userDetails.rentals;
+  let receipts = userDetails.receipts;
+
+  let sortedRentals = [...rentals].sort((a, b) => a.id - b.id);
+  let sortedReceipts = [...receipts].sort((a, b) => a.id - b.id);
+
+  let filteredAndSortedRentals = sortedRentals.filter(rental => new Date(rental.endDate) > new Date());
+
+  const receiptsForCurrentPage = sortedReceipts.slice(
+    (currentPage - 1) * entriesPerPage,
+    currentPage * entriesPerPage
+  );
+  
+  const rentalsForCurrentPage = filteredAndSortedRentals.slice(
     (currentPage - 1) * entriesPerPage,
     currentPage * entriesPerPage
   );
@@ -44,7 +57,7 @@ export default function MyOrders({ userDetails }) {
         </Head>
         <div
             className={
-              "max-w-7xl mx-auto p-6 bg-white shadow-md rounded-md flex flex-col h-[95vh] overflow-auto"
+              "max-w-7xl mx-auto p-6  flex flex-col h-[95vh] "
             }
         >
           <form className={"space-y-2"}>
@@ -54,7 +67,62 @@ export default function MyOrders({ userDetails }) {
                 <TableCaption>A list of your Orders</TableCaption>
                 <TableHeader>
                   <TableRow>
-                    <TableHead className="w-[100px]">Order ID</TableHead>
+                    <TableHead>Order ID</TableHead>
+                    <TableHead>Date</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                {userDetails &&
+                  Array.isArray(userDetails.rentals) &&
+                  rentalsForCurrentPage
+                      .map((rental, index) => {
+                          return (
+                            <TableRow key={index}>
+                              <TableCell className="font-medium">
+                                {rental.id}
+                              </TableCell>
+
+                              <TableCell>
+                                {"From: " +
+                                    rental.startDate +
+                                    " To: " +
+                                    rental.endDate}
+                              </TableCell>
+                              <TableCell className="text-right">
+                                {rental.totalPrice}
+                              </TableCell>
+                            </TableRow>
+                        );
+                      })}
+                </TableBody>
+              </Table>
+            </div>
+            <div className={"p-4 bg-white"}>
+              <Pagination>
+                <PaginationContent>
+                  <PaginationItem>
+                    <PaginationPrevious onClick={handlePreviousPage} />
+                  </PaginationItem>
+                  <PaginationItem>
+                    <PaginationLink href="#" isActive>
+                      {currentPage}
+                    </PaginationLink>
+                  </PaginationItem>
+                  <PaginationItem>
+                    <PaginationNext onClick={handleNextPage} />
+                  </PaginationItem>
+                </PaginationContent>
+              </Pagination>
+            </div>
+          </form>
+          <form className={"space-y-2"}>
+            <div className={"flex-grow overflow-auto"}>
+              <h2 className={"text-2x1 font-semibold mb-4"}>My Receipts</h2>
+              <Table>
+                <TableCaption>A list of your Orders</TableCaption>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead className="w-[100px]">Receipt ID</TableHead>
                     <TableHead>Car Name</TableHead>
                     <TableHead>Location</TableHead>
                     <TableHead>Provider</TableHead>
@@ -65,8 +133,9 @@ export default function MyOrders({ userDetails }) {
                 <TableBody>
                   {userDetails &&
                       Array.isArray(userDetails.receipts) &&
-                      receiptsForCurrentPage.map((receipt, index) => {
-                        console.log("MyOrders.js: ", receipt);
+                      receiptsForCurrentPage
+                      .map((receipt, index) => {
+                        
                         return (
                             <TableRow key={index}>
                               <TableCell className="font-medium">
@@ -108,6 +177,7 @@ export default function MyOrders({ userDetails }) {
               </Pagination>
             </div>
           </form>
+          
         </div>
       </>
   );

@@ -28,12 +28,9 @@ export default function Page() {
 
     useEffect(() => {
         const fetchUserDetails = async () => {
-            console.log("Fetching user details for: ", user);
             if (user) {
                 try {
-                    console.log("Fetching user details for: ", user.email);
                     const userDetails = await asyncApiRequest("GET", `/api/users/${user.email}`);
-                    console.log(userDetails);
                     setUserDetails(userDetails);
                 } catch (error) {
                     console.error("Error fetching user details: ", error);

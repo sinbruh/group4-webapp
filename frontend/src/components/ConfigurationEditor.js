@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { asyncApiRequest } from "@/tools/request";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import {
   Table,
   TableBody,
@@ -63,11 +63,8 @@ export default function ConfigurationEditor() {
         values,
         true
       );
+      updateJsonFile();
 
-      if (response.ok) {
-      } else {
-        console.error("Error updating config details: ", response);
-      }
     } catch (error) {
       console.error("Error updating config details: ", error);
     }
@@ -117,7 +114,28 @@ export default function ConfigurationEditor() {
     updateJsonFile();
   }, []);
 
-  const configsForCurrentPage = configs.slice(
+  let sortedCars = [...cars].sort((a, b) => a.id - b.id);
+
+  const getFilteredAndSortedConfigs = (configs, searchTerm) => {
+    return configs
+      .filter(
+        (config) =>
+          config.id.toString().includes(searchTerm) ||
+          config.car.make.includes(searchTerm) ||
+          config.car.model.includes(searchTerm) ||
+          config.car.valid.toString().includes(searchTerm) ||
+          config.car.year.toString().includes(searchTerm) ||
+          config.name.includes(searchTerm) ||
+          config.numberOfSeats.toString().includes(searchTerm) ||
+          config.fuelType.includes(searchTerm) ||
+          config.transmissionType.includes(searchTerm)
+      )
+      .sort((a, b) => a.id - b.id);
+  };
+
+  const filteredAndSortedProviders = getFilteredAndSortedConfigs(configs, searchTerm);
+
+  const configsForCurrentPage = filteredAndSortedProviders.slice(
     (currentPage - 1) * entriesPerPage,
     currentPage * entriesPerPage
   );
@@ -153,18 +171,6 @@ export default function ConfigurationEditor() {
             </TableHeader>
             <TableBody>
               {configsForCurrentPage
-                .filter(
-                  (config) =>
-                    config.id.toString().includes(searchTerm) ||
-                    config.car.make.includes(searchTerm) ||
-                    config.car.model.includes(searchTerm) ||
-                    config.car.valid.toString().includes(searchTerm) ||
-                    config.car.year.toString().includes(searchTerm) ||
-                    config.name.includes(searchTerm) ||
-                    config.numberOfSeats.toString().includes(searchTerm) ||
-                    config.fuelType.includes(searchTerm) ||
-                    config.tranmissionType.includes(searchTerm)
-                )
                 .map((config, index) => (
                   <TableRow key={index}>
                     <TableCell className="font-medium">{config.id}</TableCell>
@@ -173,7 +179,7 @@ export default function ConfigurationEditor() {
                     <TableCell>{config.name}</TableCell>
                     <TableCell>{config.numberOfSeats}</TableCell>
                     <TableCell>{config.fuelType}</TableCell>
-                    <TableCell>{config.tranmissionType}</TableCell>
+                    <TableCell>{config.transmissionType}</TableCell>
                   </TableRow>
                 ))}
             </TableBody>

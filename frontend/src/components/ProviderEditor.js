@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { asyncApiRequest } from "@/tools/request";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import {
   Table,
   TableBody,
@@ -65,19 +65,8 @@ export default function ProviderEditor() {
         values,
         true
       );
+      updateJsonFile();
 
-      if (responseProviders.ok && responseVisibility.ok) {
-      } else {
-        if (!responseProviders.ok) {
-          console.error("Error updating provider details: ", responseProviders);
-        }
-        if (!responseVisibility.ok) {
-          console.error(
-            "Error updating visibility details: ",
-            responseVisibility
-          );
-        }
-      }
     } catch (error) {
       console.error("Error updating details: ", error);
     }
@@ -129,7 +118,30 @@ export default function ProviderEditor() {
     updateJsonFile();
   }, []);
 
-  const carsForCurrentPage = providers.slice(
+
+  let sortedCars = [...cars].sort((a, b) => a.id - b.id);
+
+  const getFilteredAndSortedProviders = (providers, searchTerm) => {
+    return providers
+      .filter(
+        (provider) =>
+          provider.id.toString() === searchTerm ||
+          provider.car.make.includes(searchTerm) ||
+          provider.car.model.includes(searchTerm) ||
+          provider.config.name.includes(searchTerm) ||
+          provider.name.includes(searchTerm) ||
+          provider.price.toString().includes(searchTerm) ||
+          provider.location.includes(searchTerm) ||
+          provider.visible.toString().includes(searchTerm) ||
+          provider.available.toString().includes(searchTerm)
+      )
+      .sort((a, b) => a.id - b.id);
+  };
+
+  const filteredAndSortedProviders = getFilteredAndSortedProviders(providers, searchTerm);
+
+
+  const carsForCurrentPage = filteredAndSortedProviders.slice(
     (currentPage - 1) * entriesPerPage,
     currentPage * entriesPerPage
   );
@@ -167,19 +179,6 @@ export default function ProviderEditor() {
             </TableHeader>
             <TableBody>
               {carsForCurrentPage
-                .filter(
-                  (provider) =>
-                    provider.id.toString() === searchTerm ||
-                    provider.car.make.includes(searchTerm) ||
-                    provider.car.model.includes(searchTerm) ||
-                    provider.config.name.includes(searchTerm) ||
-                    provider.name.includes(searchTerm) ||
-                    provider.price.toString().includes(searchTerm) ||
-                    provider.location.includes(searchTerm) ||
-                    provider.visible.toString().includes(searchTerm) ||
-                    provider.available.toString().includes(searchTerm)
-                )
-                .sort((a, b) => a.id - b.id)
                 .map((provider, index) => (
                   <TableRow key={index}>
                     <TableCell className="font-medium">{provider.id}</TableCell>

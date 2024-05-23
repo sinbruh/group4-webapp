@@ -20,6 +20,14 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+  } from "@/components/ui/dialog"
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { getCookie } from "@/tools/cookies";
@@ -71,25 +79,53 @@ export default function AccountSettings({ userDetails, setOpen }) {
   });
 
   const [newPassword, setNewPassword] = useState("");
+  const [newPasswordCheck, setNewPasswordCheck] = useState("");
   const requestBody = { password: newPassword };
   const [isEditing, setIsEditing] = useState(false);
   const [editableDetails, setEditableDetails] = useState({});
+  const [passwordChangeStatus, setPasswordChangeStatus] = useState(null);
+  const [deletePassword, setDeletePassword] = useState('');
+  const [deletePasswordCheck, setDeletePasswordCheck] = useState('');
+  const [deleteAccountStatus, setDeleteAccountStatus] = useState('');
 
   const handlePasswordChange = async (e) => {
+    if (newPassword !== newPasswordCheck) {
+        setPasswordChangeStatus('The passwords do not match.');
+        return;
+      }
     try {
       const response = await asyncApiRequest(
         "PUT",
         `/api/users/${Email}/password`,
-        requestBody
+        requestBody,true
       );
-      if (response.ok) {
-        alert("Password changed successfully");
-      } else {
-        console.error("Error changing password: ", response);
-      }
+      setPasswordChangeStatus('Password changed successfully.');  
+        
     } catch (error) {
+      setPasswordChangeStatus('Failed to change password.', response);
       console.error("Error changing password: ", error);
       console.error("Response body: ", error.response.body);
+    }
+  };
+
+  const handleDeleteAccount = async () => {
+    if (deletePassword !== deletePasswordCheck) {
+      setDeleteAccountStatus('The passwords do not match.');
+      return;
+    }
+
+    setDeleteAccountStatus('Account Deleted.');
+  
+    try {
+      const response = await asyncApiRequest(
+        "DELETE",
+        `/api/users/${Email}`,
+        requestBody,true
+      );
+  
+    } catch (error) {
+      console.error("Error deleting account: ", error);
+      setDeleteAccountStatus('Failed to delete account.');
     }
   };
 
@@ -128,13 +164,11 @@ export default function AccountSettings({ userDetails, setOpen }) {
         values
       );
 
-      if (response.ok) {
-        setIsEditing(false);
-      } else {
-        console.error("Error updating user details: ", response);
-      }
+      setIsEditing(false);
+
     } catch (error) {
       console.error("Error updating user details: ", error);
+      console.error("Error updating user details: ", response);
     }
   };
 
@@ -369,29 +403,103 @@ export default function AccountSettings({ userDetails, setOpen }) {
                 </FormItem>
               )}
             />
-            {isEditing && (
-              <FormItem className="flex flex-col space-y-2">
-                <FormLabel className="font-semibold text-lg text-gray-700">
-                  New Password
-                </FormLabel>
-                <FormControl>
-                  <Input
+            <div className="flex flex-col space-y-4">
+            <Dialog>
+            <DialogTrigger 
+                className="font-semibold text-lg text-red-700"
+                onClick={() => setPasswordChangeStatus('')}>
+                Change Password
+            </DialogTrigger>
+            <DialogContent>
+                <DialogHeader>
+                <DialogTitle>Are you absolutely sure?</DialogTitle>
+                
+                <FormItem className="flex flex-col space-y-2">
+                    <FormLabel className="font-semibold text-lg text-gray-700">
+                    New Password
+                    </FormLabel>
+                    <FormControl>
+                    <div>
+                    <Input
+                        type="password"
+                        value={newPassword}
+                        onChange={(e) => setNewPassword(e.target.value)}
+                        className="p-2 border rounded border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-600"
+                    />
+
+                    <FormLabel className="font-semibold text-lg text-gray-700">
+                    Confirm New Password:
+                    </FormLabel>
+                    
+                    <Input
+                        type="password"
+                        value={newPasswordCheck}
+                        onChange={(e) => setNewPasswordCheck(e.target.value)}
+                        className="mt-2 p-2 border rounded border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-600"
+                    />
+                    </div>
+                    </FormControl>
+                    <Button
+                    type="button"
+                    onClick={handlePasswordChange}
+                    className="py-1 px-3 bg-gray-800 text-white rounded hover:bg-gray-700"
+                    >
+                    Change Password:
+                    </Button>
+                    <p className="font-semibold text-lg text-red-700">{passwordChangeStatus}</p>
+                </FormItem> 
+                
+                </DialogHeader>
+            </DialogContent>
+            </Dialog>
+            <Dialog>
+            <DialogTrigger 
+                className="font-semibold text-lg text-red-700"
+                onClick={() => setDeleteAccountStatus('')}>
+                Delete Account
+            </DialogTrigger>
+            <DialogContent>
+                <DialogHeader>
+                <DialogTitle>Are you absolutely sure?</DialogTitle>
+                
+                <FormItem className="flex flex-col space-y-2">
+                    <FormLabel className="font-semibold text-lg text-gray-700">
+                    Write Password to Delete:
+                    </FormLabel>
+                    <FormControl>
+                    <div>
+                    <Input
                     type="password"
-                    value={newPassword}
-                    onChange={(e) => setNewPassword(e.target.value)}
-                    readOnly={!isEditing}
+                    value={deletePassword}
+                    onChange={(e) => setDeletePassword(e.target.value)}
                     className="p-2 border rounded border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-600"
-                  />
-                </FormControl>
-                <Button
-                  type="button"
-                  onClick={handlePasswordChange}
-                  className="py-1 px-3 bg-gray-800 text-white rounded hover:bg-gray-700"
-                >
-                  Change Password
-                </Button>
-              </FormItem>
-            )}
+                    />
+
+                    <FormLabel className="font-semibold text-lg text-gray-700">
+                    Confirm Password:
+                    </FormLabel>
+                    <Input
+                    type="password"
+                    value={deletePasswordCheck}
+                    onChange={(e) => setDeletePasswordCheck(e.target.value)}
+                    className="mt-2 p-2 border rounded border-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-600"
+                    />
+                    </div>
+                    </FormControl>
+                    <Button
+                    type="button"
+                    onClick={handleDeleteAccount}
+                    className="py-1 px-3 bg-gray-800 text-white rounded hover:bg-gray-700"
+                    >
+                    Delete Account:
+                    </Button>
+                    <p className="font-semibold text-lg text-red-700">{passwordChangeStatus}</p>
+                </FormItem> 
+                
+                </DialogHeader>
+            </DialogContent>
+            </Dialog>
+            </div>
           </form>
         </Form>
       </div>

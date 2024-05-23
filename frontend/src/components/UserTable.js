@@ -18,11 +18,13 @@ import {
 } from "@/components/ui/pagination";
 import { asyncApiRequest } from "@/tools/request";
 import Head from "next/head";
+import { Input } from "@/components/ui/input";
 
 export function UserTable() {
   const [users, setUsers] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const entriesPerPage = 2;
+  const entriesPerPage = 5;
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -47,10 +49,24 @@ export function UserTable() {
     }
   };
 
-  const usersForCurrentPage = users.slice(
+  const getFilteredAndSortedUsers = (users, searchTerm) => {
+    return users
+        .filter(
+            (user) =>
+                user.id.toString().includes(searchTerm) ||
+                user.email.includes(searchTerm) ||
+                 user.roles.some((role) => role.name.includes(searchTerm))
+               )
+               .sort((a, b) => a.id - b.id);
+  };
+
+  const filteredAndSortedUsers = getFilteredAndSortedUsers(users, searchTerm);
+
+  const usersForCurrentPage = filteredAndSortedUsers.slice(
     (currentPage - 1) * entriesPerPage,
     currentPage * entriesPerPage
   );
+
 
   return (
       <>
@@ -63,7 +79,13 @@ export function UserTable() {
             }
         >
           <div className={"flex-grow overflow-auto"}>
-            <h2 className="text-2xl font-semibold mb-4">View Orders</h2>
+            <h2 className="text-2xl font-semibold mb-4">View Users</h2>
+            <Input
+            type="String"
+            placeholder="Search"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            />
             <Table>
               <TableCaption>A list of all users.</TableCaption>
               <TableHeader>
@@ -82,7 +104,7 @@ export function UserTable() {
                               user.roles.some((r) => r.name === "ROLE_ADMIN")
                           )
                   );
-                  console.log("roles", roles);
+                  
                   return (
                       <TableRow key={user.id}>
                         <TableCell className="font-medium">{user.id}</TableCell>
