@@ -34,17 +34,10 @@ const expandedCard = ({ carInfo, dates, showConfirmation}) => {
     }
 
     const handleClick = async () => {
-        console.log("Book now button clicked")
-        console.log("User: ", user)
-
         if (carInfo.availability) {
             if (user) {
                 const bookingConfirmed = await confirmationDialogRef.current.openDialog();
                 if (bookingConfirmed) {
-
-
-                    console.log("Dates: ", dates.start, dates.end)
-
                     const body = {
                         startDate: dates.start,
                         endDate: dates.end,

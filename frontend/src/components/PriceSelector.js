@@ -9,7 +9,6 @@ import {
 } from "@/components/ui/select"
 
 export default function PriceSelector({ providers, onValueChange }) {
-    console.log(providers)
     return (
         <Select onValueChange={onValueChange} >
             <SelectTrigger className="w-[180px]">

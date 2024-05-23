@@ -58,7 +58,6 @@ export default function Search() {
     // Use effect to filter cars whenever dependencies change
     useEffect(() => {
         if (dataLoaded) {
-            console.log(cars);
             const flattenedCars = flattenCars(cars);
             const filtered = filterCars(flattenedCars, location, price, favoriteFilter, favorites);
             setFilteredCars(filtered);

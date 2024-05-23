@@ -1,7 +1,6 @@
 function fetchAndCreateCards() {
     try {
         const data = JSON.parse(localStorage.getItem('cars'));
-        console.log(data);
 
         if (data && data.cars) {
             createCards(data);
@@ -27,22 +26,22 @@ function createCards(data) {
     cardsContainer.innerHTML = '';
     const expandedCard = document.getElementById('expandedCard');
     expandedCard.innerHTML = '';
-   
-    
-    
+
+
+
 
     // Creates a card for each car with the createCard method
     data.cars.forEach(car => {
         // Gets lowest price for a car and checks it to price range
         const prices = car.configurations[0].providers.map(provider => provider.price);
         const lowestPrice = Math.min(...prices);
-        
+
         const fromPrice = parseInt(document.getElementById('fromPrice').value);
         const toPrice = parseInt(document.getElementById('toPrice').value);
-       
+
         if (lowestPrice >= fromPrice && lowestPrice <= toPrice) {
             createCard(car);
-        } 
+        }
     });
 }
 
@@ -91,24 +90,24 @@ window.initCarReader = function() {
 }
         // main method
     function createCard(car) {
-        
+
         const card = document.createElement('div');
         card.className = 'card';
-    
-      
+
+
         const img = createImageElement(car);
         card.appendChild(img);
-    
-        
+
+
         const cardInfo = createCardInfoElement(car);
         card.appendChild(cardInfo);
-    
-    
+
+
         //method for expanded card
                 card.addEventListener('click', function() {
                     const expandedCard = document.getElementById('expandedCard');
                     expandedCard.innerHTML = card.innerHTML;
-            
+
                  //obtains info from original card, and adds more info from Json
         const additionalInfo = document.createElement('div');
         additionalInfo.innerHTML = `<p>Year: ${car.year}</p>
@@ -123,4 +122,4 @@ window.initCarReader = function() {
     document.getElementById('cards').appendChild(card);
     }
 
-    
+

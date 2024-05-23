@@ -65,7 +65,7 @@ export default function LoginModalClient() {
             type: "manual",
             message: "Incorrect password"
         });
-        console.log("Login failed");
+        console.error("Login failed");
     }
 
     function handleShowSignup() {

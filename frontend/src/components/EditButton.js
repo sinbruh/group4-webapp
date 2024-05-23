@@ -44,10 +44,8 @@ function EditButton({ carInfo: carInfoProp, onEdit }) {
 
     const handleSave = () => {
         setIsEditMode(false);
-        onEdit(carInfo); 
+        onEdit(carInfo);
     };
-
-    console.log("EditButton.js" + carInfo);
 
     return (
         <div className="p-4">
@@ -59,7 +57,7 @@ function EditButton({ carInfo: carInfoProp, onEdit }) {
       <DialogDescription>
             <Card>
                 <CardHeader>
-                    
+
                         <CardDescription>Card Description</CardDescription>
                 </CardHeader>
 
@@ -77,7 +75,7 @@ function EditButton({ carInfo: carInfoProp, onEdit }) {
                     <SelectTrigger className="w-[180px]">
                         <SelectValue placeholder="Theme" />
                     </SelectTrigger>
-                    
+
                 </Select>
                 </CardFooter>
                 <CardFooter>
@@ -102,7 +100,7 @@ function EditButton({ carInfo: carInfoProp, onEdit }) {
 
 
 
-       
+
             <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={() => setIsEditMode(!isEditMode)}>
                 {isEditMode ? 'Save' : 'Edit'}
             </button>
@@ -135,7 +133,7 @@ function EditButton({ carInfo: carInfoProp, onEdit }) {
                 <option value="Automatic">Automatic</option>
             </select>
         </div>
-        <label className="font-bold text-gray-700 mb-2">Description: 
+        <label className="font-bold text-gray-700 mb-2">Description:
             <textarea name="description" value={carInfo.description} onChange={handleInputChange} className="border p-2 rounded-md w-full focus:outline-none focus:ring-2 focus:ring-blue-400" />
         </label>
         <div className="flex space-x-4 items-center">

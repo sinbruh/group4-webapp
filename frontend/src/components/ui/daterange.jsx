@@ -63,8 +63,6 @@ export default function DatePickerWithRange({
     endDate.setDate(day.getDate() + 7);
 
     setDate({ from: day, to: endDate });
-
-    console.log("Double click!!!");
   };
 
   React.useEffect(() => {
