@@ -99,16 +99,16 @@ const expandedCard = ({ carInfo, dates, showConfirmation }) => {
                                     <p>Info: </p>
                                     <p>Price: {carInfo.price} NOK/day</p>
                                     <p>Location: {carInfo.location}</p>
-                                    <p>Provider: {carInfo.provider[0].name}</p>
+                                    <p>Provider: {carInfo.provider.name}</p>
                                 </div>
 
                                 <div className="flex flex-col gap-2">
                                     <p>Extra Features: </p>
-                                    <p>{carInfo.configurations[0].extraFeatures && carInfo.configurations[0].extraFeatures[0] && carInfo.configurations[0].extraFeatures[0].name}</p>
-                                    <p>{carInfo.configurations[0].extraFeatures && carInfo.configurations[0].extraFeatures[1] && carInfo.configurations[0].extraFeatures[1].name}</p>
-                                    <p>{carInfo.configurations[0].extraFeatures && carInfo.configurations[0].extraFeatures[2] && carInfo.configurations[0].extraFeatures[2].name}</p>
-                                    <p>{carInfo.configurations[0].extraFeatures && carInfo.configurations[0].extraFeatures[3] && carInfo.configurations[0].extraFeatures[3].name}</p>
-                                    <p>{carInfo.configurations[0].extraFeatures && carInfo.configurations[0].extraFeatures[4] && carInfo.configurations[0].extraFeatures[4].name}</p>
+                                    <p>{carInfo.configuration.extraFeatures && carInfo.configuration.extraFeatures && carInfo.configuration.extraFeatures.name}</p>
+                                    <p>{carInfo.configuration.extraFeatures && carInfo.configuration.extraFeatures && carInfo.configuration.extraFeatures.name}</p>
+                                    <p>{carInfo.configuration.extraFeatures && carInfo.configuration.extraFeatures && carInfo.configuration.extraFeatures.name}</p>
+                                    <p>{carInfo.configuration.extraFeatures && carInfo.configuration.extraFeatures && carInfo.configuration.extraFeatures.name}</p>
+                                    <p>{carInfo.configuration.extraFeatures && carInfo.configuration.extraFeatures && carInfo.configuration.extraFeatures.name}</p>
                                 </div>
                             </div>
 

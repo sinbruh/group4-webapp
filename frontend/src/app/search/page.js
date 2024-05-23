@@ -8,16 +8,19 @@ import Link from "next/link";
 import FilterBar from "@/components/FilterBar";
 import ExpandedCard from "@/components/ExpandedCard";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import CarReader from '../../components/CarReader.js';
 import { useMediaQuery } from 'react-responsive';
-import {  useRouter } from 'next/navigation';
-
+import { useRouter } from 'next/navigation';
+import { createCarCards, filterCars, fetchData, flattenCars, useCarData } from '@/tools/carData.js';
+import { useFavoriteStore, fetchFavorites } from '@/tools/favorite.js';
+import { useStore } from '@/tools/authentication'
 
 export default function Search() {
     const searchParams = useSearchParams();
     const defaultLocation = searchParams.get('location') || '';
     const start = searchParams.get('start') || new Date().toISOString().split('T')[0];
     const end = searchParams.get('end') || new Date(new Date().setDate(new Date().getDate() + 1)).toISOString().split('T')[0];
+    const [favorites, addFavorite] = useFavoriteStore((state) => [state.favorites, state.addFavorite]);
+    const user = useStore((state) => state.user);
 
     const [location, setLocation] = useState(defaultLocation);
     const [dates, setDates] = useState({ start: start, end: end });
@@ -26,10 +29,41 @@ export default function Search() {
     const [favoriteFilter, setFavoriteFilter] = useState(false);
     const router = useRouter();
     const isDesktop = useMediaQuery({ query: '(min-width: 1024px)' });
+    const cars = useCarData((state) => state.cars);
+    const [filteredCars, setFilteredCars] = useState([]);
+    const [dataLoaded, setDataLoaded] = useState(false);
 
-    function showConfirmation () {
+    function showConfirmation() {
         router.push('/order');
     }
+
+    // Use effect to fetch data when component mounts
+    useEffect(() => {
+        const fetchDataAndFilter = async () => {
+            await fetchData();
+            if (user) {
+                const favorites = await fetchFavorites(user.email);
+                if (favorites) {
+                    favorites.forEach((favorite) => {
+                        addFavorite(favorite.id);
+                    });
+                }
+            }
+            setDataLoaded(true); // Set dataLoaded to true after fetching data
+        };
+
+        fetchDataAndFilter();
+    }, []);
+
+    // Use effect to filter cars whenever dependencies change
+    useEffect(() => {
+        if (dataLoaded) {
+            console.log(cars);
+            const flattenedCars = flattenCars(cars);
+            const filtered = filterCars(flattenedCars, location, price, favoriteFilter, favorites);
+            setFilteredCars(filtered);
+        }
+    }, [location, price, favoriteFilter, cars, dataLoaded, favorites]);
 
     return (
         <div className="bg-[url('/temp-background-image-low.webp')] bg-cover bg-center">
@@ -54,13 +88,7 @@ export default function Search() {
                 <section className="flex flex-row justify-between h-screen px-2">
 
                     <ScrollArea className="rounded-lg m-2 grow max-h-[78%]">
-                        <CarReader
-                            location={location}
-                            dates={dates}
-                            price={price}
-                            setExpandedCarInfo={setExpandedCar}
-                            favoriteFilter={favoriteFilter}
-                        />
+                        {createCarCards(filteredCars, setExpandedCar, dates)}
                     </ScrollArea>
                     {isDesktop &&
                         <section className="rounded m-2 max-h-[78%] w-[55%]">
@@ -72,4 +100,5 @@ export default function Search() {
             </Suspense>
         </div>
     );
-};
+}
+

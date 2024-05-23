@@ -26,7 +26,7 @@ export default function FavoriteButton(carInfo) {
 
     useEffect(() => {
         if (favorites && Array.isArray(favorites)) {
-            setIsFavorite(favorites.includes(carInfo.carInfo.provider[0].id));
+            setIsFavorite(favorites.includes(carInfo.carInfo.provider.id));
         }
     }, [favorites, carInfo]);
 
@@ -35,14 +35,14 @@ export default function FavoriteButton(carInfo) {
 
         if (user) {
             if (isFavorite) {
-                removeFavorite(carInfo.carInfo.provider[0].id);
+                removeFavorite(carInfo.carInfo.provider.id);
             } else {
-                addFavorite(carInfo.carInfo.provider[0].id);
+                addFavorite(carInfo.carInfo.provider.id);
             }
 
             setIsFavorite(!isFavorite);
 
-            sendFavoriteRequest(carInfo.carInfo.provider[0].id);
+            sendFavoriteRequest(carInfo.carInfo.provider.id);
 
             //send request to backend to add to favorite with configID
         } else {

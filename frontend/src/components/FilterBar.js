@@ -42,29 +42,6 @@ export default function FilterBar({ defaultLocation, defaultStart, defaultEnd, s
                         </>
                     )}
                 </section>
-
-        {/*isDesktop &&
-            }
-            {!isDesktop &&
-                <Popover>
-                    <PopoverTrigger asChild className="grow flex m-4">
-                        <Button className="grow">Filter</Button>
-                    </PopoverTrigger>
-                    <PopoverContent>
-                        <section className="flex flex-col gap-2 items-center bg-[#ffffff] rounded m-4 p-2">
-                            <Locationbox defaultValue={defaultLocation} setLocation={setLocation} />
-                            <DatePickerWithRange defaultStart={defaultStart} defaultEnd={defaultEnd} setDates={setDates} />
-                            <PricePicker defaultValue={price} setPrice={setPrice} />
-                            {isLoggedIn() && (
-                                <>
-                                    <p> Filter by favorite: </p>
-                                    <FavoriteFilterButton onFavoriteChange={setFavoriteFilter} />
-                                </>
-                            )}
-                        </section>
-                    </PopoverContent>
-                </Popover>
-            */}
         </div>
     );
 }

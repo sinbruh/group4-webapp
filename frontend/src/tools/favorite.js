@@ -19,6 +19,18 @@ export const useFavoriteStore = create((set) => ({
   })),
 }));
 
+export async function fetchFavorites(email) {
+    try {
+        const response = await asyncApiRequest('GET', '/api/users/' + email, null);
+        console.log("fetched favorites");
+        console.log(response);
+        return response.favorites;
+    } catch (error) {
+        console.error('Error fetching favorites:', error);
+        return [];
+    }
+}
+
 // export function isProviderFavorite(providerID) {
 //     return useFavoriteStore.getState().favorites.includes(providerID);
 // }
