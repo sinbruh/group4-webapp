@@ -4,7 +4,6 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-
 import java.util.Iterator;
 import java.util.Optional;
 import no.ntnu.project.group4.webapp.models.Car;
@@ -14,7 +13,6 @@ import no.ntnu.project.group4.webapp.models.User;
 import no.ntnu.project.group4.webapp.services.AccessUserService;
 import no.ntnu.project.group4.webapp.services.CarService;
 import no.ntnu.project.group4.webapp.services.ConfigurationService;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,21 +55,21 @@ public class ConfigurationController {
   /**
    * Returns an iterable containing all configurations. When this endpoint is requested, a HTTP 200
    * OK response will automatically be sent back.
-   * 
+   *
    * <p>If user is not authenticated or user is authenticated but not admin, only providers who are
    * visible are included.</p>
    *
    * @return 200 OK + all configuration data
    */
   @Operation(
-    summary = "Get all configurations",
-    description = "Gets all configurations"
+      summary = "Get all configurations",
+      description = "Gets all configurations"
   )
   @ApiResponses(value = {
-    @ApiResponse(
-      responseCode = "200",
-      description = "All configuration data"
-    )
+      @ApiResponse(
+        responseCode = "200",
+        description = "All configuration data"
+      )
   })
   @GetMapping
   public Iterable<Configuration> getAll() {
@@ -106,23 +104,23 @@ public class ConfigurationController {
    *         <p>404 NOT FOUND if configuration is not found</p>
    */
   @Operation(
-    summary = "Get configuration by ID",
-    description = "Gets the configuration with the specified ID"
+      summary = "Get configuration by ID",
+      description = "Gets the configuration with the specified ID"
   )
   @ApiResponses(value = {
-    @ApiResponse(
-      responseCode = "200",
-      description = "Configuration data"
-    ),
-    @ApiResponse(
-      responseCode = "404",
-      description = "Configuration with specified ID not found"
-    )
+      @ApiResponse(
+        responseCode = "200",
+        description = "Configuration data"
+      ),
+      @ApiResponse(
+        responseCode = "404",
+        description = "Configuration with specified ID not found"
+      )
   })
   @GetMapping("/{id}")
   public ResponseEntity<?> get(
-    @Parameter(description = "The ID of the configuration to get")
-    @PathVariable Long id
+      @Parameter(description = "The ID of the configuration to get")
+      @PathVariable Long id
   ) {
     ResponseEntity<?> response;
     User sessionUser = this.userService.getSessionUser();
@@ -163,37 +161,37 @@ public class ConfigurationController {
    *         <p>404 NOT FOUND if car is not found</p>
    */
   @Operation(
-    summary = "Add configuration",
-    description = "Adds the specified configuration to the car with the specified car ID"
+      summary = "Add configuration",
+      description = "Adds the specified configuration to the car with the specified car ID"
   )
   @ApiResponses(value = {
-    @ApiResponse(
-      responseCode = "201",
-      description = "Configuration added + ID of configuration"
-    ),
-    @ApiResponse(
-      responseCode = "400",
-      description = "Error adding configuration + error message"
-    ),
-    @ApiResponse(
-      responseCode = "401",
-      description = "Only authenticated users have access to add configurations"
-    ),
-    @ApiResponse(
-      responseCode = "403",
-      description = "Only admin users have access to add configurations"
-    ),
-    @ApiResponse(
-      responseCode = "404",
-      description = "Car with specified car ID not found"
-    )
+      @ApiResponse(
+        responseCode = "201",
+        description = "Configuration added + ID of configuration"
+      ),
+      @ApiResponse(
+        responseCode = "400",
+        description = "Error adding configuration + error message"
+      ),
+      @ApiResponse(
+        responseCode = "401",
+        description = "Only authenticated users have access to add configurations"
+      ),
+      @ApiResponse(
+        responseCode = "403",
+        description = "Only admin users have access to add configurations"
+      ),
+      @ApiResponse(
+        responseCode = "404",
+        description = "Car with specified car ID not found"
+      )
   })
   @PostMapping("/{carId}")
   public ResponseEntity<?> add(
-    @Parameter(description = "The ID of the car to add to")
-    @PathVariable Long carId,
-    @Parameter(description = "The configuration to add")
-    @RequestBody Configuration configuration
+      @Parameter(description = "The ID of the car to add to")
+      @PathVariable Long carId,
+      @Parameter(description = "The configuration to add")
+      @RequestBody Configuration configuration
   ) {
     ResponseEntity<?> response;
     User sessionUser = this.userService.getSessionUser();
@@ -203,8 +201,8 @@ public class ConfigurationController {
         configuration.setCar(car.get());
         try {
           this.configurationService.add(configuration);
-          logger.info("Car found and valid configuration data, sending generated ID of new " + 
-                      "configuration...");
+          logger.info("Car found and valid configuration data, sending generated ID of new "
+                    + "configuration...");
           response = new ResponseEntity<>(configuration.getId(), HttpStatus.CREATED);
         } catch (IllegalArgumentException e) {
           logger.error("Invaid configuration data, sending error message...");
@@ -230,12 +228,12 @@ public class ConfigurationController {
   /**
    * Returns a HTTP response to the request requesting to update the configuration with the
    * specified ID with the specified configuration.
-   * 
+   *
    * <p>The response body contains an empty string on success or a string with an error message on
    * error.</p>
-   * 
+   *
    * <p><b>NB!</b> This method does not allow updating which car the configuration belongs to.</p>
-   * 
+   *
    * @param id            The specified ID
    * @param configuration The specified configuration
    * @return <p>200 OK on success</p>
@@ -245,46 +243,46 @@ public class ConfigurationController {
    *         <p>404 NOT FOUND if configuration is not found</p>
    */
   @Operation(
-    summary = "Update configuration",
-    description = "Updates the configuration with the specified ID with the specified " +
-                  "configuration"
+      summary = "Update configuration",
+      description = "Updates the configuration with the specified ID with the specified "
+                  + "configuration"
   )
   @ApiResponses(value = {
-    @ApiResponse(
-      responseCode = "200",
-      description = "Configuration updated"
-    ),
-    @ApiResponse(
-      responseCode = "400",
-      description = "Error updating configuration + error message"
-    ),
-    @ApiResponse(
-      responseCode = "401",
-      description = "Only authenticated users have access to update configurations"
-    ),
-    @ApiResponse(
-      responseCode = "403",
-      description = "Only admin users have access to update configurations"
-    ),
-    @ApiResponse(
-      responseCode = "404",
-      description = "Configuration with specified ID not found"
-    )
+      @ApiResponse(
+        responseCode = "200",
+        description = "Configuration updated"
+      ),
+      @ApiResponse(
+        responseCode = "400",
+        description = "Error updating configuration + error message"
+      ),
+      @ApiResponse(
+        responseCode = "401",
+        description = "Only authenticated users have access to update configurations"
+      ),
+      @ApiResponse(
+        responseCode = "403",
+        description = "Only admin users have access to update configurations"
+      ),
+      @ApiResponse(
+        responseCode = "404",
+        description = "Configuration with specified ID not found"
+      )
   })
   @PutMapping("/{id}")
   public ResponseEntity<String> update(
-    @Parameter(description = "The ID of the configuration to update")
-    @PathVariable Long id,
-    @Parameter(description = "The configuration to update the existing configuration with")
-    @RequestBody Configuration configuration
+      @Parameter(description = "The ID of the configuration to update")
+      @PathVariable Long id,
+      @Parameter(description = "The configuration to update the existing configuration with")
+      @RequestBody Configuration configuration
   ) {
     ResponseEntity<String> response;
     User sessionUser = this.userService.getSessionUser();
     if (sessionUser != null && sessionUser.isAdmin()) {
       try {
         if (this.configurationService.update(id, configuration)) {
-          logger.info("Configuration found and valid configuration data, updating " +
-                      "configuration...");
+          logger.info("Configuration found and valid configuration data, updating "
+                    + "configuration...");
           response = new ResponseEntity<>("", HttpStatus.OK);
         } else {
           logger.error("Configuration not found, sending error message...");
@@ -297,8 +295,8 @@ public class ConfigurationController {
       }
     } else if (sessionUser == null) {
       logger.error("User not authenticated, sending error message...");
-      response = new ResponseEntity<>("Only authenticated users have access to update " +
-                                      "configurations", HttpStatus.UNAUTHORIZED);
+      response = new ResponseEntity<>("Only authenticated users have access to update "
+                                    + "configurations", HttpStatus.UNAUTHORIZED);
     } else {
       logger.error("User not admin, sending error message...");
       response = new ResponseEntity<>("Only admin users have access to update configurations",
@@ -321,30 +319,30 @@ public class ConfigurationController {
    *         <p>404 NOT FOUND if configuration is not found</p>
    */
   @Operation(
-    summary = "Delete configuration",
-    description = "Deletes the configuration with the specified ID")
+      summary = "Delete configuration",
+      description = "Deletes the configuration with the specified ID")
   @ApiResponses(value = {
-    @ApiResponse(
-      responseCode = "200",
-      description = "Configuration deleted"
-    ),
-    @ApiResponse(
-      responseCode = "401",
-      description = "Only authenticated users have access to delete configurations"
-    ),
-    @ApiResponse(
-      responseCode = "403",
-      description = "Only admin users have access to delete configurations"
-    ),
-    @ApiResponse(
-      responseCode = "404",
-      description = "Configuration with specified ID not found"
-    )
+      @ApiResponse(
+        responseCode = "200",
+        description = "Configuration deleted"
+      ),
+      @ApiResponse(
+        responseCode = "401",
+        description = "Only authenticated users have access to delete configurations"
+      ),
+      @ApiResponse(
+        responseCode = "403",
+        description = "Only admin users have access to delete configurations"
+      ),
+      @ApiResponse(
+        responseCode = "404",
+        description = "Configuration with specified ID not found"
+      )
   })
   @DeleteMapping("/{id}")
   public ResponseEntity<String> delete(
-    @Parameter(description = "The ID of the configuration to delete")
-    @PathVariable Long id
+      @Parameter(description = "The ID of the configuration to delete")
+      @PathVariable Long id
   ) {
     ResponseEntity<String> response;
     User sessionUser = this.userService.getSessionUser();
@@ -359,8 +357,8 @@ public class ConfigurationController {
       }
     } else if (sessionUser == null) {
       logger.error("User not authenticated, sending error message...");
-      response = new ResponseEntity<>("Only authenticated users have access to delete " +
-                                      "configurations", HttpStatus.UNAUTHORIZED);
+      response = new ResponseEntity<>("Only authenticated users have access to delete "
+                                    + "configurations", HttpStatus.UNAUTHORIZED);
     } else {
       logger.error("User not admin, sending error message...");
       response = new ResponseEntity<>("Only admin users have access to delete configurations",
@@ -372,7 +370,7 @@ public class ConfigurationController {
   /**
    * Returns a HTTP response to the request causing the specified
    * MethodArgumentTypeMismatchException.
-   * 
+   *
    * @param e The specified MethodArgumentTypeMismatchException
    * @return 400 BAD REQUEST with an error message
    */
@@ -385,14 +383,14 @@ public class ConfigurationController {
 
   /**
    * Returns a HTTP response to the request causing the specified HttpMessageNotReadableException.
-   * 
+   *
    * @param e The specified HttpMessageNotReadableException
    * @return 400 BAD REQUEST with an error message
    */
   @ExceptionHandler(HttpMessageNotReadableException.class)
   public ResponseEntity<String> handleRequestBodyException(HttpMessageNotReadableException e) {
     logger.error("Received configuration data could not be read, sending error message...");
-    return new ResponseEntity<>("Configuration data not supplied or contains a parameter on an " +
-                                "invalid format", HttpStatus.BAD_REQUEST);
+    return new ResponseEntity<>("Configuration data not supplied or contains a parameter on an "
+                              + "invalid format", HttpStatus.BAD_REQUEST);
   }
 }

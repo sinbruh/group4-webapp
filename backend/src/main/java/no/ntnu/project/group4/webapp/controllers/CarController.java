@@ -4,17 +4,14 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-
 import java.util.Iterator;
 import java.util.Optional;
-
 import no.ntnu.project.group4.webapp.models.Car;
 import no.ntnu.project.group4.webapp.models.Configuration;
 import no.ntnu.project.group4.webapp.models.Provider;
 import no.ntnu.project.group4.webapp.models.User;
 import no.ntnu.project.group4.webapp.services.AccessUserService;
 import no.ntnu.project.group4.webapp.services.CarService;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,14 +59,14 @@ public class CarController {
    * @return 200 OK + all car data
    */
   @Operation(
-    summary = "Get all cars",
-    description = "Gets all cars"
+      summary = "Get all cars",
+      description = "Gets all cars"
   )
   @ApiResponses(value = {
-    @ApiResponse(
-      responseCode = "200",
-      description = "All car data"
-    )
+      @ApiResponse(
+        responseCode = "200",
+        description = "All car data"
+      )
   })
   @GetMapping
   public Iterable<Car> getAll() {
@@ -105,23 +102,23 @@ public class CarController {
    *         <p>404 NOT FOUND if car is not found</p>
    */
   @Operation(
-    summary = "Get car by ID",
-    description = "Gets the car with the specified ID"
+      summary = "Get car by ID",
+      description = "Gets the car with the specified ID"
   )
   @ApiResponses(value = {
-    @ApiResponse(
-      responseCode = "200",
-      description = "Car data"
-    ),
-    @ApiResponse(
-      responseCode = "404",
-      description = "Car with specified ID not found"
-    )
+      @ApiResponse(
+        responseCode = "200",
+        description = "Car data"
+      ),
+      @ApiResponse(
+        responseCode = "404",
+        description = "Car with specified ID not found"
+      )
   })
   @GetMapping("/{id}")
   public ResponseEntity<?> get(
-    @Parameter(description = "The ID of the car to get")
-    @PathVariable Long id
+      @Parameter(description = "The ID of the car to get")
+      @PathVariable Long id
   ) {
     ResponseEntity<?> response;
     User sessionUser = this.userService.getSessionUser();
@@ -160,31 +157,31 @@ public class CarController {
    *         <p>403 FORBIDDEN if user is not admin</p>
    */
   @Operation(
-    summary = "Add car",
-    description = "Adds the specified car"
+      summary = "Add car",
+      description = "Adds the specified car"
   )
   @ApiResponses(value = {
-    @ApiResponse(
-      responseCode = "201",
-      description = "Car added + ID of car"
-    ),
-    @ApiResponse(
-      responseCode = "400",
-      description = "Error adding car + error message"
-    ),
-    @ApiResponse(
-      responseCode = "401",
-      description = "Only authenticated users have access to add cars"
-    ),
-    @ApiResponse(
-      responseCode = "403",
-      description = "Only admin users have access to add cars"
-    )
+      @ApiResponse(
+        responseCode = "201",
+        description = "Car added + ID of car"
+      ),
+      @ApiResponse(
+        responseCode = "400",
+        description = "Error adding car + error message"
+      ),
+      @ApiResponse(
+        responseCode = "401",
+        description = "Only authenticated users have access to add cars"
+      ),
+      @ApiResponse(
+        responseCode = "403",
+        description = "Only admin users have access to add cars"
+      )
   })
   @PostMapping
   public ResponseEntity<?> add(
-    @Parameter(description = "The car to add")
-    @RequestBody Car car
+      @Parameter(description = "The car to add")
+      @RequestBody Car car
   ) {
     ResponseEntity<?> response;
     User sessionUser = this.userService.getSessionUser();
@@ -212,10 +209,10 @@ public class CarController {
   /**
    * Returns a HTTP response to the request requesting to update the car with the specified ID with
    * the specified car.
-   * 
+   *
    * <p>The response body contains an empty string on success or a string with an error message on
    * error.</p>
-   * 
+   *
    * @param id  The specified ID
    * @param car The specified car
    * @return <p>200 OK on success</p>
@@ -225,37 +222,37 @@ public class CarController {
    *         <p>404 NOT FOUND if car is not found</p>
    */
   @Operation(
-    summary = "Update car",
-    description = "Updates the car with the specified ID with the specified car"
+      summary = "Update car",
+      description = "Updates the car with the specified ID with the specified car"
   )
   @ApiResponses(value = {
-    @ApiResponse(
-      responseCode = "200",
-      description = "Car updated"
-    ),
-    @ApiResponse(
-      responseCode = "400",
-      description = "Error updating car + error message"
-    ),
-    @ApiResponse(
-      responseCode = "401",
-      description = "Only authenticated users have access to update cars"
-    ),
-    @ApiResponse(
-      responseCode = "403",
-      description = "Only admin users have access to update cars"
-    ),
-    @ApiResponse(
-      responseCode = "404",
-      description = "Car with specified ID not found"
-    )
+      @ApiResponse(
+        responseCode = "200",
+        description = "Car updated"
+      ),
+      @ApiResponse(
+        responseCode = "400",
+        description = "Error updating car + error message"
+      ),
+      @ApiResponse(
+        responseCode = "401",
+        description = "Only authenticated users have access to update cars"
+      ),
+      @ApiResponse(
+        responseCode = "403",
+        description = "Only admin users have access to update cars"
+      ),
+      @ApiResponse(
+        responseCode = "404",
+        description = "Car with specified ID not found"
+      )
   })
   @PutMapping("/{id}")
   public ResponseEntity<String> update(
-    @Parameter(description = "The ID of the car to update")
-    @PathVariable Long id,
-    @Parameter(description = "The car to update the existing car with")
-    @RequestBody Car car
+      @Parameter(description = "The ID of the car to update")
+      @PathVariable Long id,
+      @Parameter(description = "The car to update the existing car with")
+      @RequestBody Car car
   ) {
     ResponseEntity<String> response;
     User sessionUser = this.userService.getSessionUser();
@@ -297,31 +294,32 @@ public class CarController {
    *         <p>404 NOT FOUND if car is not found</p>
    */
   @Operation(
-    summary = "Delete car",
-    description = "Deletes the car with the specified ID"
+      summary = "Delete car",
+      description = "Deletes the car with the specified ID"
   )
   @ApiResponses(value = {
-    @ApiResponse(
-      responseCode = "200",
-      description = "Car deleted"
-    ),
-    @ApiResponse(
-      responseCode = "401",
-      description = "Only authenticated users have access to delete cars"
-    ),
-    @ApiResponse(
-      responseCode = "403",
-      description = "Only admin users have access to delete cars"
-    ),
-    @ApiResponse(
-      responseCode = "404",
-      description = "Car with specified ID not found"
-    )
+      @ApiResponse(
+        responseCode = "200",
+        description = "Car deleted"
+      ),
+      @ApiResponse(
+        responseCode = "401",
+        description = "Only authenticated users have access to delete cars"
+      ),
+      @ApiResponse(
+        responseCode = "403",
+        description = "Only admin users have access to delete cars"
+      ),
+      @ApiResponse(
+        responseCode = "404",
+        description = "Car with specified ID not found"
+      )
   })
   @DeleteMapping("/{id}")
   public ResponseEntity<String> delete(
-    @Parameter(description = "The ID of the car to delete")
-    @PathVariable Long id) {
+      @Parameter(description = "The ID of the car to delete")
+      @PathVariable Long id
+  ) {
     ResponseEntity<String> response;
     User sessionUser = this.userService.getSessionUser();
     if (sessionUser != null && sessionUser.isAdmin()) {
@@ -347,7 +345,7 @@ public class CarController {
   /**
    * Returns a HTTP response to the request causing the specified
    * MethodArgumentTypeMismatchException.
-   * 
+   *
    * @param e The specified MethodArgumentTypeMismatchException
    * @return 400 BAD REQUEST with an error message
    */
@@ -360,14 +358,14 @@ public class CarController {
 
   /**
    * Returns a HTTP response to the request causing the specified HttpMessageNotReadableException.
-   * 
+   *
    * @param e The specified HttpMessageNotReadableException
    * @return 400 BAD REQUEST with an error message
    */
   @ExceptionHandler(HttpMessageNotReadableException.class)
   public ResponseEntity<String> handleRequestBodyException(HttpMessageNotReadableException e) {
     logger.error("Received car data could not be read, sending error message...");
-    return new ResponseEntity<>("Car data not supplied or contains a parameter on an invalid " +
-                                "format", HttpStatus.BAD_REQUEST);
+    return new ResponseEntity<>("Car data not supplied or contains a parameter on an invalid "
+                              + "format", HttpStatus.BAD_REQUEST);
   }
 }

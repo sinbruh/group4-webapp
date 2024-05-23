@@ -14,9 +14,9 @@ import org.springframework.stereotype.Component;
 
 /**
  * The JwtUtil class represents a utility class for handling JWT tokens.
- * 
+ *
  * <p>Code from https://youtu.be/X80nJ5T7YpE.</p>
- * 
+ *
  * @author Group 4
  * @version v1.0 (2024.05.22)
  */
@@ -30,7 +30,7 @@ public class JwtUtil {
 
   /**
    * Getter for secret key.
-   * 
+   *
    * @return Secret key
    */
   private SecretKey getSigningKey() {
@@ -69,7 +69,8 @@ public class JwtUtil {
   }
 
   /**
-   * Checks if the specified JWT token is valid for the user specified in the specified user details.
+   * Checks if the specified JWT token is valid for the user specified in the specified user
+   * details.
    *
    * @param token       The specified JWT token
    * @param userDetails The specified user details
@@ -77,13 +78,13 @@ public class JwtUtil {
    */
   public boolean validateToken(String token, UserDetails userDetails) throws JwtException {
     final String username = extractUsername(token);
-    return userDetails != null && username.equals(userDetails.getUsername()) &&
-           !isTokenExpired(token);
+    return userDetails != null && username.equals(userDetails.getUsername())
+           && !isTokenExpired(token);
   }
 
   /**
    * Returns the expiration date of the specified JWT token.
-   * 
+   *
    * @param token The specified JWT token
    * @return The expiration date of the specified JWT token
    */
@@ -93,10 +94,10 @@ public class JwtUtil {
 
   /**
    * Returns the claims of the specified JWT token with the specified claims resolver.
-   * 
+   *
    * @param token          The specified JWT token
    * @param claimsResolver The specified claims resolver
-   * @return
+   * @return The claims of the specified JWT token with the specified claims resolver
    */
   private <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
     final Claims claims = extractAllClaims(token);
@@ -105,7 +106,7 @@ public class JwtUtil {
 
   /**
    * Returns all the claims of the specified JWT token.
-   * 
+   *
    * @param token The specified JWT token
    * @return All the claims of the specified JWT token
    */
@@ -115,7 +116,7 @@ public class JwtUtil {
 
   /**
    * Checks if the specified JWT token is expired.
-   * 
+   *
    * @param token The specified JWT token
    * @return True if the specified JWT token is expired or false otherwise
    */

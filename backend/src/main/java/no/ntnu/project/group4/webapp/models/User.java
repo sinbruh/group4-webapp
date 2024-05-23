@@ -10,7 +10,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
-
 import java.sql.Date;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
@@ -18,9 +17,9 @@ import java.util.Set;
 
 /**
  * The User class represents the entity class for the user entity.
- * 
+ *
  * <p>The class uses JPA with annotations for ORM operations.</p>
- * 
+ *
  * @author Group 4
  * @version v1.0 (2024.05.22)
  */
@@ -48,8 +47,8 @@ public class User {
   @Schema(description = "Roles the user has")
   @ManyToMany(fetch = FetchType.EAGER)
   @JoinTable(name = "user_role",
-    joinColumns = @JoinColumn(name = "user_id"),
-    inverseJoinColumns = @JoinColumn(name = "role_id")
+      joinColumns = @JoinColumn(name = "user_id"),
+      inverseJoinColumns = @JoinColumn(name = "role_id")
   )
   private Set<Role> roles = new LinkedHashSet<>();
   @Schema(description = "Rentals the users has")
@@ -61,14 +60,14 @@ public class User {
   @Schema(description = "Providers the user has favorited")
   @ManyToMany(fetch = FetchType.EAGER)
   @JoinTable(name = "favorite",
-    joinColumns = @JoinColumn(name = "user_id"),
-    inverseJoinColumns = @JoinColumn(name = "provider_id")
+      joinColumns = @JoinColumn(name = "user_id"),
+      inverseJoinColumns = @JoinColumn(name = "provider_id")
   )
   private Set<Provider> favorites = new LinkedHashSet<>();
 
   /**
    * Constructs an instance of the User class.
-   * 
+   *
    * <p>Empty constructor needed for JPA.</p>
    */
   public User() {
@@ -77,7 +76,7 @@ public class User {
 
   /**
    * Constructs an instance of the User class.
-   * 
+   *
    * @param firstName   The specified first name
    * @param lastName    The specfifed last name
    * @param email       The specified email
@@ -97,7 +96,7 @@ public class User {
 
   /**
    * Getter for ID.
-   * 
+   *
    * @return ID
    */
   public Long getId() {
@@ -106,7 +105,7 @@ public class User {
 
   /**
    * Setter for ID.
-   * 
+   *
    * @param id The specified ID
    */
   public void setId(Long id) {
@@ -115,7 +114,7 @@ public class User {
 
   /**
    * Getter for first name.
-   * 
+   *
    * @return First name
    */
   public String getFirstName() {
@@ -124,7 +123,7 @@ public class User {
 
   /**
    * Setter for first name.
-   * 
+   *
    * @param firstName The specified first name
    */
   public void setFirstName(String firstName) {
@@ -133,7 +132,7 @@ public class User {
 
   /**
    * Getter for last name.
-   * 
+   *
    * @return Last name
    */
   public String getLastName() {
@@ -142,7 +141,7 @@ public class User {
 
   /**
    * Setter for last name.
-   * 
+   *
    * @param lastName The specified last name
    */
   public void setLastName(String lastName) {
@@ -151,7 +150,7 @@ public class User {
 
   /**
    * Getter for email.
-   * 
+   *
    * @return Email
    */
   public String getEmail() {
@@ -160,7 +159,7 @@ public class User {
 
   /**
    * Setter for email.
-   * 
+   *
    * @param email The specified email
    */
   public void setEmail(String email) {
@@ -169,7 +168,7 @@ public class User {
 
   /**
    * Getter for phone number.
-   * 
+   *
    * @return Phone number
    */
   public int getPhoneNumber() {
@@ -178,7 +177,7 @@ public class User {
 
   /**
    * Setter for phone number.
-   * 
+   *
    * @param phoneNumber The specified phone number
    */
   public void setPhoneNumber(int phoneNumber) {
@@ -187,7 +186,7 @@ public class User {
 
   /**
    * Getter for password.
-   * 
+   *
    * @return Password
    */
   public String getPassword() {
@@ -196,7 +195,7 @@ public class User {
 
   /**
    * Setter for password.
-   * 
+   *
    * @param password The specified password
    */
   public void setPassword(String password) {
@@ -205,7 +204,7 @@ public class User {
 
   /**
    * Getter for date of birth.
-   * 
+   *
    * @return Date of birth
    */
   public Date getDateOfBirth() {
@@ -214,7 +213,7 @@ public class User {
 
   /**
    * Setter for date of birth.
-   * 
+   *
    * @param dateOfBirth The specified date of birth
    */
   public void setDateOfBirth(Date dateOfBirth) {
@@ -223,7 +222,7 @@ public class User {
 
   /**
    * Checks if the user is active.
-   * 
+   *
    * @return True if the user is active or false otherwise
    */
   public boolean isActive() {
@@ -232,7 +231,7 @@ public class User {
 
   /**
    * Setter for active status.
-   * 
+   *
    * @param active The specified active status
    */
   public void setActive(boolean active) {
@@ -241,7 +240,7 @@ public class User {
 
   /**
    * Getter for roles.
-   * 
+   *
    * @return Roles
    */
   public Set<Role> getRoles() {
@@ -250,7 +249,7 @@ public class User {
 
   /**
    * Setter for roles.
-   * 
+   *
    * @param roles The specified roles
    */
   public void setRoles(Set<Role> roles) {
@@ -259,7 +258,7 @@ public class User {
 
   /**
    * Getter for rentals.
-   * 
+   *
    * @return Rentals
    */
   public Set<Rental> getRentals() {
@@ -268,7 +267,7 @@ public class User {
 
   /**
    * Setter for rentals.
-   * 
+   *
    * @param rentals The specified rentals
    */
   public void setRentals(Set<Rental> rentals) {
@@ -277,7 +276,7 @@ public class User {
 
   /**
    * Getter for receipts.
-   * 
+   *
    * @return Receipts
    */
   public Set<Receipt> getReceipts() {
@@ -286,7 +285,7 @@ public class User {
 
   /**
    * Setter for receipts.
-   * 
+   *
    * @param receipts The specified receipts
    */
   public void setReceipts(Set<Receipt> receipts) {
@@ -295,7 +294,7 @@ public class User {
 
   /**
    * Getter for favorites.
-   * 
+   *
    * @return Favorites
    */
   public Set<Provider> getFavorites() {
@@ -304,7 +303,7 @@ public class User {
 
   /**
    * Setter for favorties.
-   * 
+   *
    * @param favorites The specified favorites
    */
   public void setFavorites(Set<Provider> favorites) {
@@ -313,7 +312,7 @@ public class User {
 
   /**
    * Adds the specified role to the user.
-   * 
+   *
    * @param role The specified role
    */
   public void addRole(Role role) {
@@ -322,7 +321,7 @@ public class User {
 
   /**
    * Adds the specified provider to the user favorites.
-   * 
+   *
    * @param provider The specified provider
    */
   public void addFavorite(Provider provider) {
@@ -331,7 +330,7 @@ public class User {
 
   /**
    * Removes the specified provider from the user favorites.
-   * 
+   *
    * @param provider The specified provider
    */
   public void removeFavorite(Provider provider) {
@@ -340,7 +339,7 @@ public class User {
 
   /**
    * Checks if the user has the admin role.
-   * 
+   *
    * @return True if the user has the admin role or false otherwise
    */
   public boolean isAdmin() {
@@ -349,7 +348,7 @@ public class User {
 
   /**
    * Checks if the user has the specified role.
-   * 
+   *
    * @param roleName The specified role
    * @return True if the user has the specified role or false otherwise
    */
@@ -367,13 +366,13 @@ public class User {
 
   /**
    * Returns true if the user is valid or false otherwise.
-   * 
+   *
    * @return True if the user is valid or false otherwise
    */
   public boolean isValid() {
-    return this.firstName != null && !this.firstName.isBlank() && this.lastName != null &&
-           !this.lastName.isBlank() && this.email != null && !this.email.isBlank() &&
-           this.phoneNumber > 0 && this.password != null && !this.password.isBlank() &&
-           this.dateOfBirth != null;
+    return this.firstName != null && !this.firstName.isBlank() && this.lastName != null
+           && !this.lastName.isBlank() && this.email != null && !this.email.isBlank()
+           && this.phoneNumber > 0 && this.password != null && !this.password.isBlank()
+           && this.dateOfBirth != null;
   }
 }

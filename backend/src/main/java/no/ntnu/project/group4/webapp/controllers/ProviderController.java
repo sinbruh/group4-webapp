@@ -4,18 +4,15 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-
 import java.util.LinkedHashSet;
 import java.util.Optional;
 import java.util.Set;
-
 import no.ntnu.project.group4.webapp.models.Configuration;
 import no.ntnu.project.group4.webapp.models.Provider;
 import no.ntnu.project.group4.webapp.models.User;
 import no.ntnu.project.group4.webapp.services.AccessUserService;
 import no.ntnu.project.group4.webapp.services.ConfigurationService;
 import no.ntnu.project.group4.webapp.services.ProviderService;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,12 +63,12 @@ public class ProviderController {
    * @return 200 OK + all provider data
    */
   @Operation(
-    summary = "Get all providers",
-    description = "Gets all providers"
+      summary = "Get all providers",
+      description = "Gets all providers"
   )
   @ApiResponse(
-    responseCode = "200",
-    description = "All provider data"
+      responseCode = "200",
+      description = "All provider data"
   )
   @GetMapping
   public ResponseEntity<Set<Provider>> getAll() {
@@ -108,27 +105,27 @@ public class ProviderController {
    *         <p>404 NOT FOUND if provider is not found</p>
    */
   @Operation(
-    summary = "Get provider by ID",
-    description = "Gets the provider with the specified ID"
+      summary = "Get provider by ID",
+      description = "Gets the provider with the specified ID"
   )
   @ApiResponses(value = {
-    @ApiResponse(
-      responseCode = "200",
-      description = "Provider data"
-    ),
-    @ApiResponse(
-      responseCode = "403",
-      description = "Provider with specified ID not visible"
-    ),
-    @ApiResponse(
-      responseCode = "404",
-      description = "Provider with specified ID not found"
-    )
+      @ApiResponse(
+        responseCode = "200",
+        description = "Provider data"
+      ),
+      @ApiResponse(
+        responseCode = "403",
+        description = "Provider with specified ID not visible"
+      ),
+      @ApiResponse(
+        responseCode = "404",
+        description = "Provider with specified ID not found"
+      )
   })
   @GetMapping("/{id}")
   public ResponseEntity<?> get(
-    @Parameter(description = "The ID of the provider to get")
-    @PathVariable Long id
+      @Parameter(description = "The ID of the provider to get")
+      @PathVariable Long id
   ) {
     ResponseEntity<?> response;
     User sessionUser = this.userService.getSessionUser();
@@ -172,38 +169,38 @@ public class ProviderController {
    *         <p>404 NOT FOUND if configuration is not found</p>
    */
   @Operation(
-    summary = "Add provider",
-    description = "Adds the specified provider to the configuration with the specified " +
-                  "configuration ID"
+      summary = "Add provider",
+      description = "Adds the specified provider to the configuration with the specified "
+                  + "configuration ID"
   )
   @ApiResponses(value = {
-    @ApiResponse(
-      responseCode = "201",
-      description = "Provider added + ID of provider"
-    ),
-    @ApiResponse(
-      responseCode = "400",
-      description = "Error adding provider + error message"
-    ),
-    @ApiResponse(
-      responseCode = "401",
-      description = "Only authenticated users have access to add providers"
-    ),
-    @ApiResponse(
-      responseCode = "403",
-      description = "Only admin users have access to add providers"
-    ),
-    @ApiResponse(
-      responseCode = "404",
-      description = "Configuration with specified configuration ID not found"
-    )
+      @ApiResponse(
+        responseCode = "201",
+        description = "Provider added + ID of provider"
+      ),
+      @ApiResponse(
+        responseCode = "400",
+        description = "Error adding provider + error message"
+      ),
+      @ApiResponse(
+        responseCode = "401",
+        description = "Only authenticated users have access to add providers"
+      ),
+      @ApiResponse(
+        responseCode = "403",
+        description = "Only admin users have access to add providers"
+      ),
+      @ApiResponse(
+        responseCode = "404",
+        description = "Configuration with specified configuration ID not found"
+      )
   })
   @PostMapping("/{configId}")
   public ResponseEntity<?> add(
-    @Parameter(description = "The ID of the configuration to add to")
-    @PathVariable Long configId,
-    @Parameter(description = "The provider to add")
-    @RequestBody Provider provider
+      @Parameter(description = "The ID of the configuration to add to")
+      @PathVariable Long configId,
+      @Parameter(description = "The provider to add")
+      @RequestBody Provider provider
   ) {
     ResponseEntity<?> response;
     User sessionUser = this.userService.getSessionUser();
@@ -213,8 +210,8 @@ public class ProviderController {
         provider.setConfiguration(configuration.get());
         try {
           this.providerService.add(provider);
-          logger.info("Configuration found and valid provider data, sending generated ID of new " +
-                      "provider...");
+          logger.info("Configuration found and valid provider data, sending generated ID of new "
+                    + "provider...");
           response = new ResponseEntity<>(provider.getId(), HttpStatus.CREATED);
         } catch (IllegalArgumentException e) {
           logger.error("Invalid provider data, sending error message...");
@@ -240,13 +237,13 @@ public class ProviderController {
   /**
    * Returns a HTTP response to the request requesting to update the provider with the specified ID
    * with the specified provider.
-   * 
+   *
    * <p>The response body contains an empty string on success or a string with an error message on
    * error.</p>
-   * 
+   *
    * <p><b>NB!</b> This method does not allow updating which configuration the provider belongs
    * to.</p>
-   * 
+   *
    * @param id       The specified ID
    * @param provider The specified provider
    * @return <p>200 OK on success</p>
@@ -256,37 +253,37 @@ public class ProviderController {
    *         <p>404 NOT FOUND if provider is not found</p>
    */
   @Operation(
-    summary = "Update provider",
-    description = "Updates the provider with the specified ID with the specified provider"
+      summary = "Update provider",
+      description = "Updates the provider with the specified ID with the specified provider"
   )
   @ApiResponses(value = {
-    @ApiResponse(
-      responseCode = "200",
-      description = "Provider was updated"
-    ),
-    @ApiResponse(
-      responseCode = "400",
-      description = "Error updating provider"
-    ),
-    @ApiResponse(
-      responseCode = "401",
-      description = "Only authenticated users have access to update providers"
-    ),
-    @ApiResponse(
-      responseCode = "403",
-      description = "Only admin users have access to update providers"
-    ),
-    @ApiResponse(
-      responseCode = "404",
-      description = "Provider with specified ID not found"
-    )
+      @ApiResponse(
+        responseCode = "200",
+        description = "Provider was updated"
+      ),
+      @ApiResponse(
+        responseCode = "400",
+        description = "Error updating provider"
+      ),
+      @ApiResponse(
+        responseCode = "401",
+        description = "Only authenticated users have access to update providers"
+      ),
+      @ApiResponse(
+        responseCode = "403",
+        description = "Only admin users have access to update providers"
+      ),
+      @ApiResponse(
+        responseCode = "404",
+        description = "Provider with specified ID not found"
+      )
   })
   @PutMapping("/{id}")
   public ResponseEntity<String> update(
-    @Parameter(description = "The ID of the provider to update")
-    @PathVariable Long id,
-    @Parameter(description = "The provider to update the existing provider with")
-    @RequestBody Provider provider
+      @Parameter(description = "The ID of the provider to update")
+      @PathVariable Long id,
+      @Parameter(description = "The provider to update the existing provider with")
+      @RequestBody Provider provider
   ) {
     ResponseEntity<String> response;
     User sessionUser = this.userService.getSessionUser();
@@ -329,31 +326,31 @@ public class ProviderController {
    *         <p>404 NOT FOUND if provider is not found</p>
    */
   @Operation(
-    summary = "Delete provider",
-    description = "Deletes the provider with the specified ID"
+      summary = "Delete provider",
+      description = "Deletes the provider with the specified ID"
   )
   @ApiResponses(value = {
-    @ApiResponse(
-      responseCode = "200",
-      description = "Provider deleted"
-    ),
-    @ApiResponse(
-      responseCode = "401",
-      description = "Only authenticated users have access to delete providers"
-    ),
-    @ApiResponse(
-      responseCode = "403",
-      description = "Only admin users have access to delete providers"
-    ),
-    @ApiResponse(
-      responseCode = "404",
-      description = "Provider with specified ID not found"
-    )
+      @ApiResponse(
+        responseCode = "200",
+        description = "Provider deleted"
+      ),
+      @ApiResponse(
+        responseCode = "401",
+        description = "Only authenticated users have access to delete providers"
+      ),
+      @ApiResponse(
+        responseCode = "403",
+        description = "Only admin users have access to delete providers"
+      ),
+      @ApiResponse(
+        responseCode = "404",
+        description = "Provider with specified ID not found"
+      )
   })
   @DeleteMapping("/{id}")
   public ResponseEntity<String> delete(
-    @Parameter(description = "The ID of the provider to delete")
-    @PathVariable Long id
+      @Parameter(description = "The ID of the provider to delete")
+      @PathVariable Long id
   ) {
     ResponseEntity<String> response;
     User sessionUser = this.userService.getSessionUser();
@@ -381,7 +378,7 @@ public class ProviderController {
   /**
    * Returns a HTTP response to the request causing the specified
    * MethodArgumentTypeMismatchException.
-   * 
+   *
    * @param e The specified MethodArgumentTypeMismatchException
    * @return 400 BAD REQUEST with an error message
    */
@@ -394,14 +391,14 @@ public class ProviderController {
 
   /**
    * Returns a HTTP response to the request causing the specified HttpMessageNotReadableException.
-   * 
+   *
    * @param e The specified HttpMessageNotReadableException
    * @return 400 BAD REQUEST with an error message
    */
   @ExceptionHandler(HttpMessageNotReadableException.class)
   public ResponseEntity<String> handleRequestBodyException(HttpMessageNotReadableException e) {
     logger.error("Received provider data could not be read, sending error message...");
-    return new ResponseEntity<>("Provider data not supplied or contains a parameter on an " +
-                                "invalid format", HttpStatus.BAD_REQUEST);
+    return new ResponseEntity<>("Provider data not supplied or contains a parameter on an "
+                              + "invalid format", HttpStatus.BAD_REQUEST);
   }
 }

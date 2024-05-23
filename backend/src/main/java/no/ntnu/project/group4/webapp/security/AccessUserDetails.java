@@ -14,7 +14,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 /**
  * The AccessUserDetails class represents the class that contains the authentication information.
  * The class is needed by the AccessUserService class.
- * 
+ *
  * @author Group 4
  * @version v1.0 (2024.05.22)
  */
@@ -39,7 +39,7 @@ public class AccessUserDetails implements UserDetails {
 
   /**
    * Converts the specified roles the user has into instances of the SimpleGrantedAuthority class.
-   * 
+   *
    * @param roles The specified roles the user has
    */
   private void convertRoles(Set<Role> roles) {
@@ -51,7 +51,7 @@ public class AccessUserDetails implements UserDetails {
 
   /**
    * Getter for username.
-   * 
+   *
    * @return Username
    */
   @Override
@@ -61,7 +61,7 @@ public class AccessUserDetails implements UserDetails {
 
   /**
    * Getter for password.
-   * 
+   *
    * @return Password
    */
   @Override
@@ -71,7 +71,7 @@ public class AccessUserDetails implements UserDetails {
 
   /**
    * Getter for authorities.
-   * 
+   *
    * @return Authorities
    */
   @Override
@@ -81,7 +81,7 @@ public class AccessUserDetails implements UserDetails {
 
   /**
    * Checks if the user is not expired.
-   * 
+   *
    * @return True if the user is not expired or false otherwise
    */
   @Override
@@ -91,7 +91,7 @@ public class AccessUserDetails implements UserDetails {
 
   /**
    * Checks if the user is not locked.
-   * 
+   *
    * @return True if the user is not locked or false otherwise
    */
   @Override
@@ -101,7 +101,7 @@ public class AccessUserDetails implements UserDetails {
 
   /**
    * Checks if the user credentials is not expired.
-   * 
+   *
    * @return True if the user credentials is not expired or false otherwise
    */
   @Override
@@ -111,7 +111,7 @@ public class AccessUserDetails implements UserDetails {
 
   /**
    * Checks if the user is enabled.
-   * 
+   *
    * @return True if the user is enabled or false otherwise
    */
   @Override

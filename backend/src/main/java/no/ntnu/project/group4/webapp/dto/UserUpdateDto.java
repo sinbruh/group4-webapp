@@ -5,7 +5,7 @@ import java.sql.Date;
 /**
  * The UserUpdateDto represents the data transfer object (DTO) for sending user data. The class
  * contains data for submitting changes to user data.
- * 
+ *
  * @author Group 4
  * @version v1.0 (2024.05.22)
  */
@@ -18,7 +18,7 @@ public class UserUpdateDto {
 
   /**
    * Constructs an instance of the UserUpdateDto class.
-   * 
+   *
    * @param firstName   The specified first name
    * @param lastName    The specified last name
    * @param email       The specified email
@@ -36,7 +36,7 @@ public class UserUpdateDto {
 
   /**
    * Getter for first name.
-   * 
+   *
    * @return First name
    */
   public String getFirstName() {
@@ -45,7 +45,7 @@ public class UserUpdateDto {
 
   /**
    * Setter for first name.
-   * 
+   *
    * @param firstName The specified first name
    */
   public void setFirstName(String firstName) {
@@ -54,7 +54,7 @@ public class UserUpdateDto {
 
   /**
    * Getter for last name.
-   * 
+   *
    * @return Last name
    */
   public String getLastName() {
@@ -63,7 +63,7 @@ public class UserUpdateDto {
 
   /**
    * Setter for last name.
-   * 
+   *
    * @param lastName The specified last name
    */
   public void setLastName(String lastName) {
@@ -72,7 +72,7 @@ public class UserUpdateDto {
 
   /**
    * Getter for email.
-   * 
+   *
    * @return Email
    */
   public String getEmail() {
@@ -81,7 +81,7 @@ public class UserUpdateDto {
 
   /**
    * Setter for email.
-   * 
+   *
    * @param email The specified email
    */
   public void setEmail(String email) {
@@ -90,7 +90,7 @@ public class UserUpdateDto {
 
   /**
    * Getter for phone number.
-   * 
+   *
    * @return Phone number
    */
   public int getPhoneNumber() {
@@ -99,7 +99,7 @@ public class UserUpdateDto {
 
   /**
    * Setter for phone number.
-   * 
+   *
    * @param phoneNumber The specified phone number
    */
   public void setPhoneNumber(int phoneNumber) {
@@ -108,7 +108,7 @@ public class UserUpdateDto {
 
   /**
    * Getter for date of birth.
-   * 
+   *
    * @return Date of birth
    */
   public Date getDateOfBirth() {
@@ -117,7 +117,7 @@ public class UserUpdateDto {
 
   /**
    * Setter for date of birth.
-   * 
+   *
    * @param dateLong The specified long value for the date of birth
    */
   public void setDateOfBirth(long dateLong) {

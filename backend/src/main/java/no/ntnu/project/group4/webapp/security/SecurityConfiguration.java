@@ -19,10 +19,12 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 /**
  * The SecurityConfiguration class represents the security configuration for the API.
- * 
- * Creates AuthenticationManager - set up authentication type.
- * The @EnableMethodSecurity is needed so that each endpoint can specify which role it requires
- * 
+ *
+ * <p>Creates AuthenticationManager - set up authentication type.</p>
+ *
+ * <p>The @EnableMethodSecurity is needed so that each endpoint can specify which role it
+ * requires.</p>
+ *
  * @author Group 4
  * @version v1.0 (2024.05.22)
  */
@@ -133,7 +135,7 @@ public class SecurityConfiguration {
    */
   @Bean
   public AuthenticationManager authenticationManager(AuthenticationConfiguration config)
-  throws Exception {
+      throws Exception {
     return config.getAuthenticationManager();
   }
 

@@ -24,7 +24,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
  * The JwtRequestFilter class represents the request filter for JWT tokens. The class is a filter
  * that is applied to all HTTP requests and checks for a valid JWT token in the `Authorization:
  * Bearer ...` header.
- * 
+ *
  * @author Group 4
  * @version v1.0 (2024.05.22)
  */
@@ -36,20 +36,19 @@ public class JwtRequestFilter extends OncePerRequestFilter {
   private JwtUtil jwtUtil;
 
   private static final Logger logger = LoggerFactory.getLogger(
-    JwtRequestFilter.class.getSimpleName()
+      JwtRequestFilter.class.getSimpleName()
   );
 
   /**
    * Enables internal filter.
-   * 
+   *
    * @param request     The specified request
    * @param response    The specified response
    * @param filterChain The specified filter chain
    */
   @Override
   protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
-                                  FilterChain filterChain)
-  throws ServletException, IOException {
+                                  FilterChain filterChain) throws ServletException, IOException {
     String jwtToken = this.getJwtToken(request);
     String username = jwtToken != null ? this.getUsernameFrom(jwtToken) : null;
     if (username != null && notAuthenticatedYet()) {
@@ -63,7 +62,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
   /**
    * Returns the user details of the user with the specified username from the database.
-   * 
+   *
    * @param username The specified username
    * @return The user details of the user with the specified username from the database
    */
@@ -79,7 +78,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
   /**
    * Returns the JWT token gathered from the Header of the specified request.
-   * 
+   *
    * @param request The specified request
    * @return The JWT token gathered from the Header of the specified request
    */
@@ -105,7 +104,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
   /**
    * Returns the username of the user extracted from the specified JWT token.
-   * 
+   *
    * @param jwtToken The specified JWT token
    * @return The username of the user extracted from the specified JWT token
    */
@@ -123,7 +122,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
   /**
    * Checks if the user is not authenticated yet.
-   * 
+   *
    * @return True if the user is not authenticated yet or false otherwise
    */
   private static boolean notAuthenticatedYet() {
@@ -133,14 +132,14 @@ public class JwtRequestFilter extends OncePerRequestFilter {
   /**
    * Registers the user with the specified user details as authenticated with the specified
    * request.
-   * 
+   *
    * @param request     The specified request
    * @param userDetails The specified user details
    */
   private static void registerUserAsAuthenticated(HttpServletRequest request,
                                                   UserDetails userDetails) {
     final UsernamePasswordAuthenticationToken upat = new UsernamePasswordAuthenticationToken(
-      userDetails, null, userDetails.getAuthorities()
+        userDetails, null, userDetails.getAuthorities()
     );
     upat.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
     SecurityContextHolder.getContext().setAuthentication(upat);

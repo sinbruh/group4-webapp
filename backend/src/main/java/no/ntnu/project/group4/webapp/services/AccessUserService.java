@@ -23,7 +23,7 @@ import org.springframework.stereotype.Service;
 /**
  * The AccessUserDetails class represents the provider for AccessUserDetails needed for
  * authentication.
- * 
+ *
  * @author Group 4
  * @version v1.0 (2024.05.22)
  */
@@ -37,7 +37,7 @@ public class AccessUserService implements UserDetailsService {
 
   /**
    * Returns the AccessUserDetails of the user with the specified username.
-   * 
+   *
    * @param username The specified username
    * @return The AccessUserDetails of the user with the specified username
    */
@@ -90,8 +90,7 @@ public class AccessUserService implements UserDetailsService {
    * @throws IOException If creation of the user failed
    */
   public void tryCreateNewUser(String firstName, String lastName, String email, int phoneNumber,
-                               String password, Date dateOfBirth)
-  throws IOException {
+                               String password, Date dateOfBirth) throws IOException {
     String errorMessage;
     if (email.isBlank()) {
       errorMessage = "Email cannot be empty";
@@ -181,7 +180,7 @@ public class AccessUserService implements UserDetailsService {
 
   /**
    * Updates user password.
-   * 
+   *
    * @param user         User to update
    * @param userPassword User password to set for the user
    * @return A string containing an error message, null if no errors occured

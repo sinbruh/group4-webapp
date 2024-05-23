@@ -10,16 +10,16 @@ import jakarta.persistence.ManyToOne;
 
 /**
  * The ExtraFeature class represents the entity class for the extra feature entity.
- * 
+ *
  * <p>The class uses JPA with annotations for ORM operations.</p>
- * 
+ *
  * @author Group 4
  * @version v1.0 (2024.05.22)
  */
 @Entity(name = "extra_feature")
 @Schema(
-  description = "An extra feature entity, representing a specific configuration extra feature " +
-                "that can be added to a car configuration"
+    description = "An extra feature entity, representing a specific configuration extra feature "
+                + "that can be added to a car configuration"
 )
 public class ExtraFeature {
   @Schema(description = "Unique ID")
@@ -35,7 +35,7 @@ public class ExtraFeature {
 
   /**
    * Constructs an instance of the ExtraFeature class.
-   * 
+   *
    * <p>Empty constructor needed for JPA.</p>
    */
   public ExtraFeature() {
@@ -44,7 +44,7 @@ public class ExtraFeature {
 
   /**
    * Constructs an instance of the ExtraFeature class.
-   * 
+   *
    * @param name The specified name
    */
   public ExtraFeature(String name) {
@@ -53,7 +53,7 @@ public class ExtraFeature {
 
   /**
    * Getter for ID.
-   * 
+   *
    * @return ID
    */
   public Long getId() {
@@ -62,7 +62,7 @@ public class ExtraFeature {
 
   /**
    * Setter for ID.
-   * 
+   *
    * @param id The specified ID
    */
   public void setId(Long id) {
@@ -71,7 +71,7 @@ public class ExtraFeature {
 
   /**
    * Getter for name.
-   * 
+   *
    * @return Name
    */
   public String getName() {
@@ -80,7 +80,7 @@ public class ExtraFeature {
 
   /**
    * Setter for name.
-   * 
+   *
    * @param name The specified name
    */
   public void setName(String name) {
@@ -89,7 +89,7 @@ public class ExtraFeature {
 
   /**
    * Getter for configuration.
-   * 
+   *
    * @return Configuration
    */
   public Configuration getConfiguration() {
@@ -98,7 +98,7 @@ public class ExtraFeature {
 
   /**
    * Setter for configuration.
-   * 
+   *
    * @param configuration The specified configuration
    */
   public void setConfiguration(Configuration configuration) {
@@ -107,7 +107,7 @@ public class ExtraFeature {
 
   /**
    * Returns true if the extra feature is valid or false otherwise.
-   * 
+   *
    * @return True if the extra feature is valid or false otherwise
    */
   public boolean isValid() {

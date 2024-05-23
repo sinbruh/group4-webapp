@@ -1,16 +1,14 @@
 package no.ntnu.project.group4.webapp.services;
 
 import java.util.Optional;
-
+import no.ntnu.project.group4.webapp.models.User;
+import no.ntnu.project.group4.webapp.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import no.ntnu.project.group4.webapp.models.User;
-import no.ntnu.project.group4.webapp.repositories.UserRepository;
-
 /**
  * The UserService class represents the service class for the user entity.
- * 
+ *
  * @author Group 4
  * @version v1.0 (2024.05.22)
  */
@@ -21,7 +19,7 @@ public class UserService {
 
   /**
    * Returns all users in the database.
-   * 
+   *
    * @return All users in the database
    */
   public Iterable<User> getAll() {
@@ -30,7 +28,7 @@ public class UserService {
 
   /**
    * Returns the user with the specified ID regardless of if it exists or not.
-   * 
+   *
    * @param id The specified ID
    * @return The user with the specified ID regardless of if it exists or not
    */
@@ -40,7 +38,7 @@ public class UserService {
 
   /**
    * Returns the user with the specified email regardless of if it exists or not.
-   * 
+   *
    * @param email The specified email
    * @return The user with the specified email regardless of if it exists or not
    */
@@ -50,7 +48,7 @@ public class UserService {
 
   /**
    * Returns the generated ID of the specified user if it is added to the database.
-   * 
+   *
    * @param user The specified user
    * @return The generated ID of the specified user if it is added to the database
    * @throws IllegalArgumentException If the specified user is invalid
@@ -66,7 +64,7 @@ public class UserService {
   /**
    * Returns true if the user with the specified ID is found and updated with the specified user or
    * false otherwise.
-   * 
+   *
    * @param id   The specified ID
    * @param user The specified user
    * @return True if the user with the specified ID is found and updated with the specified
@@ -97,7 +95,7 @@ public class UserService {
 
   /**
    * Returns true if the user with the specified ID is found and deleted or false otherwise.
-   * 
+   *
    * @param id The specified ID
    * @return True if the user with the specified ID is found and deleted or false otherwise
    */

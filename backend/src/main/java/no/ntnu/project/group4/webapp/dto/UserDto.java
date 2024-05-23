@@ -2,7 +2,6 @@ package no.ntnu.project.group4.webapp.dto;
 
 import java.sql.Date;
 import java.util.Set;
-
 import no.ntnu.project.group4.webapp.models.Provider;
 import no.ntnu.project.group4.webapp.models.Receipt;
 import no.ntnu.project.group4.webapp.models.Rental;
@@ -10,7 +9,7 @@ import no.ntnu.project.group4.webapp.models.Role;
 
 /**
  * The UserDto class represents the data transfer object (DTO) for receiving user data.
- * 
+ *
  * @author Group 4
  * @version v1.0 (2024.05.22)
  */
@@ -29,7 +28,7 @@ public class UserDto {
 
   /**
    * Constructs an instance of the UserDto class.
-   * 
+   *
    * @param id          The specified ID
    * @param firstName   The specified first name
    * @param lastName    The specified last name
@@ -60,7 +59,7 @@ public class UserDto {
 
   /**
    * Getter for ID.
-   * 
+   *
    * @return ID
    */
   public Long getId() {
@@ -69,7 +68,7 @@ public class UserDto {
 
   /**
    * Setter for ID.
-   * 
+   *
    * @param id The specified ID
    */
   public void setId(Long id) {
@@ -78,7 +77,7 @@ public class UserDto {
 
   /**
    * Getter for first name.
-   * 
+   *
    * @return First name
    */
   public String getFirstName() {
@@ -87,7 +86,7 @@ public class UserDto {
 
   /**
    * Setter for first name.
-   * 
+   *
    * @param firstName The specified first name
    */
   public void setFirstName(String firstName) {
@@ -96,7 +95,7 @@ public class UserDto {
 
   /**
    * Getter for last name.
-   * 
+   *
    * @return Last name
    */
   public String getLastName() {
@@ -105,7 +104,7 @@ public class UserDto {
 
   /**
    * Setter for last name.
-   * 
+   *
    * @param lastName The specified last name
    */
   public void setLastName(String lastName) {
@@ -114,7 +113,7 @@ public class UserDto {
 
   /**
    * Getter for email.
-   * 
+   *
    * @return Email
    */
   public String getEmail() {
@@ -123,7 +122,7 @@ public class UserDto {
 
   /**
    * Setter for email.
-   * 
+   *
    * @param email The specified email
    */
   public void setEmail(String email) {
@@ -132,7 +131,7 @@ public class UserDto {
 
   /**
    * Getter for phone number.
-   * 
+   *
    * @return Phone number
    */
   public int getPhoneNumber() {
@@ -141,7 +140,7 @@ public class UserDto {
 
   /**
    * Setter for phone number.
-   * 
+   *
    * @param phoneNumber The specified phone number
    */
   public void setPhoneNumber(int phoneNumber) {
@@ -150,7 +149,7 @@ public class UserDto {
 
   /**
    * Getter for date of birth.
-   * 
+   *
    * @return Date of birth
    */
   public Date getDateOfBirth() {
@@ -158,8 +157,8 @@ public class UserDto {
   }
 
   /**
-   * Setter for date of birth.
-   * 
+   * Setter fordate of birth.
+   *
    * @param dateLong The specified long value for the date of birth
    */
   public void setDateOfBirth(long dateLong) {
@@ -168,7 +167,7 @@ public class UserDto {
 
   /**
    * Checks if the user is active.
-   * 
+   *
    * @return True if the user is active or false otherwise
    */
   public boolean isActive() {
@@ -177,7 +176,7 @@ public class UserDto {
 
   /**
    * Setter for active status.
-   * 
+   *
    * @param active The specified active status
    */
   public void setActive(boolean active) {
@@ -186,7 +185,7 @@ public class UserDto {
 
   /**
    * Getter for roles.
-   * 
+   *
    * @return Roles
    */
   public Set<Role> getRoles() {
@@ -195,7 +194,7 @@ public class UserDto {
 
   /**
    * Setter for roles.
-   * 
+   *
    * @param roles The specified roles
    */
   public void setRoles(Set<Role> roles) {
@@ -204,7 +203,7 @@ public class UserDto {
 
   /**
    * Getter for rentals.
-   * 
+   *
    * @return Rentals
    */
   public Set<Rental> getRentals() {
@@ -213,7 +212,7 @@ public class UserDto {
 
   /**
    * Setter for rentals.
-   * 
+   *
    * @param rentals The specified rentals
    */
   public void setRentals(Set<Rental> rentals) {
@@ -222,7 +221,7 @@ public class UserDto {
 
   /**
    * Getter for receipts.
-   * 
+   *
    * @return Receipts
    */
   public Set<Receipt> getReceipts() {
@@ -231,7 +230,7 @@ public class UserDto {
 
   /**
    * Setter for receipts.
-   * 
+   *
    * @param receipts The specified receipts
    */
   public void setReceipts(Set<Receipt> receipts) {
@@ -240,7 +239,7 @@ public class UserDto {
 
   /**
    * Getter for favorites.
-   * 
+   *
    * @return Favorites
    */
   public Set<Provider> getFavorites() {
@@ -249,7 +248,7 @@ public class UserDto {
 
   /**
    * Setter for favorites.
-   * 
+   *
    * @param favorites The specified favorites
    */
   public void setFavorites(Set<Provider> favorites) {

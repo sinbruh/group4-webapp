@@ -1,16 +1,14 @@
 package no.ntnu.project.group4.webapp.services;
 
 import java.util.Optional;
-
+import no.ntnu.project.group4.webapp.models.Receipt;
+import no.ntnu.project.group4.webapp.repositories.ReceiptRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import no.ntnu.project.group4.webapp.models.Receipt;
-import no.ntnu.project.group4.webapp.repositories.ReceiptRepository;
-
 /**
  * The ReceiptService class represents the service class for the receipt entity.
- * 
+ *
  * @author Group 4
  * @version 1.1 (2024.05.21)
  */
@@ -21,7 +19,7 @@ public class ReceiptService {
 
   /**
    * Returns an iterable containing all receipts in the database.
-   * 
+   *
    * @return An iterable containing all receipts in the database
    */
   public Iterable<Receipt> getAll() {
@@ -30,7 +28,7 @@ public class ReceiptService {
 
   /**
    * Returns the receipt with the specified ID regardless of if it exists or not.
-   * 
+   *
    * @param id The specified ID
    * @return The receipt with the specified ID regardless of if it exists or not
    */
@@ -40,7 +38,7 @@ public class ReceiptService {
 
   /**
    * Returns the generated ID of the specified receipt if it is added to the database.
-   * 
+   *
    * @param receipt The specified receipt
    * @return The generated ID of the specified receipt if it is added to the database
    * @throws IllegalArgumentException If the specified receipt is invalid
@@ -55,7 +53,7 @@ public class ReceiptService {
 
   /**
    * Returns true if the receipt with the specified ID is found and deleted or false otherwise.
-   * 
+   *
    * @param id The specified ID
    * @return True if the receipt with the specified ID is found and deleted or false otherwise
    */

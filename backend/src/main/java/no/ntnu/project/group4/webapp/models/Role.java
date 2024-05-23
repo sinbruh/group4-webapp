@@ -1,5 +1,6 @@
 package no.ntnu.project.group4.webapp.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -8,13 +9,11 @@ import jakarta.persistence.ManyToMany;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 /**
  * The Role class represents the entity class for the role entity.
- * 
+ *
  * <p>The class uses JPA with annotations for ORM operations.</p>
- * 
+ *
  * @author Group 4
  * @version v1.0 (2024.05.22)
  */
@@ -34,7 +33,7 @@ public class Role {
 
   /**
    * Constructs an instance of the Role class.
-   * 
+   *
    * <p>Empty constructor needed for JPA.</p>
    */
   public Role() {
@@ -43,7 +42,7 @@ public class Role {
 
   /**
    * Constructs an instane of the Role class.
-   * 
+   *
    * @param name The specified name
    */
   public Role(String name) {
@@ -52,7 +51,7 @@ public class Role {
 
   /**
    * Getter for ID.
-   * 
+   *
    * @return ID
    */
   public Long getId() {
@@ -61,7 +60,7 @@ public class Role {
 
   /**
    * Setter for ID.
-   * 
+   *
    * @param id The specified ID
    */
   public void setId(Long id) {
@@ -70,7 +69,7 @@ public class Role {
 
   /**
    * Getter for name.
-   * 
+   *
    * @return Name
    */
   public String getName() {
@@ -79,7 +78,7 @@ public class Role {
 
   /**
    * Setter for name.
-   * 
+   *
    * @param name The specified name
    */
   public void setName(String name) {
@@ -88,7 +87,7 @@ public class Role {
 
   /**
    * Getter for users.
-   * 
+   *
    * @return Users
    */
   public Set<User> getUsers() {
@@ -97,7 +96,7 @@ public class Role {
 
   /**
    * Setter for users.
-   * 
+   *
    * @param users The specified users
    */
   public void setUsers(Set<User> users) {
@@ -106,7 +105,7 @@ public class Role {
 
   /**
    * Returns true if the role is valid or false otherwise.
-   * 
+   *
    * @return True if the role is valid or false otherwise
    */
   public boolean isValid() {

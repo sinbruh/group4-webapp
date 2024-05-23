@@ -12,7 +12,6 @@ import no.ntnu.project.group4.webapp.services.AccessUserService;
 import no.ntnu.project.group4.webapp.services.ProviderService;
 import no.ntnu.project.group4.webapp.services.RentalService;
 import no.ntnu.project.group4.webapp.services.UserService;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,22 +63,22 @@ public class RentalController {
    *         <p>403 FORBIDDEN if user is not admin</p>
    */
   @Operation(
-    summary = "Get all rentals",
-    description = "Gets all rentals"
+      summary = "Get all rentals",
+      description = "Gets all rentals"
   )
   @ApiResponses(value = {
-    @ApiResponse(
-      responseCode = "200",
-      description = "All rental data"
-    ),
-    @ApiResponse(
-      responseCode = "401",
-      description = "Only authenticated users have access to rental data"
-    ),
-    @ApiResponse(
-      responseCode = "403",
-      description = "Only admin users have access to rental data"
-    )
+      @ApiResponse(
+        responseCode = "200",
+        description = "All rental data"
+      ),
+      @ApiResponse(
+        responseCode = "401",
+        description = "Only authenticated users have access to rental data"
+      ),
+      @ApiResponse(
+        responseCode = "403",
+        description = "Only admin users have access to rental data"
+      )
   })
   @GetMapping
   public ResponseEntity<?> getAll() {
@@ -113,31 +112,31 @@ public class RentalController {
    *         <p>404 NOT FOUND if rental is not found</p>
    */
   @Operation(
-    summary = "Get rental by ID",
-    description = "Gets the rental with the specified ID"
+      summary = "Get rental by ID",
+      description = "Gets the rental with the specified ID"
   )
   @ApiResponses(value = {
-    @ApiResponse(
-      responseCode = "200",
-      description = "Rental data"
-    ),
-    @ApiResponse(
-      responseCode = "401",
-      description = "Only authenticated users have access to rental data"
-    ),
-    @ApiResponse(
-      responseCode = "403",
-      description = "Users do not have access to rental data of other users"
-    ),
-    @ApiResponse(
-      responseCode = "404",
-      description = "Rental with specified ID not found"
-    )
+      @ApiResponse(
+        responseCode = "200",
+        description = "Rental data"
+      ),
+      @ApiResponse(
+        responseCode = "401",
+        description = "Only authenticated users have access to rental data"
+      ),
+      @ApiResponse(
+        responseCode = "403",
+        description = "Users do not have access to rental data of other users"
+      ),
+      @ApiResponse(
+        responseCode = "404",
+        description = "Rental with specified ID not found"
+      )
   })
   @GetMapping("/{id}")
   public ResponseEntity<?> get(
-    @Parameter(description = "The ID of the rental to get")
-    @PathVariable Long id
+      @Parameter(description = "The ID of the rental to get")
+      @PathVariable Long id
   ) {
     ResponseEntity<?> response;
     User sessionUser = this.accessUserService.getSessionUser();
@@ -145,13 +144,13 @@ public class RentalController {
       Optional<Rental> rental = this.rentalService.getOne(id);
       if (rental.isPresent()) {
         Rental foundRental = rental.get();
-        if (sessionUser.getEmail().equals(foundRental.getUser().getEmail()) ||
-            sessionUser.isAdmin()) {
+        if (sessionUser.getEmail().equals(foundRental.getUser().getEmail())
+            || sessionUser.isAdmin()) {
           logger.info("Rental found, sending rental data...");
           response = new ResponseEntity<>(foundRental, HttpStatus.OK);
         } else {
-          logger.error("Email of rental user does not match email of session user, sending " +
-                       "error message...");
+          logger.error("Email of rental user does not match email of session user, sending "
+                     + "error message...");
           response = new ResponseEntity<>("Users do not have access to rental data of other users",
                                           HttpStatus.FORBIDDEN);
         }
@@ -184,40 +183,41 @@ public class RentalController {
    *         <p>404 NOT FOUND if user or provider is not found</p>
    */
   @Operation(
-    summary = "Add rental",
-    description = "Adds the specified rental to the user with the specified email and the " +
-                  "provider with the specified provider ID"
+      summary = "Add rental",
+      description = "Adds the specified rental to the user with the specified email and the "
+                  + "provider with the specified provider ID"
   )
   @ApiResponses(value = {
-    @ApiResponse(
-      responseCode = "201",
-      description = "Added renal + ID of rental"
-    ),
-    @ApiResponse(
-      responseCode = "400",
-      description = "Error adding rental + error message"
-    ),
-    @ApiResponse(
-      responseCode = "401",
-      description = "Only authenticated users have access to add rentals"
-    ),
-    @ApiResponse(
-      responseCode = "403",
-      description = "Users do not have access to add rental data of other users"
-    ),
-    @ApiResponse(
-      responseCode = "404",
-      description = "User with specified email not found or provider with specified provider ID not found"
-    )
+      @ApiResponse(
+        responseCode = "201",
+        description = "Added renal + ID of rental"
+      ),
+      @ApiResponse(
+        responseCode = "400",
+        description = "Error adding rental + error message"
+      ),
+      @ApiResponse(
+        responseCode = "401",
+        description = "Only authenticated users have access to add rentals"
+      ),
+      @ApiResponse(
+        responseCode = "403",
+        description = "Users do not have access to add rental data of other users"
+      ),
+      @ApiResponse(
+        responseCode = "404",
+        description = "User with specified email not found or provider with specified provider ID "
+                    + "not found"
+      )
   })
   @PostMapping("/{email}/{providerId}")
   public ResponseEntity<?> add(
-    @Parameter(description = "The email of the user to add to")
-    @PathVariable String email,
-    @Parameter(description = "The ID of the provider to add to")
-    @PathVariable Long providerId,
-    @Parameter(description = "The rental to add")
-    @RequestBody Rental rental
+      @Parameter(description = "The email of the user to add to")
+      @PathVariable String email,
+      @Parameter(description = "The ID of the provider to add to")
+      @PathVariable Long providerId,
+      @Parameter(description = "The rental to add")
+      @RequestBody Rental rental
   ) {
     ResponseEntity<?> response;
     User sessionUser = this.accessUserService.getSessionUser();
@@ -230,18 +230,18 @@ public class RentalController {
           rental.setProvider(provider.get());
           try {
             this.rentalService.add(rental);
-            logger.info("User and provider found and valid rental data, sending generated ID of " +
-                        "new rental...");
+            logger.info("User and provider found and valid rental data, sending generated ID of "
+                      + "new rental...");
             response = new ResponseEntity<>(rental.getId(), HttpStatus.CREATED);
           } catch (IllegalArgumentException e) {
             logger.error("Invalid rental data, sending error message...");
             response = new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
           }
         } else {
-          logger.error("Email of user does not match email of session user, sending error " +
-                       "message...");
-          response = new ResponseEntity<>("Users do not have access to add rental data of other " +
-                                          "users", HttpStatus.FORBIDDEN);
+          logger.error("Email of user does not match email of session user, sending error "
+                     + "message...");
+          response = new ResponseEntity<>("Users do not have access to add rental data of other "
+                                        + "users", HttpStatus.FORBIDDEN);
         }
       } else if (!user.isPresent()) {
         logger.error("User not found, sending error message...");
@@ -273,26 +273,26 @@ public class RentalController {
    *         <p>404 NOT FOUND if rental is not found</p>
    */
   @Operation(
-    summary = "Delete rental by ID",
-    description = "Deletes the rental with the specified ID"
+      summary = "Delete rental by ID",
+      description = "Deletes the rental with the specified ID"
   )
   @ApiResponses(value = {
-    @ApiResponse(
-      responseCode = "200",
-      description = "Rental deleted"
-    ),
-    @ApiResponse(
-      responseCode = "401",
-      description = "Only authenticated users have access to delete rentals"
-    ),
-    @ApiResponse(
-      responseCode = "403",
-      description = "Users do not have access to delete rentals of other users"
-    ),
-    @ApiResponse(
-      responseCode = "404",
-      description = "Rental with specified ID not found"
-    )
+      @ApiResponse(
+        responseCode = "200",
+        description = "Rental deleted"
+      ),
+      @ApiResponse(
+        responseCode = "401",
+        description = "Only authenticated users have access to delete rentals"
+      ),
+      @ApiResponse(
+        responseCode = "403",
+        description = "Users do not have access to delete rentals of other users"
+      ),
+      @ApiResponse(
+        responseCode = "404",
+        description = "Rental with specified ID not found"
+      )
   })
   @DeleteMapping("/{id}")
   public ResponseEntity<String> delete(@PathVariable Long id) {
@@ -301,16 +301,16 @@ public class RentalController {
     if (sessionUser != null) {
       Optional<Rental> rental = this.rentalService.getOne(id);
       if (rental.isPresent()) {
-        if (sessionUser.getEmail().equals(rental.get().getUser().getEmail()) ||
-            sessionUser.isAdmin()) {
+        if (sessionUser.getEmail().equals(rental.get().getUser().getEmail())
+            || sessionUser.isAdmin()) {
           logger.info("Rental found, deleting rental...");
           this.rentalService.delete(id);
           response = new ResponseEntity<>("", HttpStatus.OK);
         } else {
-          logger.error("Email of rental users does not match email of session user, sending " +
-                       "error message...");
-          response = new ResponseEntity<>("Users do not have access to delete rentals of other " +
-                                          "users", HttpStatus.FORBIDDEN);
+          logger.error("Email of rental users does not match email of session user, sending "
+                     + "error message...");
+          response = new ResponseEntity<>("Users do not have access to delete rentals of other "
+                                        + "users", HttpStatus.FORBIDDEN);
         }
       } else {
         logger.error("Rental not found, sending error message...");
@@ -328,7 +328,7 @@ public class RentalController {
   /**
    * Returns a HTTP response to the request causing the specified
    * MethodArgumentTypeMismatchException.
-   * 
+   *
    * @param e The specified MethodArgumentTypeMismatchException
    * @return 400 BAD REQUEST with an error message
    */
@@ -341,14 +341,14 @@ public class RentalController {
 
   /**
    * Returns a HTTP response to the request causing the specified HttpMessageNotReadableException.
-   * 
+   *
    * @param e The specified HttpMessageNotReadableException
    * @return 400 BAD REQUEST with an error message
    */
   @ExceptionHandler(HttpMessageNotReadableException.class)
   public ResponseEntity<String> handleRequestBodyException(HttpMessageNotReadableException e) {
     logger.error("Received rental data could not be read, sending error message...");
-    return new ResponseEntity<>("Rental data not supplied or contains a parameter on an invalid " +
-                                "format", HttpStatus.BAD_REQUEST);
+    return new ResponseEntity<>("Rental data not supplied or contains a parameter on an invalid "
+                              + "format", HttpStatus.BAD_REQUEST);
   }
 }

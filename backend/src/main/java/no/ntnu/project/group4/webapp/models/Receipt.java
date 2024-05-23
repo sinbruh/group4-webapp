@@ -1,27 +1,25 @@
 package no.ntnu.project.group4.webapp.models;
 
-import java.sql.Date;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import java.sql.Date;
 
 /**
  * The Receipt class represents the entity class for the receipt entity.
- * 
+ *
  * <p>The class uses JPA with annotations for ORM operations.</p>
- * 
+ *
  * @author Group 4
  * @version v1.0 (2024.05.22)
  */
 @Entity(name = "receipt")
 @Schema(
-  description = "A receipt entity, representing a specific receipt that can be added to a user"
+    description = "A receipt entity, representing a specific receipt that can be added to a user"
 )
 public class Receipt {
   @Schema(description = "Unique ID")
@@ -47,7 +45,7 @@ public class Receipt {
 
   /**
    * Constructs an instance of the Receipt class.
-   * 
+   *
    * <p>Empty constructor needed for JPA.</p>
    */
   public Receipt() {
@@ -56,7 +54,7 @@ public class Receipt {
 
   /**
    * Constructs an instance of the Receipt class.
-   * 
+   *
    * @param carName       The specified car name
    * @param providerName  The specified provider name
    * @param location      The specified location
@@ -76,7 +74,7 @@ public class Receipt {
 
   /**
    * Getter for ID.
-   * 
+   *
    * @return ID
    */
   public Long getId() {
@@ -85,7 +83,7 @@ public class Receipt {
 
   /**
    * Setter for ID.
-   * 
+   *
    * @param id The specified ID
    */
   public void setId(Long id) {
@@ -94,7 +92,7 @@ public class Receipt {
 
   /**
    * Getter for car name.
-   * 
+   *
    * @return Car name
    */
   public String getCarName() {
@@ -103,7 +101,7 @@ public class Receipt {
 
   /**
    * Setter for car name.
-   * 
+   *
    * @param carName The specified car name
    */
   public void setCarName(String carName) {
@@ -112,7 +110,7 @@ public class Receipt {
 
   /**
    * Getter for provider name.
-   * 
+   *
    * @return Provider name
    */
   public String getProviderName() {
@@ -121,7 +119,7 @@ public class Receipt {
 
   /**
    * Setter for provider name.
-   * 
+   *
    * @param providerName The specified provider name
    */
   public void setProviderName(String providerName) {
@@ -130,7 +128,7 @@ public class Receipt {
 
   /**
    * Getter for location.
-   * 
+   *
    * @return Location
    */
   public String getLocation() {
@@ -139,7 +137,7 @@ public class Receipt {
 
   /**
    * Setter for location.
-   * 
+   *
    * @param location The specified location
    */
   public void setLocation(String location) {
@@ -148,7 +146,7 @@ public class Receipt {
 
   /**
    * Getter for start date.
-   * 
+   *
    * @return Start date
    */
   public Date getStartDate() {
@@ -157,7 +155,7 @@ public class Receipt {
 
   /**
    * Setter for start date.
-   * 
+   *
    * @param startDateLong The specified long value for the start date
    */
   public void setStartDate(long startDateLong) {
@@ -166,7 +164,7 @@ public class Receipt {
 
   /**
    * Getter for end date.
-   * 
+   *
    * @return End date
    */
   public Date getEndDate() {
@@ -175,7 +173,7 @@ public class Receipt {
 
   /**
    * Setter for end date.
-   * 
+   *
    * @param endDateLong The specified long value for the end date
    */
   public void setEndDate(long endDateLong) {
@@ -184,7 +182,7 @@ public class Receipt {
 
   /**
    * Getter for total price.
-   * 
+   *
    * @return Total price
    */
   public int getTotalPrice() {
@@ -193,7 +191,7 @@ public class Receipt {
 
   /**
    * Setter for total price.
-   * 
+   *
    * @param totalPrice The specified total price
    */
   public void setTotalPrice(int totalPrice) {
@@ -202,7 +200,7 @@ public class Receipt {
 
   /**
    * Getter for user.
-   * 
+   *
    * @return User
    */
   public User getUser() {
@@ -211,7 +209,7 @@ public class Receipt {
 
   /**
    * Setter for user.
-   * 
+   *
    * @param user The specified user
    */
   public void setUser(User user) {
@@ -220,11 +218,11 @@ public class Receipt {
 
   /**
    * Returns true if the receipt is valid or false otherwise.
-   * 
+   *
    * @return True if the receipt is valid or false otherwise
    */
   public boolean isValid() {
-    return !this.carName.isBlank() && !this.providerName.isBlank() && !this.location.isBlank() &&
-           this.startDate != null && this.endDate != null && this.totalPrice >= 0;
+    return !this.carName.isBlank() && !this.providerName.isBlank() && !this.location.isBlank()
+           && this.startDate != null && this.endDate != null && this.totalPrice >= 0;
   }
 }

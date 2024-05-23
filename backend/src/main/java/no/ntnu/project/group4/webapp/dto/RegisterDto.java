@@ -5,7 +5,7 @@ import java.sql.Date;
 /**
  * The RegisterDto class represents the data transfer object (DTO) the user will send when
  * registering. The class contains data from the register form.
- * 
+ *
  * @author Group 4
  * @version v1.0 (2024.05.22)
  */
@@ -19,7 +19,7 @@ public class RegisterDto {
 
   /**
    * Constructs an instance of the RegisterDto class.
-   * 
+   *
    * @param firstName   The specified first name
    * @param lastName    The specified last name
    * @param email       The specified email
@@ -39,7 +39,7 @@ public class RegisterDto {
 
   /**
    * Getter for first name.
-   * 
+   *
    * @return First name
    */
   public String getFirstName() {
@@ -48,7 +48,7 @@ public class RegisterDto {
 
   /**
    * Getter for last name.
-   * 
+   *
    * @return Last name
    */
   public String getLastName() {
@@ -57,7 +57,7 @@ public class RegisterDto {
 
   /**
    * Getter for email.
-   * 
+   *
    * @return Email
    */
   public String getEmail() {
@@ -66,7 +66,7 @@ public class RegisterDto {
 
   /**
    * Getter for phone number.
-   * 
+   *
    * @return Phone number
    */
   public int getPhoneNumber() {
@@ -75,7 +75,7 @@ public class RegisterDto {
 
   /**
    * Getter for password.
-   * 
+   *
    * @return Password
    */
   public String getPassword() {
@@ -84,7 +84,7 @@ public class RegisterDto {
 
   /**
    * Getter for date of birth.
-   * 
+   *
    * @return Date of birth
    */
   public Date getDateOfBirth() {
