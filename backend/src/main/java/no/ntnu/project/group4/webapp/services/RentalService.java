@@ -8,13 +8,19 @@ import org.springframework.stereotype.Service;
 import no.ntnu.project.group4.webapp.models.Rental;
 import no.ntnu.project.group4.webapp.repositories.RentalRepository;
 
+/**
+ * The RentalService class represents the service class for the rental entity.
+ * 
+ * @author Group 4
+ * @version v1.0 (2024.05.22)
+ */
 @Service
 public class RentalService {
   @Autowired
   private RentalRepository rentalRepository;
 
   /**
-   * Get all rentals in the database.
+   * Returns all rentals in the database.
    * 
    * @return All rentals in the database
    */
@@ -23,21 +29,21 @@ public class RentalService {
   }
 
   /**
-   * Try to find a rental with the given ID regardless of if it exists or not
+   * Returns the rental with the specified ID regardless of if it exists or not.
    * 
-   * @param id The given ID
-   * @return A rental with the given ID regardless of if it exists or not
+   * @param id The specified ID
+   * @return The rental with the specified ID regardless of if it exists or not
    */
   public Optional<Rental> getOne(Long id) {
     return this.rentalRepository.findById(id);
   }
 
   /**
-   * Add the given rental to the database.
+   * Returns the generated ID of the specified rental if it is added to the database.
    * 
-   * @param rental The given rental
-   * @return The ID of the given rental
-   * @throws IllegalArgumentException If the given rental is invalid
+   * @param rental The specified rental
+   * @return The generated ID of the specified rental if it is added to the database
+   * @throws IllegalArgumentException If the specified rental is invalid
    */
   public Long add(Rental rental) {
     if (!rental.isValid()) {
@@ -48,26 +54,14 @@ public class RentalService {
   }
 
   /**
-   * Try to delete a rental with the given ID.
+   * Returns true if the rental with the specified ID is found and updated with the specified
+   * rental or false otherwise.
    * 
-   * @param id The given ID
-   * @return True if the rental was found and thus deleted or false otherwise
-   */
-  public boolean delete(Long id) {
-    Optional<Rental> rental = this.rentalRepository.findById(id);
-    if (rental.isPresent()) {
-      this.rentalRepository.deleteById(id);
-    }
-    return rental.isPresent();
-  }
-
-  /**
-   * Try to update a rental with the given ID.
-   * 
-   * @param id The given ID
-   * @param rental The updated rental metadata
-   * @throws IllegalArgumentException If the current rental is not found or the updated rental
-   *                                  metadata has an ID mismatch or is invalid
+   * @param id       The specified ID
+   * @param rental The specified rental
+   * @return True if the rental with the specified ID is found and updated with the specified
+   *         rental or false otherwise
+   * @throws IllegalArgumentException If the specified rental is invalid
    */
   public boolean update(Long id, Rental rental) {
     Optional<Rental> existingRental = this.rentalRepository.findById(id);
@@ -81,5 +75,19 @@ public class RentalService {
       this.rentalRepository.save(existingRentalObj);
     }
     return existingRental.isPresent();
+  }
+
+  /**
+   * Returns true if the rental with the specified ID is found and deleted or false otherwise.
+   * 
+   * @param id The specified ID
+   * @return True if the rental with the specified ID is found and deleted or false otherwise
+   */
+  public boolean delete(Long id) {
+    Optional<Rental> rental = this.rentalRepository.findById(id);
+    if (rental.isPresent()) {
+      this.rentalRepository.deleteById(id);
+    }
+    return rental.isPresent();
   }
 }

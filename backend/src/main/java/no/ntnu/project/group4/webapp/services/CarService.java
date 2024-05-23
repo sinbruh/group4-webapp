@@ -8,13 +8,19 @@ import org.springframework.stereotype.Service;
 import no.ntnu.project.group4.webapp.models.Car;
 import no.ntnu.project.group4.webapp.repositories.CarRepository;
 
+/**
+ * The CarService class represents the service class for the car entity.
+ * 
+ * @author Group 4
+ * @version v1.0 (2024.05.22)
+ */
 @Service
 public class CarService {
   @Autowired
   private CarRepository carRepository;
 
   /**
-   * Gets all cars in the database.
+   * Returns all cars in the database.
    * 
    * @return All cars in the database
    */
@@ -23,7 +29,7 @@ public class CarService {
   }
   
   /**
-   * Gets the car with the specified ID regardless of if it exists or not.
+   * Returns the car with the specified ID regardless of if it exists or not.
    * 
    * @param id The specified ID
    * @return The car with the specified ID regardless of if it exists or not
@@ -33,10 +39,10 @@ public class CarService {
   }
 
   /**
-   * Tries to add the specified car to the database.
+   * Returns the generated ID of the specified car if it is added to the database.
    * 
    * @param car The specified car
-   * @return The ID of the specified car added to the database
+   * @return The generated ID of the specified car if it is added to the database
    * @throws IllegalArgumentException If the specified car is invalid
    */
   public Long add(Car car) {
@@ -46,29 +52,16 @@ public class CarService {
     this.carRepository.save(car);
     return car.getId();
   }
-  
+
   /**
-   * Tries to delete the car with the specified ID.
+   * Returns true if the car with the specified ID is found and updated with the specified car or
+   * false otherwise.
    * 
-   * @param id The specified ID
-   * @return True if the car with the specified ID was found and thus deleted or false otherwise
-   */
-  public boolean delete(Long id) {
-    Optional<Car> car = this.carRepository.findById(id);
-    if (car.isPresent()) {
-      this.carRepository.deleteById(id);
-    }
-    return car.isPresent();
-  }
-  
-  /**
-   * Tries to update the car with the specified ID to the specified car. The ID of the car must
-   * match the specified ID.
-   * 
-   * @param id The specified ID
+   * @param id  The specified ID
    * @param car The specified car
-   * @throws IllegalArgumentException If the existing car was not found or any of the specified
-   *                                  data is wrong (error message can be used in HTTP response)
+   * @return True if the car with the specified ID is found and updated with the specified car or
+   *         false otherwise
+   * @throws IllegalArgumentException If the specified car is invalid
    */
   public boolean update(Long id, Car car) {
     Optional<Car> existingCar = this.carRepository.findById(id);
@@ -83,5 +76,19 @@ public class CarService {
       this.carRepository.save(existingCarObj);
     }
     return existingCar.isPresent();
+  }
+  
+  /**
+   * Returns true if the car with the specified ID is found and deleted or false otherwise
+   * 
+   * @param id The specified ID
+   * @return True if the car with the specified ID is found and deleted or false otherwise
+   */
+  public boolean delete(Long id) {
+    Optional<Car> car = this.carRepository.findById(id);
+    if (car.isPresent()) {
+      this.carRepository.deleteById(id);
+    }
+    return car.isPresent();
   }
 }

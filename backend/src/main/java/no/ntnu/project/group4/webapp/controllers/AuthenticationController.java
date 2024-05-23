@@ -1,6 +1,7 @@
 package no.ntnu.project.group4.webapp.controllers;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import java.io.IOException;
@@ -49,24 +50,36 @@ public class AuthenticationController {
   private final Logger logger = LoggerFactory.getLogger(AuthenticationController.class);
 
   /**
-   * Returns a response to the request of authenticating the user in the specified authentication
-   * request.
+   * Returns a HTTP response to the request requesting to authenticate the user with the specified
+   * authentication request.
    *
-   * <p>The response body contains (1) a JWT token or (2) a string that contains an error
-   * message.</p>
+   * <p>The response body contains a JWT token on success or a string with an error message on
+   * error.</p>
    *
    * @param authenticationRequest The specified authentication request
    * @return <p>200 OK on success + JWT token</p>
-   * <p>401 UNAUTHORIZED if invalid email or password</p>
+   *         <p>401 UNAUTHORIZED if invalid email or password</p>
    */
 
-  @Operation(summary = "Authenticate a user")
+  @Operation(
+    summary = "Authenticate user",
+    description = "Authenticates user with the specified authentication request"
+  )
   @ApiResponses(value = {
-      @ApiResponse(responseCode = "200", description = "User authenticated"),
-      @ApiResponse(responseCode = "401", description = "Invalid email or password")
+    @ApiResponse(
+      responseCode = "200",
+      description = "User authenticated"
+    ),
+    @ApiResponse(
+      responseCode = "401",
+      description = "Invalid email or password"
+    )
   })
   @PostMapping("/authenticate")
-  public ResponseEntity<?> authenticate(@RequestBody AuthenticationRequest authenticationRequest) {
+  public ResponseEntity<?> authenticate(
+    @Parameter(description = "The authentication request")
+    @RequestBody AuthenticationRequest authenticationRequest
+  ) {
     try {
       this.authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
           authenticationRequest.getEmail(),
@@ -83,20 +96,34 @@ public class AuthenticationController {
   }
 
   /**
-   * Returns a response to the request of registering the user in the specified register DTO.
+   * Returns a HTTP response to the request requesting to register a new user with the specified
+   * register DTO.
    *
-   * <p>The response body contains a string that is empty or contains an error message.</p>
+   * <p>The response body contains a string that is empty on success or contains an error message
+   * on error.</p>
    *
    * @return <p>200 OK on success</p>
-   * <p>400 BAD REQUEST on error</p>
+   *         <p>400 BAD REQUEST on error</p>
    */
-  @Operation(summary = "Register a new user")
+  @Operation(
+    summary = "Register a new user",
+    description = "Registers a new user with the specified register DTO"
+  )
   @ApiResponses(value = {
-      @ApiResponse(responseCode = "200", description = "User registered"),
-      @ApiResponse(responseCode = "400", description = "Error registering user")
+    @ApiResponse(
+      responseCode = "200",
+      description = "New user registered"
+    ),
+    @ApiResponse(
+      responseCode = "400",
+      description = "Error registering new user"
+    )
   })
   @PostMapping("/register")
-  public ResponseEntity<String> registerProcess(@RequestBody RegisterDto registerData) {
+  public ResponseEntity<String> registerProcess(
+    @Parameter(description = "The register DTO")
+    @RequestBody RegisterDto registerData
+  ) {
     ResponseEntity<String> response;
     try {
       this.userService.tryCreateNewUser(registerData.getFirstName(), registerData.getLastName(),

@@ -173,8 +173,8 @@ public class ReceiptController {
    * <p>The response body contains the generated ID of the receipt on success or a string with an
    * error message on error.</p>
    * 
-   * @param email The specified email
-   * @param rentalId The specified rental ID
+   * @param email      The specified email
+   * @param rentalId   The specified rental ID
    * @param totalPrice The specified total price
    * @return <p>200 OK on success</p>
    *         <p>400 BAD REQUEST on error</p>

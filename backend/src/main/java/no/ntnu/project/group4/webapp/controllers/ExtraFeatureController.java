@@ -1,6 +1,7 @@
 package no.ntnu.project.group4.webapp.controllers;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import java.util.Optional;
@@ -54,9 +55,16 @@ public class ExtraFeatureController {
    * Returns an iterable containing all extra features. When this endpoint is requested, a HTTP 200
    * OK response will automatically be sent back.
    *
-   * @return 200 OK + extra feature data
+   * @return 200 OK + all extra feature data
    */
-  @Operation(summary = "Get all extra features")
+  @Operation(
+    summary = "Get all extra features",
+    description = "Gets all extra features"
+  )
+  @ApiResponse(
+    responseCode = "200",
+    description = "All extra feature data"
+  )
   @GetMapping
   public Iterable<ExtraFeature> getAll() {
     logger.info("Sending all extra feature data...");
@@ -64,24 +72,35 @@ public class ExtraFeatureController {
   }
 
   /**
-   * Returns a response to the request of getting the extra feature with the specified ID.
+   * Returns a HTTP response to the request requesting to get the extra feature with the specified
+   * ID.
    *
-   * <p>The response body contains (1) extra feature data or (2) a string that contains an error
+   * <p>The response body contains extra feature data on success or a string that with an error
    * message.</p>
    *
    * @param id The specified ID
    * @return <p>200 OK on success + extra feature data</p>
-   * <p>404 NOT FOUND if extra feature is not found</p>
+   *         <p>404 NOT FOUND if extra feature is not found</p>
    */
   @Operation(
-      summary = "Get extra feature by ID",
-      description = "Returns the extra feature with the specified ID")
+    summary = "Get extra feature by ID",
+    description = "Gets the extra feature with the specified ID"
+  )
   @ApiResponses(value = {
-      @ApiResponse(responseCode = "200", description = "Extra feature data"),
-      @ApiResponse(responseCode = "404", description = "Extra feature with specified ID not found")
+    @ApiResponse(
+      responseCode = "200",
+      description = "Extra feature data"
+    ),
+    @ApiResponse(
+      responseCode = "404",
+      description = "Extra feature with specified ID not found"
+    )
   })
   @GetMapping("/{id}")
-  public ResponseEntity<?> get(@PathVariable Long id) {
+  public ResponseEntity<?> get(
+    @Parameter(description = "The ID of the extra feature to get")
+    @PathVariable Long id
+  ) {
     ResponseEntity<?> response;
     Optional<ExtraFeature> extraFeature = this.extraFeatureService.getOne(id);
     if (extraFeature.isPresent()) {
@@ -90,7 +109,7 @@ public class ExtraFeatureController {
     } else {
       logger.error("Extra feature not found, sending error message...");
       response = new ResponseEntity<>("Extra feature with specified ID not found",
-          HttpStatus.NOT_FOUND);
+                                      HttpStatus.NOT_FOUND);
     }
     return response;
   }
@@ -111,22 +130,39 @@ public class ExtraFeatureController {
    *         <p>404 NOT FOUND if configuration is not found</p>
    */
   @Operation(
-      summary = "Add extra feature",
-      description = "Adds the specified extra feature to the configuration with the specified configuration ID")
+    summary = "Add extra feature",
+    description = "Adds the specified extra feature to the configuration with the specified " +
+                  "configuration ID"
+  )
   @ApiResponses(value = {
-      @ApiResponse(responseCode = "201", description = "ID of extra feature"),
-      @ApiResponse(responseCode = "400", description = "Error message"),
-      @ApiResponse(responseCode = "401", description =
-          "Only authenticated users have access to add " +
-              "extra features"),
-      @ApiResponse(responseCode = "403", description =
-          "Only admin users have access to add extra " +
-              "features"),
-      @ApiResponse(responseCode = "404", description = "Configuration with specified configuration ID not found")
+    @ApiResponse(
+      responseCode = "201",
+      description = "Extra feature added + ID of extra feature"
+    ),
+    @ApiResponse(
+      responseCode = "400",
+      description = "Error adding extra feature + error message"
+    ),
+    @ApiResponse(
+      responseCode = "401",
+      description = "Only authenticated users have access to add extra features"
+    ),
+    @ApiResponse(
+      responseCode = "403",
+      description = "Only admin users have access to add extra features"
+    ),
+    @ApiResponse(
+      responseCode = "404",
+      description = "Configuration with specified configuration ID not found"
+    )
   })
   @PostMapping("/{configId}")
-  public ResponseEntity<?> add(@PathVariable Long configId,
-                                    @RequestBody ExtraFeature extraFeature) {
+  public ResponseEntity<?> add(
+    @Parameter(description = "The ID of the configuration to add to")
+    @PathVariable Long configId,
+    @Parameter(description = "The extra featore to add")
+    @RequestBody ExtraFeature extraFeature
+  ) {
     ResponseEntity<?> response;
     User sessionUser = this.userService.getSessionUser();
     if (sessionUser != null && sessionUser.isAdmin()) {
@@ -145,16 +181,16 @@ public class ExtraFeatureController {
       } else {
         logger.error("Configuration not found, sending error message...");
         response = new ResponseEntity<>("Configuration with specified ID not found",
-            HttpStatus.NOT_FOUND);
+                                        HttpStatus.NOT_FOUND);
       }
     } else if (sessionUser == null) {
       logger.error("User not authenticated, sending error message...");
       response = new ResponseEntity<>("Only authenticated users have access to add extra features",
-          HttpStatus.UNAUTHORIZED);
+                                      HttpStatus.UNAUTHORIZED);
     } else {
       logger.error("User not admin, sending error message...");
       response = new ResponseEntity<>("Only admin users have access to add extra features",
-          HttpStatus.FORBIDDEN);
+                                      HttpStatus.FORBIDDEN);
     }
     return response;
   }
@@ -169,7 +205,7 @@ public class ExtraFeatureController {
    * <p><b>NB!</b> This method does not allow updating which configuration the extra feature
    * belongs to.</p>
    * 
-   * @param id The specified ID
+   * @param id           The specified ID
    * @param extraFeature The specified extra feature
    * @return <p>200 OK success</p>
    *         <p>400 BAD REQUEST on error</p>
@@ -189,7 +225,7 @@ public class ExtraFeatureController {
     ),
     @ApiResponse(
       responseCode = "400",
-      description = "Error updating extra feature"
+      description = "Error updating extra feature + error message"
     ),
     @ApiResponse(
       responseCode = "401",
@@ -205,8 +241,12 @@ public class ExtraFeatureController {
     )
   })
   @PutMapping("/{id}")
-  public ResponseEntity<String> update(@PathVariable Long id,
-                                       @RequestBody ExtraFeature extraFeature) {
+  public ResponseEntity<String> update(
+    @Parameter(description = "The ID of the extra feature to update")
+    @PathVariable Long id,
+    @Parameter(description = "The extra feature to update the existing extra feature with")
+    @RequestBody ExtraFeature extraFeature
+  ) {
     ResponseEntity<String> response;
     User sessionUser = this.userService.getSessionUser();
     if (sessionUser != null && sessionUser.isAdmin()) {
@@ -237,9 +277,11 @@ public class ExtraFeatureController {
   }
 
   /**
-   * Returns a response to the request of deleting the extra feature with the specified ID.
+   * Returns a HTTP response to the request requesting to delete the extra feature with the
+   * specified ID.
    *
-   * <p>The response body contains a string that is empty or contains an error message.</p>
+   * <p>The response body contains an empty string on success or a string with an error message on
+   * error.</p>
    *
    * @param id The specified ID
    * @return <p>200 OK on success</p>
@@ -248,20 +290,32 @@ public class ExtraFeatureController {
    *         <p>404 NOT FOUND if extra feature is not found</p>
    */
   @Operation(
-      summary = "Delete extra feature",
-      description = "Deletes the extra feature with the specified ID")
+    summary = "Delete extra feature",
+    description = "Deletes the extra feature with the specified ID"
+  )
   @ApiResponses(value = {
-      @ApiResponse(responseCode = "200", description = "Extra feature deleted"),
-      @ApiResponse(responseCode = "401", description =
-          "Only authenticated users have access to delete " +
-              "extra features"),
-      @ApiResponse(responseCode = "403", description =
-          "Only admin users have access to delete extra " +
-              "features"),
-      @ApiResponse(responseCode = "404", description = "Extra feature with specified ID not found")
+    @ApiResponse(
+      responseCode = "200",
+      description = "Extra feature deleted"
+    ),
+    @ApiResponse(
+      responseCode = "401",
+      description = "Only authenticated users have access to delete extra features"
+    ),
+    @ApiResponse(
+      responseCode = "403",
+      description = "Only admin users have access to delete extra features"
+    ),
+    @ApiResponse(
+      responseCode = "404",
+      description = "Extra feature with specified ID not found"
+    )
   })
   @DeleteMapping("/{id}")
-  public ResponseEntity<String> delete(@PathVariable Long id) {
+  public ResponseEntity<String> delete(
+    @Parameter(description = "The ID of the extra feature to delete")
+    @PathVariable Long id
+  ) {
     ResponseEntity<String> response;
     User sessionUser = this.userService.getSessionUser();
     if (sessionUser != null && sessionUser.isAdmin()) {

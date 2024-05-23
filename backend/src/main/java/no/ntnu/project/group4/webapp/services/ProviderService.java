@@ -8,13 +8,19 @@ import org.springframework.stereotype.Service;
 import no.ntnu.project.group4.webapp.models.Provider;
 import no.ntnu.project.group4.webapp.repositories.ProviderRepository;
 
+/**
+ * The ProviderService class represents the service class for the provider entity.
+ * 
+ * @author Group 4
+ * @version v1.0 (2024.05.22)
+ */
 @Service
 public class ProviderService {
   @Autowired
   private ProviderRepository providerRepository;
 
   /**
-   * Gets all providers in the database.
+   * Returns all providers in the database.
    * 
    * @return All providers in the database
    */
@@ -23,7 +29,7 @@ public class ProviderService {
   }
   
   /**
-   * Gets the provider with the specified ID regardless of if it exists or not.
+   * Returns the provider with the specified ID regardless of if it exists or not.
    * 
    * @param id The specified ID
    * @return The provider with the specified ID regardless of if it exists or not
@@ -33,10 +39,10 @@ public class ProviderService {
   }
 
   /**
-   * Tries to add the specified provider to the database.
+   * Returns the generated ID of the specified provider if it is added to the database.
    * 
    * @param provider The specified provider
-   * @return The ID of the specified provider added to the database
+   * @return The generated ID of the specified provider if it is added to the database
    * @throws IllegalArgumentException If the specified provider is invalid
    */
   public Long add(Provider provider) {
@@ -46,31 +52,16 @@ public class ProviderService {
     this.providerRepository.save(provider);
     return provider.getId();
   }
-  
+
   /**
-   * Tries to delete the provider with the specified ID.
+   * Returns true if the provider with the specified ID is found and updated with the specified
+   * provider or false otherwise.
    * 
-   * @param id The specified ID
-   * @return True if the provider with the specified ID was found and thus deleted or false
-   *         otherwise
-   */
-  public boolean delete(Long id) {
-    Optional<Provider> provider = this.providerRepository.findById(id);
-    if (provider.isPresent()) {
-      this.providerRepository.deleteById(id);
-    }
-    return provider.isPresent();
-  }
-  
-  /**
-   * Tries to update the provider with the specified ID to the specified provider. The ID of the
-   * provider must match the specified ID.
-   * 
-   * @param id The specified ID
+   * @param id       The specified ID
    * @param provider The specified provider
-   * @throws IllegalArgumentException If the existing provider was not found or any of the
-   *                                  specified data is wrong (error message can be used in HTTP
-   *                                  response)
+   * @return True if the provider with the specified ID is found and updated with the specified
+   *         provider or false otherwise
+   * @throws IllegalArgumentException If the specified provider is invalid
    */
   public boolean update(Long id, Provider provider) {
     Optional<Provider> existingProvider = this.providerRepository.findById(id);
@@ -87,5 +78,19 @@ public class ProviderService {
       this.providerRepository.save(existingProviderObj);
     }
     return existingProvider.isPresent();
+  }
+  
+  /**
+   * Returns true if the provider with the specified ID is found and deleted or false otherwise.
+   * 
+   * @param id The specified ID
+   * @return True if the provider with the specified ID is found and deleted or false otherwise
+   */
+  public boolean delete(Long id) {
+    Optional<Provider> provider = this.providerRepository.findById(id);
+    if (provider.isPresent()) {
+      this.providerRepository.deleteById(id);
+    }
+    return provider.isPresent();
   }
 }

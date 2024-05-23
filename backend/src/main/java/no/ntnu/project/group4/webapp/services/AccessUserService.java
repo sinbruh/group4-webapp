@@ -21,7 +21,11 @@ import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
 /**
- * Provides AccessUserDetails needed for authentication.
+ * The AccessUserDetails class represents the provider for AccessUserDetails needed for
+ * authentication.
+ * 
+ * @author Group 4
+ * @version v1.0 (2024.05.22)
  */
 @Service
 public class AccessUserService implements UserDetailsService {
@@ -31,6 +35,12 @@ public class AccessUserService implements UserDetailsService {
   @Autowired
   RoleRepository roleRepository;
 
+  /**
+   * Returns the AccessUserDetails of the user with the specified username.
+   * 
+   * @param username The specified username
+   * @return The AccessUserDetails of the user with the specified username
+   */
   @Override
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
     Optional<User> user = userRepository.findByEmail(username);
@@ -71,11 +81,11 @@ public class AccessUserService implements UserDetailsService {
   /**
    * Tries to create a new user.
    *
-   * @param firstName First name of the new user
-   * @param lastName Last name of the new user
-   * @param email Email of the new user, this will act as the username
+   * @param firstName   First name of the new user
+   * @param lastName    Last name of the new user
+   * @param email       Email of the new user, this will act as the username
    * @param phoneNumber Phone number of the new user
-   * @param password Plaintext password of the new user
+   * @param password    Plaintext password of the new user
    * @param dateOfBirth Date of birth of the new user
    * @throws IOException If creation of the user failed
    */
@@ -146,7 +156,7 @@ public class AccessUserService implements UserDetailsService {
   /**
    * Updates user information except password.
    *
-   * @param user User to update
+   * @param user     User to update
    * @param userData User data to set for the user
    * @return A string containing an error message, null if no errors occured.
    */
@@ -172,7 +182,7 @@ public class AccessUserService implements UserDetailsService {
   /**
    * Updates user password.
    * 
-   * @param user User to update
+   * @param user         User to update
    * @param userPassword User password to set for the user
    * @return A string containing an error message, null if no errors occured
    */
