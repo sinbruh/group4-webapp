@@ -1,0 +1,18 @@
+# group4-webapp
+
+## Project Description
+
+Exam Project in courses
+[IDATA2301 Web Technologies](https://www.ntnu.edu/studies/courses/IDATA2301#tab=omEmnet) and
+[IDATA2306 Application Development](https://www.ntnu.edu/studies/courses/IDATA2306#tab=omEmnet) at
+[NTNU](https://www.ntnu.edu/) by group 4.
+
+Project theme given for this project: Car Rentals
+
+## Installation
+
+1. Clone the repository 
+2. Make sure you have Java (JDK 17 or higher)
+3. Install independancies needed
+4. run mvn spring-boot:run
+

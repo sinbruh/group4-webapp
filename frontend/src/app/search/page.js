@@ -29,7 +29,7 @@ export default function Search() {
     const [favoriteFilter, setFavoriteFilter] = useState(false);
     const router = useRouter();
     const isDesktop = useMediaQuery({ query: '(min-width: 1024px)' });
-    const cars = useCarData((state) => state.cars);
+    const [cars, bookCar]  = useCarData((state) => [state.cars, state.bookCar]);
     const [filteredCars, setFilteredCars] = useState([]);
     const [dataLoaded, setDataLoaded] = useState(false);
 
@@ -92,7 +92,7 @@ export default function Search() {
                     </ScrollArea>
                     {isDesktop &&
                         <section className="rounded m-2 max-h-[78%] w-[55%]">
-                            <ExpandedCard carInfo={expandedCar} dates={dates} showConfirmation={showConfirmation} />
+                            <ExpandedCard carInfo={expandedCar} dates={dates}  showConfirmation={showConfirmation} />
                         </section>
                     }
                 </section>
