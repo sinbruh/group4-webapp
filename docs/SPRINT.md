@@ -332,15 +332,21 @@ reach certain goals of this sprint:
 
 1. Mats is responsible for adding missing endpoints in the backend
 2. Mathias is responsible for adding remaining user functionality
-3. Sindre and Leander are responsible for finishing the seach page
+3. Sindre and Leander are responsible for finishing the search page
 
 Even though group members have different responsibilities, all members should contribute to reaching
 the goals of the sprint.
 
 ### Accomplishments
 
-TBD
+All the goals set by the group for this sprint was accomplished; the group added missing endpoints
+in the backend, they added remaining user functionality and they finished the search page.
 
 ### Retrospective
 
-TBD
+The group worked the whole week on the project and was satisfied with the workflow. This was the
+last sprint, meaning that the project at this point is considered done. Even though the project is
+done, the group still wanted to add more functionality. For example, the group added functionality
+in the backend that they were not able to utilize in the frontend. This could be considered future
+work if the group were to work more on the project later. All in all, the group is satisfied with
+the project and the learning outcome of doing it.
