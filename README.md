@@ -18,7 +18,11 @@ Following tools used for the project
 website is available at [httpsrentalroulette.me](https://rentalroulette.me/)
 to run the website locally:
 1. Clone the repository from Github
-2. 
+2. Install needed dependancies such as next.js
+  
+4. Go to terminal in both backend and frontend
+5. frontend: npm run dev command
+6. backend: mvn spring-boot:run
 
 ### Extra features
 
