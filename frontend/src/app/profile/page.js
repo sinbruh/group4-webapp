@@ -54,7 +54,7 @@ export default function Page() {
             case 'viewusers':
                 return <UserTable />;
             case 'myorders':
-                return <MyOrders />;
+                return <MyOrders userDetails={userDetails}/>;
             case 'vieworders':
                 return <ViewOrders />;
             case 'editcars':

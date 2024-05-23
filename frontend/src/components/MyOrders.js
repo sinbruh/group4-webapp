@@ -1,6 +1,3 @@
-import { getCookie } from "@/tools/cookies";
-import React, { useEffect, useState } from "react";
-import { asyncApiRequest } from "@/tools/request";
 import {
   Table,
   TableBody,
@@ -11,33 +8,10 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-export default function MyOrders() {
-  const [user, setUser] = useState(null);
+export default function MyOrders({userDetails}) {
 
-  const Email = getCookie("current_email");
 
-  const UserInfo = async () => {
-    try {
-        let data = await asyncApiRequest("GET", "/api/users/" + Email, {
-            headers: {
-                Authorization: "Bearer " + getCookie("jwt"),
-            },
-        });
-
-        if (data) {
-            setUser(data);
-            console.log("MyOrders.js: ", data);
-        }
-    } catch (error) {
-        console.error("Error fetching user information", error);
-    }
-};
-
-useEffect(() => {
-    UserInfo();
-}, []);
-
-  //console.log("MyOrders.js: ", user);
+  console.log("MyOrders.js: ", userDetails);
 
   return (
     <div className={"max-w-x1 mx-auto p-6 bg-white shadow-md rounded-md"}>
@@ -57,9 +31,9 @@ useEffect(() => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {user &&
-              Array.isArray(user.receipts) &&
-              user.receipts.map((receipt, index) => {
+            {userDetails &&
+              Array.isArray(userDetails.receipts) &&
+              userDetails.receipts.map((receipt, index) => {
                 console.log("MyOrders.js: ", receipt); // Add this line
                 return (
                   <TableRow key={index}>
