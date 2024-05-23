@@ -17,7 +17,7 @@ Libraries and frameworks that have been used for the project, which includes:
 - React
 - TailwindCss framework
 - Shadcn component library
-
+- Copilot was utilized for some parts of the code
 
 ## Website 
 
