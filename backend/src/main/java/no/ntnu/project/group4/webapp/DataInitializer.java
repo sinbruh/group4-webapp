@@ -108,36 +108,26 @@ public class DataInitializer implements ApplicationListener<ApplicationReadyEven
     this.logger.info("Loading user data...");
     if (isEmpty) {
       // Create admin user with temporary password
-      User admin = new User("Admin", "User", "admin@user.com", 12345678, "temp",
-                            new Date(946684800000l));
+      User admin = new User("Chuck", "Norris", "chuck@user.com", 12345678, "temp",
+                            new Date(5875200000l));
 
       // Create users with temporary password
-      User user1 = new User("Morgan", "Lee", "morganlee@user.com", 13572468, "temp",
-                            new Date(315532800000l));
-      User user2 = new User("Sarah", "Larsen", "sarahlarsen@user.com", 24681357, "temp",
-                            new Date(631152000000l));
-      User user3 = new User("Max", "Smith", "maxsmith@user.com", 12457836, "temp",
-                            new Date(1104537600000l));
+      User user = new User("Dave", "Dangerous", "dave@user.com", 87654321, "temp",
+                            new Date(324601200000l));
 
       Role userRole = this.roleRepository.findOneByName("ROLE_USER");
       Role adminRole = this.roleRepository.findOneByName("ROLE_ADMIN");
 
       admin.addRole(userRole);
       admin.addRole(adminRole);
-      user1.addRole(userRole);
-      user2.addRole(userRole);
-      user3.addRole(userRole);
+      user.addRole(userRole);
 
       this.userService.add(admin);
-      this.userService.add(user1);
-      this.userService.add(user2);
-      this.userService.add(user3);
+      this.userService.add(user);
 
       // Update admin user password to a proper password that uses BCrypt hashing
-      this.accessUserService.updateUserPassword(admin, new UserUpdatePasswordDto("adminuser"));
-      this.accessUserService.updateUserPassword(user1, new UserUpdatePasswordDto("morganuser"));
-      this.accessUserService.updateUserPassword(user2, new UserUpdatePasswordDto("sarahuser"));
-      this.accessUserService.updateUserPassword(user3, new UserUpdatePasswordDto("maxuser1"));
+      this.accessUserService.updateUserPassword(admin, new UserUpdatePasswordDto("Nunchucks2024"));
+      this.accessUserService.updateUserPassword(user, new UserUpdatePasswordDto("Dangerous2024"));
 
       this.logger.info("Done loading user data");
     } else {
@@ -487,7 +477,7 @@ public class DataInitializer implements ApplicationListener<ApplicationReadyEven
     } else {
       this.logger.info("Cars already in the database, not loading data");
     }
-    this.loadRentals();
+    // this.loadRentals();
   }
 
   /**
@@ -593,7 +583,7 @@ public class DataInitializer implements ApplicationListener<ApplicationReadyEven
     } else {
       this.logger.info("Rentals with receipts already in the database, not loading data");
     }
-    this.addFavorites();
+    // this.addFavorites();
   }
 
   private void addFavorites() {
