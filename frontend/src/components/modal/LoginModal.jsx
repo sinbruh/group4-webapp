@@ -84,7 +84,10 @@ export default function LoginModalClient() {
             <Dialog open={open} onOpenChange={setOpen}>
                 <DialogTrigger asChild>
                     <Button variant="ghost" size="icon">
+                      <div width={32} height={32} className="flex items-center justify-center">
                         <Image src={userIcon} alt="User icon" width={32} height={32} />
+                        </div>
+
                     </Button>
                 </DialogTrigger>
                 <DialogContent>
