@@ -15,7 +15,7 @@ export default function PricePicker({ defaultValue, setPrice }) {
         <div className="flex flex-col md:flex-row space-x-4">
             <div className="flex items-center space-x-2">
                 <p className="block text-sm font-medium text-gray-700">Min: {value[0]}kr</p>
-                <Slider  max={1000} step={1} className={"w-full min-w-72 max-w-full"} value={value} onValueChange={setValue} />
+                <Slider  max={1000} step={1} className={"w-52 max-w-full"} value={value} onValueChange={setValue} />
 
                 <p htmlFor="toPrice" className="block text-sm font-medium text-gray-700">Max: {value[1]}kr</p>
             </div>
