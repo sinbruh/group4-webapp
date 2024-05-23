@@ -8,7 +8,7 @@ Exam Project in courses
 
 Project theme given for this project: Car Rentals
 
-The project theme specified to emulate a real-life situation when you get a speficication from a customer. The project website must be a web aggregator portal for a provided company and the provided products. The project theme states that the general purpose of the portal is a price overview for visitors. The webapp will let users see and compare prices of products from different vendors. This website bare the same resemblences as known car rental websites such as kayak, hertz and sixt. 
+The project theme specified to emulate a real-life situation when you get a specification from a customer. The project website must be a web aggregator portal for a provided company and the provided products. The project theme states that the general purpose of the portal is a price overview for visitors. The webapp will let users see and compare prices of products from different vendors. This website bare the same resemblences as known car rental websites such as kayak, hertz and sixt. 
 
 
 Following tools used for the project
