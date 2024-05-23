@@ -23,7 +23,7 @@ export default function CarReader({
     setIsLoading(true);
     try {
       let data = await asyncApiRequest("GET", "/api/cars");
-  
+
       if (data) {
         // Add img property to each car configuration
         data = data.map((item) => {
@@ -37,15 +37,15 @@ export default function CarReader({
           return item;
         });
       }
-  
-      
+
+
       setCars(data);
       setIsLoading(false);
     } catch (error) {
       console.error("Error updating JSON file:", error);
     }
   };
-  
+
   useEffect(() => {
     updateJsonFile();
   }, [location, dates, price]);
@@ -54,7 +54,7 @@ export default function CarReader({
     const timer = setTimeout(() => {
       setShowCarCard(true);
     }, 3000); // 3000ms delay
-  
+
     return () => clearTimeout(timer); // Clean up on component unmount
   }, []);
 
@@ -78,18 +78,18 @@ export default function CarReader({
             const isPriceInRange = price ? fromPriceNumber <= lowestPrice && (toPriceNumber >= lowestPrice || toPriceNumber === 0) : true;
             const isLocationMatch = location ? carLocation.toLowerCase() === location.toLowerCase() : true;
             const isFavorite = favoriteFilter ? favorites.includes(provider.id) : true;
-          
+
             return isPriceInRange && isLocationMatch && isFavorite;
           })
           .map(({ configurations, provider, make, model }) => {
             if (!configurations || configurations.length === 0) {
               throw new Error('No configurations found for this car');
             }
-          
+
             const firstConfig = configurations[0];
             const carImageName = firstConfig.img || "default.jpg";
             const providerRentals = provider.rentals || [];
-          
+
             const isAvailable = providerRentals.every((rental) => {
             const rentalStartDate = new Date(rental.startDate);
             const rentalEndDate = new Date(rental.endDate);
