@@ -44,7 +44,7 @@ export default function ProviderEditor() {
   const [searchTerm, setSearchTerm] = useState("");
   const [providers, setProviders] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const entriesPerPage = 10;
+  const entriesPerPage = 5;
   const [providerId, setProviderId] = useState('');
 
   const form = useForm({

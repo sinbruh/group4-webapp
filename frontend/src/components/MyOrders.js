@@ -20,7 +20,7 @@ import {
 
 export default function MyOrders({userDetails}) {
   const [currentPage, setCurrentPage] = useState(1);
-  const entriesPerPage = 2;
+  const entriesPerPage = 5;
 
   const handlePreviousPage = () => {
     setCurrentPage((prevPage) => Math.max(prevPage - 1, 1));

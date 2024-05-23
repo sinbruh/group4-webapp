@@ -43,7 +43,7 @@ export default function ConfigurationEditor() {
   const [searchTerm, setSearchTerm] = useState("");
   const [configs, setConfigs] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const entriesPerPage = 10;
+  const entriesPerPage = 5;
   const [configId, setConfigId] = useState('');
 
   const form = useForm({

@@ -43,7 +43,7 @@ export default function CarEditor() {
   const Email = getCookie("current_email");
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const entriesPerPage = 10;
+  const entriesPerPage = 5;
   const [carId, setCarId] = useState('');
 
   const form = useForm({
