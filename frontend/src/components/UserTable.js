@@ -17,6 +17,7 @@ import {
   PaginationPrevious,
 } from "@/components/ui/pagination";
 import { asyncApiRequest } from "@/tools/request";
+import Head from "next/head";
 
 export function UserTable() {
   const [users, setUsers] = useState([]);
@@ -52,60 +53,65 @@ export function UserTable() {
   );
 
   return (
-    <div
-      className={
-        "mx-auto p-6  flex flex-col  overflow-auto"
-      }
-    >
-      <div className={"flex-grow overflow-auto"}>
-        <h2 className="text-2xl font-semibold mb-4">View Orders</h2>
-        <Table>
-          <TableCaption>A list of all users.</TableCaption>
-          <TableHeader>
-            <TableRow>
-              <TableHead className="w-[100px]">User ID</TableHead>
-              <TableHead>Email</TableHead>
-              <TableHead>Roles</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {usersForCurrentPage.map((user) => {
-              const roles = user.roles.filter(
-                (role) =>
-                  !(
-                    role.name === "ROLE_USER" &&
-                    user.roles.some((r) => r.name === "ROLE_ADMIN")
-                  )
-              );
-              console.log("roles", roles);
-              return (
-                <TableRow key={user.id}>
-                  <TableCell className="font-medium">{user.id}</TableCell>
-                  <TableCell>{user.email}</TableCell>
-                  <TableCell>
-                    {roles.map((role) => role.name).join(", ")}
-                  </TableCell>
+      <>
+        <Head>
+          <title>Table over users</title>
+        </Head>
+        <div
+            className={
+              "mx-auto p-6  flex flex-col  overflow-auto"
+            }
+        >
+          <div className={"flex-grow overflow-auto"}>
+            <h2 className="text-2xl font-semibold mb-4">View Orders</h2>
+            <Table>
+              <TableCaption>A list of all users.</TableCaption>
+              <TableHeader>
+                <TableRow>
+                  <TableHead className="w-[100px]">User ID</TableHead>
+                  <TableHead>Email</TableHead>
+                  <TableHead>Roles</TableHead>
                 </TableRow>
-              );
-            })}
-          </TableBody>
-        </Table>
-        <Pagination>
-          <PaginationContent>
-            <PaginationItem>
-              <PaginationPrevious onClick={handlePreviousPage} />
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationLink href="#" isActive>
-                {currentPage}
-              </PaginationLink>
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationNext onClick={handleNextPage} />
-            </PaginationItem>
-          </PaginationContent>
-        </Pagination>
-      </div>
-    </div>
+              </TableHeader>
+              <TableBody>
+                {usersForCurrentPage.map((user) => {
+                  const roles = user.roles.filter(
+                      (role) =>
+                          !(
+                              role.name === "ROLE_USER" &&
+                              user.roles.some((r) => r.name === "ROLE_ADMIN")
+                          )
+                  );
+                  console.log("roles", roles);
+                  return (
+                      <TableRow key={user.id}>
+                        <TableCell className="font-medium">{user.id}</TableCell>
+                        <TableCell>{user.email}</TableCell>
+                        <TableCell>
+                          {roles.map((role) => role.name).join(", ")}
+                        </TableCell>
+                      </TableRow>
+                  );
+                })}
+              </TableBody>
+            </Table>
+            <Pagination>
+              <PaginationContent>
+                <PaginationItem>
+                  <PaginationPrevious onClick={handlePreviousPage}/>
+                </PaginationItem>
+                <PaginationItem>
+                  <PaginationLink href="#" isActive>
+                    {currentPage}
+                  </PaginationLink>
+                </PaginationItem>
+                <PaginationItem>
+                  <PaginationNext onClick={handleNextPage}/>
+                </PaginationItem>
+              </PaginationContent>
+            </Pagination>
+          </div>
+        </div>
+      </>
   );
 }

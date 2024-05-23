@@ -18,6 +18,7 @@ import {
   PaginationPrevious,
 } from "@/components/ui/pagination";
 import { asyncApiRequest } from "@/tools/request";
+import Head from "next/head";
 
 export default function ViewOrders({ rental }) {
   const [orders, setOrders] = useState([]);
@@ -56,54 +57,59 @@ export default function ViewOrders({ rental }) {
   );
 
   return (
-    <div className="mx-auto p-6  flex flex-col  overflow-auto">
-      <div className={"flex-grow overflow-auto"}>
-        <h2 className="text-2xl font-semibold mb-4">View Orders</h2>
-        {fetchError ? (
-          <p className="error-message">Error: {fetchError}</p>
-        ) : (
-          <Table>
-            <TableCaption>A list of all orders.</TableCaption>
-            <TableHeader>
-              <TableRow>
-                <TableHead className="w-[100px]">Order ID</TableHead>
-                <TableHead>Date</TableHead>
-                <TableHead className="text-right">Total</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {ordersForCurrentPage.map((order) => (
-                <TableRow key={order.id}>
-                  <TableCell className="font-medium">{order.id}</TableCell>
-                  <TableCell>
-                    {"From: " + order.startDate + " To: " + order.endDate}
-                  </TableCell>
-                  <TableCell className="text-right">
-                    {order.totalPrice}
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        )}
-      </div>
-      <div className={"p-4 bg-white"}>
-        <Pagination>
-          <PaginationContent>
-            <PaginationItem>
-              <PaginationPrevious onClick={handlePreviousPage} />
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationLink href="#" isActive>
-                {currentPage}
-              </PaginationLink>
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationNext onClick={handleNextPage} />
-            </PaginationItem>
-          </PaginationContent>
-        </Pagination>
-      </div>
-    </div>
+      <>
+        <Head>
+            <title>Total orders of the website</title>
+        </Head>
+        <div className="mx-auto p-6  flex flex-col  overflow-auto">
+          <div className={"flex-grow overflow-auto"}>
+            <h2 className="text-2xl font-semibold mb-4">View Orders</h2>
+            {fetchError ? (
+                <p className="error-message">Error: {fetchError}</p>
+            ) : (
+                <Table>
+                  <TableCaption>A list of all orders.</TableCaption>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead className="w-[100px]">Order ID</TableHead>
+                      <TableHead>Date</TableHead>
+                      <TableHead className="text-right">Total</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {ordersForCurrentPage.map((order) => (
+                        <TableRow key={order.id}>
+                          <TableCell className="font-medium">{order.id}</TableCell>
+                          <TableCell>
+                            {"From: " + order.startDate + " To: " + order.endDate}
+                          </TableCell>
+                          <TableCell className="text-right">
+                            {order.totalPrice}
+                          </TableCell>
+                        </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+            )}
+          </div>
+          <div className={"p-4 bg-white"}>
+            <Pagination>
+              <PaginationContent>
+                <PaginationItem>
+                  <PaginationPrevious onClick={handlePreviousPage}/>
+                </PaginationItem>
+                <PaginationItem>
+                  <PaginationLink href="#" isActive>
+                    {currentPage}
+                  </PaginationLink>
+                </PaginationItem>
+                <PaginationItem>
+                  <PaginationNext onClick={handleNextPage}/>
+                </PaginationItem>
+              </PaginationContent>
+            </Pagination>
+          </div>
+        </div>
+      </>
   );
 }

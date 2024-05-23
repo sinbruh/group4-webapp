@@ -26,6 +26,7 @@ import Image from 'next/image';
 import { sendAuthenticationRequest } from "@/tools/authentication";
 
 import { useStore } from '@/tools/authentication';
+import Head from "next/head";
 
 const formSchema = z.object({
     email: z.string().email(),
@@ -76,78 +77,83 @@ export default function LoginModalClient() {
     }
 
     return (
-        <Dialog open={open} onOpenChange={setOpen}>
-            <DialogTrigger asChild>
-                <Button variant="ghost" size="icon">
-                    <Image src={userIcon} alt="User icon" width={32} height={32} />
-                </Button>
-            </DialogTrigger>
-            <DialogContent>
-                <DialogHeader>
-                    <DialogTitle id="DialogTitle">
-                        {showLogin ? ("Login") : ("Sign up")}
-                    </DialogTitle>
-                    <DialogDescription>
-                        {showLogin ? (
-                            <span>Don't have an account? &nbsp;
-                                <a
-                                    href="#"
-                                    onClick={() => handleShowSignup()}
-                                    className="text-blue-500 hover:text-blue-700 text-sm font focus:outline-none hover:underline"
-                                >
+        <>
+            <Head>
+                <title>Login</title>
+            </Head>
+            <Dialog open={open} onOpenChange={setOpen}>
+                <DialogTrigger asChild>
+                    <Button variant="ghost" size="icon">
+                        <Image src={userIcon} alt="User icon" width={32} height={32} />
+                    </Button>
+                </DialogTrigger>
+                <DialogContent>
+                    <DialogHeader>
+                        <DialogTitle id="DialogTitle">
+                            {showLogin ? ("Login") : ("Sign up")}
+                        </DialogTitle>
+                        <DialogDescription>
+                            {showLogin ? (
+                                <span>Don't have an account? &nbsp;
+                                    <a
+                                        href="#"
+                                        onClick={() => handleShowSignup()}
+                                        className="text-blue-500 hover:text-blue-700 text-sm font focus:outline-none hover:underline"
+                                    >
                                     Sign up
                                 </a>
                             </span>
-                        ) : (
-                            <span> Already have an account? &nbsp;
-                                <a
-                                    href="#"
-                                    onClick={() => handleShowLogin()}
-                                    className="text-blue-500 hover:text-blue-700 text-sm font focus:outline-none hover:underline"
-                                >
+                            ) : (
+                                <span> Already have an account? &nbsp;
+                                    <a
+                                        href="#"
+                                        onClick={() => handleShowLogin()}
+                                        className="text-blue-500 hover:text-blue-700 text-sm font focus:outline-none hover:underline"
+                                    >
                                     Log in
                                 </a>
                             </span>
-                        )}
-                    </DialogDescription>
-                </DialogHeader>
-                {showLogin ? (
-                    <Form {...form}>
-                        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-                            <FormField
-                                control={form.control}
-                                name="email"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel>Email</FormLabel>
-                                        <FormControl>
-                                            <Input {...field} />
-                                        </FormControl>
-                                        <FormMessage>{form.formState.errors.email?.message}</FormMessage>
-                                    </FormItem>
-                                )}
-                            />
-                            <FormField
-                                control={form.control}
-                                name="password"
-                                render={({ field }) => (
-                                    <FormItem>
-                                        <FormLabel>Password</FormLabel>
-                                        <FormControl>
-                                            <Input type="password" {...field} />
-                                        </FormControl>
-                                        <FormMessage>{form.formState.errors.password?.message}</FormMessage>
-                                    </FormItem>
-                                )}
-                            />
-                            <Button type="submit">Log in</Button>
-                        </form>
-                    </Form>
-                ) : (
-                    <SignupModal setOpen={setOpen} />
-                )}
-            </DialogContent>
-        </Dialog>
-
+                            )}
+                        </DialogDescription>
+                    </DialogHeader>
+                    {showLogin ? (
+                        <Form {...form}>
+                            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+                                <FormField
+                                    control={form.control}
+                                    name="email"
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel>Email</FormLabel>
+                                            <FormControl>
+                                                <Input {...field} />
+                                            </FormControl>
+                                            <FormMessage>{form.formState.errors.email?.message}</FormMessage>
+                                        </FormItem>
+                                    )}
+                                />
+                                <FormField
+                                    control={form.control}
+                                    name="password"
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel>Password</FormLabel>
+                                            <FormControl>
+                                                <Input type="password" {...field} />
+                                            </FormControl>
+                                            <FormMessage>{form.formState.errors.password?.message}</FormMessage>
+                                        </FormItem>
+                                    )}
+                                />
+                                <Button type="submit">Log in</Button>
+                            </form>
+                        </Form>
+                    ) : (
+                        <SignupModal setOpen={setOpen} />
+                    )}
+                </DialogContent>
+            </Dialog>
+        </>
     )
 }
+

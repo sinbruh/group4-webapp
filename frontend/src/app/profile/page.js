@@ -14,6 +14,7 @@ import ViewOrders from "@/components/ViewOrders";
 import CarEditor from '@/components/CarEditor';
 import ConfigurationEditor from '@/components/ConfigurationEditor';
 import ProviderEditor from '@/components/ProviderEditor';
+import Head from "next/head";
 
 export default function Page() {
     const user = useStore((state) => state.user);
@@ -69,39 +70,57 @@ export default function Page() {
     };
 
     return (
-        <div>
-        {isLoggedIn() && (
-        <div className="bg-[url('/temp-background-image-low.webp')] bg-cover bg-center">
-            <Navigation />
-            <section className="text-black">
-                <p>
-                    <Link href="/">Home</Link> &gt; <Link href="/profile">Profile</Link>
-                </p>
-            </section>
-            <div className="flex flex-wrap items-center justify-center">
-                <section className="mx-auto p-6 m-2 p-2 h-dvh bg-white max-w-full shadow-md rounded-md min-w-[60%] rounded flex-col overflow-auto">
-                    <div className="flex flex-wrap gap-x-2  justify-center">
-                    <Button onClick={() => handleClick('account')} className="m-4 w-full md:w-auto md:grow-0 md:m-0">Account</Button>
-                    <Button onClick={() => handleClick('myorders')} className="m-4 w-full md:w-auto md:grow-0 md:m-0">My Orders</Button>
-                    {isAdmin() && (
-                        <>
-                            <Button onClick={() => handleClick('viewusers')} className="m-4 w-full md:w-auto md:grow-0 md:m-0">View Users</Button>
-                            <Button onClick={() => handleClick('vieworders')} className="m-4 w-full md:w-auto md:grow-0 md:m-0">View Orders</Button>
-                            <Button onClick={() => handleClick('editcars')} className="m-4 w-full md:w-auto md:grow-0 md:m-0">Car Editor</Button>
-                            <Button onClick={() => handleClick('editconfig')} className="m-4 w-full md:w-auto md:grow-0 md:m-0">Configuration Editor</Button>
-                            <Button onClick={() => handleClick('editprovider')} className="m-4 w-full md:w-auto md:grow-0 md:m-0">Provider Editor</Button>
-                        </>
-                    )}
+        <>
+            <Head>
+                <title>Profile Page</title>
+            </Head>
+            <div>
+                {isLoggedIn() && (
+                    <div className="bg-[url('/temp-background-image-low.webp')] bg-cover bg-center">
+                        <Navigation/>
+                        <section className="text-black">
+                            <p>
+                                <Link href="/">Home</Link> &gt; <Link href="/profile">Profile</Link>
+                            </p>
+                        </section>
+                        <div className="flex flex-wrap items-center justify-center">
+                            <section
+                                className="mx-auto p-6 m-2 p-2 h-dvh bg-white max-w-full shadow-md rounded-md min-w-[60%] rounded flex-col overflow-auto">
+                                <div className="flex flex-wrap gap-x-2  justify-center">
+                                    <Button onClick={() => handleClick('account')}
+                                            className="m-4 w-full md:w-auto md:grow-0 md:m-0">Account</Button>
+                                    <Button onClick={() => handleClick('myorders')}
+                                            className="m-4 w-full md:w-auto md:grow-0 md:m-0">My Orders</Button>
+                                    {isAdmin() && (
+                                        <>
+                                            <Button onClick={() => handleClick('viewusers')}
+                                                    className="m-4 w-full md:w-auto md:grow-0 md:m-0">View
+                                                Users</Button>
+                                            <Button onClick={() => handleClick('vieworders')}
+                                                    className="m-4 w-full md:w-auto md:grow-0 md:m-0">View
+                                                Orders</Button>
+                                            <Button onClick={() => handleClick('editcars')}
+                                                    className="m-4 w-full md:w-auto md:grow-0 md:m-0">Car
+                                                Editor</Button>
+                                            <Button onClick={() => handleClick('editconfig')}
+                                                    className="m-4 w-full md:w-auto md:grow-0 md:m-0">Configuration
+                                                Editor</Button>
+                                            <Button onClick={() => handleClick('editprovider')}
+                                                    className="m-4 w-full md:w-auto md:grow-0 md:m-0">Provider
+                                                Editor</Button>
+                                        </>
+                                    )}
 
+                                </div>
+                                <div className=" flex items-center justify-center">
+                                    {renderComponent()}
+                                </div>
+                            </section>
+                        </div>
+                        <Footer/>
                     </div>
-                    <div className=" flex items-center justify-center">
-                        {renderComponent()}
-                    </div>
-                </section>
-                    </div>
-            <Footer />
+                )};
             </div>
-        )};
-        </div>
+        </>
     );
 };
