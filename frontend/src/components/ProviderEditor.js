@@ -1,7 +1,8 @@
-import { getCookie } from "@/tools/cookies";
 import React, { useEffect, useState } from "react";
 import { asyncApiRequest } from "@/tools/request";
 import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { useForm, Controller } from 'react-hook-form';
 import {
   Table,
   TableBody,
@@ -14,21 +15,69 @@ import {
 import {
   Pagination,
   PaginationContent,
-  PaginationEllipsis,
   PaginationItem,
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
+import {
+    Form,
+    FormControl,
+    FormField,
+    FormItem,
+    FormLabel,
+    FormMessage,
+  } from "@/components/ui/form";
+  import { zodResolver } from '@hookform/resolvers/zod';
+  import { z } from 'zod';
+  const formSchema = z.object({
+    name: z.string(),
+    location: z.string(),
+    price: z.number(),
+    visible: z.boolean(), 
+    available: z.boolean(),
+
+  });
 
 export default function ProviderEditor() {
-  const [user, setUser] = useState(null);
   const [cars, setCars] = useState([]);
-  const Email = getCookie("current_email");
   const [searchTerm, setSearchTerm] = useState("");
   const [providers, setProviders] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const entriesPerPage = 10;
+  const [providerId, setProviderId] = useState('');
+
+  const form = useForm({
+    resolver: zodResolver(formSchema),
+        defaultValues: {
+        name: '',
+        location: '',
+        price: '',
+        visible: false,
+        available: false
+    }
+  });
+
+  const onSubmit = async (values)  => {
+ 
+    try {
+        const responseProviders = await asyncApiRequest("PUT", `/api/providers/${providerId}`, values, true);
+ 
+    
+        if (responseProviders.ok && responseVisibility.ok) {
+        } else {
+            if (!responseProviders.ok) {
+                console.error("Error updating provider details: ", responseProviders);
+            }
+            if (!responseVisibility.ok) {
+                console.error("Error updating visibility details: ", responseVisibility);
+            }
+        }
+    } catch (error) {
+        console.error("Error updating details: ", error);
+    }
+};
+
 
   //From CarReader   Changed to FlatMap Providers
   const updateJsonFile = async () => {
@@ -49,8 +98,6 @@ export default function ProviderEditor() {
           return item;
         });
       }
-
-      console.log("EditConfigs.js: ", data);
 
       const allProviders = data.flatMap((car) =>
         car.configurations.flatMap((config) =>
@@ -106,6 +153,7 @@ export default function ProviderEditor() {
               <TableHead>Location*</TableHead>
               <TableHead>Price*</TableHead>
               <TableHead>Visible*</TableHead>
+              <TableHead>Available*</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -118,7 +166,9 @@ export default function ProviderEditor() {
                   provider.config.name.includes(searchTerm) ||
                   provider.name.includes(searchTerm) ||
                   provider.price.toString().includes(searchTerm) ||
-                  provider.location.includes(searchTerm)
+                  provider.location.includes(searchTerm) ||
+                  provider.visible.toString().includes(searchTerm) ||
+                  provider.available.toString().includes(searchTerm)
               )
               .sort((a, b) => a.id - b.id)
               .map((provider, index) => (
@@ -131,6 +181,7 @@ export default function ProviderEditor() {
                   <TableCell>{provider.location}</TableCell>
                   <TableCell>{provider.price + " kr"}</TableCell>
                   <TableCell>{provider.visible.toString()}</TableCell>
+                  <TableCell>{provider.available.toString()}</TableCell>
                 </TableRow>
               ))}
           </TableBody>
@@ -151,6 +202,99 @@ export default function ProviderEditor() {
           </PaginationContent>
         </Pagination>
       </form>
+      <Input type="text" placeholder="Provider Id" value={providerId} onChange={e => setProviderId(e.target.value)} />
+      <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+                <FormField
+                    control={form.control}
+                    name="name"
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Name</FormLabel>
+                            <FormControl>
+                                <Input {...field} />
+                            </FormControl>
+                            <FormMessage>{form.formState.errors.name?.message}</FormMessage>
+                        </FormItem>
+                    )}
+                />
+                <FormField
+                    control={form.control}
+                    name="location"
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Location</FormLabel>
+                            <FormControl>
+                                <Input {...field} />
+                            </FormControl>
+                            <FormMessage>{form.formState.errors.location?.message}</FormMessage>
+                        </FormItem>
+                    )}
+                />
+                <FormField
+                    control={form.control}
+                    name="price"
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Price</FormLabel>
+                            <FormControl>
+                                <Input 
+                                {...field} 
+                                type="number"
+                                onChange={e => {
+                                    field.onChange(e); 
+                                    form.setValue('price', parseFloat(e.target.value));
+                                }}
+                                />
+                            </FormControl>
+                            <FormMessage>{form.formState.errors.price?.message}</FormMessage>
+                        </FormItem>
+                    )}
+                />
+                <FormField
+                    control={form.control}
+                    name="visible"
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Visible</FormLabel>
+                            <FormControl>
+                                <Input 
+                                {...field} 
+                                type="checkbox"
+                                onChange={e => {
+                                    field.onChange(e); 
+                                    form.setValue('visible', e.target.checked);
+                                }}
+                                />
+                            </FormControl>
+                            <FormMessage>{form.formState.errors.visible?.message}</FormMessage>
+                        </FormItem>
+                    )}
+                />
+                <FormField
+                    control={form.control}
+                    name="available"
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Available</FormLabel>
+                            <FormControl>
+                                <Input 
+                                {...field} 
+                                type="checkbox"
+                                onChange={e => {
+                                    field.onChange(e); 
+                                    form.setValue('available', e.target.checked);
+                                }}
+                                />
+                            </FormControl>
+                            <FormMessage>{form.formState.errors.available?.message}</FormMessage>
+                        </FormItem>
+                    )}
+                />
+                       
+                <Button type="submit">Submit</Button>
+            </form>
+        </Form>
     </div>
   );
 }

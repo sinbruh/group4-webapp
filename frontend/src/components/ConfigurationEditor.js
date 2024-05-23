@@ -1,7 +1,8 @@
-import { getCookie } from "@/tools/cookies";
 import React, { useEffect, useState } from "react";
 import { asyncApiRequest } from "@/tools/request";
 import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { useForm, Controller } from 'react-hook-form';
 import {
   Table,
   TableBody,
@@ -14,21 +15,66 @@ import {
 import {
   Pagination,
   PaginationContent,
-  PaginationEllipsis,
   PaginationItem,
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
+import {
+    Form,
+    FormControl,
+    FormField,
+    FormItem,
+    FormLabel,
+    FormMessage,
+  } from "@/components/ui/form";
+  import { zodResolver } from '@hookform/resolvers/zod';
+  import { z } from 'zod';
+  const formSchema = z.object({
+    name: z.string(),
+    numberOfSeats: z.number(),
+    fuelType: z.string(),
+    transmissionType: z.string(),
+    
+  });
 
 export default function ConfigurationEditor() {
-  const [user, setUser] = useState(null);
   const [cars, setCars] = useState([]);
-  const Email = getCookie("current_email");
   const [searchTerm, setSearchTerm] = useState("");
   const [configs, setConfigs] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const entriesPerPage = 10;
+  const [configId, setConfigId] = useState('');
+
+  const form = useForm({
+    resolver: zodResolver(formSchema),
+        defaultValues: {
+        name: '',
+        numberOfSeats: '',
+        fuelType: '',
+        tranmissionType: ''
+        
+    }
+  });
+
+  const onSubmit = async (values)  => {
+    
+    try {
+        const response = await asyncApiRequest("PUT", `/api/configurations/${configId}`, values, true);
+        
+    
+
+        if (response.ok) {    
+           
+        } else {
+            console.error("Error updating config details: ", response);
+           
+        }
+    } catch (error) {
+        console.error("Error updating config details: ", error);
+    }
+};
+
 
   //From CarReader    Changed to FlatMap Configurations  
   const updateJsonFile = async () => {
@@ -49,8 +95,6 @@ export default function ConfigurationEditor() {
           return item;
         });
       }
-
-      console.log("EditConfigs.js: ", data);
 
       const allConfigs = data.flatMap((car) =>
         car.configurations.map((config) => ({ ...config, car }))
@@ -148,6 +192,72 @@ export default function ConfigurationEditor() {
           </PaginationContent>
         </Pagination>
       </form>
+      <Input type="text" placeholder="Configuration Id" value={configId} onChange={e => setConfigId(e.target.value)} />
+      <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+                <FormField
+                    control={form.control}
+                    name="name"
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Name</FormLabel>
+                            <FormControl>
+                                <Input {...field} />
+                            </FormControl>
+                            <FormMessage>{form.formState.errors.name?.message}</FormMessage>
+                        </FormItem>
+                    )}
+                />
+                <FormField
+                    control={form.control}
+                    name="numberOfSeats"
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Number of Seats</FormLabel>
+                            <FormControl>
+                                <Input 
+                                {...field} 
+                                type="number"
+                                onChange={e => {
+                                    field.onChange(e); 
+                                    form.setValue('numberOfSeats', parseInt(e.target.value));
+                                }}
+                                />
+                            </FormControl>
+                            <FormMessage>{form.formState.errors.numberOfSeats?.message}</FormMessage>
+                        </FormItem>
+                    )}
+                />
+                <FormField
+                    control={form.control}
+                    name="fuelType"
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Fuel Type</FormLabel>
+                            <FormControl>
+                                <Input {...field} />
+                            </FormControl>
+                            <FormMessage>{form.formState.errors.fuelType?.message}</FormMessage>
+                        </FormItem>
+                    )}
+                />
+                <FormField
+                    control={form.control}
+                    name="transmissionType"
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Transmission Type</FormLabel>
+                            <FormControl>
+                                <Input {...field} />
+                            </FormControl>
+                            <FormMessage>{form.formState.errors.tranmissionType?.message}</FormMessage>
+                        </FormItem>
+                    )}
+                />
+                
+                <Button type="submit">Submit</Button>
+            </form>
+        </Form>
     </div>
   );
 }

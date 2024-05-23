@@ -16,7 +16,6 @@ import {
 import {
   Pagination,
   PaginationContent,
-  PaginationEllipsis,
   PaginationItem,
   PaginationLink,
   PaginationNext,
@@ -39,11 +38,7 @@ const formSchema = z.object({
   
 });
 
-
-
-
 export default function CarEditor() {
-  const [user, setUser] = useState(null);
   const [cars, setCars] = useState([]);
   const Email = getCookie("current_email");
   const [searchTerm, setSearchTerm] = useState("");
@@ -61,8 +56,6 @@ export default function CarEditor() {
   });
 
   const onSubmit = async (values)  => {
-    console.log("onSubmit", values);
-    
     
     try {
         const response = await asyncApiRequest("PUT", `/api/cars/${carId}`, values, true);
@@ -102,8 +95,6 @@ export default function CarEditor() {
           return item;
         });
       }
-
-      console.log("EditCars.js: ", data);
 
       setCars(data);
     } catch (error) {
