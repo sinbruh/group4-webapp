@@ -174,7 +174,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"email\": \"admin@user.com\",\r\n    \"password\": \"adminuser123\"\r\n}\r\n",
+					"raw": "{\r\n    \"email\": \"{{ADMIN_EMAIL}}\",\r\n    \"password\": \"{{$randomPassword}}\"\r\n}\r\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -218,7 +218,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"email\": \"admin@user.com\",\r\n    \"password\": \"adminuser\"\r\n}\r\n",
+					"raw": "{\r\n    \"email\": \"{{ADMIN_EMAIL}}\",\r\n    \"password\": \"{{ADMIN_PASSWORD}}\"\r\n}\r\n",
 					"options": {
 						"raw": {
 							"language": "json"

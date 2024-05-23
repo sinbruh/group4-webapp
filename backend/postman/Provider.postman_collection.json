@@ -31,7 +31,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"email\": \"admin@user.com\",\r\n    \"password\": \"adminuser\"\r\n}\r\n",
+					"raw": "{\r\n    \"email\": \"{{ADMIN_EMAIL}}\",\r\n    \"password\": \"{{ADMIN_PASSWORD}}\"\r\n}\r\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -72,7 +72,12 @@
 			],
 			"request": {
 				"method": "GET",
-				"header": [],
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{jwt}}"
+					}
+				],
 				"url": {
 					"raw": "{{BASE_URL}}/api/providers",
 					"host": [
@@ -105,7 +110,12 @@
 			],
 			"request": {
 				"method": "GET",
-				"header": [],
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{jwt}}"
+					}
+				],
 				"url": {
 					"raw": "{{BASE_URL}}/api/providers/1",
 					"host": [
@@ -139,7 +149,12 @@
 			],
 			"request": {
 				"method": "GET",
-				"header": [],
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{jwt}}"
+					}
+				],
 				"url": {
 					"raw": "{{BASE_URL}}/api/providers/99",
 					"host": [
@@ -173,7 +188,12 @@
 			],
 			"request": {
 				"method": "GET",
-				"header": [],
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{jwt}}"
+					}
+				],
 				"url": {
 					"raw": "{{BASE_URL}}/api/providers/id",
 					"host": [
@@ -316,7 +336,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"name\": \"Auto 1-1\",\r\n    \"price\": 500,\r\n    \"location\": \"Trondheim\"\r\n}\r\n",
+					"raw": "{\r\n    \"name\": \"Auto 1-1\",\r\n    \"price\": 500,\r\n    \"location\": \"Trondheim\",\r\n    \"available\": true,\r\n    \"visible\": true\r\n}\r\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -364,7 +384,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"name\": \"\",\r\n    \"price\": 500,\r\n    \"location\": \"Trondheim\"\r\n}\r\n",
+					"raw": "{\r\n    \"name\": \"\",\r\n    \"price\": 500,\r\n    \"location\": \"Trondheim\",\r\n    \"available\": true,\r\n    \"visible\": true\r\n}\r\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -412,7 +432,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"name\": Auto 1-1,\r\n    \"price\": 500,\r\n    \"location\": \"Trondheim\"\r\n}\r\n",
+					"raw": "{\r\n    \"name\": Auto 1-1,\r\n    \"price\": 500,\r\n    \"location\": \"Trondheim\",\r\n    \"available\": true,\r\n    \"visible\": true\r\n}\r\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -499,7 +519,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"name\": \"Auto 1-1\",\r\n    \"price\": 500,\r\n    \"location\": \"Trondheim\"\r\n}\r\n",
+					"raw": "{\r\n    \"name\": \"Auto 1-1\",\r\n    \"price\": 500,\r\n    \"location\": \"Trondheim\",\r\n    \"available\": true,\r\n    \"visible\": true\r\n}\r\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -543,7 +563,12 @@
 			],
 			"request": {
 				"method": "GET",
-				"header": [],
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{jwt}}"
+					}
+				],
 				"url": {
 					"raw": "{{BASE_URL}}/api/providers",
 					"host": [
@@ -576,7 +601,12 @@
 			],
 			"request": {
 				"method": "GET",
-				"header": [],
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{jwt}}"
+					}
+				],
 				"url": {
 					"raw": "{{BASE_URL}}/api/providers/{{providerId}}",
 					"host": [
@@ -614,7 +644,12 @@
 			],
 			"request": {
 				"method": "GET",
-				"header": [],
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{jwt}}"
+					}
+				],
 				"url": {
 					"raw": "{{BASE_URL}}/api/cars/{{carId}}",
 					"host": [
@@ -652,7 +687,12 @@
 			],
 			"request": {
 				"method": "GET",
-				"header": [],
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{jwt}}"
+					}
+				],
 				"url": {
 					"raw": "{{BASE_URL}}/api/configurations/{{configId}}",
 					"host": [
@@ -694,7 +734,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"name\": \"Auto 5-5\",\r\n    \"price\": 800,\r\n    \"location\": \"Oslo\"\r\n}\r\n",
+					"raw": "{\r\n    \"name\": \"Auto 5-5\",\r\n    \"price\": 800,\r\n    \"location\": \"Oslo\",\r\n    \"available\": true,\r\n    \"visible\": true\r\n}\r\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -742,7 +782,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"name\": \"\",\r\n    \"price\": 800,\r\n    \"location\": \"Oslo\"\r\n}\r\n",
+					"raw": "{\r\n    \"name\": \"\",\r\n    \"price\": 800,\r\n    \"location\": \"Oslo\",\r\n    \"available\": true,\r\n    \"visible\": true\r\n}\r\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -790,7 +830,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"name\": \"Auto 5-5\",\r\n    \"price\": 800,\r\n    \"location\": \"Oslo\"\r\n}\r\n",
+					"raw": "{\r\n    \"name\": \"Auto 5-5\",\r\n    \"price\": 800,\r\n    \"location\": \"Oslo\",\r\n    \"available\": true,\r\n    \"visible\": true\r\n}\r\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -806,208 +846,6 @@
 						"api",
 						"providers",
 						"99"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "UPDATE toggle availability for new provider",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Status code is 200 OK\", function () {\r",
-							"    pm.response.to.have.status(200);\r",
-							"});\r",
-							""
-						],
-						"type": "text/javascript",
-						"packages": {}
-					}
-				}
-			],
-			"request": {
-				"method": "PUT",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "Bearer {{jwt}}"
-					}
-				],
-				"url": {
-					"raw": "{{BASE_URL}}/api/providers/{{providerId}}/availability",
-					"host": [
-						"{{BASE_URL}}"
-					],
-					"path": [
-						"api",
-						"providers",
-						"{{providerId}}",
-						"availability"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "UPDATE toggle availability for provider with ID 99",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Status code is 404 NOT FOUND\", function () {\r",
-							"    pm.response.to.have.status(404);\r",
-							"});\r",
-							""
-						],
-						"type": "text/javascript",
-						"packages": {}
-					}
-				}
-			],
-			"request": {
-				"method": "PUT",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "Bearer {{jwt}}"
-					}
-				],
-				"url": {
-					"raw": "{{BASE_URL}}/api/providers/99/availability",
-					"host": [
-						"{{BASE_URL}}"
-					],
-					"path": [
-						"api",
-						"providers",
-						"99",
-						"availability"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "UPDATE toggle visibility for new provider",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Status code is 200 OK\", function () {\r",
-							"    pm.response.to.have.status(200);\r",
-							"});\r",
-							""
-						],
-						"type": "text/javascript",
-						"packages": {}
-					}
-				}
-			],
-			"request": {
-				"method": "PUT",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "Bearer {{jwt}}"
-					}
-				],
-				"url": {
-					"raw": "{{BASE_URL}}/api/providers/{{providerId}}/visibility",
-					"host": [
-						"{{BASE_URL}}"
-					],
-					"path": [
-						"api",
-						"providers",
-						"{{providerId}}",
-						"visibility"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "UPDATE toggle visibility for provider with ID 99",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Status code is 404 NOT FOUND\", function () {\r",
-							"    pm.response.to.have.status(404);\r",
-							"});\r",
-							""
-						],
-						"type": "text/javascript",
-						"packages": {}
-					}
-				}
-			],
-			"request": {
-				"method": "PUT",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "Bearer {{jwt}}"
-					}
-				],
-				"url": {
-					"raw": "{{BASE_URL}}/api/providers/99/visibility",
-					"host": [
-						"{{BASE_URL}}"
-					],
-					"path": [
-						"api",
-						"providers",
-						"99",
-						"visibility"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "GET new provider after availability and visibility were toggled",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Status code is 200 OK\", function () {\r",
-							"    pm.response.to.have.status(200);\r",
-							"});\r",
-							"\r",
-							"pm.test(\"Available is false\", function () {\r",
-							"    pm.expect(pm.response.json()[\"available\"]).to.eql(false);\r",
-							"});\r",
-							"\r",
-							"pm.test(\"Visible is false\", function () {\r",
-							"    pm.expect(pm.response.json()[\"visible\"]).to.eql(false);\r",
-							"});\r",
-							""
-						],
-						"type": "text/javascript",
-						"packages": {}
-					}
-				}
-			],
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{BASE_URL}}/api/providers/{{providerId}}",
-					"host": [
-						"{{BASE_URL}}"
-					],
-					"path": [
-						"api",
-						"providers",
-						"{{providerId}}"
 					]
 				}
 			},
@@ -1086,6 +924,305 @@
 						"api",
 						"providers",
 						"99"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ADD new provider again",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201 CREATED\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"pm.environment.set(\"providerId\", pm.response.json())\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{jwt}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Auto 2-2\",\r\n    \"price\": 400,\r\n    \"location\": \"Bergen\",\r\n    \"available\": true,\r\n    \"visible\": false\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/api/providers/{{configId}}",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"api",
+						"providers",
+						"{{configId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ADD register new user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200 OK\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"firstName\": \"John\",\r\n    \"lastName\": \"Doe\",\r\n    \"email\": \"johndoe@user.com\",\r\n    \"phoneNumber\": 12345678,\r\n    \"password\": \"iamatestuser\",\r\n    \"dateOfBirth\": 315532800000\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/api/register",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"api",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ADD login to new user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200 OK\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.environment.set(\"email\", JSON.parse(pm.request.body.raw)[\"email\"]);\r",
+							"\r",
+							"pm.environment.set(\"jwt\", pm.response.json()[\"jwt\"]);\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"johndoe@user.com\",\r\n    \"password\": \"iamatestuser\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/api/authenticate",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"api",
+						"authenticate"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET new provider again",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 403 FORBIDDEN\", function () {\r",
+							"    pm.response.to.have.status(403);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{jwt}}"
+					}
+				],
+				"url": {
+					"raw": "{{BASE_URL}}/api/providers/{{providerId}}",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"api",
+						"providers",
+						"{{providerId}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE new user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200 OK\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{jwt}}"
+					}
+				],
+				"url": {
+					"raw": "{{BASE_URL}}/api/users/{{email}}",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"api",
+						"users",
+						"{{email}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ADD login to admin user again",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200 OK\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.environment.set(\"jwt\", pm.response.json()[\"jwt\"]);\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"{{ADMIN_EMAIL}}\",\r\n    \"password\": \"{{ADMIN_PASSWORD}}\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/api/authenticate",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"api",
+						"authenticate"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE new provider again",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200 OK\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{jwt}}"
+					}
+				],
+				"url": {
+					"raw": "{{BASE_URL}}/api/providers/{{providerId}}",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"api",
+						"providers",
+						"{{providerId}}"
 					]
 				}
 			},
