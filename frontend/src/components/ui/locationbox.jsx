@@ -44,7 +44,7 @@ const locations = [
 export default function Locationbox({ defaultValue, onChange,  setLocation}) {
     const [value, setValue] = React.useState(defaultValue || false)
     const [open, setOpen] = React.useState("")
-    
+
 
     const handleSelect = (locationValue) => {
         if (value === locationValue) {
@@ -66,10 +66,10 @@ export default function Locationbox({ defaultValue, onChange,  setLocation}) {
         }
     };
 
-    
 
 
-    
+
+
 
     return (
         <Popover open={open} onOpenChange={setOpen}>
@@ -78,7 +78,7 @@ export default function Locationbox({ defaultValue, onChange,  setLocation}) {
                     variant="outline"
                     role="combobox"
                     aria-expanded={open}
-                    className="w-[200px] justify-between"
+                    className="justify-between"
                 >
                     {value
                         ? locations.find((location) => location.value === value)?.label
