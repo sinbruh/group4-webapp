@@ -18,10 +18,9 @@ export default function FavoriteFilterButton({ onFavoriteChange  }) {
     const [isFavorite, setIsFavorite] = useState(false);
     const user = useStore((state) => state.user);
     const [isAlertOpen, setIsAlertOpen] = useState(false);
-    
+
 
     const handleOnClick = (e) => {
-        console.log("Favorite button clicked, I hate this message");
         e.stopPropagation();
 
         if (user) {

@@ -1,7 +1,7 @@
 'use client'
 import { useSearchParams } from 'next/navigation';
 import styles from "./search.module.css";
-import React, { Suspense, useState } from 'react';
+import React, { Suspense, useState, useEffect } from 'react';
 import Navigation from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import Link from "next/link";
@@ -18,7 +18,6 @@ export default function Search() {
     const defaultLocation = searchParams.get('location') || '';
     const start = searchParams.get('start') || new Date().toISOString().split('T')[0];
     const end = searchParams.get('end') || new Date(new Date().setDate(new Date().getDate() + 1)).toISOString().split('T')[0];
-    const isDesktop = useMediaQuery({ query: '(min-width: 1450px)' });
 
     const [location, setLocation] = useState(defaultLocation);
     const [dates, setDates] = useState({ start: start, end: end });
@@ -26,6 +25,7 @@ export default function Search() {
     const [expandedCar, setExpandedCar] = useState(null);
     const [favoriteFilter, setFavoriteFilter] = useState(false);
     const router = useRouter();
+    const isDesktop = useMediaQuery({ query: '(min-width: 1024px)' });
 
     function showConfirmation () {
         router.push('/order');
