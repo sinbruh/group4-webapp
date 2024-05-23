@@ -21,11 +21,13 @@ Libraries and frameworks that have been used for the project, which includes:
 
 ## Website 
 
-this contains screen shots taken from the website itself and its functions:
+this contains screen shots taken from the website itself and its functions
 
+
+The startpage:
 ![mainpage](https://github.com/sinbruh/group4-webapp/assets/123637151/2725f749-d7c6-451f-95bc-c69aa2f4e335)
 
-
+the booking and car details page:
 ![search page](https://github.com/sinbruh/group4-webapp/assets/123637151/e1ae3c11-ee3f-46eb-bda0-2ed96a3d76b3)
 
 
