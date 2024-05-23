@@ -26,4 +26,4 @@ jobs:
 
       - name: Deploy to server
         run: |
-          ssh -i ~/.ssh/github_action sindfo@129.241.153.151 'cd /home/local/sindfo/repo/group4-webapp/frontend && git pull && npm install && npm update && npm run build && ./killnextserver.sh && (nohup npm run start &) && cd /home/local/sindfo/repo/group4-webapp/backend && ./restart-spring-boot.sh'
+          ssh -i ~/.ssh/github_action sindfo@129.241.153.151 'cd /home/local/sindfo/repo/group4-webapp/frontend && git pull && npm install && npm update && npm run build && ./killnextserver.sh && cd /home/local/sindfo/repo/group4-webapp/backend && ./restart-spring-boot.sh'
