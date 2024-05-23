@@ -11,7 +11,6 @@ Project theme given for this project: Car Rentals
 
 The project theme specified to emulate a real-life situation when you get a specification from a customer. The project website must be a web aggregator portal for a provided company and the provided products. The project theme states that the general purpose of the portal is a price overview for visitors. The webapp will let users see and compare prices of products from different vendors. This website bare the same resemblences as known car rental websites such as kayak, hertz and sixt. 
 
-Following tools used for the project
 
 ## Getting started
 
@@ -24,8 +23,3 @@ to run the website locally:
 5. frontend: npm run dev command
 6. backend: mvn spring-boot:run
 
-### Extra features
-
-Extra features discussed and agreed with the lectureres in the courses:
-
-1. Functionality for picking location in car search
