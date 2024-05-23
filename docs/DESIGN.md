@@ -146,7 +146,7 @@ includes UI component libraries such as shadcn. The group mainly used the https:
 
 ### Spacing
 
-TBH
+We used a consistant spacing scale to maintain a balanced layout for our website, so no specific spacing was decided.
 
 ### Border Rounding
 
