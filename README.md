@@ -14,13 +14,13 @@ The project theme specified to emulate a real-life situation when you get a spec
 
 ## Getting started
 
-website is available at [httpsrentalroulette.me](https://rentalroulette.me/)
+website is available at [rentalroulette.me](https://rentalroulette.me/)
 to run the website locally:
 1. Clone the repository from Github
 2. Install needed dependancies such as next.js
   
 4. Go to terminal in both backend and frontend
-5. frontend: npm run dev command
+5. frontend: npm run dev
 6. backend: mvn spring-boot:run
 
 
