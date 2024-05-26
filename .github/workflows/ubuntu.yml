@@ -43,5 +43,5 @@ jobs:
             echo "Restarting Spring Boot application..."
             ./restart-spring-boot.sh
             echo "Deployment finished."
-            exit
+            exit 0
           EOF
