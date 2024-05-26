@@ -26,4 +26,22 @@ jobs:
 
       - name: Deploy to server
         run: |
-          ssh -i ~/.ssh/github_action sindfo@129.241.153.151 'cd /home/local/sindfo/repo/group4-webapp/frontend && git pull && npm install && npm update && npm run build && ./killnextserver.sh && cd /home/local/sindfo/repo/group4-webapp/backend && ./restart-spring-boot.sh && exit'
+          set -e  # Exit on any error
+          ssh -i ~/.ssh/github_action sindfo@129.241.153.151 << 'EOF'
+            cd /home/local/sindfo/repo/group4-webapp/frontend
+            echo "Pulling latest code..."
+            git pull
+            echo "Installing dependencies..."
+            npm install
+            echo "Updating dependencies..."
+            npm update
+            echo "Building project..."
+            npm run build
+            echo "Stopping Next.js server..."
+            ./killnextserver.sh
+            cd /home/local/sindfo/repo/group4-webapp/backend
+            echo "Restarting Spring Boot application..."
+            ./restart-spring-boot.sh
+            echo "Deployment finished."
+            exit
+          EOF
